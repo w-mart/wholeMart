@@ -71,6 +71,7 @@ public class OrderService {
         }).toList());
         cartService.clear(currentUser);
         return order;
+        
     }
 
     @Transactional(readOnly = true)
