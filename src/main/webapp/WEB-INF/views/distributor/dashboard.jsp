@@ -109,11 +109,11 @@
                 </div>
             </div>
 
-            <div class="wm-performance-marquee" aria-label="Distributor performance ticker">
+            <section class="wm-performance-marquee" aria-label="Distributor performance ticker">
                 <div class="wm-performance-track" id="wmPerformanceTicker">
                     <div class="wm-performance-chip">Loading performance insights...</div>
                 </div>
-            </div>
+            </section>
 
             <div class="wm-toolbar wm-dashboard-toolbar">
                 <input class="wm-input" placeholder="Search by order ID, retailer, or product">
