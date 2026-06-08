@@ -1,0 +1,12 @@
+target/
+.codex-docx-reference/
+.codex-reference-w-next-mart/
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
