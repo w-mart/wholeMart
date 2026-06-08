@@ -2,6 +2,8 @@
 
 Spring Boot modular monolith for local B2B commerce with JSP web routes and mobile-ready REST APIs.
 
+This repository is the WholeMart project.
+
 ## Run Locally
 
 ```powershell
