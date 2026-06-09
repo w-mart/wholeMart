@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.time.Instant;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "audit_events")
 public class AuditEvent extends BaseEntity {
@@ -51,27 +53,4 @@ public class AuditEvent extends BaseEntity {
         this(actorUserId, eventType, targetType, targetId, null, Instant.now());
     }
 
-    public Long getActorUserId() {
-        return actorUserId;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public String getTargetType() {
-        return targetType;
-    }
-
-    public Long getTargetId() {
-        return targetId;
-    }
-
-    public String getDetailsJson() {
-        return detailsJson;
-    }
-
-    public Instant getOccurredAt() {
-        return occurredAt;
-    }
 }

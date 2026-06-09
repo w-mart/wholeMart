@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "ai_conversations")
 public class AiConversation extends BaseEntity {
@@ -30,7 +32,4 @@ public class AiConversation extends BaseEntity {
         this.title = title;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
 }

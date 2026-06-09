@@ -8,9 +8,10 @@
     String wmRoleLabel = wmRole.replace("ROLE_", "");
     String wmUserName = session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username"));
     String wmUserInitial = wmUserName.isEmpty() ? "?" : wmUserName.substring(0, 1).toUpperCase();
+    String wmBodyClass = request.getAttribute("wmBodyClass") == null ? "" : String.valueOf(request.getAttribute("wmBodyClass"));
 %>
 </head>
-<body data-role="<%= wmRoleLabel %>" >
+<body class="<%= wmBodyClass %>" data-role="<%= wmRoleLabel %>" >
 <div class="wm-app">
     <header class="wm-topbar" role="banner">
         <div class="wm-topbar-left">

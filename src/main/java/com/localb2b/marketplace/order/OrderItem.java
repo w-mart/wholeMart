@@ -5,7 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "order_items")
 public class OrderItem extends BaseEntity {
@@ -42,31 +44,4 @@ public class OrderItem extends BaseEntity {
         this.lineTotal = unitPrice.multiply(BigDecimal.valueOf(quantity));
     }
 
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public String getSku() {
-        return sku;
-    }
-
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public BigDecimal getLineTotal() {
-        return lineTotal;
-    }
 }

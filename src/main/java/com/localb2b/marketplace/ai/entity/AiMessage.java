@@ -27,4 +27,16 @@ public class AiMessage extends BaseEntity {
         this.sender = sender;
         this.content = content;
     }
+
+    public Long getConversationId() {
+        return conversationId;
+    }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

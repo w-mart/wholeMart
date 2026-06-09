@@ -7,7 +7,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "ai_actions")
 public class AiAction extends BaseEntity {
@@ -33,14 +35,6 @@ public class AiAction extends BaseEntity {
         this.userId = userId;
         this.actionType = actionType;
         this.payloadJson = payloadJson;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public AiActionType getActionType() {
-        return actionType;
     }
 
     public void confirm() {

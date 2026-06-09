@@ -8,7 +8,9 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.Instant;
+import lombok.Getter;
 
+@Getter
 @MappedSuperclass
 public abstract class BaseEntity {
     @Id
@@ -33,15 +35,4 @@ public abstract class BaseEntity {
         updatedAt = Instant.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
-    }
 }

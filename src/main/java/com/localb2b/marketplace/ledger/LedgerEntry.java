@@ -5,7 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "ledger_entries")
 public class LedgerEntry extends BaseEntity {
@@ -31,19 +33,4 @@ public class LedgerEntry extends BaseEntity {
         this.reason = reason;
     }
 
-    public Long getRetailerUserId() {
-        return retailerUserId;
-    }
-
-    public Long getDistributorUserId() {
-        return distributorUserId;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public String getReason() {
-        return reason;
-    }
 }

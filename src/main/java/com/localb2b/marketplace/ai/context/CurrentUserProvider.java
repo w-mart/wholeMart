@@ -27,6 +27,10 @@ public class CurrentUserProvider {
         return from(currentUser);
     }
 
+    public CurrentUser requireCommonCurrentUser() {
+        return currentUserProvider.requireCurrentUser();
+    }
+
     private UserContext from(CurrentUser currentUser) {
         UserAccount user = userService.requireActiveUser(currentUser);
         return new UserContext(user.getId(), user.getRole().name(), null, null, null, user.getName());

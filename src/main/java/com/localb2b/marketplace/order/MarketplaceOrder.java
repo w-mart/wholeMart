@@ -7,7 +7,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "orders")
 public class MarketplaceOrder extends BaseEntity {
@@ -36,26 +38,6 @@ public class MarketplaceOrder extends BaseEntity {
         this.distributorUserId = distributorUserId;
         this.totalAmount = totalAmount;
         this.paymentMode = paymentMode;
-    }
-
-    public Long getRetailerUserId() {
-        return retailerUserId;
-    }
-
-    public Long getDistributorUserId() {
-        return distributorUserId;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public OrderPaymentMode getPaymentMode() {
-        return paymentMode;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
     }
 
     public void accept() {

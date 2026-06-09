@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "delivery_assignments")
 public class DeliveryAssignment extends BaseEntity {
@@ -26,18 +28,6 @@ public class DeliveryAssignment extends BaseEntity {
     public DeliveryAssignment(Long orderId, Long driverUserId) {
         this.orderId = orderId;
         this.driverUserId = driverUserId;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public Long getDriverUserId() {
-        return driverUserId;
-    }
-
-    public DeliveryStatus getStatus() {
-        return status;
     }
 
     public void updateStatus(DeliveryStatus status) {

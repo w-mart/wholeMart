@@ -3,7 +3,9 @@ package com.localb2b.marketplace.order;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 public class MarketplaceOrderDetails {
     private Long id;
     private Long retailerUserId;
@@ -50,55 +52,4 @@ public class MarketplaceOrderDetails {
         this.items = items == null ? List.of() : items;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Long getRetailerUserId() {
-        return retailerUserId;
-    }
-
-    public Long getDistributorUserId() {
-        return distributorUserId;
-    }
-
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
-
-    public OrderPaymentMode getPaymentMode() {
-        return paymentMode;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getRetailerName() {
-        return retailerName;
-    }
-
-    public String getRetailerLocation() {
-        return retailerLocation;
-    }
-
-    public String getDistributorShopName() {
-        return distributorShopName;
-    }
-
-    public String getDistributorBusinessName() {
-        return distributorBusinessName;
-    }
-
-    public String getDistributorAddress() {
-        return distributorAddress;
-    }
-
-    public List<OrderItemDetails> getItems() {
-        return items;
-    }
 }
