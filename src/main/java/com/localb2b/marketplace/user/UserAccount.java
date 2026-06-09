@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "users")
 public class UserAccount extends BaseEntity {
@@ -33,26 +35,10 @@ public class UserAccount extends BaseEntity {
         this.role = role;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public UserRole getRole() {
-        return role;
-    }
-
     public void updateLoginProfile(String name) {
         if (name != null && !name.isBlank()) {
             this.name = name;
         }
-    }
-
-    public UserStatus getStatus() {
-        return status;
     }
 
     public void suspend() {

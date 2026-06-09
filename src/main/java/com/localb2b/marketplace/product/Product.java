@@ -6,7 +6,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
@@ -124,67 +126,6 @@ public class Product extends BaseEntity {
         this.sustainabilityNote = details.sustainabilityNote();
         this.productMetadataJson = details.productMetadataJson();
     }
-
-    public Long getDistributorUserId() {
-        return distributorUserId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public BigDecimal getUnitPrice() {
-        return unitPrice;
-    }
-
-    public String getSku() { return sku; }
-    public String getBrand() { return brand; }
-    public String getDescription() { return description; }
-    public String getSubCategory() { return subCategory; }
-    public String getHsnCode() { return hsnCode; }
-    public BigDecimal getGstRate() { return gstRate; }
-    public BigDecimal getMrp() { return mrp; }
-    public BigDecimal getWholesalePrice() { return wholesalePrice; }
-    public String getUnitOfMeasure() { return unitOfMeasure; }
-    public String getPackSize() { return packSize; }
-    public Integer getMinOrderQuantity() { return minOrderQuantity; }
-    public Integer getMaxOrderQuantity() { return maxOrderQuantity; }
-    public Integer getStockQuantity() { return stockQuantity; }
-    public Integer getReorderLevel() { return reorderLevel; }
-    public String getBatchNumber() { return batchNumber; }
-    public LocalDate getManufactureDate() { return manufactureDate; }
-    public LocalDate getExpiryDate() { return expiryDate; }
-    public Integer getShelfLifeDays() { return shelfLifeDays; }
-    public String getStorageType() { return storageType; }
-    public String getOriginCountry() { return originCountry; }
-    public String getOriginState() { return originState; }
-    public String getOriginCity() { return originCity; }
-    public String getBarcode() { return barcode; }
-    public String getImageUrl() { return imageUrl; }
-    public String getVideoUrl() { return videoUrl; }
-    public String getTags() { return tags; }
-    public String getIngredients() { return ingredients; }
-    public String getAllergenInfo() { return allergenInfo; }
-    public String getCertifications() { return certifications; }
-    public Boolean getReturnable() { return returnable; }
-    public Boolean getCodAvailable() { return codAvailable; }
-    public String getDeliveryWindow() { return deliveryWindow; }
-    public BigDecimal getWeightKg() { return weightKg; }
-    public BigDecimal getLengthCm() { return lengthCm; }
-    public BigDecimal getWidthCm() { return widthCm; }
-    public BigDecimal getHeightCm() { return heightCm; }
-    public Boolean getFragile() { return fragile; }
-    public Boolean getColdChainRequired() { return coldChainRequired; }
-    public String getAiKeywords() { return aiKeywords; }
-    public String getDemandForecastNote() { return demandForecastNote; }
-    public Boolean getSmartReorderEnabled() { return smartReorderEnabled; }
-    public BigDecimal getCarbonScore() { return carbonScore; }
-    public String getSustainabilityNote() { return sustainabilityNote; }
-    public String getProductMetadataJson() { return productMetadataJson; }
 
     public record ProductDetails(
             String sku,

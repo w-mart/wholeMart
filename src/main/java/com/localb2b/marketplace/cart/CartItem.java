@@ -4,7 +4,9 @@ import com.localb2b.marketplace.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "cart_items")
 public class CartItem extends BaseEntity {
@@ -24,18 +26,6 @@ public class CartItem extends BaseEntity {
         this.retailerUserId = retailerUserId;
         this.productId = productId;
         this.quantity = quantity;
-    }
-
-    public Long getRetailerUserId() {
-        return retailerUserId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public void setQuantity(int quantity) {

@@ -5,7 +5,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "retailer_profiles")
 public class RetailerProfile extends BaseEntity {
@@ -28,38 +30,6 @@ public class RetailerProfile extends BaseEntity {
     public RetailerProfile(Long userId, String shopName) {
         this.userId = userId;
         this.shopName = shopName;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public String getShopName() {
-        return shopName;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getAddressLine() {
-        return addressLine;
-    }
-
-    public String getPincode() {
-        return pincode;
-    }
-
-    public BigDecimal getLatitude() {
-        return latitude;
-    }
-
-    public BigDecimal getLongitude() {
-        return longitude;
     }
 
     public void updateProfile(String shopName,

@@ -91,6 +91,7 @@
         }
     </style>
 
+    <% request.setAttribute("wmBodyClass", "wm-dashboard-scale"); %>
     <%@ include file="../common/wholemart-shell-start.jsp" %>
 
     <div class="wm-dashboard-overview">
@@ -202,6 +203,10 @@
                     <form class="wm-ai-quick-form" id="wmDashboardAiForm">
                         <input class="wm-input" id="wmDashboardAiMessage"
                                placeholder="Ask about today's priorities">
+                        <button class="btn wm-ai-voice-btn" id="wmDashboardAiVoice" type="button"
+                                aria-label="Start voice input" title="Start voice input">
+                            <span class="wm-ai-voice-icon" aria-hidden="true"></span>
+                        </button>
                         <button class="btn wm-gradient-btn" type="submit">Ask AI</button>
                     </form>
 
@@ -301,6 +306,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             var form = document.getElementById("wmDashboardAiForm");
             var input = document.getElementById("wmDashboardAiMessage");
+            var voiceButton = document.getElementById("wmDashboardAiVoice");
             var responseBox = document.getElementById("wmDashboardAiResponse");
             var actionBox = document.getElementById("wmDashboardAiActionBox");
             var quickButtons = document.getElementById("wmDashboardAiQuickButtons");
@@ -308,6 +314,67 @@
 
             if (!form || !input || !responseBox) {
                 return;
+            }
+
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var recognition = SpeechRecognition ? new SpeechRecognition() : null;
+            var voiceHadError = false;
+            var finalTranscript = "";
+
+            if (recognition) {
+                recognition.lang = "en-IN";
+                recognition.interimResults = true;
+                recognition.continuous = false;
+
+                recognition.addEventListener("start", function () {
+                    voiceHadError = false;
+                    finalTranscript = "";
+                    input.value = "";
+                    voiceButton.classList.add("is-listening");
+                    voiceButton.setAttribute("aria-label", "Stop voice input");
+                    voiceButton.setAttribute("title", "Stop voice input");
+                    responseBox.textContent = "Listening...";
+                });
+
+                recognition.addEventListener("result", function (event) {
+                    var interimTranscript = "";
+                    for (var i = event.resultIndex; i < event.results.length; i += 1) {
+                        if (event.results[i].isFinal) {
+                            finalTranscript += event.results[i][0].transcript;
+                        } else {
+                            interimTranscript += event.results[i][0].transcript;
+                        }
+                    }
+                    input.value = (finalTranscript + " " + interimTranscript).trim();
+                });
+
+                recognition.addEventListener("end", function () {
+                    voiceButton.classList.remove("is-listening");
+                    voiceButton.setAttribute("aria-label", "Start voice input");
+                    voiceButton.setAttribute("title", "Start voice input");
+                    if (voiceHadError) {
+                        return;
+                    }
+                    input.value = (finalTranscript || input.value).trim();
+                    if (input.value) {
+                        window.askAi();
+                    } else {
+                        responseBox.textContent = "No voice input heard.";
+                    }
+                });
+
+                recognition.addEventListener("error", function (event) {
+                    voiceHadError = true;
+                    voiceButton.classList.remove("is-listening");
+                    voiceButton.setAttribute("aria-label", "Start voice input");
+                    voiceButton.setAttribute("title", "Start voice input");
+                    responseBox.textContent = event.error === "not-allowed"
+                        ? "Microphone permission is blocked."
+                        : "Voice input is not available right now.";
+                });
+            } else if (voiceButton) {
+                voiceButton.disabled = true;
+                voiceButton.title = "Voice input is not supported in this browser";
             }
 
             function setText(id, value) {
@@ -578,6 +645,20 @@
                 event.preventDefault();
                 window.askAi();
             });
+
+            if (voiceButton && recognition) {
+                voiceButton.addEventListener("click", function () {
+                    if (voiceButton.classList.contains("is-listening")) {
+                        recognition.stop();
+                        return;
+                    }
+                    try {
+                        recognition.start();
+                    } catch (error) {
+                        responseBox.textContent = "Voice input is already starting.";
+                    }
+                });
+            }
 
             if (quickButtons) {
                 quickButtons.addEventListener("click", function (event) {

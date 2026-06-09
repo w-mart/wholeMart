@@ -4,7 +4,9 @@ import com.localb2b.marketplace.common.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "inventory_items")
 public class InventoryItem extends BaseEntity {
@@ -20,10 +22,6 @@ public class InventoryItem extends BaseEntity {
     public InventoryItem(Long productId, int availableQuantity) {
         this.productId = productId;
         this.availableQuantity = availableQuantity;
-    }
-
-    public int getAvailableQuantity() {
-        return availableQuantity;
     }
 
     public void reserve(int quantity) {

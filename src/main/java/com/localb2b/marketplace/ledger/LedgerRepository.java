@@ -1,6 +1,7 @@
 package com.localb2b.marketplace.ledger;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,17 @@ public interface LedgerRepository extends JpaRepository<LedgerEntry, Long> {
             where l.distributorUserId = :distributorUserId
             """)
     BigDecimal sumAmountByDistributorUserId(@Param("distributorUserId") Long distributorUserId);
+
+    @Query("""
+            select coalesce(sum(l.amount), 0)
+            from LedgerEntry l
+            where l.distributorUserId = :distributorUserId
+              and l.createdAt >= :start
+              and l.createdAt < :end
+            """)
+    BigDecimal sumAmountByDistributorUserIdBetween(
+            @Param("distributorUserId") Long distributorUserId,
+            @Param("start") Instant start,
+            @Param("end") Instant end
+    );
 }

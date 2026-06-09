@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DistributorAiTools {
+
     private final CurrentUserProvider currentUserProvider;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
@@ -37,9 +38,26 @@ public class DistributorAiTools {
         this.ledgerService = ledgerService;
     }
 
-    @Tool(description = "Get today's order summary for the current logged-in distributor")
+    @Tool(description = """
+            Use this tool when the logged-in distributor asks about today's orders,
+            order pipeline, pending orders, accepted orders, completed orders,
+            order status, order workload, or daily order summary.
+
+            Natural language examples:
+            - "show today's order summary"
+            - "aaj ke orders batao"
+            - "bhai order ka kya scene hai?"
+            - "pending orders kitne hain?"
+            - "accepted orders kitne hain?"
+            - "aaj order pipeline kya hai?"
+            - "orders waiting for review dikhao"
+
+            This returns only the current logged-in distributor's order counts.
+            Never use this tool for another distributor.
+            """)
     public DistributorOrderSummary getTodayOrderSummary() {
         Long distributorUserId = requireDistributorUserId();
+
         return new DistributorOrderSummary(
                 orderRepository.countByDistributorUserIdAndStatus(distributorUserId, OrderStatus.PLACED),
                 orderRepository.countByDistributorUserIdAndStatus(distributorUserId, OrderStatus.ACCEPTED),
@@ -47,9 +65,27 @@ public class DistributorAiTools {
         );
     }
 
-    @Tool(description = "Get inventory summary for the current logged-in distributor")
+    @Tool(description = """
+            Use this tool when the logged-in distributor asks about inventory,
+            stock, low stock, expired items, product availability, stock planning,
+            inventory attention, or stock health.
+
+            Natural language examples:
+            - "show low stock summary"
+            - "stock ka kya haal hai?"
+            - "low stock dikhao"
+            - "inventory summary batao"
+            - "kaunse product kam hain?"
+            - "stock attention kya hai?"
+            - "expired items kitne hain?"
+            - "product availability ka scene kya hai?"
+
+            This returns only the current logged-in distributor's inventory summary.
+            Never use this tool for another distributor.
+            """)
     public DistributorInventorySummary getInventorySummary() {
         Long distributorUserId = requireDistributorUserId();
+
         return new DistributorInventorySummary(
                 productRepository.countByDistributorUserId(distributorUserId),
                 inventoryRepository.countLowStockByDistributorUserId(distributorUserId),
@@ -57,48 +93,145 @@ public class DistributorAiTools {
         );
     }
 
-    @Tool(description = "Get total inventory value in rupees for the current logged-in distributor")
+    @Tool(description = """
+            Use this tool when the logged-in distributor asks about total inventory value,
+            stock value, inventory amount, total product value, or warehouse value.
+
+            Natural language examples:
+            - "total inventory value batao"
+            - "stock ki total value kitni hai?"
+            - "inventory amount kitna hai?"
+            - "mere products ka total value kya hai?"
+            - "warehouse stock value batao"
+
+            This calculates total value using product unit price and stock quantity
+            for the current logged-in distributor only.
+            """)
     public BigDecimal getInventoryValue() {
         Long distributorUserId = requireDistributorUserId();
+
         return productRepository.findByDistributorUserId(distributorUserId).stream()
-                .map(product -> product.getUnitPrice().multiply(BigDecimal.valueOf(product.getStockQuantity() == null ? 0 : product.getStockQuantity())))
+                .map(product -> {
+                    BigDecimal unitPrice = product.getUnitPrice() == null
+                            ? BigDecimal.ZERO
+                            : product.getUnitPrice();
+
+                    int stockQuantity = product.getStockQuantity() == null
+                            ? 0
+                            : product.getStockQuantity();
+
+                    return unitPrice.multiply(BigDecimal.valueOf(stockQuantity));
+                })
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .setScale(2, RoundingMode.HALF_UP);
     }
 
-    @Tool(description = "Get ledger and payment summary for the current logged-in distributor")
+    @Tool(description = """
+            Use this tool when the logged-in distributor asks about ledger,
+            payments, dues, pending amount, overdue dues, captured revenue,
+            settlements, collections, or retailer payment follow-up.
+
+            Natural language examples:
+            - "show payment and dues summary"
+            - "payment pending hai kya?"
+            - "dues kitna hai?"
+            - "ledger summary batao"
+            - "payment ka kya scene hai?"
+            - "pending settlements kitne hain?"
+            - "overdue amount batao"
+            - "captured revenue kitna hai?"
+
+            This returns only the current logged-in distributor's ledger and payment summary.
+            Never show another distributor's payment or ledger data.
+            """)
     public DistributorLedgerSummary getLedgerSummary() {
-        return ledgerService.getDistributorLedgerSummary(requireDistributorUserId());
+        Long distributorUserId = requireDistributorUserId();
+        return ledgerService.getDistributorLedgerSummary(distributorUserId);
     }
 
-    @Tool(description = "Get recommended next actions for the current logged-in distributor")
+    @Tool(description = """
+            Use this tool when the logged-in distributor asks about today's sale,
+            aaj ki sale, daily sales, sales report, today's revenue, or aaj kitni sale hui.
+
+            This returns only today's captured revenue for the current logged-in distributor.
+            Never guess a sale amount and never show another distributor's sales.
+            """)
+    public BigDecimal getTodayCapturedRevenue() {
+        Long distributorUserId = requireDistributorUserId();
+        return ledgerService.getTodayCapturedRevenue(distributorUserId);
+    }
+
+    @Tool(description = """
+            Use this tool when the logged-in distributor asks what to do next,
+            daily priorities, recommended actions, business suggestions,
+            urgent tasks, or first action for today.
+
+            Natural language examples:
+            - "What should I do first today?"
+            - "aaj kya karna hai?"
+            - "bhai aaj priority kya hai?"
+            - "suggest next actions"
+            - "next action batao"
+            - "urgent kaam kya hai?"
+            - "dashboard ke hisab se kya karu?"
+            - "business priority batao"
+
+            This tool checks current distributor orders, inventory, and ledger
+            and returns practical next actions.
+            """)
     public List<String> getRecommendedNextActions() {
         Long distributorUserId = requireDistributorUserId();
-        long openOrders = orderRepository.countByDistributorUserIdAndStatus(distributorUserId, OrderStatus.PLACED);
-        long lowStock = inventoryRepository.countLowStockByDistributorUserId(distributorUserId);
-        DistributorLedgerSummary ledgerSummary = ledgerService.getDistributorLedgerSummary(distributorUserId);
+
+        long openOrders = orderRepository.countByDistributorUserIdAndStatus(
+                distributorUserId,
+                OrderStatus.PLACED
+        );
+
+        long lowStock = inventoryRepository.countLowStockByDistributorUserId(
+                distributorUserId
+        );
+
+        DistributorLedgerSummary ledgerSummary =
+                ledgerService.getDistributorLedgerSummary(distributorUserId);
 
         List<String> actions = new ArrayList<>();
+
         if (openOrders > 0) {
-            actions.add("Check open order queue");
+            actions.add("Check open order queue: " + openOrders + " orders are waiting for review.");
         }
+
         if (lowStock > 0) {
-            actions.add("Review low stock inventory");
+            actions.add("Review low stock inventory: " + lowStock + " items need attention.");
         }
-        if (ledgerSummary.overdueDues().compareTo(BigDecimal.ZERO) > 0) {
-            actions.add("Follow up overdue retailer dues");
+
+        if (ledgerSummary != null
+                && ledgerSummary.overdueDues() != null
+                && ledgerSummary.overdueDues().compareTo(BigDecimal.ZERO) > 0) {
+            actions.add("Follow up overdue retailer dues: Rs. " + ledgerSummary.overdueDues());
         }
+
         if (actions.isEmpty()) {
-            actions.add("No urgent issue. Review sales report and update fast-moving stock.");
+            actions.add("No urgent issue right now. Review sales report and update fast-moving stock.");
         }
+
         return actions;
     }
 
     private Long requireDistributorUserId() {
         UserContext user = currentUserProvider.getCurrentUser();
+
+        if (user == null || user.role() == null) {
+            throw new SecurityException("Authenticated user context is required");
+        }
+
         if (!"ROLE_DISTRIBUTOR".equals(user.role())) {
             throw new SecurityException("Distributor AI tools are only available to distributors");
         }
+
+        if (user.userId() == null) {
+            throw new SecurityException("Distributor user id is missing");
+        }
+
         return user.userId();
     }
 }

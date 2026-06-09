@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "LocalB2bMarketplaceApplication",
+      "request": "launch",
+      "mainClass": "LocalB2bMarketplaceApplication",
+      "projectName": "marketplace"
+    },
+    {
+      "type": "java",
+      "name": "Run LocalB2B",
+      "request": "launch",
+      "mainClass": "com.localb2b.marketplace.LocalB2bMarketplaceApplication",
+      "projectName": "marketplace"
+    }
+  ]
+}
