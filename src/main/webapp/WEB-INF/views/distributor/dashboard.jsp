@@ -33,17 +33,24 @@
 
         .wm-performance-marquee {
             overflow: hidden;
-            margin: 16px 0 12px;
+            margin: 0 0 6px;
             border: 1px solid rgba(13, 105, 82, .16);
             border-radius: 8px;
             background: #f7fbf8;
+        }
+
+        .wm-performance-marquee-top {
+            margin: 0 0 7px;
+            border-color: rgba(15, 95, 80, .18);
+            background: #ffffff;
+            box-shadow: 0 6px 16px rgba(15, 23, 42, .04);
         }
 
         .wm-performance-track {
             display: flex;
             gap: 12px;
             width: max-content;
-            padding: 10px 12px;
+            padding: 6px 10px;
             animation: wmPerformanceMarquee 28s linear infinite;
         }
 
@@ -56,8 +63,8 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            min-height: 34px;
-            padding: 6px 12px;
+            min-height: 28px;
+            padding: 4px 10px;
             border: 1px solid rgba(13, 105, 82, .18);
             border-radius: 999px;
             background: #fff;
@@ -66,7 +73,18 @@
             white-space: nowrap;
         }
 
+        .wm-performance-marquee-top .wm-performance-chip {
+            border-color: rgba(13, 105, 82, .16);
+            color: #173026;
+            background: #f7fbf8;
+            box-shadow: none;
+        }
+
         .wm-performance-chip span {
+            color: #0b8066;
+        }
+
+        .wm-performance-marquee-top .wm-performance-chip span {
             color: #0b8066;
         }
 
@@ -94,6 +112,12 @@
     <% request.setAttribute("wmBodyClass", "wm-dashboard-scale"); %>
     <%@ include file="../common/wholemart-shell-start.jsp" %>
 
+    <section class="wm-performance-marquee wm-performance-marquee-top" aria-label="Distributor performance ticker">
+        <div class="wm-performance-track" id="wmPerformanceTicker">
+            <div class="wm-performance-chip">Loading performance insights...</div>
+        </div>
+    </section>
+
     <div class="wm-dashboard-overview">
         <div class="wm-dashboard-primary">
             <div class="wm-dashboard-head">
@@ -110,10 +134,27 @@
                 </div>
             </div>
 
-            <section class="wm-performance-marquee" aria-label="Distributor performance ticker">
-                <div class="wm-performance-track" id="wmPerformanceTicker">
-                    <div class="wm-performance-chip">Loading performance insights...</div>
-                </div>
+            <section class="wm-priority-strip" aria-label="Today's priority summary">
+                <a class="wm-priority-tile is-urgent" href="/web/distributor/orders">
+                    <span>Review Queue</span>
+                    <strong id="priorityReviewQueue">0</strong>
+                    <small>new orders</small>
+                </a>
+                <a class="wm-priority-tile" href="/web/distributor/delivery">
+                    <span>Dispatch Ready</span>
+                    <strong id="priorityDispatchReady">0</strong>
+                    <small>accepted orders</small>
+                </a>
+                <a class="wm-priority-tile" href="/web/distributor/dues">
+                    <span>Settlement Watch</span>
+                    <strong id="prioritySettlements">0</strong>
+                    <small>pending payments</small>
+                </a>
+                <a class="wm-priority-tile" href="/web/distributor/products">
+                    <span>Catalog Health</span>
+                    <strong id="priorityCatalogHealth">0%</strong>
+                    <small>priced items</small>
+                </a>
             </section>
 
             <div class="wm-toolbar wm-dashboard-toolbar">
@@ -269,13 +310,31 @@
                 <h2>Recommended Next Actions</h2>
                 <p>Prepare reorder plans, check order queues, and follow up with retailers.</p>
             </div>
-            <div class="wm-action-list">
-                <a href="/web/distributor/products">Review low stock inventory</a>
+            <div class="wm-action-list" id="wmRecommendedActions">
                 <a href="/web/distributor/orders">Check open order queue</a>
+                <a href="/web/distributor/products">Review catalog and stock planning</a>
                 <a href="/web/distributor/ai-chat">Ask AI for daily priorities</a>
             </div>
         </section>
     </div>
+
+    <section class="wm-attention-card" aria-label="Operational attention queue">
+        <div class="wm-attention-head">
+            <div>
+                <span class="wm-insight-kicker">Control Tower</span>
+                <h2>Needs Attention</h2>
+                <p>Highest-impact work pulled from orders, payments, delivery, and catalog data.</p>
+            </div>
+            <a class="btn wm-btn-secondary" href="/web/distributor/reports">Open Reports</a>
+        </div>
+        <div class="wm-attention-list" id="wmAttentionList">
+            <div class="wm-attention-item">
+                <strong>Loading priorities...</strong>
+                <span>Checking live dashboard data.</span>
+                <a href="/web/distributor/ai-chat">Ask AI</a>
+            </div>
+        </div>
+    </section>
 
     <div class="wm-insight-grid">
         <section class="wm-report-card">
@@ -309,6 +368,18 @@
             var actionBox = document.getElementById("wmDashboardAiActionBox");
             var quickButtons = document.getElementById("wmDashboardAiQuickButtons");
             var performanceTicker = document.getElementById("wmPerformanceTicker");
+            var priorityReviewQueue = document.getElementById("priorityReviewQueue");
+            var priorityDispatchReady = document.getElementById("priorityDispatchReady");
+            var prioritySettlements = document.getElementById("prioritySettlements");
+            var priorityCatalogHealth = document.getElementById("priorityCatalogHealth");
+            var recommendedActions = document.getElementById("wmRecommendedActions");
+            var attentionList = document.getElementById("wmAttentionList");
+            var dashboardState = {
+                orders: [],
+                products: [],
+                payments: [],
+                deliveries: []
+            };
 
             if (!form || !input || !responseBox) {
                 return;
@@ -421,6 +492,134 @@
                 }).length;
             }
 
+            function normalizeRows(data) {
+                if (window.wmRows) {
+                    return window.wmRows(data);
+                }
+                return Array.isArray(data) ? data : [];
+            }
+
+            function buildAttentionItem(title, detail, href, actionText, tone) {
+                return '<div class="wm-attention-item ' + (tone || '') + '">'
+                    + '<strong>' + title + '</strong>'
+                    + '<span>' + detail + '</span>'
+                    + '<a href="' + href + '">' + actionText + '</a>'
+                    + '</div>';
+            }
+
+            function renderRecommendedActions() {
+                if (!recommendedActions || !attentionList) {
+                    return;
+                }
+
+                var orders = dashboardState.orders;
+                var products = dashboardState.products;
+                var payments = dashboardState.payments;
+                var deliveries = dashboardState.deliveries;
+                var waitingOrders = orders.filter(function (order) {
+                    return order.status === "PLACED";
+                }).length;
+                var acceptedOrders = orders.filter(function (order) {
+                    return order.status === "ACCEPTED";
+                }).length;
+                var pendingPayments = payments.filter(function (payment) {
+                    return payment.status === "PENDING";
+                }).length;
+                var inProgressDeliveries = deliveries.filter(function (delivery) {
+                    return delivery.status !== "DELIVERED" && delivery.status !== "FAILED";
+                }).length;
+                var pricedProducts = products.filter(function (product) {
+                    return Number(product.unitPrice || 0) > 0;
+                }).length;
+                var catalogHealth = products.length ? Math.round((pricedProducts / products.length) * 100) : 0;
+
+                setText("priorityReviewQueue", waitingOrders);
+                setText("priorityDispatchReady", acceptedOrders);
+                setText("prioritySettlements", pendingPayments);
+                setText("priorityCatalogHealth", catalogHealth + "%");
+
+                var actions = [];
+                var attentionItems = [];
+
+                if (waitingOrders > 0) {
+                    actions.push('<a href="/web/distributor/orders">Accept or reject ' + waitingOrders + ' waiting orders</a>');
+                    attentionItems.push(buildAttentionItem(
+                        "Order review queue",
+                        waitingOrders + " orders are waiting for distributor review.",
+                        "/web/distributor/orders",
+                        "Review",
+                        "is-urgent"
+                    ));
+                }
+
+                if (acceptedOrders > 0) {
+                    actions.push('<a href="/web/distributor/delivery">Assign dispatch for ' + acceptedOrders + ' accepted orders</a>');
+                    attentionItems.push(buildAttentionItem(
+                        "Dispatch planning",
+                        acceptedOrders + " accepted orders need delivery coordination.",
+                        "/web/distributor/delivery",
+                        "Plan",
+                        ""
+                    ));
+                }
+
+                if (pendingPayments > 0) {
+                    actions.push('<a href="/web/distributor/dues">Follow up ' + pendingPayments + ' pending settlements</a>');
+                    attentionItems.push(buildAttentionItem(
+                        "Payment follow-up",
+                        pendingPayments + " settlements are still pending.",
+                        "/web/distributor/dues",
+                        "Collect",
+                        ""
+                    ));
+                }
+
+                if (catalogHealth < 100 && products.length > 0) {
+                    actions.push('<a href="/web/distributor/products">Complete pricing for catalog items</a>');
+                    attentionItems.push(buildAttentionItem(
+                        "Catalog cleanup",
+                        catalogHealth + "% of items have a valid price.",
+                        "/web/distributor/products",
+                        "Update",
+                        ""
+                    ));
+                } else if (products.length === 0) {
+                    actions.push('<a href="/web/distributor/add-product">Add your first inventory item</a>');
+                    attentionItems.push(buildAttentionItem(
+                        "Catalog setup",
+                        "Add products so retailers can start placing orders.",
+                        "/web/distributor/add-product",
+                        "Add",
+                        "is-urgent"
+                    ));
+                }
+
+                if (inProgressDeliveries > 0) {
+                    attentionItems.push(buildAttentionItem(
+                        "Delivery tracking",
+                        inProgressDeliveries + " delivery records are still active.",
+                        "/web/distributor/delivery",
+                        "Track",
+                        ""
+                    ));
+                }
+
+                actions.push('<a href="/web/distributor/ai-chat">Ask AI for daily priorities</a>');
+                recommendedActions.innerHTML = actions.slice(0, 4).join("");
+
+                if (attentionItems.length === 0) {
+                    attentionItems.push(buildAttentionItem(
+                        "All caught up",
+                        "No urgent operational issues found in the current dashboard data.",
+                        "/web/distributor/reports",
+                        "Review",
+                        ""
+                    ));
+                }
+
+                attentionList.innerHTML = attentionItems.slice(0, 4).join("");
+            }
+
             function renderPerformanceTicker(orders) {
                 if (!performanceTicker) {
                     return;
@@ -465,7 +664,8 @@
                     return apiResponse.json();
                 })
                 .then(function (orders) {
-                    orders = Array.isArray(orders) ? orders : [];
+                    orders = normalizeRows(orders);
+                    dashboardState.orders = orders;
 
                     setText("ordersWaiting", orders.filter(function (order) {
                         return order.status === "PLACED";
@@ -496,6 +696,7 @@
                     }, 0)));
 
                     renderPerformanceTicker(orders);
+                    renderRecommendedActions();
                 })
                 .catch(function () {
                     if (performanceTicker) {
@@ -509,7 +710,8 @@
                     return apiResponse.json();
                 })
                 .then(function (products) {
-                    products = Array.isArray(products) ? products : [];
+                    products = normalizeRows(products);
+                    dashboardState.products = products;
 
                     var categories = new Set(products.map(function (product) {
                         return product.category;
@@ -520,6 +722,7 @@
                     setText("categoryCount", categories);
                     setText("reportCategoryCount", categories);
                     setText("stockPlanningCount", categories);
+                    renderRecommendedActions();
                 })
                 .catch(function () {
                     console.warn("Unable to load product dashboard data.");
@@ -530,11 +733,13 @@
                     return apiResponse.json();
                 })
                 .then(function (payments) {
-                    payments = Array.isArray(payments) ? payments : [];
+                    payments = normalizeRows(payments);
+                    dashboardState.payments = payments;
 
                     setText("pendingSettlements", payments.filter(function (payment) {
                         return payment.status === "PENDING";
                     }).length);
+                    renderRecommendedActions();
                 })
                 .catch(function () {
                     console.warn("Unable to load payment dashboard data.");
@@ -545,11 +750,13 @@
                     return apiResponse.json();
                 })
                 .then(function (deliveries) {
-                    deliveries = Array.isArray(deliveries) ? deliveries : [];
+                    deliveries = normalizeRows(deliveries);
+                    dashboardState.deliveries = deliveries;
 
                     setText("completedDropoffs", deliveries.filter(function (delivery) {
                         return delivery.status === "DELIVERED";
                     }).length);
+                    renderRecommendedActions();
                 })
                 .catch(function () {
                     console.warn("Unable to load delivery dashboard data.");

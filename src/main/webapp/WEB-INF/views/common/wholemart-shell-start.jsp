@@ -1,6 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/common.css" rel="stylesheet">
-<link href="/css/wholemart.css?v=project-theme-refresh-35" rel="stylesheet">
+<link href="/css/wholemart.css?v=project-theme-refresh-52" rel="stylesheet">
 <%-- Shared shell start: opens body, app wrapper, sidebar, main, and panel. Closed by wholemart-shell-end.jsp. --%>
 <%
     String wmUri = request.getRequestURI();
@@ -9,6 +9,9 @@
     String wmUserName = session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username"));
     String wmUserInitial = wmUserName.isEmpty() ? "?" : wmUserName.substring(0, 1).toUpperCase();
     String wmBodyClass = request.getAttribute("wmBodyClass") == null ? "" : String.valueOf(request.getAttribute("wmBodyClass"));
+    if (wmUri.contains("/dashboard")) {
+        wmBodyClass = (wmBodyClass + " wm-dashboard-page").trim();
+    }
 %>
 </head>
 <body class="<%= wmBodyClass %>" data-role="<%= wmRoleLabel %>" >
