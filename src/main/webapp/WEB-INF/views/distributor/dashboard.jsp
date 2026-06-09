@@ -135,8 +135,6 @@
                     <h2>Ask AI for everything</h2>
                     <p>Orders, inventory, payments, delivery, reports, and daily priorities.</p>
 
-                    <br><br><br>
-
                     <div class="wm-ai-quick-response" id="wmDashboardAiResponse">
                         AI response will appear here.
                     </div>

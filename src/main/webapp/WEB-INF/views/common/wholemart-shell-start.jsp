@@ -1,6 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/common.css" rel="stylesheet">
-<link href="/css/wholemart.css?v=project-theme-refresh-33" rel="stylesheet">
+<link href="/css/wholemart.css?v=project-theme-refresh-35" rel="stylesheet">
 <%-- Shared shell start: opens body, app wrapper, sidebar, main, and panel. Closed by wholemart-shell-end.jsp. --%>
 <%
     String wmUri = request.getRequestURI();
