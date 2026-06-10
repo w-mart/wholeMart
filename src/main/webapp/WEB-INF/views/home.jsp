@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WholeMart | Local B2B Marketplace</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/wholemart.css?v=project-theme-refresh-32" rel="stylesheet">
 </head>
@@ -24,6 +27,7 @@
             <a class="wm-header-link" href="#impact">Impact</a>
             <a class="wm-header-link" href="#roles">Roles</a>
             <a class="wm-header-link" href="#operations">Operations</a>
+            <a class="wm-header-link" href="#faq">FAQ</a>
             <a class="wm-header-link" href="/web/aip-studio" target="_blank" rel="noopener noreferrer">AI Agent</a>
         </nav>
         <div class="wm-top-actions">
@@ -62,7 +66,7 @@
                     </div>
                     <div class="wm-home-visual">
                         <img src="/images/wholemart-home-hero.png" alt="Retailer, distributor, and delivery workflow">
-                        <div class="wm-home-workflow">
+                        <div class="wm-home-metrics">
                             <div class="wm-home-step">
                                 <b>Retailer orders</b>
                                 <span>Browse distributors, compare products, and build carts quickly.</span>
@@ -75,6 +79,35 @@
                                 <b>Driver delivers</b>
                                 <span>Track delivery status, earnings, alerts, and reports.</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="wm-home-ops" id="features">
+            <div class="wm-home-container">
+                <div class="wm-home-section-head">
+                    <h2>The Complete Wholesale OS.</h2>
+                    <p>Powerful tools designed for the unique challenges of local supply chains.</p>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-white shadow-sm h-100">
+                            <h5 class="fw-bold mb-2">Smart Inventory Alerts</h5>
+                            <p class="text-muted small mb-0">Get notified before stock runs out. AI suggests reorder quantities based on sales velocity.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-white shadow-sm h-100">
+                            <h5 class="fw-bold mb-2">Digital Credit Ledger</h5>
+                            <p class="text-muted small mb-0">Track retailer dues and collections automatically. No more paper-based reconciliation errors.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-white shadow-sm h-100">
+                            <h5 class="fw-bold mb-2">Live Route Optimization</h5>
+                            <p class="text-muted small mb-0">Efficient delivery sequencing saves fuel and ensures retailers get accurate time-of-arrival updates.</p>
                         </div>
                     </div>
                 </div>
@@ -116,7 +149,7 @@
                 </div>
                 <div class="wm-home-role-grid">
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon">A</div>
+                        <div class="wm-home-role-icon"><i data-lucide="shield-check"></i></div>
                         <h3>Admin</h3>
                         <p>Oversee marketplace health and keep approvals moving.</p>
                         <ul>
@@ -127,7 +160,7 @@
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=admin">Admin login</a>
                     </article>
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon">R</div>
+                        <div class="wm-home-role-icon"><i data-lucide="shopping-bag"></i></div>
                         <h3>Retailer</h3>
                         <p>Find distributors, place wholesale orders, and monitor dues.</p>
                         <ul>
@@ -138,7 +171,7 @@
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=retailer">Retailer login</a>
                     </article>
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon">D</div>
+                        <div class="wm-home-role-icon"><i data-lucide="layout-dashboard"></i></div>
                         <h3>Distributor</h3>
                         <p>Sell into local retail demand with inventory and delivery control.</p>
                         <ul>
@@ -149,7 +182,7 @@
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=distributor">Distributor login</a>
                     </article>
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon">V</div>
+                        <div class="wm-home-role-icon"><i data-lucide="truck"></i></div>
                         <h3>Driver</h3>
                         <p>Handle assigned deliveries and keep earnings transparent.</p>
                         <ul>
@@ -159,6 +192,45 @@
                         </ul>
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=driver">Driver login</a>
                     </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="wm-home-ops" id="how-it-works">
+            <div class="wm-home-container">
+                <div class="wm-home-section-head">
+                    <h2>Simple steps to scale your business.</h2>
+                    <p>Whether you are buying or selling, WholeMart streamlines the entire wholesale lifecycle.</p>
+                </div>
+                <div class="row g-4 text-center">
+                    <div class="col-md-3">
+                        <div class="p-4 border rounded bg-white shadow-sm h-100">
+                            <div class="h1 text-primary mb-3">01</div>
+                            <h4 class="fw-bold">Register</h4>
+                            <p class="text-muted small">Sign up as a retailer, distributor, or driver in under 2 minutes.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-4 border rounded bg-white shadow-sm h-100">
+                            <div class="h1 text-primary mb-3">02</div>
+                            <h4 class="fw-bold">Connect</h4>
+                            <p class="text-muted small">Browse local inventory or list your products for verified buyers.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-4 border rounded bg-white shadow-sm h-100">
+                            <div class="h1 text-primary mb-3">03</div>
+                            <h4 class="fw-bold">Transact</h4>
+                            <p class="text-muted small">Place orders, manage digital ledgers, and track payments live.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-4 border rounded bg-white shadow-sm h-100">
+                            <div class="h1 text-primary mb-3">04</div>
+                            <h4 class="fw-bold">Deliver</h4>
+                            <p class="text-muted small">Coordinate delivery with real-time tracking and earnings reports.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -197,6 +269,44 @@
                             <span>Drivers receive operational views for current and completed work.</span>
                         </div>
                         <span class="wm-home-pill">Delivery</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="wm-home-impact" id="faq">
+            <div class="wm-home-container">
+                <div class="wm-home-section-head text-center">
+                    <h2>Common Questions</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="accordion" id="wmFaqAccordion">
+                            <div class="accordion-item mb-3 border-0 shadow-sm rounded">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        How does the AI Agent help my business?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#wmFaqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        Our AI Assistant monitors your inventory, predicts low-stock items, analyzes sales trends, and can even draft reorder requests for you to approve with one click.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item mb-3 border-0 shadow-sm rounded">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        Is the payment system secure?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#wmFaqAccordion">
+                                    <div class="accordion-body text-muted">
+                                        Yes. WholeMart uses an integrated digital ledger for all transactions. We support COD, digital payments, and track credit dues transparently between buyers and sellers.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

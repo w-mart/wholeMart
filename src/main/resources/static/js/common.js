@@ -261,43 +261,50 @@
 
     function normalizeStatIcons() {
         var iconMap = [
-            ["revenue", "$"],
-            ["paid", "$"],
-            ["earning", "$"],
-            ["warning", "!"],
-            ["pending", "P"],
-            ["active", "A"],
-            ["delivered", "D"],
-            ["delivery", "D"],
-            ["driver", "D"],
-            ["order", "O"],
-            ["inventory", "I"],
-            ["item", "I"],
-            ["alert", "!"],
-            ["info", "i"],
-            ["total", "T"],
-            ["completed", "C"],
-            ["cart", "C"],
-            ["user", "U"],
-            ["report", "R"],
-            ["approval", "A"]
+            ["revenue", "banknote"],
+            ["paid", "banknote"],
+            ["earning", "banknote"],
+            ["warning", "alert-triangle"],
+            ["pending", "clock"],
+            ["active", "check-circle"],
+            ["delivered", "truck"],
+            ["delivery", "truck"],
+            ["driver", "truck"],
+            ["order", "shopping-cart"],
+            ["inventory", "package"],
+            ["item", "package"],
+            ["alert", "alert-circle"],
+            ["info", "info"],
+            ["total", "bar-chart-3"],
+            ["completed", "check-check"],
+            ["cart", "shopping-bag"],
+            ["user", "user"],
+            ["report", "file-text"],
+            ["approval", "shield-check"]
         ];
 
-        document.querySelectorAll(".wm-stat").forEach(function (stat) {
-            var icon = stat.querySelector(".wm-stat-icon");
-            if (!icon) {
-                return;
-            }
-            var text = normalize(stat.textContent);
-            var replacement = "W";
+        document.querySelectorAll(".wm-stat, .status, .wm-status").forEach(function (el) {
+            var text = normalize(el.textContent);
+            var iconName = null;
             for (var i = 0; i < iconMap.length; i += 1) {
                 if (text.indexOf(iconMap[i][0]) !== -1) {
-                    replacement = iconMap[i][1];
+                    iconName = iconMap[i][1];
                     break;
                 }
             }
-            icon.textContent = replacement;
+
+            if (iconName) {
+                var iconContainer = el.querySelector(".wm-stat-icon");
+                if (iconContainer) {
+                    iconContainer.innerHTML = '<i data-lucide="' + iconName + '"></i>';
+                } else if (!el.querySelector('i[data-lucide]')) {
+                    el.insertAdjacentHTML('afterbegin', '<i data-lucide="' + iconName + '" class="me-1" style="width:12px;height:12px"></i>');
+                }
+            }
         });
+        if (window.lucide) {
+            lucide.createIcons();
+        }
     }
 
     function upgradePlainTables() {
