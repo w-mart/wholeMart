@@ -1,6 +1,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/common.css" rel="stylesheet">
-<link href="/css/wholemart.css?v=project-theme-refresh-52" rel="stylesheet">
+<link href="/css/wholemart.css?v=project-theme-refresh-61" rel="stylesheet">
 <%-- Shared shell start: opens body, app wrapper, sidebar, main, and panel. Closed by wholemart-shell-end.jsp. --%>
 <%
     String wmUri = request.getRequestURI();
@@ -12,6 +12,32 @@
     if (wmUri.contains("/dashboard")) {
         wmBodyClass = (wmBodyClass + " wm-dashboard-page").trim();
     }
+    String wmDashboardHref = "/web/distributor/dashboard";
+    String wmAiHref = "/web/distributor/ai-chat";
+    String wmQuickActionHref = "/web/distributor/add-product";
+    String wmQuickActionLabel = "Add Product";
+    String wmArea = "distributor";
+    if ("ROLE_ADMIN".equals(wmRole)) {
+        wmDashboardHref = "/web/admin/dashboard";
+        wmAiHref = "/web/admin/ai-chat";
+        wmQuickActionHref = "/web/admin/users";
+        wmQuickActionLabel = "Users";
+        wmArea = "admin";
+    } else if ("ROLE_RETAILER".equals(wmRole)) {
+        wmDashboardHref = "/web/retailer/dashboard";
+        wmAiHref = "/web/retailer/ai-chat";
+        wmQuickActionHref = "/web/retailer/cart";
+        wmQuickActionLabel = "Cart";
+        wmArea = "retailer";
+    } else if ("ROLE_DRIVER".equals(wmRole)) {
+        wmDashboardHref = "/web/driver/dashboard";
+        wmAiHref = "/web/driver/ai-chat";
+        wmQuickActionHref = "/web/driver/deliveries";
+        wmQuickActionLabel = "Deliveries";
+        wmArea = "driver";
+    }
+    String wmProfileHref = "/web/" + wmArea + "/profile";
+    String wmSettingsHref = "/web/" + wmArea + "/settings";
 %>
 </head>
 <body class="<%= wmBodyClass %>" data-role="<%= wmRoleLabel %>" >
@@ -32,6 +58,13 @@
             <input id="wm-search" class="wm-search" placeholder="Search products, orders, or support..." aria-label="Search">
         </div>
         <div class="wm-topbar-right wm-top-actions">
+            <nav class="wm-header-links" aria-label="Header quick links">
+                <a class="wm-header-link <%= "/".equals(wmUri) ? "active" : "" %>" href="/">Home</a>
+                <a class="wm-header-link <%= wmUri.contains("/dashboard") ? "active" : "" %>" href="<%= wmDashboardHref %>">Dashboard</a>
+                <a class="wm-header-link <%= wmUri.contains(wmQuickActionHref) ? "active" : "" %>" href="<%= wmQuickActionHref %>"><%= wmQuickActionLabel %></a>
+                <a class="wm-header-link <%= wmUri.contains("/ai-chat") ? "active" : "" %>" href="<%= wmAiHref %>">AI</a>
+                <a class="wm-header-link" href="mailto:support@wholemart.com">Support</a>
+            </nav>
             <button class="wm-bell" type="button" aria-label="Open notifications">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                     <path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16l-2-2Z"></path>
@@ -43,7 +76,6 @@
                 <button class="wm-user-trigger" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Open profile settings">
                     <span class="wm-user-avatar"><%= wmUserInitial %></span>
                     <span class="wm-welcome">
-                        <span>Welcome</span>
                         <strong><%= wmUserName %></strong>
                         <span class="wm-role-label"><%= wmRoleLabel %></span>
                     </span>
@@ -56,8 +88,14 @@
                             <span><%= wmRoleLabel %></span>
                         </div>
                     </div>
+                    <a href="<%= wmDashboardHref %>" role="menuitem">My dashboard</a>
+                    <a href="<%= wmProfileHref %>" role="menuitem">Profile</a>
+                    <a href="<%= wmSettingsHref %>" role="menuitem">Business settings</a>
+                    <a href="<%= wmAiHref %>" role="menuitem">Ask AI</a>
+                    <a href="mailto:support@wholemart.com" role="menuitem">Support</a>
+                    <a href="/" role="menuitem">Home</a>
                     <a href="/web/auth/login" role="menuitem">Switch account</a>
-                    <a href="/" role="menuitem">Back to home</a>
+                    <a href="/web/auth/logout" role="menuitem">Logout</a>
                 </div>
             </div>
         </div>

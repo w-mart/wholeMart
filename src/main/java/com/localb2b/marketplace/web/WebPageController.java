@@ -21,4 +21,19 @@ public class WebPageController {
     public String page(@PathVariable String area, @PathVariable String page) {
         return area + "/" + page;
     }
+
+    @GetMapping("/web/distributor/orders/view")
+    public String distributorOrderView() {
+        return "distributor/order-view";
+    }
+
+    @GetMapping("/web/{area}/profile")
+    public String profile() {
+        return "common/profile";
+    }
+
+    @GetMapping("/web/{area}/settings")
+    public String settings() {
+        return "common/settings";
+    }
 }

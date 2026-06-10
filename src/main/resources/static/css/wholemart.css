@@ -5329,6 +5329,174 @@ body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-w
     line-height: 1.05 !important;
 }
 
+body:not(.wm-home):not(.wm-auth) .wm-header-links {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-header-link {
+    min-height: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    color: #28534a !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-header-link:hover,
+body:not(.wm-home):not(.wm-auth) .wm-header-link.active {
+    color: #0f5f50 !important;
+    background: transparent !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 4px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-topbar {
+    min-height: 52px !important;
+    grid-template-columns: minmax(238px, auto) minmax(240px, 540px) minmax(560px, auto) !important;
+    padding: 0 24px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-topbar-right {
+    align-items: center !important;
+    gap: 9px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-app {
+    padding-top: 52px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-sidebar {
+    top: 52px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-brand-link {
+    gap: 0 !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-brand-name {
+    margin-left: 7px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-topbar-center {
+    max-width: 540px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-search {
+    min-height: 34px !important;
+    padding: 7px 13px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-menu,
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-bell {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    border-color: rgba(15, 95, 80, .14) !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-logo,
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-user-avatar,
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-profile-head .wm-user-avatar {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger {
+    min-height: 34px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome {
+    align-items: center !important;
+    gap: 1px !important;
+    text-align: center !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome strong {
+    font-size: 12.5px !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-profile-popover {
+    width: 230px !important;
+    min-width: 230px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-profile-summary-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-profile-summary-grid p {
+    min-height: 58px !important;
+    display: grid !important;
+    gap: 4px !important;
+    margin: 0 !important;
+    padding: 10px !important;
+    border: 1px solid rgba(15, 118, 110, .14) !important;
+    background: #ffffff !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-profile-summary-grid span {
+    color: var(--wm-text-soft) !important;
+    font-size: 11px !important;
+    font-weight: 760 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-profile-summary-grid strong {
+    color: var(--wm-brand-dark) !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-profile-actions {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-profile-popover a[href^="mailto:"] {
+    border-bottom: 1px solid rgba(15, 118, 110, .1) !important;
+    margin-bottom: 4px !important;
+}
+
+@media (max-width: 1220px) {
+    body:not(.wm-home):not(.wm-auth) .wm-header-link {
+        padding: 0 8px !important;
+    }
+
+    body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-topbar {
+        grid-template-columns: minmax(210px, auto) minmax(220px, 1fr) minmax(500px, auto) !important;
+        gap: 12px !important;
+    }
+}
+
+@media (max-width: 980px) {
+    body:not(.wm-home):not(.wm-auth) .wm-header-links {
+        display: none !important;
+    }
+
+    body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-topbar {
+        grid-template-columns: auto minmax(0, 1fr) auto !important;
+    }
+}
+
+@media (max-width: 680px) {
+    body:not(.wm-home):not(.wm-auth) .wm-profile-summary-grid,
+    body:not(.wm-home):not(.wm-auth) .wm-profile-actions {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 .wm-inline-status {
     min-height: 22px;
     margin: 0 0 10px;
@@ -5418,4 +5586,765 @@ body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-w
         grid-template-columns: 32px !important;
         padding: 2px !important;
     }
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger {
+    align-items: center !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome {
+    min-width: 92px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    text-align: center !important;
+}
+
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome strong,
+body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-role-label {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+/* Screenshot parity: apply distributor dashboard density across every app page. */
+body:not(.wm-home):not(.wm-auth) {
+    --wm-page-bg: #eef6f2;
+    --wm-shell-bg: #eaf1e8;
+    --wm-card-bg: #ffffff;
+    --wm-card-border: rgba(15, 95, 80, .14);
+    --wm-text-main: #10231e;
+    --wm-text-soft: #6f7d78;
+    --wm-brand-dark: #0f5f50;
+    --wm-brand-bright: #0b8066;
+    --wm-shadow-flat: 0 8px 20px rgba(15, 23, 42, .045);
+    min-width: 0 !important;
+    color: var(--wm-text-main) !important;
+    background: linear-gradient(135deg, #dff3ec 0, #edf6ff 48%, #fbfcf4 100%) !important;
+    font-family: Inter, "Segoe UI", Arial, sans-serif !important;
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-app {
+    min-height: 100svh !important;
+    padding-top: 52px !important;
+    padding-left: 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-topbar {
+    min-height: 52px !important;
+    display: grid !important;
+    grid-template-columns: minmax(238px, auto) minmax(240px, 540px) minmax(560px, auto) !important;
+    align-items: center !important;
+    gap: 9px !important;
+    padding: 0 24px !important;
+    color: var(--wm-text-main) !important;
+    background: rgba(234, 240, 226, .82) !important;
+    border-bottom: 1px solid rgba(15, 23, 42, .1) !important;
+    box-shadow: 0 8px 22px rgba(15, 23, 42, .08) !important;
+    backdrop-filter: blur(18px) saturate(1.15) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.15) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-topbar-left,
+body:not(.wm-home):not(.wm-auth) .wm-brand-link,
+body:not(.wm-home):not(.wm-auth) .wm-topbar-right,
+body:not(.wm-home):not(.wm-auth) .wm-header-links {
+    display: flex !important;
+    align-items: center !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-topbar-left {
+    gap: 10px !important;
+    min-width: 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-brand-link {
+    gap: 0 !important;
+    color: inherit !important;
+    text-decoration: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-logo,
+body:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-user-avatar,
+body:not(.wm-home):not(.wm-auth) .wm-profile-head .wm-user-avatar {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    color: #ffffff !important;
+    background: var(--wm-brand-dark) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-brand-name {
+    margin-left: 7px !important;
+    color: var(--wm-text-main) !important;
+    font-size: 21px !important;
+    font-weight: 850 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-topbar-center {
+    width: 100% !important;
+    max-width: 540px !important;
+    justify-self: center !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-search {
+    width: 100% !important;
+    min-height: 34px !important;
+    padding: 7px 13px !important;
+    color: var(--wm-text-main) !important;
+    background: #f8faf9 !important;
+    border: 1px solid rgba(15, 95, 80, .18) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    font-size: 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-search::placeholder {
+    color: #74837d !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-search:focus,
+body:not(.wm-home):not(.wm-auth) .wm-input:focus,
+body:not(.wm-home):not(.wm-auth) .wm-select:focus,
+body:not(.wm-home):not(.wm-auth) .form-control:focus,
+body:not(.wm-home):not(.wm-auth) .form-select:focus {
+    background: #ffffff !important;
+    border-color: var(--wm-brand-dark) !important;
+    box-shadow: 0 0 0 3px rgba(15, 95, 80, .12) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-topbar-right {
+    min-width: max-content !important;
+    justify-content: flex-end !important;
+    gap: 9px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-header-links {
+    gap: 16px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-header-link {
+    min-height: 0 !important;
+    padding: 0 !important;
+    color: #28534a !important;
+    background: transparent !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-header-link:hover,
+body:not(.wm-home):not(.wm-auth) .wm-header-link.active {
+    color: var(--wm-brand-dark) !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 1px !important;
+    text-underline-offset: 4px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-menu,
+body:not(.wm-home):not(.wm-auth) .wm-bell {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    color: #28534a !important;
+    background: #f7faf9 !important;
+    border: 1px solid rgba(15, 95, 80, .14) !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-menu:hover,
+body:not(.wm-home):not(.wm-auth) .wm-menu.is-active,
+body:not(.wm-home):not(.wm-auth) .wm-bell:hover {
+    color: var(--wm-brand-dark) !important;
+    background: #eef7f4 !important;
+    border-color: rgba(15, 95, 80, .28) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-user-menu {
+    position: relative !important;
+    display: block !important;
+    padding: 0 !important;
+    color: var(--wm-text-main) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-user-trigger {
+    min-height: 34px !important;
+    display: flex !important;
+    flex-direction: row-reverse !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 0 !important;
+    color: inherit !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome {
+    min-width: 92px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    text-align: center !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome strong,
+body:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-role-label {
+    width: 100% !important;
+    color: var(--wm-text-main) !important;
+    font-size: 12.5px !important;
+    line-height: 1.05 !important;
+    text-align: center !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-role-label {
+    color: #64746f !important;
+    font-size: 11px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-main {
+    width: calc(100% - 4px) !important;
+    max-width: none !important;
+    margin: 0 2px !important;
+    padding: 6px 0 2px !important;
+    background: linear-gradient(135deg, rgba(226, 243, 238, .5), rgba(238, 246, 255, .42)), #f7fbfa !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-panel {
+    max-width: none !important;
+    min-height: calc(100svh - 60px) !important;
+    margin: 0 !important;
+    padding: 6px !important;
+    border: 1px solid rgba(15, 23, 42, .08) !important;
+    border-radius: 8px !important;
+    background: rgba(232, 233, 221, .39) !important;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, .06) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-panel::before {
+    display: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-title,
+body:not(.wm-home):not(.wm-auth) .wm-panel > h1,
+body:not(.wm-home):not(.wm-auth) h1 {
+    margin: 0 0 4px !important;
+    color: var(--wm-text-main) !important;
+    font-size: clamp(18px, 1.7vw, 24px) !important;
+    font-weight: 850 !important;
+    line-height: 1.15 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) h2,
+body:not(.wm-home):not(.wm-auth) .wm-card-title,
+body:not(.wm-home):not(.wm-auth) .wm-insight-card h2,
+body:not(.wm-home):not(.wm-auth) .wm-ops-card h2,
+body:not(.wm-home):not(.wm-auth) .wm-report-card h2 {
+    margin: 5px 0 3px !important;
+    color: var(--wm-text-main) !important;
+    font-size: 15px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) p,
+body:not(.wm-home):not(.wm-auth) label,
+body:not(.wm-home):not(.wm-auth) .wm-subtitle,
+body:not(.wm-home):not(.wm-auth) .card-text {
+    color: var(--wm-text-soft) !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-subtitle {
+    margin-bottom: 6px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-dashboard-head,
+body:not(.wm-home):not(.wm-auth) .wm-toolbar,
+body:not(.wm-home):not(.wm-auth) .wm-performance-marquee,
+body:not(.wm-home):not(.wm-auth) .wm-ai-top-card,
+body:not(.wm-home):not(.wm-auth) .wm-insight-card,
+body:not(.wm-home):not(.wm-auth) .wm-ops-card,
+body:not(.wm-home):not(.wm-auth) .wm-report-card,
+body:not(.wm-home):not(.wm-auth) .wm-section,
+body:not(.wm-home):not(.wm-auth) .wm-stat,
+body:not(.wm-home):not(.wm-auth) .wm-table-wrap,
+body:not(.wm-home):not(.wm-auth) .table-responsive,
+body:not(.wm-home):not(.wm-auth) section.border,
+body:not(.wm-home):not(.wm-auth) .card,
+body:not(.wm-home):not(.wm-auth) .wm-card {
+    border: 1px solid rgba(15, 23, 42, .09) !important;
+    border-radius: 8px !important;
+    background: var(--wm-card-bg) !important;
+    box-shadow: var(--wm-shadow-flat) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-dashboard-head,
+body:not(.wm-home):not(.wm-auth) .wm-toolbar,
+body:not(.wm-home):not(.wm-auth) .wm-ai-top-card,
+body:not(.wm-home):not(.wm-auth) .wm-insight-card,
+body:not(.wm-home):not(.wm-auth) .wm-ops-card,
+body:not(.wm-home):not(.wm-auth) .wm-report-card,
+body:not(.wm-home):not(.wm-auth) .wm-section,
+body:not(.wm-home):not(.wm-auth) .card-body,
+body:not(.wm-home):not(.wm-auth) section.border {
+    padding: 10px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-toolbar {
+    gap: 7px !important;
+    margin: 8px 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-toolbar .row {
+    width: 100% !important;
+    --bs-gutter-x: 8px !important;
+    --bs-gutter-y: 8px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-input,
+body:not(.wm-home):not(.wm-auth) .wm-select,
+body:not(.wm-home):not(.wm-auth) .form-control,
+body:not(.wm-home):not(.wm-auth) .form-select {
+    min-height: 30px !important;
+    padding: 4px 9px !important;
+    color: var(--wm-text-main) !important;
+    background: #fff !important;
+    border: 1px solid rgba(15, 95, 80, .18) !important;
+    border-radius: 8px !important;
+    font-size: 12px !important;
+    box-shadow: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .btn,
+body:not(.wm-home):not(.wm-auth) .wm-gradient-btn,
+body:not(.wm-home):not(.wm-auth) .wm-btn-secondary {
+    min-height: 30px !important;
+    padding: 4px 10px !important;
+    border-radius: 7px !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-gradient-btn,
+body:not(.wm-home):not(.wm-auth) .btn-primary {
+    color: #fff !important;
+    background: var(--wm-brand-dark) !important;
+    border-color: var(--wm-brand-dark) !important;
+    box-shadow: 0 10px 22px rgba(15, 95, 80, .16) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-btn-secondary,
+body:not(.wm-home):not(.wm-auth) .btn-outline-success {
+    color: var(--wm-brand-dark) !important;
+    background: #fff !important;
+    border-color: rgba(15, 95, 80, .18) !important;
+    box-shadow: none !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stats,
+body:not(.wm-home):not(.wm-auth) .wm-insight-grid,
+body:not(.wm-home):not(.wm-auth) .wm-ops-grid {
+    gap: 8px !important;
+    margin: 8px 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat {
+    min-height: 64px !important;
+    gap: 8px !important;
+    padding: 9px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat-icon {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    color: var(--wm-brand-bright) !important;
+    font-size: 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat b {
+    color: var(--wm-brand-dark) !important;
+    font-size: 18px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat span {
+    color: var(--wm-text-soft) !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-insight-kicker,
+body:not(.wm-home):not(.wm-auth) .wm-card-kicker {
+    color: var(--wm-brand-bright) !important;
+    font-size: 8.5px !important;
+    font-weight: 900 !important;
+    letter-spacing: .04em !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table,
+body:not(.wm-home):not(.wm-auth) .table {
+    width: 100% !important;
+    color: var(--wm-text-main) !important;
+    background: #fff !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    font-size: 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table thead th,
+body:not(.wm-home):not(.wm-auth) .table thead th {
+    padding: 8px 9px !important;
+    color: #173f31 !important;
+    background: #f8fcfa !important;
+    border-bottom: 1px solid rgba(15, 95, 80, .14) !important;
+    font-size: 10.5px !important;
+    font-weight: 900 !important;
+    letter-spacing: .04em !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table td,
+body:not(.wm-home):not(.wm-auth) .wm-table th,
+body:not(.wm-home):not(.wm-auth) .table td,
+body:not(.wm-home):not(.wm-auth) .table th {
+    padding: 8px 9px !important;
+    border-color: rgba(15, 95, 80, .1) !important;
+    vertical-align: middle !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-footer {
+    width: calc(100% - 4px) !important;
+    max-width: none !important;
+    margin: 0 2px 2px !important;
+    padding: 18px 22px !important;
+    background: #092d24 !important;
+    border-top: 1px solid rgba(255, 255, 255, .16) !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-footer-content,
+body:not(.wm-home):not(.wm-auth) .wm-footer-bottom {
+    max-width: none !important;
+}
+
+@media (min-width: 901px) {
+    body:not(.wm-home):not(.wm-auth).wm-sidebar-open .wm-main,
+    body:not(.wm-home):not(.wm-auth).wm-sidebar-open .wm-footer {
+        width: calc(100% - 254px) !important;
+        margin-left: 252px !important;
+        margin-right: 2px !important;
+    }
+}
+
+@media (max-width: 1220px) {
+    body:not(.wm-home):not(.wm-auth) .wm-topbar {
+        grid-template-columns: minmax(210px, auto) minmax(220px, 1fr) minmax(500px, auto) !important;
+        gap: 12px !important;
+    }
+}
+
+@media (max-width: 980px) {
+    body:not(.wm-home):not(.wm-auth) .wm-header-links {
+        display: none !important;
+    }
+
+    body:not(.wm-home):not(.wm-auth) .wm-topbar {
+        grid-template-columns: auto minmax(0, 1fr) auto !important;
+    }
+}
+
+@media (max-width: 900px) {
+    body:not(.wm-home):not(.wm-auth) .wm-app {
+        padding-top: 56px !important;
+    }
+
+    body:not(.wm-home):not(.wm-auth) .wm-topbar {
+        min-height: 56px !important;
+        gap: 10px !important;
+        padding: 0 12px !important;
+    }
+
+    body:not(.wm-home):not(.wm-auth) .wm-main,
+    body:not(.wm-home):not(.wm-auth) .wm-footer {
+        width: calc(100% - 4px) !important;
+        margin-left: 2px !important;
+        margin-right: 2px !important;
+    }
+
+    body:not(.wm-home):not(.wm-auth) .wm-panel {
+        padding: 10px !important;
+    }
+
+    body:not(.wm-home):not(.wm-auth) .wm-dashboard-overview,
+    body:not(.wm-home):not(.wm-auth) .wm-ops-card,
+    body:not(.wm-home):not(.wm-auth) .wm-stats,
+    body:not(.wm-home):not(.wm-auth) .wm-insight-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    body:not(.wm-home):not(.wm-auth) .wm-user-trigger .wm-welcome {
+        display: none !important;
+    }
+}
+
+/* Dashboard exact type lock: keep every workspace page on the dashboard text scale. */
+body:not(.wm-home):not(.wm-auth),
+body:not(.wm-home):not(.wm-auth) .wm-panel,
+body:not(.wm-home):not(.wm-auth) .wm-panel * {
+    letter-spacing: 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-brand-name {
+    font-size: 24px !important;
+    font-weight: 850 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-title,
+body:not(.wm-home):not(.wm-auth) .wm-panel > h1,
+body:not(.wm-home):not(.wm-auth) h1 {
+    margin: 0 0 4px !important;
+    font-size: 23px !important;
+    font-weight: 850 !important;
+    line-height: 1.08 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-subtitle {
+    margin: 0 0 8px !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.35 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) h2,
+body:not(.wm-home):not(.wm-auth) .wm-card-title,
+body:not(.wm-home):not(.wm-auth) .wm-form-band h2,
+body:not(.wm-home):not(.wm-auth) .wm-insight-card h2,
+body:not(.wm-home):not(.wm-auth) .wm-ops-card h2,
+body:not(.wm-home):not(.wm-auth) .wm-report-card h2 {
+    margin: 0 0 8px !important;
+    font-size: 16px !important;
+    font-weight: 850 !important;
+    line-height: 1.12 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) h3,
+body:not(.wm-home):not(.wm-auth) h4,
+body:not(.wm-home):not(.wm-auth) h5,
+body:not(.wm-home):not(.wm-auth) h6 {
+    font-size: 13px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) p,
+body:not(.wm-home):not(.wm-auth) label,
+body:not(.wm-home):not(.wm-auth) small,
+body:not(.wm-home):not(.wm-auth) td,
+body:not(.wm-home):not(.wm-auth) th,
+body:not(.wm-home):not(.wm-auth) .card-text,
+body:not(.wm-home):not(.wm-auth) .list-group-item {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-panel {
+    padding: 7px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-dashboard-head,
+body:not(.wm-home):not(.wm-auth) .wm-toolbar,
+body:not(.wm-home):not(.wm-auth) .wm-ai-top-card,
+body:not(.wm-home):not(.wm-auth) .wm-insight-card,
+body:not(.wm-home):not(.wm-auth) .wm-ops-card,
+body:not(.wm-home):not(.wm-auth) .wm-report-card,
+body:not(.wm-home):not(.wm-auth) .wm-section,
+body:not(.wm-home):not(.wm-auth) .wm-form-band,
+body:not(.wm-home):not(.wm-auth) .wm-product-wizard-head,
+body:not(.wm-home):not(.wm-auth) section.border,
+body:not(.wm-home):not(.wm-auth) .card-body {
+    padding: 10px 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stats {
+    gap: 9px !important;
+    margin: 9px 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat {
+    min-height: 58px !important;
+    gap: 8px !important;
+    padding: 9px 11px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat-icon {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    font-size: 11px !important;
+    font-weight: 850 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat b {
+    font-size: 18px !important;
+    font-weight: 850 !important;
+    line-height: 1 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-stat span {
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-toolbar {
+    min-height: 0 !important;
+    padding: 8px 10px !important;
+    margin: 9px 0 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-input,
+body:not(.wm-home):not(.wm-auth) .wm-select,
+body:not(.wm-home):not(.wm-auth) .form-control,
+body:not(.wm-home):not(.wm-auth) .form-select,
+body:not(.wm-home):not(.wm-auth) textarea.wm-input {
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    font-size: 12px !important;
+    font-weight: 650 !important;
+    line-height: 1.25 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) textarea.wm-input {
+    min-height: 68px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .btn,
+body:not(.wm-home):not(.wm-auth) .wm-gradient-btn,
+body:not(.wm-home):not(.wm-auth) .wm-btn-secondary,
+body:not(.wm-home):not(.wm-auth) .wm-btn {
+    min-height: 34px !important;
+    padding: 7px 12px !important;
+    font-size: 12px !important;
+    font-weight: 850 !important;
+    line-height: 1.1 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table-wrap,
+body:not(.wm-home):not(.wm-auth) .table-responsive {
+    margin-top: 9px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table,
+body:not(.wm-home):not(.wm-auth) .table {
+    font-size: 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table thead th,
+body:not(.wm-home):not(.wm-auth) .table thead th {
+    padding: 9px 10px !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    line-height: 1.2 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table td,
+body:not(.wm-home):not(.wm-auth) .table td {
+    padding: 10px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table strong,
+body:not(.wm-home):not(.wm-auth) .table strong {
+    font-size: 12px !important;
+    font-weight: 850 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-table small,
+body:not(.wm-home):not(.wm-auth) .table small {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-product-form {
+    gap: 10px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-product-wizard-head strong {
+    font-size: 16px !important;
+    font-weight: 850 !important;
+    line-height: 1.1 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-product-wizard-head span {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-product-form label {
+    gap: 5px !important;
+    font-size: 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-product-form label span {
+    font-size: 12px !important;
+    font-weight: 850 !important;
+    line-height: 1.2 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-form-grid {
+    gap: 9px 10px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-autofill-panel {
+    padding: 9px 10px !important;
+    gap: 8px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-map {
+    font-size: 12px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-footer {
+    padding: 18px 22px 16px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-footer-content {
+    gap: 22px !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-footer-section h4 {
+    margin: 0 0 8px !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+}
+
+body:not(.wm-home):not(.wm-auth) .wm-footer-section p,
+body:not(.wm-home):not(.wm-auth) .wm-footer-section li,
+body:not(.wm-home):not(.wm-auth) .wm-footer-section a,
+body:not(.wm-home):not(.wm-auth) .wm-footer-bottom {
+    font-size: 12px !important;
+    line-height: 1.45 !important;
 }
