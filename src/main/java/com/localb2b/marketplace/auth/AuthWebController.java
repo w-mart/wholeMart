@@ -26,6 +26,12 @@ public class AuthWebController {
         return "auth/login";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/web/auth/login";
+    }
+
     @PostMapping("/login")
     public String loginSubmit(@RequestParam String mobile,
                               @RequestParam UserRole role,
