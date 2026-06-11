@@ -1,4 +1,4 @@
-/* Core WholeMart theme variables and shared base layout */
+h/* Core WholeMart theme variables and shared base layout */
 :root {
     --wm-blue: #5f7ce8;
     --wm-purple: #7d47bf;
@@ -886,6 +886,7 @@ body.wm-home .wm-topbar {
     background: #fef9f2;
     box-shadow: 0 2px 8px rgba(15, 118, 110, .08);
     border-bottom: 1px solid rgba(13, 105, 51, .1);
+    border-bottom: 1px solid var(--wm-border) !important;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
@@ -937,6 +938,7 @@ body.wm-home .wm-logo {
     display: grid;
     place-items: center;
     border-radius: 6px;
+    border-radius: 50%;
     background: linear-gradient(135deg, var(--wm-teal), #0a8d74);
     color: #fff;
     font-weight: 800;
@@ -974,8 +976,8 @@ body.wm-home .wm-topbar .wm-search:focus {
 body.wm-home .wm-header-links {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 32px;
+    justify-content: right;
+    gap: 15px;
     flex-grow: 1;
     margin: 0;
     padding: 0;
@@ -992,6 +994,12 @@ body.wm-home .wm-header-link {
 
 body.wm-home .wm-header-link:hover {
     color: var(--wm-green);
+}
+
+body.wm-home .wm-header-link.active {
+    color: var(--wm-brand-dark);
+    border-bottom: 2px solid var(--wm-brand);
+    padding-bottom: 4px;
 }
 
 body.wm-home .wm-top-actions {
@@ -1498,11 +1506,6 @@ body.wm-home {
     color: var(--wm-ink);
     background: var(--wm-soft);
     padding-top: 0;
-    padding-left: 0;
-}
-
-.wm-app body.wm-home {
-    padding-top: 98px;
     padding-left: 0;
 }
 
@@ -3321,6 +3324,12 @@ body:not(.wm-home) {
     box-shadow: 0 22px 58px rgba(13, 105, 51, .14);
 }
 
+/* Fix: Remove sidebar padding when using the home-style/sidebar-less layout */
+body.wm-home .wm-app {
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+}
+
 .wm-auth-card .wm-brand {
     margin-bottom: 22px;
 }
@@ -3373,7 +3382,7 @@ body:not(.wm-home) {
 .wm-topbar {
     color: #fff !important;
     background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%) !important;
-    border-bottom: 2px solid #01251b !important;
+    border-bottom: 1px solid var(--wm-border) !important;
     box-shadow: 0 8px 28px rgba(15, 118, 110, .22), inset 0 1px 0 rgba(255, 255, 255, .08) !important;
     backdrop-filter: blur(8px);
 }
@@ -3672,6 +3681,7 @@ section.border,
 body[data-role="DISTRIBUTOR"] .wm-topbar {
     background: linear-gradient(110deg, #0f7a5a 0%, #13ad80 100%) !important;
     border-bottom-color: rgba(255,255,255,.16) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 0 16px 36px rgba(15, 78, 49, .18) !important;
 }
 
@@ -3822,10 +3832,12 @@ a:hover {
 .wm-avatar,
 .wm-user-avatar,
 .wm-stat-icon,
-.home-role-mark {
+.home-role-mark,
+.wm-logo {
     color: #fff !important;
     background: linear-gradient(135deg, var(--wm-brand), var(--wm-accent)) !important;
     box-shadow: 0 12px 26px rgba(15, 118, 110, .18) !important;
+    border-radius: 50% !important;
 }
 
 .home-kicker,
@@ -3978,6 +3990,16 @@ section.border,
 .wm-nav a.active {
     color: #fff !important;
     background: linear-gradient(135deg, var(--wm-brand-dark), var(--wm-brand)) !important;
+}
+
+body.wm-home .wm-header-link.active {
+    color: var(--wm-brand) !important;
+    border-bottom: 2px solid var(--wm-brand);
+    padding-bottom: 4px;
+}
+
+body.wm-home .wm-header-links {
+    gap: 16px !important;
 }
 
 .wm-table thead th,
@@ -5678,6 +5700,10 @@ body:not(.wm-home):not(.wm-auth) {
     line-height: 1.35 !important;
 }
 
+/* Lucide icon styling for homepage elements */
+.home-btn .lucide,
+.home-role-mark .lucide { width: 18px; height: 18px; }
+
 body:not(.wm-home):not(.wm-auth) .wm-app {
     padding-top: 58px !important;
 }
@@ -6470,6 +6496,28 @@ body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-bell:hover {
     color: #0f5f50 !important;
     background: #eef7f4 !important;
     border-color: rgba(15, 95, 80, .28) !important;
+}
+
+/* Ensure menu icon is visible and has a rectangular border in the distributor header */
+body.wm-home .wm-menu {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    width: 36px !important;
+    height: 34px !important;
+    background: #ffffff !important;
+    border: 1.5px solid var(--wm-brand-dark) !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+}
+
+body.wm-home .wm-menu-line {
+    display: block !important;
+    width: 18px !important;
+    height: 2px !important;
+    background: var(--wm-brand-dark) !important;
 }
 
 body[data-role="DISTRIBUTOR"]:not(.wm-home):not(.wm-auth) .wm-user-trigger {
@@ -7540,3 +7588,185 @@ body:not(.wm-home):not(.wm-auth) .wm-footer-bottom {
     font-size: 12px !important;
     line-height: 1.45 !important;
 }
+
+/* =======================================================================
+   WholeMart HOME responsiveness fixes (last-write-wins overrides)
+   ======================================================================= */
+
+/* Keep hero/visual/workflow consistent between desktop & tablet */
+@media (max-width: 1024px) {
+    body.wm-home .wm-home-visual,
+    body.wm-home .wm-home-visual img {
+        min-height: 0 !important;
+    }
+
+    body.wm-home .wm-home-visual {
+        min-height: clamp(220px, 30svh, 300px) !important;
+    }
+
+    body.wm-home .wm-home-workflow {
+        position: static !important;
+        margin-top: 14px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    body.wm-home .wm-home-impact-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    body.wm-home .wm-home-role-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* ── Hamburger button ── */
+.wm-topbar .wm-menu {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: var(--wm-surface, #fff);
+    border: 1.5px solid var(--wm-border, #e5e7eb);
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: box-shadow 0.15s, background 0.15s;
+}
+.wm-topbar .wm-menu:hover, .wm-topbar .wm-menu.is-active {
+    background: var(--wm-hover, #f3f4f6);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.13);
+}
+.wm-topbar .wm-menu .wm-menu-line {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: var(--wm-brand-ink, #1a2e1a);
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.wm-topbar .wm-menu.is-active .wm-menu-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.wm-topbar .wm-menu.is-active .wm-menu-line:nth-child(2) {
+    opacity: 0;
+}
+.wm-topbar .wm-menu.is-active .wm-menu-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ── Mobile drawer ── */
+.wm-mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100dvh;
+    background: #ffffff;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    transform: translateX(-100%);
+    transition: transform 0.26s cubic-bezier(.4,0,.2,1);
+    box-shadow: none;
+    scrollbar-width: none; /* Remove scrollbar for Firefox */
+}
+.wm-mobile-nav::-webkit-scrollbar {
+    display: none; /* Remove scrollbar for Chrome/Safari */
+}
+.wm-mobile-nav.wm-nav--mobile-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 32px rgba(0,0,0,0.12);
+}
+
+/* ── Topbar Layering ── */
+.wm-topbar {
+    z-index: 1200 !important;
+    position: fixed !important;
+}
+
+/* ── Backdrop ── */
+.wm-mobile-nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.32);
+    z-index: 1099;
+}
+.wm-mobile-nav-backdrop.active {
+    display: block;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .wm-header-links { display: none !important; }
+}
+@media (min-width: 901px) {
+    .wm-header-links { display: none !important; }
+    .wm-app { transition: padding-left 0.26s cubic-bezier(.4,0,.2,1); }
+    .wm-topbar { transition: left 0.26s cubic-bezier(.4,0,.2,1); }
+    body.wm-sidebar-open.wm-home .wm-app { padding-left: 300px !important; }
+    body.wm-sidebar-open .wm-topbar { left: 300px !important; }
+    body.wm-sidebar-open .wm-mobile-nav-backdrop { display: none !important; }
+}
+/* Mobile: avoid cramped title + ensure overlay becomes normal flow */
+@media (max-width: 768px) {
+    body.wm-home .wm-home-main {
+        padding: 18px 16px !important;
+    }
+/* Standardized SaaS Layout Overrides */
+.wm-home-container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
+    width: 100% !important;
+}
+
+    body.wm-home .wm-home-hero-grid {
+        grid-template-columns: 1fr !important;
+        gap: 22px !important;
+    }
+.wm-home-hero, .wm-home-ops, .wm-home-impact, .wm-home-roles {
+    padding: 80px 0 !important;
+    margin: 0 !important;
+}
+
+    body.wm-home .wm-home-title {
+        font-size: clamp(26px, 6vw, 34px) !important;
+        line-height: 1.15 !important;
+    }
+.wm-home-hero-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 48px !important;
+    align-items: center !important;
+}
+
+.wm-home-role-grid, .wm-home-impact-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 24px !important;
+}
+
+.wm-home-role-card, .wm-home-impact-card, .wm-home-ops .border {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    margin: 0 !important;
+}
+
+.wm-home-role-card .btn {
+    margin-top: auto !important;
+}
+
+    body.wm-home .wm-home-visual {
+        min-height: 0 !important;
+  

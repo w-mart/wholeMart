@@ -12,6 +12,10 @@
     if (wmUri.contains("/dashboard")) {
         wmBodyClass = (wmBodyClass + " wm-dashboard-page").trim();
     }
+    boolean wmUseDistHeader = Boolean.TRUE.equals(request.getAttribute("wmUseDistHeader"));
+    if (wmUseDistHeader) {
+        wmBodyClass = (wmBodyClass + " wm-home").trim();
+    }
     String wmDashboardHref = "/web/distributor/dashboard";
     String wmAiHref = "/web/distributor/ai-chat";
     String wmQuickActionHref = "/web/distributor/add-product";
@@ -42,6 +46,9 @@
 </head>
 <body class="<%= wmBodyClass %>" data-role="<%= wmRoleLabel %>" >
 <div class="wm-app">
+    <% if (wmUseDistHeader) { %>
+        <%@ include file="distributor-header.jsp" %>
+    <% } else { %>
     <header class="wm-topbar" role="banner">
         <div class="wm-topbar-left">
             <button class="wm-menu" type="button" aria-label="Toggle menu" aria-expanded="true">
@@ -51,7 +58,7 @@
             </button>
             <a class="wm-brand-link" href="/" aria-label="WholeMart home">
                 <span class="wm-logo">W</span>
-                <span class="wm-brand-name">WholeMart</span>
+                <span class="wm-brand-name">WholeeMart</span>
             </a>
         </div>
         <div class="wm-topbar-center">
@@ -100,6 +107,8 @@
             </div>
         </div>
     </header>
+    <% } %>
+    <% if (!wmUseDistHeader) { %>
     <aside class="wm-sidebar">
         <nav class="wm-nav">
             <%
@@ -159,6 +168,7 @@
             <div><strong><%= wmUserName %></strong><span><%= wmRoleLabel %></span></div>
         </div>
     </aside>
+    <% } %>
     <main class="wm-main">
         <section class="wm-panel">
             <%-- Page-specific JSP content is inserted here after this include. --%>

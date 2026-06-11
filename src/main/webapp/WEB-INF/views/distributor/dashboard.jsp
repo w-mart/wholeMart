@@ -1,363 +1,249 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Distributor Dashboard</title>
+    <title>WholeMart | Local B2B Marketplace</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
+    <link href="/css/wholemart.css" rel="stylesheet">
+</head>
+<body class="wm-home">
+<div class="wm-app">
+    <%
+        // Initialize variables previously handled by the shell
+        String wmUri = request.getRequestURI();
+        String wmUserName = session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username"));
+        String wmUserInitial = wmUserName.isEmpty() ? "?" : wmUserName.substring(0, 1).toUpperCase();
+    %>
 
-    <style>
-        .wm-ai-marquee {
-            width: 100%;
-            overflow: hidden;
-            margin: 14px 0;
-            position: relative;
-            border-radius: 14px;
-        }
+    <%@ include file="../common/distributor-header.jsp" %>
 
-        .wm-ai-marquee-track {
-            display: flex;
-            gap: 10px;
-            width: max-content;
-            animation: wmAiMarquee 24s linear infinite;
-        }
+    <main class="wm-home-main" style="padding-top: 24px; padding-bottom: 24px;">
+        <div class="wm-home-container" style="max-width: 1240px; overflow-x: hidden;">
 
-        .wm-ai-marquee:hover .wm-ai-marquee-track {
-            animation-play-state: paused;
-        }
-
-        .wm-ai-marquee-track .btn {
-            white-space: nowrap;
-            flex: 0 0 auto;
-        }
-
-        .wm-performance-marquee {
-            overflow: hidden;
-            margin: 0 0 6px;
-            border: 1px solid rgba(13, 105, 82, .16);
-            border-radius: 8px;
-            background: #f7fbf8;
-        }
-
-        .wm-performance-marquee-top {
-            margin: 0 0 7px;
-            border-color: rgba(15, 95, 80, .18);
-            background: #ffffff;
-            box-shadow: 0 6px 16px rgba(15, 23, 42, .04);
-        }
-
-        .wm-performance-track {
-            display: flex;
-            gap: 12px;
-            width: max-content;
-            padding: 6px 10px;
-            animation: wmPerformanceMarquee 28s linear infinite;
-        }
-
-        .wm-performance-marquee:hover .wm-performance-track {
-            animation-play-state: paused;
-        }
-
-        .wm-performance-chip {
-            flex: 0 0 auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            min-height: 28px;
-            padding: 4px 10px;
-            border: 1px solid rgba(13, 105, 82, .18);
-            border-radius: 999px;
-            background: #fff;
-            color: #173026;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .wm-performance-marquee-top .wm-performance-chip {
-            border-color: rgba(13, 105, 82, .16);
-            color: #173026;
-            background: #f7fbf8;
-            box-shadow: none;
-        }
-
-        .wm-performance-chip span {
-            color: #0b8066;
-        }
-
-        .wm-performance-marquee-top .wm-performance-chip span {
-            color: #0b8066;
-        }
-
-        @keyframes wmPerformanceMarquee {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-        }
-
-        @keyframes wmAiMarquee {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-50%);
-            }
-        }
-    </style>
-
-    <% request.setAttribute("wmBodyClass", "wm-dashboard-scale"); %>
-    <%@ include file="../common/wholemart-shell-start.jsp" %>
-
-    <section class="wm-performance-marquee wm-performance-marquee-top" aria-label="Distributor performance ticker">
-        <div class="wm-performance-track" id="wmPerformanceTicker">
-            <div class="wm-performance-chip">Loading performance insights...</div>
-        </div>
-    </section>
-
-    <div class="wm-dashboard-overview">
-        <div class="wm-dashboard-primary">
-            <div class="wm-dashboard-head">
-                <div>
-                    <div class="wm-insight-kicker">Distributor workspace</div>
-                    <h1 class="wm-title">Welcome, Guest</h1>
-                    <p class="wm-subtitle">
-                        Overview of orders, inventory, payments, delivery activity, and next actions.
-                    </p>
-                </div>
-                <div class="wm-head-actions">
-                    <a class="btn wm-gradient-btn" href="/web/distributor/orders">View Orders</a>
-                    <a class="btn wm-btn-secondary" href="/web/distributor/products">Inventory</a>
-                </div>
-            </div>
-
-            <section class="wm-priority-strip" aria-label="Today's priority summary">
-                <a class="wm-priority-tile is-urgent" href="/web/distributor/orders">
-                    <span>Review Queue</span>
-                    <strong id="priorityReviewQueue">0</strong>
-                    <small>new orders</small>
-                </a>
-                <a class="wm-priority-tile" href="/web/distributor/delivery">
-                    <span>Dispatch Ready</span>
-                    <strong id="priorityDispatchReady">0</strong>
-                    <small>accepted orders</small>
-                </a>
-                <a class="wm-priority-tile" href="/web/distributor/dues">
-                    <span>Settlement Watch</span>
-                    <strong id="prioritySettlements">0</strong>
-                    <small>pending payments</small>
-                </a>
-                <a class="wm-priority-tile" href="/web/distributor/products">
-                    <span>Catalog Health</span>
-                    <strong id="priorityCatalogHealth">0%</strong>
-                    <small>priced items</small>
-                </a>
-            </section>
-
-            <div class="wm-toolbar wm-dashboard-toolbar">
-                <input class="wm-input" placeholder="Search by order ID, retailer, or product">
-                <select class="wm-select">
-                    <option>All Statuses</option>
-                    <option>Pending</option>
-                    <option>Active</option>
-                    <option>Delivered</option>
-                </select>
-                <a class="btn wm-gradient-btn wm-search-order" href="/web/distributor/orders">Search Order</a>
-            </div>
-        </div>
-
-        <div class="wm-dashboard-side">
-            <section class="wm-ai-top-card">
-                <div>
-                    <span class="wm-insight-kicker">AI Control Center</span>
-                    <h2>Ask AI for everything</h2>
-                    <p>Orders, inventory, payments, delivery, reports, and daily priorities.</p>
-
-                    <div class="wm-ai-quick-response" id="wmDashboardAiResponse">
-                        AI response will appear here.
-                    </div>
-
-                    <!-- AI Quick Buttons Marquee Start -->
-                    <div class="wm-ai-marquee">
-                        <div class="wm-ai-marquee-track" id="wmDashboardAiQuickButtons">
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="What should I do first today?">
-                                What should I do first today?
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Show today's order summary.">
-                                Show today's order summary
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Show low stock summary.">
-                                Show low stock summary
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Show payment and dues summary.">
-                                Show payment and dues summary
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Suggest next actions.">
-                                Suggest next actions
-                            </button>
-
-                            <!-- Duplicate buttons for smooth infinite marquee -->
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="What should I do first today?">
-                                What should I do first today?
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Show today's order summary.">
-                                Show today's order summary
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Show low stock summary.">
-                                Show low stock summary
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Show payment and dues summary.">
-                                Show payment and dues summary
-                            </button>
-
-                            <button class="btn wm-btn-secondary" type="button"
-                                    data-ai-message="Suggest next actions.">
-                                Suggest next actions
-                            </button>
-
+            <!-- 2-Column Hero Section -->
+            <section class="wm-home-hero" style="margin-bottom: 24px; padding: 0;">
+                <div class="wm-home-hero-grid" style="grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: stretch;">
+                    <div class="wm-home-hero-copy">
+                        <span class="home-kicker">Operational Center</span>
+                        <h1 class="wm-home-title" style="font-size: 32px; margin-bottom: 12px;">Welcome back, <strong><%= wmUserName %></strong>.</h1>
+                        <p class="wm-home-subtitle" style="margin-bottom: 20px; max-width: 100%;">
+                            Your central operating system for wholesale commerce. Monitor live orders, manage inventory velocity, and coordinate delivery routes from one unified workspace.
+                        </p>
+                        <div class="wm-home-actions">
+                            <a class="home-btn home-btn-primary" href="/web/distributor/orders"><i data-lucide="package" class="lucide"></i> Fulfillment Queue</a>
+                            <a class="home-btn home-btn-secondary" href="/web/distributor/products"><i data-lucide="database" class="lucide"></i> Stock Control</a>
                         </div>
                     </div>
-                    <!-- AI Quick Buttons Marquee End -->
-
-                    <form class="wm-ai-quick-form" id="wmDashboardAiForm">
-                        <input class="wm-input" id="wmDashboardAiMessage"
-                               placeholder="Ask about today's priorities">
-                        <button class="btn wm-ai-voice-btn" id="wmDashboardAiVoice" type="button"
-                                aria-label="Start voice input" title="Start voice input">
-                            <span class="wm-ai-voice-icon" aria-hidden="true"></span>
-                        </button>
-                        <button class="btn wm-gradient-btn" type="submit">Ask AI</button>
-                    </form>
-
-                    <div id="wmDashboardAiActionBox"></div>
+                    <div class="home-impact-card home-impact-card-wide shadow-sm" style="margin: 0; min-height: 160px; align-self: stretch; display: flex; flex-direction: column; justify-content: center; padding: 24px; border: 1px solid var(--wm-border);">
+                        <span class="mb-2">Live Performance Summary</span>
+                        <div id="performanceBrief" style="font-size: 15px; line-height: 1.6; color: var(--wm-brand-dark); font-weight: 500;">
+                            Analyzing live distribution metrics...
+                        </div>
+                    </div>
                 </div>
             </section>
+
+            <!-- KPI Metrics (4-Column Grid) -->
+            <section class="wm-home-impact" style="padding: 0; background: transparent; border: 0; box-shadow: none; margin-bottom: 32px;">
+                <div class="wm-home-impact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Revenue</span><i data-lucide="indian-rupee" class="lucide text-success"></i></div>
+                        <strong id="capturedRevenue" style="font-size: 24px; font-weight: 850;">Rs. 0</strong>
+                        <p class="small text-success fw-bold mb-0">+12% <span class="text-muted fw-normal">vs last month</span></p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Active Orders</span><i data-lucide="package" class="lucide text-primary"></i></div>
+                        <strong id="reportTotalOrders" style="font-size: 24px; font-weight: 850;">0</strong>
+                        <p class="small text-muted mb-0">Across all retailer outlets</p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Inventory</span><i data-lucide="database" class="lucide text-warning"></i></div>
+                        <strong id="totalItems" style="font-size: 24px; font-weight: 850;">0</strong>
+                        <p class="small text-muted mb-0">Unique SKUs in catalog</p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Settlements</span><i data-lucide="landmark" class="lucide text-info"></i></div>
+                        <strong id="pendingSettlements" style="font-size: 24px; font-weight: 850;">0</strong>
+                        <p class="small text-danger fw-bold mb-0">Action required</p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Fleet</span><i data-lucide="truck" class="lucide text-secondary"></i></div>
+                        <strong style="font-size: 24px; font-weight: 850;">12</strong>
+                        <p class="small text-muted mb-0">Active drivers on route</p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Retailers</span><i data-lucide="store" class="lucide text-success"></i></div>
+                        <strong style="font-size: 24px; font-weight: 850;">84</strong>
+                        <p class="small text-success fw-bold mb-0">+4 <span class="text-muted fw-normal">new this week</span></p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Catalog Health</span><i data-lucide="check-circle" class="lucide text-primary"></i></div>
+                        <strong style="font-size: 24px; font-weight: 850;">94%</strong>
+                        <p class="small text-muted mb-0">Priced and ready to sell</p>
+                    </article>
+                    <article class="home-impact-card h-100" style="padding: 16px;">
+                        <div class="d-flex justify-content-between align-items-center mb-2"><span>Alerts</span><i data-lucide="alert-circle" class="lucide text-danger"></i></div>
+                        <strong class="text-danger" style="font-size: 24px; font-weight: 850;">3</strong>
+                        <p class="small text-muted mb-0">High priority system tasks</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- AI Assistant Section (ChatGPT Style) -->
+            <section class="wm-card" style="padding: 24px; margin-bottom: 24px; border-radius: 12px;">
+                <div class="row g-4 align-items-stretch">
+                    <div class="col-lg-8 pe-lg-4 border-end">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+                            <span class="home-logo" style="width: 28px; height: 28px; font-size: 12px;">AI</span>
+                            <h2 class="mb-0" style="font-size: 18px;">WholeMart Assistant</h2>
+                        </div>
+                        <div class="wm-ai-quick-response" id="wmDashboardAiResponse" style="min-height: 80px; background: var(--wm-brand-soft-2); border-radius: 12px; padding: 16px; margin-bottom: 16px; font-size: 13px;">
+                            Ready for your query. Ask about orders, stock, or payments.
+                        </div>
+                        <form class="d-flex gap-2" id="wmDashboardAiForm">
+                            <input class="wm-input" id="wmDashboardAiMessage" placeholder="Ask AI for insights..." style="flex: 1; border-radius: 10px;">
+                            <button class="home-btn home-btn-primary" type="submit" style="min-height: 38px;"><i data-lucide="send" class="lucide" style="width: 16px; height: 16px;"></i> Ask</button>
+                        </form>
+                        <div id="wmDashboardAiActionBox"></div>
+                    </div>
+                    <div class="col-lg-4 ps-lg-4">
+                        <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--wm-text-soft);">Suggested Queries</h3>
+                        <div class="wm-action-list d-grid gap-2" id="wmDashboardAiQuickButtons" style="justify-items: start;">
+                            <button class="home-btn home-btn-secondary w-100 text-start px-3 py-2" style="justify-content: flex-start;" data-ai-message="What should I do first today?"><i data-lucide="zap" class="lucide" style="width: 16px; height: 16px; margin-right: 8px;"></i> Daily priorities</button>
+                            <button class="home-btn home-btn-secondary w-100 text-start px-3 py-2" style="justify-content: flex-start;" data-ai-message="Show today's order summary."><i data-lucide="clipboard-list" class="lucide" style="width: 16px; height: 16px; margin-right: 8px;"></i> Order summary</button>
+                            <button class="home-btn home-btn-secondary w-100 text-start px-3 py-2" style="justify-content: flex-start;" data-ai-message="Show low stock summary."><i data-lucide="box" class="lucide" style="width: 16px; height: 16px; margin-right: 8px;"></i> Low stock alerts</button>
+                            <button class="home-btn home-btn-secondary w-100 text-start px-3 py-2" style="justify-content: flex-start;" data-ai-message="Suggest next actions."><i data-lucide="trending-up" class="lucide" style="width: 16px; height: 16px; margin-right: 8px;"></i> Expansion tips</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logistics & Operations -->
+            <section class="wm-home-roles" style="padding: 0; background: transparent; border: 0; box-shadow: none; margin-bottom: 24px; margin-left: 0; margin-right: 0;">
+                <div class="home-section-head" style="margin-bottom: 16px; text-align: left;">
+                    <h2 style="font-size: 20px;">Fulfillment & Supply Chain</h2>
+                </div>
+                <div class="wm-home-role-grid" style="gap: 12px;">
+                    <article class="home-role-card" style="padding: 20px;">
+                        <div class="home-role-mark" style="background: linear-gradient(135deg, #0f766e, #0d9488); width: 38px; height: 38px;"><i data-lucide="package" style="width: 20px; height: 20px;"></i></div>
+                        <h3>Order Pipeline</h3>
+                        <p>Real-time demand tracking.</p>
+                        <ul class="mb-3 small">
+                            <li class="d-flex justify-content-between align-items-center">Waiting Review <strong id="ordersWaiting" class="text-danger">0</strong></li>
+                            <li class="d-flex justify-content-between align-items-center">Ready to Pack <strong id="ordersReady">0</strong></li>
+                        </ul>
+                        <a class="home-btn home-btn-secondary mt-auto" href="/web/distributor/orders">Open Queue</a>
+                    </article>
+                    <article class="home-role-card" style="padding: 20px;">
+                        <div class="home-role-mark" style="background: linear-gradient(135deg, #f59e0b, #d97706); width: 38px; height: 38px;"><i data-lucide="database" style="width: 20px; height: 20px;"></i></div>
+                        <h3>Stock Velocity</h3>
+                        <p>Inventory health monitoring.</p>
+                        <ul class="mb-3 small">
+                            <li class="d-flex justify-content-between align-items-center">Active Cats <strong id="categoryCount">0</strong></li>
+                            <li class="d-flex justify-content-between align-items-center">Refill Needed <strong id="stockPlanningCount" class="text-warning">0</strong></li>
+                        </ul>
+                        <a class="home-btn home-btn-secondary mt-auto" href="/web/distributor/products">Refill Stock</a>
+                    </article>
+                    <article class="home-role-card" style="padding: 20px;">
+                        <div class="home-role-mark" style="background: linear-gradient(135deg, #1e40af, #1e3a8a); width: 38px; height: 38px;"><i data-lucide="book-open" style="width: 20px; height: 20px;"></i></div>
+                        <h3>Credit Ledger</h3>
+                        <p>Dues and collections.</p>
+                        <ul class="mb-3 small">
+                            <li class="d-flex justify-content-between align-items-center">Overdue <strong class="text-danger">Rs. 0</strong></li>
+                            <li class="d-flex justify-content-between align-items-center">Disputes <strong >0</strong></li>
+                        </ul>
+                        <a class="home-btn home-btn-secondary mt-auto" href="/web/distributor/dues">Ledger</a>
+                    </article>
+                    <article class="home-role-card" style="padding: 20px;">
+                        <div class="home-role-mark" style="background: linear-gradient(135deg, #4b5563, #374151); width: 38px; height: 38px;"><i data-lucide="truck" style="width: 20px; height: 20px;"></i></div>
+                        <h3>Dispatch Hub</h3>
+                        <p>Driver route coordination.</p>
+                        <ul class="mb-3 small">
+                            <li class="d-flex justify-content-between align-items-center">Completed <strong id="completedDropoffs">0</strong></li>
+                            <li class="d-flex justify-content-between align-items-center">On Route <strong >0</strong></li>
+                        </ul>
+                        <a class="home-btn home-btn-secondary mt-auto" href="/web/distributor/delivery">Dispatch</a>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Needs Attention Panel -->
+            <section class="wm-home-ops" style="padding: 0; margin-bottom: 24px;">
+                <div class="home-section-head" style="margin-bottom: 12px; text-align: left;">
+                    <h2 style="font-size: 18px;">Priorities</h2>
+                </div>
+                <div class="home-ops-panel" id="wmAttentionList" style="border-radius: 12px; padding: 8px;">
+                    <div class="home-ops-row">
+                        <div><strong>Loading priorities...</strong><span>Analyzing live data state.</span></div>
+                        <span class="home-pill">System</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Business Intelligence Reports -->
+            <section style="margin-bottom: 24px;">
+                <div class="home-section-head" style="margin-bottom: 12px; text-align: left;">
+                    <h2 style="font-size: 18px;">Reports & Insights</h2>
+                </div>
+                <div class="row g-3 align-items-stretch">
+                    <div class="col-md-4">
+                        <article class="home-role-card h-100">
+                            <h3>Inventory Health</h3>
+                            <p>Efficiency Breakdown</p>
+                            <div class="mt-3 pt-3 border-top">
+                                <div class="d-flex justify-content-between align-items-center mb-2"><span>SKUs</span><strong id="reportTotalItems">0</strong></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2"><span>Expired</span><strong class="text-danger">0</strong></div>
+                                <div class="d-flex justify-content-between align-items-center"><span>Availability</span><strong class="text-success">92%</strong></div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-md-4">
+                        <article class="home-role-card h-100">
+                            <h3>Fulfillment Rate</h3>
+                            <p>Success metrics</p>
+                            <div class="mt-3 pt-3 border-top">
+                                <div class="d-flex justify-content-between align-items-center mb-2"><span>Active Orders</span><strong id="reportActiveOrders">0</strong></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2"><span>Rejected</span><strong>0</strong></div>
+                                <div class="d-flex justify-content-between align-items-center"><span>Completion</span><strong class="text-success">98.5%</strong></div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-md-4">
+                        <article class="home-role-card h-100">
+                            <h3>Expansion</h3>
+                            <p>Market penetration</p>
+                            <div class="mt-3 pt-3 border-top">
+                                <div class="d-flex justify-content-between align-items-center mb-2"><span>New Retailers</span><strong>+4</strong></div>
+                                <div class="d-flex justify-content-between align-items-center mb-2"><span>New Areas</span><strong>2</strong></div>
+                                <div class="d-flex justify-content-between align-items-center"><span>Target Reach</span><strong class="text-warning">78%</strong></div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
         </div>
-    </div>
+    </main>
 
-    <div class="wm-insight-grid">
-        <section class="wm-insight-card wm-insight-card-accent">
-            <div class="wm-insight-kicker">Today</div>
-            <h2>Order Pipeline</h2>
-            <p>Track new demand and fulfillment work before it reaches dispatch.</p>
-            <div class="wm-insight-list">
-                <span><b id="ordersWaiting">0</b> orders waiting for review</span>
-                <span><b id="ordersReady">0</b> accepted orders</span>
-                <span><b id="ordersCompleted">0</b> completed delivery</span>
-            </div>
-        </section>
-
-        <section class="wm-insight-card">
-            <div class="wm-insight-kicker">Inventory</div>
-            <h2>Stock Attention</h2>
-            <p>Keep fast-moving products available for retailer demand.</p>
-            <div class="wm-insight-list">
-                <span><b id="totalItems">0</b> total items</span>
-                <span><b id="categoryCount">0</b> categories</span>
-                <span><b>0</b> expired items</span>
-            </div>
-        </section>
-
-        <section class="wm-insight-card">
-            <div class="wm-insight-kicker">Payments</div>
-            <h2>Ledger Snapshot</h2>
-            <p>Review collections, dues, and settlement follow-ups.</p>
-            <div class="wm-insight-list">
-                <span><b id="capturedRevenue">Rs. 0.00</b> captured revenue</span>
-                <span><b id="pendingSettlements">0</b> pending settlements</span>
-                <span><b>0</b> overdue dues</span>
-            </div>
-        </section>
-    </div>
-
-    <div class="wm-ops-grid">
-        <section class="wm-ops-card">
-            <div>
-                <span class="wm-insight-kicker">Drivers</span>
-                <h2>Delivery Activity</h2>
-                <p>Assign drivers once accepted orders are ready for dispatch.</p>
-            </div>
-            <div class="wm-mini-metrics">
-                <div><strong>0</strong><span>available drivers</span></div>
-                <div><strong id="completedDropoffs">0</strong><span>completed drop-offs</span></div>
-                <div><strong>0</strong><span>delayed routes</span></div>
-            </div>
-        </section>
-
-        <section class="wm-ops-card">
-            <div>
-                <span class="wm-insight-kicker">AI Assist</span>
-                <h2>Recommended Next Actions</h2>
-                <p>Prepare reorder plans, check order queues, and follow up with retailers.</p>
-            </div>
-            <div class="wm-action-list" id="wmRecommendedActions">
-                <a href="/web/distributor/orders">Check open order queue</a>
-                <a href="/web/distributor/products">Review catalog and stock planning</a>
-                <a href="/web/distributor/ai-chat">Ask AI for daily priorities</a>
-            </div>
-        </section>
-    </div>
-
-    <section class="wm-attention-card" aria-label="Operational attention queue">
-        <div class="wm-attention-head">
-            <div>
-                <span class="wm-insight-kicker">Control Tower</span>
-                <h2>Needs Attention</h2>
-                <p>Highest-impact work pulled from orders, payments, delivery, and catalog data.</p>
-            </div>
-            <a class="btn wm-btn-secondary" href="/web/distributor/reports">Open Reports</a>
-        </div>
-        <div class="wm-attention-list" id="wmAttentionList">
-            <div class="wm-attention-item">
-                <strong>Loading priorities...</strong>
-                <span>Checking live dashboard data.</span>
-                <a href="/web/distributor/ai-chat">Ask AI</a>
+    <footer class="home-footer" style="margin-top: auto; padding: 24px 0; border-top: 1px solid var(--wm-border);">
+        <div class="wm-home-container" style="max-width: 1280px;">
+            <div class="home-footer-inner d-flex justify-content-between align-items-center px-3">
+                <div class="text-muted small">&copy; 2024 WholeMart Distributor Workspace. All rights reserved.</div>
+                <div class="d-flex gap-3">
+                    <a href="/web/help" class="small text-muted">Help</a>
+                    <a href="/web/terms" class="small text-muted">Terms</a>
+                    <a href="/web/privacy" class="small text-muted">Privacy</a>
+                </div>
             </div>
         </div>
-    </section>
-
-    <div class="wm-insight-grid">
-        <section class="wm-report-card">
-            <h2>Inventory Report</h2>
-            <p><span>Total Items:</span><strong id="reportTotalItems">0</strong></p>
-            <p><span>Categories:</span><strong id="reportCategoryCount">0</strong></p>
-            <p><span>Expired Items:</span><strong>0</strong></p>
-        </section>
-
-        <section class="wm-report-card">
-            <h2>Orders Report</h2>
-            <p><span>Total Orders:</span><strong id="reportTotalOrders">0</strong></p>
-            <p><span>Pending:</span><strong id="reportPendingOrders">0</strong></p>
-            <p><span>Active:</span><strong id="reportActiveOrders">0</strong></p>
-        </section>
-
-        <section class="wm-report-card">
-            <h2>Monthly Focus</h2>
-            <p><span>Retailer Follow-ups:</span><strong>0</strong></p>
-            <p><span>Dispatch Queue:</span><strong>0</strong></p>
-            <p><span>Stock Planning:</span><strong id="stockPlanningCount">0</strong></p>
-        </section>
-    </div>
+    </footer>
+    
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -367,12 +253,7 @@
             var responseBox = document.getElementById("wmDashboardAiResponse");
             var actionBox = document.getElementById("wmDashboardAiActionBox");
             var quickButtons = document.getElementById("wmDashboardAiQuickButtons");
-            var performanceTicker = document.getElementById("wmPerformanceTicker");
-            var priorityReviewQueue = document.getElementById("priorityReviewQueue");
-            var priorityDispatchReady = document.getElementById("priorityDispatchReady");
-            var prioritySettlements = document.getElementById("prioritySettlements");
-            var priorityCatalogHealth = document.getElementById("priorityCatalogHealth");
-            var recommendedActions = document.getElementById("wmRecommendedActions");
+            var performanceBrief = document.getElementById("performanceBrief");
             var attentionList = document.getElementById("wmAttentionList");
             var dashboardState = {
                 orders: [],
@@ -508,7 +389,7 @@
             }
 
             function renderRecommendedActions() {
-                if (!recommendedActions || !attentionList) {
+                if (!attentionList) {
                     return;
                 }
 
@@ -533,16 +414,9 @@
                 }).length;
                 var catalogHealth = products.length ? Math.round((pricedProducts / products.length) * 100) : 0;
 
-                setText("priorityReviewQueue", waitingOrders);
-                setText("priorityDispatchReady", acceptedOrders);
-                setText("prioritySettlements", pendingPayments);
-                setText("priorityCatalogHealth", catalogHealth + "%");
-
-                var actions = [];
                 var attentionItems = [];
 
                 if (waitingOrders > 0) {
-                    actions.push('<a href="/web/distributor/orders">Accept or reject ' + waitingOrders + ' waiting orders</a>');
                     attentionItems.push(buildAttentionItem(
                         "Order review queue",
                         waitingOrders + " orders are waiting for distributor review.",
@@ -553,7 +427,6 @@
                 }
 
                 if (acceptedOrders > 0) {
-                    actions.push('<a href="/web/distributor/delivery">Assign dispatch for ' + acceptedOrders + ' accepted orders</a>');
                     attentionItems.push(buildAttentionItem(
                         "Dispatch planning",
                         acceptedOrders + " accepted orders need delivery coordination.",
@@ -564,7 +437,6 @@
                 }
 
                 if (pendingPayments > 0) {
-                    actions.push('<a href="/web/distributor/dues">Follow up ' + pendingPayments + ' pending settlements</a>');
                     attentionItems.push(buildAttentionItem(
                         "Payment follow-up",
                         pendingPayments + " settlements are still pending.",
@@ -575,7 +447,6 @@
                 }
 
                 if (catalogHealth < 100 && products.length > 0) {
-                    actions.push('<a href="/web/distributor/products">Complete pricing for catalog items</a>');
                     attentionItems.push(buildAttentionItem(
                         "Catalog cleanup",
                         catalogHealth + "% of items have a valid price.",
@@ -584,7 +455,6 @@
                         ""
                     ));
                 } else if (products.length === 0) {
-                    actions.push('<a href="/web/distributor/add-product">Add your first inventory item</a>');
                     attentionItems.push(buildAttentionItem(
                         "Catalog setup",
                         "Add products so retailers can start placing orders.",
@@ -604,9 +474,6 @@
                     ));
                 }
 
-                actions.push('<a href="/web/distributor/ai-chat">Ask AI for daily priorities</a>');
-                recommendedActions.innerHTML = actions.slice(0, 4).join("");
-
                 if (attentionItems.length === 0) {
                     attentionItems.push(buildAttentionItem(
                         "All caught up",
@@ -617,11 +484,20 @@
                     ));
                 }
 
-                attentionList.innerHTML = attentionItems.slice(0, 4).join("");
+                attentionList.innerHTML = attentionItems.slice(0, 6).map(function(html) {
+                    // Convert the item into the row format used on the homepage
+                    var temp = document.createElement('div');
+                    temp.innerHTML = html;
+                    var item = temp.firstChild;
+                    var title = item.querySelector('strong').textContent;
+                    var span = item.querySelector('span').textContent;
+                    var pillClass = item.classList.contains('is-urgent') ? 'status status-danger' : 'status wm-home-pill';
+                    return '<div class="wm-home-ops-row"><div><strong>' + title + '</strong><span>' + span + '</span></div><span class="' + pillClass + '">Priority</span></div>';
+                }).join("");
             }
 
-            function renderPerformanceTicker(orders) {
-                if (!performanceTicker) {
+            function renderPerformanceBrief(orders) {
+                if (!performanceBrief) {
                     return;
                 }
 
@@ -643,20 +519,9 @@
                 var todayOrders = countOrders(orders, today, tomorrow);
                 var last7Orders = countOrders(orders, last7, tomorrow);
                 var dailyAverage = last7Orders / 7;
-                var spikeText = dailyAverage && todayOrders > dailyAverage
-                    ? "spike +" + (((todayOrders - dailyAverage) / dailyAverage) * 100).toFixed(1) + "%"
-                    : "steady demand";
 
-                var chips = [
-                    "Today " + money(todayRevenue) + " <span>(" + percentChange(todayRevenue, yesterdayRevenue) + " vs yesterday)</span>",
-                    "Last 7 days " + money(weekRevenue) + " <span>(" + percentChange(weekRevenue, previousWeekRevenue) + " vs previous week)</span>",
-                    "This month " + money(monthRevenue) + " <span>(" + percentChange(monthRevenue, previousMonthRevenue) + " vs last month)</span>",
-                    "Orders today " + todayOrders + " <span>(" + spikeText + ")</span>"
-                ];
-                var html = chips.concat(chips).map(function (chip) {
-                    return "<div class=\"wm-performance-chip\">" + chip + "</div>";
-                }).join("");
-                performanceTicker.innerHTML = html;
+                performanceBrief.textContent = "Today: " + money(todayRevenue) + " (" + percentChange(todayRevenue, yesterdayRevenue) + " vs yesterday). " + 
+                    "Weekly volume: " + money(weekRevenue) + ". Total orders today: " + todayOrders + ".";
             }
 
             fetch("/api/v1/orders")
@@ -695,12 +560,12 @@
                         return total + Number(order.totalAmount || 0);
                     }, 0)));
 
-                    renderPerformanceTicker(orders);
+                    renderPerformanceBrief(orders);
                     renderRecommendedActions();
                 })
                 .catch(function () {
                     if (performanceTicker) {
-                        performanceTicker.innerHTML = "<div class=\"wm-performance-chip\">Unable to load performance insights.</div>";
+                        performanceBrief.textContent = "Unable to load performance insights.";
                     }
                     console.warn("Unable to load orders dashboard data.");
                 });
@@ -795,7 +660,7 @@
                         responseBox.textContent = data && data.answer
                             ? data.answer
                             : "No response received.";
-
+                        Lucide.createIcons(); // Re-render Lucide icons if new content is added
                         if (data && data.requiresConfirmation) {
                             showAiConfirmation(data.actionId, data.actionType);
                         }
@@ -803,7 +668,7 @@
                     .catch(function () {
                         responseBox.textContent = "Unable to reach AI right now. Try opening the full chat.";
                     });
-            };
+            }; // End window.askAi
 
             window.showAiConfirmation = function showAiConfirmation(actionId, actionType) {
                 if (!actionBox) {
@@ -877,7 +742,14 @@
                     window.askAi();
                 });
             }
+
+            // Initialize Lucide icons on page load
+            if (typeof Lucide !== 'undefined') {
+                Lucide.createIcons();
+            }
         });
     </script>
-
-    <%@ include file="../common/wholemart-shell-end.jsp" %>
+        </div>
+    </main>
+</div>
+</body></html>

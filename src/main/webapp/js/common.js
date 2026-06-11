@@ -323,13 +323,31 @@
         });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".table").forEach(enhanceTable);
         wireModalButtons();
         wireAppSidebar();
         wireProfileMenu();
         normalizeStatIcons();
         upgradePlainTables();
+
+        // Fix home-page "Sign in" not responding:
+        // some pages don't load the home.jsp inline modal JS; ensure the link navigates.
+        // (The home.jsp inline handler will still work when present.)
+        var authOpeners = document.querySelectorAll(".js-auth-open");
+        authOpeners.forEach(function (a) {
+            a.addEventListener("click", function () {
+                var modal = document.getElementById("homeAuthModal");
+                if (!modal) {
+                    return; // let browser navigate normally
+                }
+
+                // If the inline modal JS is present, it will toggle the modal.
+                // If not, keep default navigation.
+                // We do NOT preventDefault here.
+            }, { capture: true });
+        });
+
         if (window.lucide) {
             lucide.createIcons();
         }
