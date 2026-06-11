@@ -9,31 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/wholemart.css?v=project-theme-refresh-32" rel="stylesheet">
+    <link href="/css/wholemart.css" rel="stylesheet">
 </head>
 <body class="wm-home">
 <div class="wm-app">
-    <header class="wm-topbar" role="banner">
-        <div class="wm-topbar-left">
-            <a class="wm-brand-link" href="/" aria-label="WholeMart home">
-                <span class="wm-logo">W</span>
-                <span class="wm-brand-name">WholeMart</span>
-            </a>
-        </div>
-        <div class="wm-topbar-center">
-            <input id="wm-search" class="wm-search" placeholder="Search marketplace, orders, or support..." aria-label="Search">
-        </div>
-        <nav class="wm-header-links" aria-label="Header quick links">
-            <a class="wm-header-link" href="#impact">Impact</a>
-            <a class="wm-header-link" href="#roles">Roles</a>
-            <a class="wm-header-link" href="#operations">Operations</a>
-            <a class="wm-header-link" href="#faq">FAQ</a>
-            <a class="wm-header-link" href="/web/aip-studio" target="_blank" rel="noopener noreferrer">AI Agent</a>
-        </nav>
-        <div class="wm-top-actions">
-            <a class="wm-btn home-btn-primary js-auth-open" data-auth-mode="login" href="/web/auth/login">Sign in</a>
-        </div>
-    </header>
+    <%@ include file="header.jsp" %>
 
     <main class="wm-home-main">
         <section class="wm-home-hero">
@@ -313,12 +293,7 @@
         </section>
     </main>
 
-    <footer class="wm-home-footer">
-        <div class="wm-home-footer-inner">
-            <div><strong>WholeMart</strong> connects local B2B commerce teams from order to delivery.</div>
-            <a class="js-auth-open" data-auth-mode="login" href="/web/auth/login">Continue to login</a>
-        </div>
-    </footer>
+    <%@ include file="footer.jsp" %>
 </div>
 
 <div class="home-auth-modal" id="homeAuthModal" hidden>
@@ -326,9 +301,9 @@
     <section class="home-auth-dialog" role="dialog" aria-modal="true" aria-labelledby="homeAuthTitle">
         <button class="home-auth-close js-auth-close" type="button" aria-label="Close login options">&times;</button>
         <div class="home-auth-head">
-            <span class="home-logo">W</span>
-            <div>
-                <h2 id="homeAuthTitle">Welcome to WholeMart</h2>
+            <span class="wm-logo">WM</span>
+            <div class="wm-brand-name">
+                <h3 id="homeAuthTitle">Welcome to WholeMart</h3>
                 <p id="homeAuthSubtitle">Choose how you want to continue.</p>
             </div>
         </div>
@@ -426,7 +401,7 @@
     </section>
 </div>
 </div>
-<script src="/js/common.js?v=project-theme-refresh-21"></script>
+<script src="/js/common.js"></script>
 <script>
     (() => {
         const modal = document.getElementById("homeAuthModal");
