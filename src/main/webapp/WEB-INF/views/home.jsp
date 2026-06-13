@@ -68,7 +68,7 @@
         <section class="wm-home-ops" id="features">
             <div class="wm-home-container">
                 <div class="wm-home-section-head">
-                    <h2>The Complete Wholesale OS.</h2>
+                    <h4>The Complete Wholesale OS</h4>
                     <p>Powerful tools designed for the unique challenges of local supply chains.</p>
                 </div>
                 <div class="row g-3">
@@ -90,33 +90,27 @@
                             <p class="text-muted small mb-0">Efficient delivery sequencing saves fuel and ensures retailers get accurate time-of-arrival updates.</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="wm-home-impact" id="impact">
-            <div class="wm-home-container">
-                <div class="wm-home-impact-grid">
-                    <article class="wm-home-impact-card wm-home-impact-wide">
-                        <span>Business lift</span>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-white shadow-sm h-100">
+                        <h5>Business lift</h5>
                         <strong>38%</strong>
-                        <p>average wholesale order spike reported across active retailers last month.</p>
-                    </article>
-                    <article class="wm-home-impact-card">
-                        <span>Distributor network</span>
-                        <strong>126</strong>
-                        <p>verified distributors ready for local retail demand.</p>
-                    </article>
-                    <article class="wm-home-impact-card">
-                        <span>City coverage</span>
-                        <strong>42</strong>
-                        <p>cities connected through local order and delivery workflows.</p>
-                    </article>
-                    <article class="wm-home-impact-card">
-                        <span>Monthly orders</span>
-                        <strong>18k+</strong>
-                        <p>orders coordinated with delivery, ledger, and alert visibility.</p>
-                    </article>
+                        <p class="text-muted small mb-0">average wholesale order spike reported across active retailers last month.</p>
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-white shadow-sm h-100">
+                        <h5>Distributor network</h5>
+                        <strong>126+</strong>
+                        <p class="text-muted small mb-0">verified distributors ready for local retail demand.</p>
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 border rounded bg-white shadow-sm h-100">
+                            <h5>City coverage</h5>
+                            <strong>42+</strong>
+                            <p class="text-muted small mb-0">cities connected through local order and delivery workflows.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -124,52 +118,28 @@
         <section class="wm-home-roles" id="roles">
             <div class="wm-home-container">
                 <div class="wm-home-section-head">
-                    <h2>One homepage, every operator's next step.</h2>
+                    <h4>One homepage, every operator's next step</h4>
                     <p>Each workspace opens into focused tools for the daily B2B workflow, from procurement to approval queues.</p>
                 </div>
                 <div class="wm-home-role-grid">
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon"><i data-lucide="shield-check"></i></div>
                         <h3>Admin</h3>
                         <p>Oversee marketplace health and keep approvals moving.</p>
-                        <ul>
-                            <li>User management</li>
-                            <li>Order oversight</li>
-                            <li>Payment and platform reports</li>
-                        </ul>
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=admin">Admin login</a>
                     </article>
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon"><i data-lucide="shopping-bag"></i></div>
                         <h3>Retailer</h3>
                         <p>Find distributors, place wholesale orders, and monitor dues.</p>
-                        <ul>
-                            <li>Product discovery</li>
-                            <li>Cart and order tracking</li>
-                            <li>Ledger and payments</li>
-                        </ul>
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=retailer">Retailer login</a>
                     </article>
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon"><i data-lucide="layout-dashboard"></i></div>
                         <h3>Distributor</h3>
                         <p>Sell into local retail demand with inventory and delivery control.</p>
-                        <ul>
-                            <li>Inventory management</li>
-                            <li>Order fulfillment</li>
-                            <li>Driver network and dues</li>
-                        </ul>
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=distributor">Distributor login</a>
                     </article>
                     <article class="wm-home-role-card">
-                        <div class="wm-home-role-icon"><i data-lucide="truck"></i></div>
                         <h3>Driver</h3>
                         <p>Handle assigned deliveries and keep earnings transparent.</p>
-                        <ul>
-                            <li>Delivery queue</li>
-                            <li>Status updates</li>
-                            <li>Earnings and reports</li>
-                        </ul>
                         <a class="btn btn-sm btn-outline-primary js-auth-open" data-auth-mode="login" href="/web/auth/login?role=driver">Driver login</a>
                     </article>
                 </div>
@@ -179,7 +149,7 @@
         <section class="wm-home-ops" id="how-it-works">
             <div class="wm-home-container">
                 <div class="wm-home-section-head">
-                    <h2>Simple steps to scale your business.</h2>
+                    <h4>Simple steps to scale your business</h4>
                     <p>Whether you are buying or selling, WholeMart streamlines the entire wholesale lifecycle.</p>
                 </div>
                 <div class="row g-4 text-center">
@@ -218,7 +188,7 @@
         <section class="wm-home-ops" id="operations">
             <div class="wm-home-container">
                 <div class="wm-home-section-head">
-                    <h2>Built for the work after the order is placed.</h2>
+                    <h4>Built for the work after the order is placed</h4>
                     <p>WholeMart keeps operational state visible: inventory, approvals, delivery status, payments, alerts, and AI-recommended actions stay connected.</p>
                 </div>
                 <div class="wm-home-ops-panel">
@@ -257,7 +227,7 @@
         <section class="wm-home-impact" id="faq">
             <div class="wm-home-container">
                 <div class="wm-home-section-head text-center">
-                    <h2>Common Questions</h2>
+                    <h4>Common Questions</h4>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
