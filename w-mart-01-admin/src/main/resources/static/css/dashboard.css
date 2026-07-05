@@ -1,0 +1,61 @@
+/* Admin dashboard page styles */
+.wm-dashboard-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.wm-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.wm-subtitle {
+    margin: 0;
+    color: #64748b;
+}
+
+.wm-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.wm-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 1rem 1.1rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+}
+
+.wm-stat-icon {
+    display: grid;
+    place-items: center;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    font-weight: 700;
+}
+
+.wm-stat-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.wm-stat-details b {
+    font-size: 1.2rem;
+}
+
+.wm-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}

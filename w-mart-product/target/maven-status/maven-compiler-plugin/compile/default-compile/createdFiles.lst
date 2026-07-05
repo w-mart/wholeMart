@@ -1,0 +1,9 @@
+com\localb2b\marketplace\product\Product$ProductDetails.class
+com\localb2b\marketplace\product\ProductDto.class
+com\localb2b\marketplace\inventory\InventoryItem.class
+com\localb2b\marketplace\product\ProductService.class
+com\localb2b\marketplace\inventory\InventoryRepository.class
+com\localb2b\marketplace\product\ProductRepository.class
+com\localb2b\marketplace\product\ProductApiController$ProductCreateRequest.class
+com\localb2b\marketplace\product\Product.class
+com\localb2b\marketplace\product\ProductApiController.class
