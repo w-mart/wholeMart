@@ -4,8 +4,10 @@ D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\advice\Val
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\annotation\Audit.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\annotation\CurrentUser.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\annotation\LogExecutionTime.java
+D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\CommonWebMvcConfiguration.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\JacksonConfig.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\LocaleConfig.java
+D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\MarketplaceJacksonConfiguration.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\MessageSourceConfig.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\ResourceConfig.java
 D:\w-mart\w-mart-common\src\main\java\com\localb2b\marketplace\common\config\WebMvcConfig.java

@@ -20,7 +20,6 @@ com\localb2b\marketplace\common\util\FileUtil.class
 com\localb2b\marketplace\common\enums\Status.class
 com\localb2b\marketplace\common\enums\OrderStatus.class
 com\localb2b\marketplace\common\exception\UnauthorizedException.class
-com\localb2b\marketplace\common\config\WebMvcConfig.class
 com\localb2b\marketplace\common\security\PasswordEncoderUtil.class
 com\localb2b\marketplace\common\filter\CharacterEncodingFilter.class
 com\localb2b\marketplace\common\constants\SessionConstants.class
@@ -36,7 +35,6 @@ com\localb2b\marketplace\common\exception\BusinessException.class
 com\localb2b\marketplace\common\util\StringUtil.class
 com\localb2b\marketplace\common\dto\PaginationResponse.class
 com\localb2b\marketplace\common\dto\SuccessResponse.class
-com\localb2b\marketplace\common\config\JacksonConfig.class
 com\localb2b\marketplace\common\enums\UserRole.class
 com\localb2b\marketplace\common\constants\ErrorConstants.class
 com\localb2b\marketplace\common\annotation\CurrentUser.class

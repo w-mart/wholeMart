@@ -1,7 +1,6 @@
 D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\controller\AdminController.java
 D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\controller\AuthController.java
 D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\controller\RegistrationApiController.java
-D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\controller\RegistrationController.java
 D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\controller\SecurityConfig.java
 D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\dto\request\RegistrationRequest.java
 D:\w-mart\w-mart-users\src\main\java\com\localb2b\marketplace\dto\response\RegistrationResponse.java
