@@ -9,4 +9,9 @@ public class HomeController {
     public String home() {
         return "home/home";
     }
+
+    @GetMapping("/register")
+    public String register() {
+        return "users/registration";
+    }
 }
