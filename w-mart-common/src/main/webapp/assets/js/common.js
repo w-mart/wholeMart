@@ -1,1 +1,0 @@
-// Common frontend utilities\n

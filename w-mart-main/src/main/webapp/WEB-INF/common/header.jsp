@@ -29,8 +29,8 @@
                         <li class="nav-item"><a class="nav-link" href="#roles">Roles</a></li>
                         <li class="nav-item"><a class="nav-link" href="#operations">Operations</a></li>
                         <li class="nav-item"><a class="nav-link" href="#security">Security</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister" >Sign up</a></li>
-                        <li class="nav-item"><a href="#" onclick="openLoginPopup()" class="btn wm-btn-primary js-auth-open">Sign In</a></li>                        
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/register" >Sign up</a></li>
+                        <li class="nav-item"><a href="${pageContext.request.contextPath}/" onclick="openLoginPopup()" class="btn wm-btn-primary js-auth-open">Sign In</a></li>                        
                     </ul>
                 </div>
             </div>
