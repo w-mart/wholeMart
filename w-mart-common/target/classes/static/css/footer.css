@@ -1,0 +1,41 @@
+.wm-footer {
+    background: var(--bg);
+    padding: clamp(40px, 7vw, 70px) 0;
+    border-top: 1px solid var(--line);
+    font-size: .94rem;
+}
+
+.wm-footer h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 12px;
+}
+
+.wm-footer h5 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 16px;
+}
+
+.wm-footer p {
+    color: var(--graphite);
+    max-width: 320px;
+}
+
+.wm-footer .list-unstyled li {
+    margin-bottom: 10px;
+}
+
+.wm-footer .list-unstyled a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .2s ease;
+}
+
+.wm-footer .list-unstyled a:hover {
+    color: var(--accent);
+}
