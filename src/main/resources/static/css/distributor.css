@@ -1,0 +1,592 @@
+/************************************************============
+ WHOLEMART — DISTRIBUTOR DASHBOARD (REDESIGNED)
+ Matches button color + text format from home.css.
+ ************************************************============/
+
+/* Use upstream design tokens from home.css (and/or common.css). */
+:root{
+  --wm-ink: var(--ink);
+  --wm-muted: var(--ink-soft);
+  --wm-bg: var(--paper);
+  --wm-surface: var(--paper-raised);
+  --wm-line: var(--line);
+
+  --wm-accent: var(--green);
+  --wm-success: var(--green);
+  --wm-warn: var(--amber);
+  --wm-danger: var(--red);
+
+  --wm-shadow-md: var(--shadow);
+  --wm-shadow-sm: var(--shadow-sm);
+  --wm-shadow-hover: var(--shadow-lg);
+
+  --wm-font-display: var(--font-display);
+  --wm-font-body: var(--font-body);
+  --wm-radius-lg: var(--radius-lg, 24px);
+  --wm-radius-md: var(--radius, 16px);
+}
+
+body.wm-home{
+  background:
+    linear-gradient(180deg, rgba(27,94,60,.05), transparent 360px),
+    var(--paper) !important;
+}
+
+.wm-home{ background: var(--wm-bg); }
+.wm-home .wm-app{ min-height: 100vh; }
+
+.wm-home-impact,
+.wm-home-ops,
+.wm-home-reports {
+  padding: 10px 0 12px;
+}
+
+.wm-home-container{
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.home-section-head{ margin: 22px 0 14px; }
+.home-section-head h2{
+  font-family: var(--wm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  color: var(--wm-ink);
+  margin: 0 0 8px;
+}
+.home-section-head p{
+  margin: 0;
+  color: var(--wm-muted);
+  max-width: 720px;
+  line-height: 1.6;
+  font-size: .98rem;
+}
+
+/***********************
+ Kicker pill
+***********************/
+.wm-kicker{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(27,94,60,.10);
+  border: 1px solid rgba(27,94,60,.24);
+  color: var(--wm-accent);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-weight: 800;
+  font-size: .72rem;
+  font-family: var(--wm-font-body);
+  margin-bottom: 14px;
+}
+.wm-kicker .wm-live-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--wm-success);
+  animation: wmLivePulse 2s infinite;
+}
+@keyframes wmLivePulse{
+  0%{ box-shadow: 0 0 0 0 rgba(31,157,85,.45); }
+  70%{ box-shadow: 0 0 0 10px rgba(31,157,85,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(31,157,85,0); }
+}
+
+/***********************
+ Buttons — match home.css
+***********************/
+.home-btn{
+  height: 50px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+  padding: 0 22px;
+  font-weight: 600;
+  border: 1px solid var(--green);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease, border-color .16s ease;
+  text-decoration: none;
+}
+.home-btn i{ font-size: 1.05rem; }
+
+.home-btn-primary{
+  background: var(--green);
+  color: #fff !important;
+  box-shadow: 0 10px 24px rgba(27,94,60,.24);
+}
+.home-btn-primary:hover{
+  background: rgba(18,24,31,.64);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(21,79,52,.28);
+}
+
+.home-btn-secondary{
+  background: transparent;
+  border: 1.5px solid rgba(18, 24, 31, .22);
+  color: var(--ink) !important;
+}
+.home-btn-secondary:hover{
+  border-color: var(--green);
+  background: rgba(27,94,60,.10);
+  transform: translateY(-2px);
+}
+
+/* Preserve existing downstream usages */
+.wm-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 22px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--wm-surface);
+  color: var(--wm-ink);
+  font-weight: 600;
+  height: 50px;
+  text-decoration: none;
+}
+
+.wm-btn:hover{ transform: translateY(-2px); }
+
+.wm-gradient-btn{
+  background: var(--green);
+  border: 1px solid var(--green) !important;
+  color: #fff !important;
+  height: 50px;
+  border-radius: 10px;
+  font-weight: 600 !important;
+  padding: 0 22px !important;
+}
+
+/***********************
+ The rest of the dashboard styles remain as-is below.
+ (kept minimal to avoid palette drift)
+***********************/
+
+/* --- layout helpers --- */
+.wm-home-hero{ position: relative; padding: 18px 0; }
+.wm-home-hero-grid{ display:grid; grid-template-columns: 1.08fr .92fr; gap: 22px; align-items: stretch; }
+.wm-home-hero-copy{ padding: 8px 0; display:flex; flex-direction: column; justify-content:center; }
+.wm-home-title{ font-family: var(--wm-font-display); font-weight: 950; color: var(--wm-ink); font-size: clamp(1.9rem, 3.1vw, 2.8rem); line-height: 1.1; margin: 6px 0 12px; letter-spacing: -.01em; }
+.wm-home-subtitle{ color: var(--wm-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 18px; }
+.wm-home-actions{ display:flex; gap: 12px; flex-wrap: wrap; }
+
+/* --- pulse card --- */
+.wm-pulse-card{ background: linear-gradient(180deg, #0f1d3a, #0b1630); color: #fff; border-radius: 20px; padding: 22px; box-shadow: var(--wm-shadow-md); position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.10); display:flex; flex-direction: column; }
+.wm-pulse-card:after{ content:""; position:absolute; inset:-2px -2px auto -2px; height: 160px; background: radial-gradient(circle at 30% 0%, rgba(23,162,184,.38), transparent 62%); pointer-events:none; opacity:.9; }
+.wm-pulse-eyebrow{ color: rgba(255,255,255,.72); letter-spacing: .14em; text-transform: uppercase; font-weight: 950; font-size: .72rem; margin-bottom: 6px; position: relative; z-index: 1; }
+.wm-pulse-card h3{ font-family: var(--wm-font-display); font-weight: 950; font-size: 1.45rem; margin: 0 0 14px; color:#fff; position: relative; z-index: 1; }
+#performanceBrief{ position: relative; z-index: 1; color: rgba(255,255,255,.86); line-height: 1.6; margin-top: 8px; min-height: 48px; font-size: .98rem; }
+.wm-pulse-card hr{ border-color: rgba(255,255,255,.14); margin: 20px 0; position: relative; z-index: 1; }
+.wm-pulse-stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; position: relative; z-index: 1; }
+.wm-pulse-stats h5{ font-family: var(--wm-font-display); font-size: 1.6rem; font-weight: 950; color:#fff; margin: 0; }
+.wm-pulse-stats small{ display:block; margin-top: 6px; color: rgba(255,255,255,.62); text-transform: uppercase; letter-spacing: .08em; font-weight: 950; font-size: .70rem; }
+
+.home-logo{ width: 52px; height: 52px; border-radius: 16px; background: rgba(255,255,255,.12); color: rgba(255,255,255,.95); display:flex; align-items:center; justify-content:center; font-weight: 950; flex-shrink: 0; position: relative; z-index: 1; }
+
+.wm-card{ background: var(--wm-surface); border: 1px solid var(--wm-line); border-radius: var(--wm-radius-lg); box-shadow: var(--wm-shadow-sm); padding: 22px; overflow: hidden; }
+
+/***********************
+ Responsive
+***********************/
+@media (max-width: 992px){ .wm-home-hero-grid{ grid-template-columns: 1fr; } }
+@media (max-width: 576px){ .wm-home-actions{ flex-direction: column; } .wm-home-actions .home-btn{ width: 100%; } }
+
+/************************************************============
+  Distributor Dashboard — styles to match home.css design system
+  (KPI cards, rings, AI panel, roles/ops/timeline/chips)
+****************************************************/ 
+
+/* ---------- KPI Headline + Secondary metrics ---------- */
+.wm-kpi-headline,
+.wm-kpi-secondary{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.wm-kpi-secondary{
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  margin-top: 22px;
+}
+
+@media (max-width: 992px){
+  .wm-kpi-headline,
+  .wm-kpi-secondary{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 576px){
+  .wm-kpi-headline,
+  .wm-kpi-secondary{ grid-template-columns: 1fr; }
+}
+
+.wm-kpi-card{
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-line);
+  border-radius: var(--wm-radius-md);
+  padding: 18px 18px 16px;
+  box-shadow: var(--wm-shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  min-height: 140px;
+}
+
+.wm-kpi-card:hover{
+  transform: translateY(-5px);
+  box-shadow: var(--wm-shadow-hover);
+  border-color: rgba(27,94,60,.28);
+}
+
+.wm-kpi-top{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.wm-kpi-label{
+  display:block;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .72rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.wm-kpi-value{
+  display:block;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.55rem;
+  margin-top: 8px;
+  color: var(--ink);
+}
+
+.wm-kpi-foot{
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  font-size: .93rem;
+  line-height: 1.5;
+}
+
+.wm-trend-up{
+  color: var(--wm-accent);
+  font-weight: 700;
+}
+
+/* ---------- Role mark icon pill (used in KPI cards) ---------- */
+.home-role-mark{
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: rgba(27,94,60,.10);
+  border: 1px solid rgba(27,94,60,.18);
+  color: var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.home-role-mark i{ font-size: 1.35rem; }
+
+.home-role-mark.is-danger{
+  background: rgba(194,65,12,.10);
+  border-color: rgba(194,65,12,.18);
+  color: var(--red);
+}
+
+/************ Rings (used as circular progress) ************/
+.wm-ring{
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position: relative;
+  background:
+    radial-gradient(closest-side, var(--wm-surface) 72%, transparent 74%);
+}
+
+.wm-ring::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background: conic-gradient(var(--wm-accent) calc(var(--pct,50) * 1%), rgba(18,24,31,.10) 0);
+  -webkit-mask: radial-gradient(closest-side, transparent calc(72% - 1px), #000 calc(72%));
+  mask: radial-gradient(closest-side, transparent calc(72% - 1px), #000 calc(72%));
+}
+
+.wm-ring span{
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: .98rem;
+  color: var(--ink);
+}
+
+.wm-ring.is-success::before{ background: conic-gradient(var(--green) calc(var(--pct,50)*1%), rgba(18,24,31,.10) 0); }
+.wm-ring.is-danger::before{ background: conic-gradient(var(--red) calc(var(--pct,50)*1%), rgba(18,24,31,.10) 0); }
+
+/* ---------- AI Panel (colors + layout) ---------- */
+.wm-ai-panel{
+  border-radius: var(--wm-radius-lg, 24px);
+  padding: 24px;
+  background: linear-gradient(165deg, #0D1116 0%, #1B3226 100%);
+  color: #EAF3EC;
+  height: 100%;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.wm-ai-panel::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 16px 16px;
+  pointer-events:none;
+}
+
+.wm-ai-header{
+  display:flex;
+  align-items:center;
+  gap: 12px;
+  margin-bottom: 14px;
+  position: relative;
+}
+
+.wm-ai-header h2{
+  font-family: var(--font-display);
+  margin: 0;
+  font-weight: 700;
+  flex: 1;
+}
+
+.wm-ai-avatar{
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: rgba(227,167,59,.12);
+  border: 1px solid rgba(227,167,59,.28);
+  color: var(--amber);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 900;
+}
+
+.wm-ai-response{
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 16px;
+  padding: 14px 14px;
+  color: rgba(234,243,236,.92);
+  min-height: 200px;
+}
+.wm-ai-response ul{ padding-left: 18px; }
+.wm-ai-response li{ color: rgba(234,243,236,.88); margin: 4px 0; }
+
+.wm-ai-chips{ display:flex; flex-direction: column; gap: 10px; }
+.wm-ai-chip{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  color: rgba(234,243,236,.95);
+  border-radius: 14px;
+  padding: 12px 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .16s ease, background-color .16s ease, border-color .16s ease;
+}
+
+.wm-ai-chip:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.10);
+  border-color: rgba(227,167,59,.40);
+}
+
+.wm-ai-chip i{ color: var(--amber); font-size: 1.1rem; }
+
+/* Action box (confirmation / response) */
+#wmDashboardAiActionBox .alert{
+  border-radius: 14px;
+}
+
+
+/* ---------- Roles grid (Fulfillment & Supply Chain) ---------- */
+.wm-home-roles{ margin-top: 18px; }
+
+.wm-home-role-grid{
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 16px;
+}
+
+@media (max-width: 992px){
+  .wm-home-role-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+@media (max-width: 576px){
+  .wm-home-role-grid{ grid-template-columns: 1fr; }
+}
+
+.home-role-card{
+  background: var(--wm-surface);
+  border: 1px solid var(--wm-line);
+  border-radius: var(--wm-radius-md);
+  padding: 20px;
+  box-shadow: var(--wm-shadow-sm);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-role-card::before{
+  content:'';
+  position:absolute;
+  left: 20px;
+  right: 20px;
+  top: 0;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, rgba(18,24,31,.95) 0 10px, transparent 10px 16px);
+  opacity: .08;
+}
+
+.home-role-card:hover{
+  transform: translateY(-6px);
+  box-shadow: var(--wm-shadow-hover);
+  border-color: rgba(27,94,60,.28);
+}
+
+.home-role-card h3{
+  font-family: var(--font-display);
+  font-weight: 900;
+  margin: 16px 0 10px;
+  font-size: 1.25rem;
+  color: var(--ink);
+}
+
+.home-role-card p{
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0;
+  font-size: .95rem;
+}
+
+.wm-role-metric-row{
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding: 6px 0;
+  border-top: 1px dashed rgba(18,24,31,.14);
+}
+
+.wm-role-metric-row:first-child{ border-top: none; }
+.wm-role-metric-row span{ color: var(--ink-soft); font-weight: 600; font-size: .93rem; }
+.wm-role-metric-row strong{ font-family: var(--font-display); font-weight: 900; }
+
+/* ---------- Priority Center ops rows ---------- */
+.wm-home-ops{ margin-top: 18px; }
+
+.wm-home-ops-row{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  padding: 14px 14px;
+  border: 1px dashed rgba(18,24,31,.18);
+  border-radius: 16px;
+  background: rgba(18,24,31,.02);
+  margin-bottom: 12px;
+}
+
+.wm-ops-icon{
+  width: 44px;
+  height: 44px;
+  border-radius: 16px;
+  background: rgba(27,94,60,.10);
+  border: 1px solid rgba(27,94,60,.18);
+  color: var(--green);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.wm-ops-icon i{ font-size: 1.3rem; }
+
+.wm-ops-body{ flex: 1; min-width: 0; }
+.wm-ops-body strong{ display:block; color: var(--ink); font-family: var(--font-display); }
+.wm-ops-body span{ display:block; color: var(--ink-soft); margin-top: 4px; }
+
+/* ---------- Live pill (used in Priority Center) ---------- */
+.home-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .66rem;
+  border: 1px solid rgba(27,94,60,.22);
+  color: var(--green);
+  background: rgba(27,94,60,.10);
+}
+
+/* ---------- Timeline ---------- */
+.wm-timeline{ display:flex; flex-direction: column; gap: 12px; }
+
+.wm-timeline-item{
+  display:flex;
+  align-items:flex-start;
+  gap: 14px;
+  padding: 12px 12px;
+  border: 1px solid var(--wm-line);
+  background: rgba(255,255,255,.55);
+  border-radius: 16px;
+}
+
+.wm-timeline-icon{
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+}
+
+.wm-timeline-icon.is-success{ background: rgba(27,94,60,.10); color: var(--green); border: 1px solid rgba(27,94,60,.20); }
+.wm-timeline-icon.is-info{ background: rgba(46,90,168,.10); color: var(--blue); border: 1px solid rgba(46,90,168,.18); }
+.wm-timeline-icon.is-warning{ background: rgba(227,167,59,.16); color: var(--amber); border: 1px solid rgba(227,167,59,.22); }
+
+.wm-timeline-icon i{ font-size: 1.2rem; }
+
+.wm-timeline-item strong{ font-family: var(--font-display); color: var(--ink); display:block; }
+.wm-timeline-item .text-muted{ color: var(--ink-soft) !important; font-size: .92rem; margin-top: 4px; }
+
+/* ---------- Quick Actions ---------- */
+.wm-quick-actions{ display:flex; flex-direction: column; gap: 12px; }
+
+.wm-quick-actions .home-btn{
+  width: 100%;
+  justify-content: flex-start;
+}
+
+
+

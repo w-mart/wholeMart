@@ -1,0 +1,297 @@
+/* ============================================================
+   WHOLEMART — HEADER & NAVIGATION
+   Contains styles for the main header, logo, search bar,
+   navigation links, and mobile responsive behavior.
+   ============================================================ */
+
+.wm-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
+}
+
+.navbar {
+    min-height: 76px;
+}
+
+.wm-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.wm-logo-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 17px;
+    font-family: var(--font-display);
+    flex-shrink: 0;
+}
+
+.wm-logo-line {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.wm-logo-title {
+    font-size: 19px;
+    font-weight: 800;
+    font-family: var(--font-display);
+    color: var(--ink);
+}
+
+.wm-logo-line small {
+    font-size: .74rem;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.wm-search {
+    width: 420px;
+    max-width: 100%;
+}
+
+.wm-search .input-group {
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    background: var(--bg);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.wm-search .input-group:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(44, 75, 212, .14);
+    background: var(--surface);
+}
+
+.wm-search .input-group-text {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    padding-left: 16px;
+}
+
+.wm-search input.form-control {
+    border: none;
+    background: transparent;
+    font-size: .92rem;
+    padding: 10px 14px 10px 4px;
+    color: var(--text);
+    box-shadow: none;
+}
+
+.wm-search input.form-control:focus {
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+}
+
+.wm-search input.form-control::placeholder {
+    color: #9AA0AC;
+}
+
+.nav-link {
+    color: var(--graphite) !important;
+    font-weight: 600;
+    margin-left: 8px;
+    padding: 8px 12px !important;
+    font-size: .95rem;
+    border-radius: 8px;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent) !important;
+    background: var(--wash-mint);
+}
+
+/* Mobile toggler + collapse panel */
+.navbar-toggler {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 7px 10px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: 0 0 0 3px rgba(44, 75, 212, .14);
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2822, 35, 63, 0.9%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* ============================================================
+   WHOLEMART — DISTRIBUTOR SIDEBAR
+   Off-canvas sidebar toggled by #wmSidebarToggle in the header.
+   Hidden by default at every breakpoint; opens only on click.
+   ============================================================ */
+
+.wm-sidebar {
+    position: fixed;
+    top: 76px;
+    left: -270px;
+    width: 270px;
+    height: calc(100vh - 76px);
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+    transition: left .3s ease;
+    z-index: 1040;
+    box-shadow: var(--shadow);
+}
+
+.wm-sidebar.show {
+    left: 0;
+}
+
+.wm-sidebar ul {
+    padding: 15px;
+}
+
+.wm-sidebar li {
+    margin-bottom: 8px;
+}
+
+.wm-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: var(--graphite);
+    font-weight: 600;
+    font-size: .95rem;
+    transition: color .2s ease, background-color .2s ease;
+}
+
+.wm-sidebar a:hover {
+    background: var(--wash-mint);
+    color: var(--accent);
+}
+
+.wm-sidebar a i {
+    font-size: 18px;
+}
+
+.wm-sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    background: transparent;
+    display: none;
+    z-index: 1035;
+}
+
+.wm-sidebar-backdrop.show {
+    display: block;
+}
+
+.wm-user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* User menu button (avatar + name + chevron) */
+.wm-user-btn {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 6px 14px 6px 6px;
+    color: var(--ink);
+    font-weight: 600;
+    font-size: .92rem;
+    transition: border-color .2s ease, background-color .2s ease;
+}
+
+.wm-user-btn:hover,
+.wm-user-btn:focus {
+    background: var(--bg);
+    border-color: var(--line);
+    color: var(--ink);
+}
+
+.wm-user-btn::after {
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
+/* Dropdown panel */
+.wm-user-menu {
+    margin-top: 10px;
+    padding: 8px;
+    min-width: 190px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.wm-user-menu-header {
+    padding: 6px 10px 10px;
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: none;
+}
+
+.wm-user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: var(--graphite);
+    font-weight: 500;
+    font-size: .92rem;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.wm-user-menu-item:hover,
+.wm-user-menu-item:focus {
+    background: var(--wash-mint);
+    color: var(--accent);
+}
+
+.wm-user-menu-item i {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.wm-user-menu-divider {
+    margin: 6px 4px;
+    border-color: var(--line);
+    opacity: 1;
+}
+
+.wm-user-menu-logout {
+    color: #d3455b;
+}
+
+.wm-user-menu-logout:hover,
+.wm-user-menu-logout:focus {
+    background: rgba(211, 69, 91, .1);
+    color: #d3455b;
+}
+
+/* No @media(min-width:992px) override on purpose: the sidebar stays
+   off-canvas and the #wmSidebarToggle button stays visible at every
+   breakpoint, so it behaves the same on desktop and mobile. */
