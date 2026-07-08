@@ -1,5 +1,7 @@
 target/
-*.class
-*.log
-.idea/
 .vscode/
+.idea/
+*.class
+*.jar
+*.war
+*.log
