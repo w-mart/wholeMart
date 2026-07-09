@@ -6,25 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Order Management</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-<link href="/css/common.css" rel="stylesheet">
-    <link href="/css/orders.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/distributor.css">
+            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hero-carousel.css">
+
 </head>
 
 <body class="wm-home">
+           <%
+String wmUserName = session.getAttribute("name") == null
+        ? "Guest"
+        : String.valueOf(session.getAttribute("name"));
+String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
+%>
+
+    <%@ include file="/WEB-INF/common/distributor-header.jsp"%>
     <div class="wm-app">
-        <% 
-            // Initialize variables previously handled by the shell 
-            String wmUri = request.getRequestURI(); 
-            String wmUserName = session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username")); 
-            String wmUserInitial = wmUserName.isEmpty() ? "?" : wmUserName.substring(0, 1).toUpperCase(); 
-        %>
-
-            <%@ include file="/WEB-INF/common/distributor-header.jsp" %>
-
-                <main class="wm-home-main">
+                 <main class="wm-home-main">
                     <div class="wm-home-container">
 
                         <h1 class="wm-home-title">Order Management</h1>
@@ -135,11 +140,8 @@
                         </script>
                     </div>
                 </main>
-        <footer class="wm-footer-bottom">
-            <p>&copy; 2024 WholeMart. All rights reserved.</p>
-        </footer>
+<%@ include file="/WEB-INF/common/footer.jsp"%>
     </div>
-    <script src="/js/common.js"></script>
 </body>
 
 </html>

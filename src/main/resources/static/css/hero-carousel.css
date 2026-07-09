@@ -1,0 +1,189 @@
+/* ==========================================================
+   W-Mart Hero Carousel
+   ========================================================== */
+
+.wm-hero-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ---------- Viewport ---------- */
+
+.wm-hero-carousel-viewport {
+    width: 100%;
+    height: 300px;
+
+    overflow: hidden;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar */
+
+.wm-hero-carousel-viewport::-webkit-scrollbar {
+    display: none;
+}
+
+.wm-hero-carousel-viewport {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+/* ---------- Track ---------- */
+
+.wm-hero-carousel-track {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+/* ---------- Slide ---------- */
+
+.wm-home-hero-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 300px;
+
+    display: flex;
+    align-items: center;
+
+    scroll-snap-align: start;
+
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* ---------- Hero Grid ---------- */
+
+.wm-home-hero-grid {
+    width: 100%;
+    height: 120%;
+    justify-content: space-between;
+    align-items: center;
+    margin: -9px;
+    padding: 15px;
+}
+
+/* Remove unwanted stretching */
+
+.wm-home-hero-slide,
+.wm-home-hero-grid,
+.wm-hero-carousel {
+    min-height: 0;
+}
+
+/* ---------- Controls ---------- */
+
+.wm-hero-carousel-controls {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    pointer-events: none;
+    z-index: 10;
+}
+
+.wm-hero-carousel-btn {
+    pointer-events: auto;
+
+    width: 46px;
+    height: 46px;
+
+    margin: 0 16px;
+
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.95);
+
+    color: #111;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+
+    box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
+
+.wm-hero-carousel-btn:hover {
+    transform: scale(1.05);
+    background: #fff;
+}
+
+/* ---------- Dots ---------- */
+
+.wm-hero-carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+}
+
+.wm-hero-dot {
+    width: 10px;
+    height: 10px;
+
+    border: none;
+    border-radius: 50%;
+
+    padding: 0;
+
+    background: rgba(0,0,0,.25);
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+}
+
+.wm-hero-dot:hover {
+    background: rgba(0,0,0,.45);
+}
+
+.wm-hero-dot.is-active,
+.wm-hero-dot[aria-current="true"] {
+    width: 24px;
+    border-radius: 999px;
+    background: #12181F;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 992px) {
+
+    .wm-hero-carousel-viewport,
+    .wm-home-hero-slide {
+        height: auto;
+        min-height: 360px;
+    }
+
+    .wm-home-hero-grid {
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .wm-hero-carousel-controls {
+        display: none;
+    }
+
+    .wm-hero-carousel-viewport,
+    .wm-home-hero-slide {
+        min-height: 420px;
+    }
+}
