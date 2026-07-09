@@ -345,10 +345,11 @@
     width: 100%;
   }
 
-  #wmDistributorNav .nav-link {
+  #wmDistributorNav .nav-item .nav-link {
     width: 100%;
     margin-left: 0;
     padding: 10px 12px !important;
+    color: var(--graphite) !important;
   }
 
   /* Keep user button from causing overflow */
@@ -356,4 +357,3 @@
     padding: 6px 10px 6px 6px;
   }
 }
-

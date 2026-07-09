@@ -1,6 +1,6 @@
 /* WholeMart — Distributor Dashboard (Dispatch Ledger) CSS
-   Reference: home.jsp + home.css + retailer/dashboard.jsp classes.
-   Purpose: style distributor/dashboard.jsp without touching JSP markup.
+   This is the CORE stylesheet for the "Dispatch Ledger" theme,
+   used across all distributor and retailer dashboard pages.
 */
 
 :root{
@@ -30,7 +30,7 @@
 
 body{background:var(--wm-cream);color:var(--wm-ink);font-family:var(--wm-font-sans);-webkit-font-smoothing:antialiased;}
 a{text-decoration:none;color:inherit;}
-
+.wm-page-background { background-color: var(--wm-cream); }
 .wm-app{max-width:1350px;margin:0 auto;padding:-10px 28px 8px;}
 
 /* ---------- perforation / ledger dividers ---------- */
@@ -296,4 +296,104 @@ a{text-decoration:none;color:inherit;}
   #wmDashboardAiForm .home-btn-primary,
   #wmDashboardAiForm .home-btn-secondary{border-radius:var(--wm-radius);}
   .wm-app{padding:0 16px 60px;}
+}
+
+/* ============================================================
+   W-Mart — Common Component Styles
+   Consolidated from various feature-specific CSS files.
+   ============================================================ */
+
+.wm-title {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin: 6px 0 6px;
+}
+
+.wm-subtitle {
+    color: #5B6158;
+    margin: 0 0 18px;
+    font-size: .95rem;
+}
+
+.wm-stats {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: 14px 0 14px;
+}
+
+.wm-stat {
+    background: #FFFDF7;
+    border: 1px solid #D8D0B8;
+    border-radius: 6px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    min-width: 190px;
+}
+
+.wm-stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    background: #E4EEE1;
+    color: #4F8F6B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-weight: 700;
+}
+
+.wm-stat b {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 1.35rem;
+    display: inline-block;
+    font-weight: 800;
+    margin-right: 8px;
+}
+
+.wm-stat span {
+    color: #5B6158;
+    font-size: .82rem;
+    text-transform: none;
+}
+
+.wm-toolbar {
+    margin: 14px 0 14px;
+}
+
+.wm-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #FFFDF7;
+    border: 1px solid #D8D0B8;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.wm-table thead th {
+    text-align: left;
+    background: #EFE9D8;
+    color: #20261F;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: .78rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    padding: 14px 14px;
+}
+
+.wm-table tbody td {
+    padding: 12px 14px;
+    border-top: 1px dashed #D8D0B8;
+    color: #20261F;
+    font-size: .92rem;
+    vertical-align: middle;
+}
+
+.wm-table tbody tr:hover td {
+    background: #F6F2E7;
 }
