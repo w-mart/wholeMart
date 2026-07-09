@@ -41,7 +41,8 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
             <!-- ========================================= -->
             <!-- HERO -->
             <!-- ========================================= -->
-            <section class="wm-home-hero">
+            <section class="wm-home-hero" aria-label="Distributor hero">
+                <div class="wm-ledger-divider"></div>
                 <div class="wm-home-hero-grid">
 
                     <div class="wm-home-hero-copy">
@@ -87,6 +88,42 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
                         </div>
                     </div>
 
+                </div>
+            </section>
+
+            <!-- ===================================================== -->
+            <!-- PRIORITY CENTER
+                 Moved directly under the hero: "what needs my attention
+                 right now" is more actionable above the fold than raw
+                 KPI counts, and it's what the AI panel below will end
+                 up talking about anyway. -->
+            <!-- ===================================================== -->
+            <section class="wm-home-ops mb-4">
+                <div class="home-section-head">
+                    <span class="wm-kicker">OPERATIONS</span>
+                    <h2>Priority Center</h2>
+                    <p>Live operational tasks generated from orders, inventory, payments and deliveries.</p>
+                </div>
+
+                <div class="wm-card">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div>
+                            <h4 class="mb-1">Action Queue</h4>
+                            <small class="text-muted">Items requiring your immediate attention.</small>
+                        </div>
+                        <span class="home-pill">LIVE</span>
+                    </div>
+
+                    <div id="wmAttentionList">
+                        <div class="wm-home-ops-row">
+                            <div class="wm-ops-icon"><i class="bi bi-hourglass-split"></i></div>
+                            <div class="wm-ops-body">
+                                <strong>Loading operational priorities...</strong>
+                                <span>WholeMart is analysing your orders, inventory and deliveries.</span>
+                            </div>
+                            <span class="home-pill">Loading</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -148,7 +185,9 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
 
                 </div>
 
-                <!-- Secondary metrics -->
+                <!-- Secondary metrics — labeled and visually lighter so the
+                     four headline numbers above stay the primary read. -->
+                <div class="wm-subsection-label">At a Glance</div>
                 <div class="wm-kpi-secondary">
 
                     <article class="wm-kpi-card">
@@ -340,37 +379,7 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
                 </div>
             </section>
 
-            <!-- ===================================================== -->
-            <!-- PRIORITY CENTER -->
-            <!-- ===================================================== -->
-            <section class="wm-home-ops mb-4">
-                <div class="home-section-head">
-                    <span class="wm-kicker">OPERATIONS</span>
-                    <h2>Priority Center</h2>
-                    <p>Live operational tasks generated from orders, inventory, payments and deliveries.</p>
-                </div>
-
-                <div class="wm-card">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <div>
-                            <h4 class="mb-1">Action Queue</h4>
-                            <small class="text-muted">Items requiring your immediate attention.</small>
-                        </div>
-                        <span class="home-pill">LIVE</span>
-                    </div>
-
-                    <div id="wmAttentionList">
-                        <div class="wm-home-ops-row">
-                            <div class="wm-ops-icon"><i class="bi bi-hourglass-split"></i></div>
-                            <div class="wm-ops-body">
-                                <strong>Loading operational priorities...</strong>
-                                <span>WholeMart is analysing your orders, inventory and deliveries.</span>
-                            </div>
-                            <span class="home-pill">Loading</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <div class="wm-ledger-divider"></div>
 
             <!-- ===================================================== -->
             <!-- BUSINESS INTELLIGENCE -->
@@ -425,6 +434,8 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
 
                 </div>
             </section>
+
+            <div class="wm-ledger-divider"></div>
 
             <!-- ===================================================== -->
             <!-- PRODUCTIVITY CENTER -->
@@ -865,4 +876,3 @@ document.addEventListener("DOMContentLoaded", function () {
 </div>
 </body>
 </html>
-;
