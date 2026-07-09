@@ -74,7 +74,7 @@ a{text-decoration:none;color:inherit;}
 
 /* ---------- hero ---------- */
 .wm-home-container{padding-top:0px;}
-.wm-home-hero{padding-top:10px;}
+.wm-home-hero{padding-top:0px;}
 .wm-home-hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:2px;align-items:stretch;}
 .wm-home-title{font-family:var(--wm-font-sans);font-weight:800;font-size:2.1rem;margin:14px 0 10px;}
 .wm-home-subtitle{color:var(--wm-ink-soft);max-width:46ch;line-height:1.5;}
