@@ -39,7 +39,7 @@
                         business decisions &mdash; built for how wholesale actually runs.
                     </p>
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a href="#" onclick="openLoginPopup()" class="btn wm-btn-primary">Start Now</a>
+                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary">Start Now</a>
                         <a href="#roles" class="btn wm-btn-outline">Choose Workspace</a>
                     </div>                   
                 </div>
