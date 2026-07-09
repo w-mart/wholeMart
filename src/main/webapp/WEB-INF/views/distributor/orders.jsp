@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
-    <link href="/css/common.css" rel="stylesheet">
-    <link href="/css/wholemart.css" rel="stylesheet">
+<link href="/css/common.css" rel="stylesheet">
+    <link href="/css/orders.css" rel="stylesheet">
 </head>
 
 <body class="wm-home">
@@ -22,7 +22,7 @@
             String wmUserInitial = wmUserName.isEmpty() ? "?" : wmUserName.substring(0, 1).toUpperCase(); 
         %>
 
-            <%@ include file="../common/distributor-header.jsp" %>
+            <%@ include file="/WEB-INF/common/distributor-header.jsp" %>
 
                 <main class="wm-home-main">
                     <div class="wm-home-container">

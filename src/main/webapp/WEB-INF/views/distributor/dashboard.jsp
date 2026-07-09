@@ -15,7 +15,6 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
             <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-            <link rel="stylesheet" href="${pageContext.request.contextPath}/css/common.css">
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
             <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
@@ -26,15 +25,16 @@
 <body class="wm-home">
 
 <%
-String wmUserName = session.getAttribute("username") == null
-        ? "Distributor"
-        : String.valueOf(session.getAttribute("username"));
+String wmUserName = session.getAttribute("name") == null
+        ? "Guest"
+        : String.valueOf(session.getAttribute("name"));
 String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
 %>
 
+    <%@ include file="/WEB-INF/common/distributor-header.jsp"%>
+
 <div class="wm-app">
 
-    <%@ include file="/WEB-INF/common/distributor-header.jsp"%>
     <main>
         <div class="wm-home-container">
 
@@ -90,6 +90,58 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
 
                 </div>
             </section>
+<hr>
+<section class="wm-home-reports mb-4">
+                <div class="home-section-head">
+                    <span class="wm-kicker">ANALYTICS</span>
+                    <h2>Reports & Business Intelligence</h2>
+                    <p>Real-time insights into inventory, fulfillment and business growth.</p>
+                </div>
+
+                <div class="row g-4">
+
+                    <div class="col-lg-4">
+                        <article class="home-role-card h-100">
+                            <div class="wm-report-card-head">
+                                <h3 class="mb-0">Inventory Health</h3>
+                                <div class="wm-ring is-success" style="--pct:92"><span>92%</span></div>
+                            </div>
+                            <div class="wm-report-item"><span>Total Products</span><strong id="reportTotalItems">0</strong></div>
+                            <div class="wm-report-item"><span>Categories</span><strong id="reportCategoryCount">0</strong></div>
+                            <div class="wm-report-item"><span>Availability</span><strong style="color:var(--wm-success)">92%</strong></div>
+                            <div class="wm-report-item"><span>Out of Stock</span><strong style="color:var(--wm-danger)">0</strong></div>
+                        </article>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <article class="home-role-card h-100">
+                            <div class="wm-report-card-head">
+                                <h3 class="mb-0">Order Performance</h3>
+                                <div class="wm-ring is-success" style="--pct:98"><span>98%</span></div>
+                            </div>
+                            <div class="wm-report-item"><span>Total Orders</span><strong id="reportTotalOrders">0</strong></div>
+                            <div class="wm-report-item"><span>Running Orders</span><strong id="reportActiveOrders">0</strong></div>
+                            <div class="wm-report-item"><span>Success Rate</span><strong style="color:var(--wm-success)">98.4%</strong></div>
+                            <div class="wm-report-item"><span>Rejected</span><strong>0</strong></div>
+                        </article>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <article class="home-role-card h-100">
+                            <div class="wm-report-card-head">
+                                <h3 class="mb-0">Business Growth</h3>
+                                <div class="wm-ring" style="--pct:78"><span>78%</span></div>
+                            </div>
+                            <div class="wm-report-item"><span>Retailers</span><strong>84</strong></div>
+                            <div class="wm-report-item"><span>Revenue Trend</span><strong style="color:var(--wm-success)">+12%</strong></div>
+                            <div class="wm-report-item"><span>Expansion</span><strong>2 Cities</strong></div>
+                            <div class="wm-report-item"><span>Target Achievement</span><strong>78%</strong></div>
+                        </article>
+                    </div>
+
+                </div>
+            </section>
+
 
             <!-- ===================================================== -->
             <!-- PRIORITY CENTER
@@ -234,6 +286,39 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
                         <p class="wm-kpi-foot" style="color:var(--wm-danger)">Immediate Action</p>
                     </article>
 
+                </div>
+            </section>
+
+            <!-- ===================================================== -->
+            <!-- BUSINESS SNAPSHOT (LEDGER) -->
+            <!-- ===================================================== -->
+            <section id="snapshot" class="mb-4">
+                <div class="home-section-head">
+                    <span class="wm-kicker">ANALYTICS</span>
+                    <h2>Business Snapshot</h2>
+                    <p>A live ledger view of your orders, revenue trend, activity and payment health.</p>
+                </div>
+
+                <div class="card shadow-sm border-0 rounded-4">
+                    <div class="card-header bg-white border-0 pt-4">
+                        <h4 class="fw-bold text-center">Business Snapshot</h4>
+                    </div>
+                    <div class="card-body px-lg-4">
+                        <div class="row g-4">
+                            <div class="col-lg-3 col-md-6">
+                                <canvas id="distOrderStatusChart" role="img" aria-label="Order status breakdown"></canvas>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <canvas id="distRevenueTrendChart" role="img" aria-label="Revenue trend, last 6 months"></canvas>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <canvas id="distActivityBarChart" role="img" aria-label="Activity count across products, orders, deliveries and payments"></canvas>
+                            </div>
+                            <div class="col-lg-3 col-md-6">
+                                <canvas id="distPaymentLedgerChart" role="img" aria-label="Payment ledger: collected vs pending"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -384,57 +469,7 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
             <!-- ===================================================== -->
             <!-- BUSINESS INTELLIGENCE -->
             <!-- ===================================================== -->
-            <section class="wm-home-reports mb-4">
-                <div class="home-section-head">
-                    <span class="wm-kicker">ANALYTICS</span>
-                    <h2>Reports & Business Intelligence</h2>
-                    <p>Real-time insights into inventory, fulfillment and business growth.</p>
-                </div>
-
-                <div class="row g-4">
-
-                    <div class="col-lg-4">
-                        <article class="home-role-card h-100">
-                            <div class="wm-report-card-head">
-                                <h3 class="mb-0">Inventory Health</h3>
-                                <div class="wm-ring is-success" style="--pct:92"><span>92%</span></div>
-                            </div>
-                            <div class="wm-report-item"><span>Total Products</span><strong id="reportTotalItems">0</strong></div>
-                            <div class="wm-report-item"><span>Categories</span><strong id="reportCategoryCount">0</strong></div>
-                            <div class="wm-report-item"><span>Availability</span><strong style="color:var(--wm-success)">92%</strong></div>
-                            <div class="wm-report-item"><span>Out of Stock</span><strong style="color:var(--wm-danger)">0</strong></div>
-                        </article>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <article class="home-role-card h-100">
-                            <div class="wm-report-card-head">
-                                <h3 class="mb-0">Order Performance</h3>
-                                <div class="wm-ring is-success" style="--pct:98"><span>98%</span></div>
-                            </div>
-                            <div class="wm-report-item"><span>Total Orders</span><strong id="reportTotalOrders">0</strong></div>
-                            <div class="wm-report-item"><span>Running Orders</span><strong id="reportActiveOrders">0</strong></div>
-                            <div class="wm-report-item"><span>Success Rate</span><strong style="color:var(--wm-success)">98.4%</strong></div>
-                            <div class="wm-report-item"><span>Rejected</span><strong>0</strong></div>
-                        </article>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <article class="home-role-card h-100">
-                            <div class="wm-report-card-head">
-                                <h3 class="mb-0">Business Growth</h3>
-                                <div class="wm-ring" style="--pct:78"><span>78%</span></div>
-                            </div>
-                            <div class="wm-report-item"><span>Retailers</span><strong>84</strong></div>
-                            <div class="wm-report-item"><span>Revenue Trend</span><strong style="color:var(--wm-success)">+12%</strong></div>
-                            <div class="wm-report-item"><span>Expansion</span><strong>2 Cities</strong></div>
-                            <div class="wm-report-item"><span>Target Achievement</span><strong>78%</strong></div>
-                        </article>
-                    </div>
-
-                </div>
-            </section>
-
+            
             <div class="wm-ledger-divider"></div>
 
             <!-- ===================================================== -->
@@ -493,6 +528,7 @@ String wmUserInitial = wmUserName.substring(0,1).toUpperCase();
 
 <%@ include file="/WEB-INF/common/footer.jsp" %>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -506,6 +542,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const quickButtons = document.getElementById("wmDashboardAiQuickButtons");
     const performanceBrief = document.getElementById("performanceBrief");
     const attentionList = document.getElementById("wmAttentionList");
+
+    /* =====================================================
+       CHART INSTANCES (Business Snapshot)
+    ====================================================== */
+    let distOrderStatusChart, distRevenueTrendChart,
+        distActivityBarChart, distPaymentLedgerChart;
 
     /* =====================================================
        DASHBOARD STATE
@@ -768,6 +810,169 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     /* =====================================================
+       BUSINESS SNAPSHOT CHARTS
+    ====================================================== */
+    function renderSnapshotCharts() {
+
+        const orders = dashboardState.orders || [];
+        const products = dashboardState.products || [];
+        const payments = dashboardState.payments || [];
+        const deliveries = dashboardState.deliveries || [];
+
+        /* ---------- 1. Order status doughnut ---------- */
+        const statusCounts = {
+            Placed: orders.filter(o => o.status === "PLACED").length,
+            Accepted: orders.filter(o => o.status === "ACCEPTED").length,
+            Delivered: orders.filter(o => o.status === "DELIVERED").length,
+            "Rejected/Cancelled": orders.filter(o => o.status === "REJECTED" || o.status === "CANCELLED").length
+        };
+
+        const statusCtx = document.getElementById("distOrderStatusChart");
+        if (statusCtx) {
+            if (distOrderStatusChart) distOrderStatusChart.destroy();
+            distOrderStatusChart = new Chart(statusCtx, {
+                type: "doughnut",
+                data: {
+                    labels: Object.keys(statusCounts),
+                    datasets: [{
+                        data: Object.values(statusCounts),
+                        backgroundColor: ["#2E5AA8", "#E3A73B", "#1F6D46", "#C2410C"],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: "bottom" },
+                        title: { display: true, text: "Order Status" }
+                    },
+                    cutout: "65%"
+                }
+            });
+        }
+
+        /* ---------- 2. Revenue trend (last 6 months) ---------- */
+        const monthLabels = [];
+        const monthTotals = [];
+        const now = new Date();
+
+        for (let i = 5; i >= 0; i--) {
+            const monthStart = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            const monthEnd = new Date(now.getFullYear(), now.getMonth() - i + 1, 1);
+            monthLabels.push(monthStart.toLocaleString("en-IN", { month: "short" }));
+
+            const total = orders.reduce((sum, o) => {
+                const created = o.createdAt ? new Date(o.createdAt) : null;
+                if (created && created >= monthStart && created < monthEnd) {
+                    return sum + Number(o.totalAmount || 0);
+                }
+                return sum;
+            }, 0);
+            monthTotals.push(Math.round(total / 1000) / 100); // in Lakhs
+        }
+
+        const trendCtx = document.getElementById("distRevenueTrendChart");
+        if (trendCtx) {
+            if (distRevenueTrendChart) distRevenueTrendChart.destroy();
+            distRevenueTrendChart = new Chart(trendCtx, {
+                type: "line",
+                data: {
+                    labels: monthLabels,
+                    datasets: [{
+                        label: "Revenue (in L)",
+                        data: monthTotals,
+                        fill: false,
+                        borderColor: "#C2410C",
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: "Monthly Revenue Trend" }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            ticks: { callback: v => "₹" + v + "L" }
+                        }
+                    }
+                }
+            });
+        }
+
+        /* ---------- 3. Activity bar chart ---------- */
+        const activityLabels = ["Products", "Active Orders", "Delivered", "Pending Payments"];
+        const activeOrders = orders.filter(o =>
+            o.status !== "DELIVERED" && o.status !== "REJECTED" && o.status !== "CANCELLED"
+        ).length;
+        const deliveredCount = deliveries.filter(d => d.status === "DELIVERED").length;
+        const pendingPayments = payments.filter(p => p.status === "PENDING").length;
+
+        const activityData = [products.length, activeOrders, deliveredCount, pendingPayments];
+
+        const barCtx = document.getElementById("distActivityBarChart");
+        if (barCtx) {
+            if (distActivityBarChart) distActivityBarChart.destroy();
+            distActivityBarChart = new Chart(barCtx, {
+                type: "bar",
+                data: {
+                    labels: activityLabels,
+                    datasets: [{
+                        label: "Count",
+                        data: activityData,
+                        backgroundColor: ["#2E5AA8", "#1F6D46", "#154F34", "#C2410C"],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: "Activity Count" }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { precision: 0 } }
+                    }
+                }
+            });
+        }
+
+        /* ---------- 4. Payment ledger doughnut ---------- */
+        const collected = payments
+            .filter(p => p.status !== "PENDING")
+            .reduce((sum, p) => sum + Number(p.amount || p.totalAmount || 0), 0);
+        const pending = payments
+            .filter(p => p.status === "PENDING")
+            .reduce((sum, p) => sum + Number(p.amount || p.totalAmount || 0), 0);
+
+        const ledgerCtx = document.getElementById("distPaymentLedgerChart");
+        if (ledgerCtx) {
+            if (distPaymentLedgerChart) distPaymentLedgerChart.destroy();
+            distPaymentLedgerChart = new Chart(ledgerCtx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Collected (₹)", "Pending (₹)"],
+                    datasets: [{
+                        data: [collected, pending],
+                        backgroundColor: ["#1F6D46", "#E3A73B"],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: "bottom" },
+                        title: { display: true, text: "Payment Ledger" }
+                    },
+                    cutout: "65%"
+                }
+            });
+        }
+    }
+
+    /* =====================================================
        AI ASSISTANT
     ====================================================== */
     async function askAi() {
@@ -854,6 +1059,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loadPayments(),
             loadDeliveries()
         ]);
+        renderSnapshotCharts();
     }
 
     initializeDashboard();

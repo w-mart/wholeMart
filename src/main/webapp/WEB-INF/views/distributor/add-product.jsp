@@ -1,4 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Add Product</title><%@ include file="../common/wholemart-shell-start.jsp" %>
+<title>Add Product</title><%@ include file="../common/wholemart-shell-start.jsp" %>
+<link href="/css/add-product.css" rel="stylesheet">
 <h1 class="wm-title">Add Product</h1>
 <p class="wm-subtitle">Create a complete catalog, inventory, compliance, logistics, and AI-ready product record.</p>
 

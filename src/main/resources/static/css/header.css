@@ -5,10 +5,18 @@
    ============================================================ */
 
 .wm-header {
+    /* Ensure tokens exist even if header.css is used without other dashboard styles */
+    --surface: var(--wm-paper, #FFFFFF);
+    --line: var(--wm-line, rgba(0,0,0,.12));
+    --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
+    
+
+
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow);
 }
+
 
 .navbar {
     min-height: 76px;
@@ -142,11 +150,19 @@
     left: -270px;
     width: 270px;
     height: calc(100vh - 76px);
-    background: var(--surface);
     border-right: 1px solid var(--line);
     overflow-y: auto;
     transition: left .3s ease;
     z-index: 1040;
+    box-shadow: var(--shadow);
+     --surface: var(--wm-paper, #FFFFFF);
+    --line: var(--wm-line, rgba(0,0,0,.12));
+    --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
+    
+
+
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow);
 }
 

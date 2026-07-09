@@ -1,838 +1,300 @@
-/* ============================================================
-   WHOLEMART — DISTRIBUTOR DASHBOARD
-   Redesign notes
-   ------------------------------------------------------------
-   This pass brings the dashboard fully into the "Dispatch
-   Ledger" identity defined in home.css, instead of just
-   borrowing its variable names. Three concrete fixes drive the
-   readability/consistency improvements:
-
-   1. Primary actions now use the site's real brand ink
-      (var(--green), near-black) the same way home.css's
-      .wm-btn-primary does — the dashboard's old bright-blue
-      CTAs didn't match anything on the public site.
-   2. Every "accent blue" tint in the old file was hand-typed as
-      rgba(44,75,212,...) — a different blue than home.css's
-      actual --blue (#2E5AA8 / rgb(46,90,168)). All tints below
-      are pulled from home.css's own tokens so hovers, focus
-      rings, and chips are pixel-consistent with the rest of
-      the app.
-   3. Status colors (success/warn/danger) are now a real,
-      distinguishable hue set rather than reusing the near-black
-      --green for "success," which made checkmarks/positive
-      trends hard to read. Success reuses the actual green hue
-      home.css already relies on for its tints and CTA gradient
-      (#1B5E3C), just promoted to a solid, readable color.
-
-   Ledger signature elements (dashed rules, mono tabular
-   numerals, the dashed "stamp" line on cards) are carried over
-   from the homepage so the dashboard reads as the same product,
-   not a different admin theme bolted on.
-
-   All existing wm-*/home-* class hooks used by the JSPs are
-   preserved — only the values behind them changed.
-   ============================================================ */
+/* WholeMart — Distributor Dashboard (Dispatch Ledger) CSS
+   Reference: home.jsp + home.css + retailer/dashboard.jsp classes.
+   Purpose: style distributor/dashboard.jsp without touching JSP markup.
+*/
 
 :root{
-  /* Core surfaces / ink — sourced from home.css, with hardcoded
-     fallbacks matching its real Dispatch Ledger palette. If home.css
-     loads correctly these are pass-throughs (colors stay identical);
-     if it 404s, loads in the wrong order, or is ever removed from a
-     page that includes this file, the dashboard still renders
-     correctly instead of falling back to invisible/transparent
-     buttons and unstyled icons. */
-  --wm-ink:          var(--ink, #12181F);
-  --wm-muted:        var(--ink-soft, rgba(18,24,31,.64));
-  --wm-faint:        var(--ink-faint, rgba(18,24,31,.40));
-  --wm-bg:           var(--paper, #F5F4EC);
-  --wm-surface:      var(--paper-raised, #FFFFFF);
-  --wm-line:         var(--line, rgba(18,24,31,.12));
-  --wm-line-strong:  var(--line-strong, rgba(18,24,31,.22));
+  --wm-cream:        #F6F2E7;
+  --wm-cream-deep:    #EFE9D8;
+  --wm-paper:         #FFFDF7;
+  --wm-ink:           #20261F;
+  --wm-ink-soft:      #5B6158;
+  --wm-line:          #D8D0B8;
+  --wm-mint:          #BFD8C4;
+  --wm-mint-deep:     #4F8F6B;
+  --wm-mint-pale:     #E4EEE1;
+  --wm-success:       #3F7D53;
+  --wm-warning:       #B8842E;
+  --wm-danger:        #B4472E;
+  --wm-dark:          #1A2420;
+  --wm-dark-soft:     #26332C;
 
-  /* Brand ink — used for primary buttons, exactly like home.css's
-     .wm-btn-primary (a deliberate near-black, matching the logo) */
-  --wm-brand:        var(--green, #12181F);
-  --wm-brand-deep:   var(--green-deep, rgba(18,24,31,.64));
-  --wm-brand-tint:   var(--green-tint, rgba(27,94,60,.10));
+  --wm-font-mono:  'IBM Plex Mono', ui-monospace, monospace;
+  --wm-font-sans:  'Plus Jakarta Sans', system-ui, sans-serif;
 
-  /* Route Blue — informational accent (kicker, links, info states) */
-  --wm-accent:       var(--blue, #2E5AA8);
-  --wm-accent-tint:  var(--blue-tint, rgba(46,90,168,.12));
-
-  /* Status colors — a real, readable hue set. "Success" reuses the
-     actual green (#1B5E3C) that home.css's tints/CTA gradient are
-     built from, rather than the near-black brand ink. */
-  --wm-success:      #1B5E3C;
-  --wm-success-tint: rgba(27, 94, 60, .12);
-  --wm-warn:         var(--amber, #E3A73B);
-  --wm-warn-tint:    var(--amber-tint, rgba(227,167,59,.16));
-  --wm-warning:      var(--amber, #E3A73B); /* alias: some JSP inline styles reference --wm-warning */
-  --wm-danger:       var(--red, #C2410C);
-  --wm-danger-tint:  var(--red-tint, rgba(194,65,12,.12));
-
-  --wm-shadow-sm:    var(--shadow-sm, 0 2px 10px rgba(18,24,31,.06));
-  --wm-shadow-md:    var(--shadow, 0 10px 30px rgba(18,24,31,.08));
-  --wm-shadow-hover: var(--shadow-lg, 0 24px 70px rgba(18,24,31,.14));
-
-  --wm-font-display: var(--font-display, 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif);
-  --wm-font-body:    var(--font-body, 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
-  --wm-font-mono:    var(--font-mono, 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace);
-
-  --wm-radius-sm: var(--radius-sm, 10px);
-  --wm-radius-md: var(--radius, 16px);
-  --wm-radius-lg: var(--radius-lg, 24px);
-
-  /* A safe, always-resolving amber for the handful of rules below
-     that need the AI accent color directly rather than through a
-     --wm-* alias. */
-  --wm-amber: var(--amber, #E3A73B);
+  --wm-radius: 3px;
+  --wm-shadow: 0 1px 0 rgba(32,38,31,0.06), 0 8px 24px -16px rgba(32,38,31,0.25);
 }
 
-/* home.css already paints body.wm-home's background (paper +
-   faint green wash near the top) — no need to redeclare it here. */
+*{box-sizing:border-box;}
 
-.wm-home .wm-app{ min-height: 100vh; }
+body{background:var(--wm-cream);color:var(--wm-ink);font-family:var(--wm-font-sans);-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
 
-.wm-home-impact,
-.wm-home-ops,
-.wm-home-reports{ padding: 10px 0 12px; }
+.wm-app{max-width:1400px;margin:0 auto;padding:0 7px 8px;}
 
-/***********************
- Main content wrapper
-***********************/
-.wm-home-main{ padding: 26px 0 60px; position: relative; }
-.wm-home-container{ max-width: 1240px; margin: 0 auto; padding: 0 20px; }
-
-/***********************
- Typography
-***********************/
-.wm-title{
-  font-family: var(--wm-font-display);
-  font-weight: 700;
-  font-size: clamp(1.6rem, 2.5vw, 2.1rem);
-  letter-spacing: -.01em;
-  color: var(--wm-ink);
-  margin: 8px 0 6px;
-}
-.wm-subtitle{
-  color: var(--wm-muted);
-  font-size: 1rem;
-  line-height: 1.7;
-  margin: 0 0 18px;
-}
-
-.home-section-head{ margin: 26px 0 16px; }
-.home-section-head h2{
-  font-family: var(--wm-font-display);
-  font-weight: 700;
-  letter-spacing: -.01em;
-  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
-  color: var(--wm-ink);
-  margin: 6px 0 8px;
-}
-.home-section-head p{
-  margin: 0;
-  color: var(--wm-muted);
-  max-width: 720px;
-  line-height: 1.7;
-  font-size: .98rem;
-}
-/* the kicker/eyebrow directly above a heading needs less gap below it */
-.home-section-head .wm-kicker{ margin-bottom: 10px; }
-
-/***********************
- Kicker pill (ledger "eyebrow" — mono, uppercase, tracked out)
-***********************/
-.wm-kicker{
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 14px;
-  border-radius: 999px;
-  background: var(--wm-brand-tint);
-  border: 1px solid rgba(27,94,60,.24);
-  color: var(--wm-brand-deep);
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  font-weight: 600;
-  font-size: .7rem;
-  font-family: var(--wm-font-mono);
-}
-.wm-kicker .wm-live-dot{
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--wm-success);
-  box-shadow: 0 0 0 0 rgba(27,94,60,.5);
-  animation: wmLivePulse 2s infinite;
-}
-@keyframes wmLivePulse{
-  0%{ box-shadow: 0 0 0 0 rgba(27,94,60,.45); }
-  70%{ box-shadow: 0 0 0 9px rgba(27,94,60,0); }
-  100%{ box-shadow: 0 0 0 0 rgba(27,94,60,0); }
-}
-@media (prefers-reduced-motion: reduce){
-  .wm-kicker .wm-live-dot{ animation: none; }
-}
-
-/***********************
- Buttons
-***********************/
-.home-btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  height: 48px;
-  padding: 0 20px;
-  border-radius: var(--wm-radius-sm);
-  text-decoration: none;
-  border: 1.5px solid transparent;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: .96rem;
-  font-family: var(--wm-font-body);
-  white-space: nowrap;
-  user-select: none;
-  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, border-color .15s ease, color .15s ease;
-}
-.home-btn i{ font-size: 1.05rem; }
-.home-btn:focus-visible{ outline: 2px solid var(--wm-accent); outline-offset: 2px; }
-
-.home-btn-primary{
-  background: var(--wm-brand);
-  border-color: var(--wm-brand);
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(18,24,31,.20);
-}
-.home-btn-primary:hover{
-  background: var(--wm-brand-deep);
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(18,24,31,.24);
-}
-
-.home-btn-secondary{
-  background: var(--wm-surface);
-  border-color: var(--wm-line-strong);
-  color: var(--wm-ink);
-}
-.home-btn-secondary:hover{
-  border-color: var(--wm-brand);
-  background: var(--wm-brand-tint);
-  transform: translateY(-2px);
-}
-
-/* Secondary utility button used on subpages (orders/products/etc) */
-.wm-btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 9px 14px;
-  border-radius: var(--wm-radius-sm);
-  border: 1px solid var(--wm-line-strong);
-  background: var(--wm-surface);
-  color: var(--wm-ink);
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
-}
-.wm-btn:hover{ background: var(--wm-brand-tint); border-color: var(--wm-brand); transform: translateY(-1px); }
-
-.wm-btn-secondary{
-  background: var(--wm-accent-tint);
-  border-color: rgba(46,90,168,.28);
-  color: var(--wm-ink);
-}
-
-/* Gradient CTA used on the products page — restated as a solid
-   ink button so it reads as "the same primary action" everywhere */
-.wm-gradient-btn{
-  background: var(--wm-brand) !important;
-  border: 1px solid var(--wm-brand) !important;
-  color: #fff !important;
-  padding: 10px 16px !important;
-  border-radius: var(--wm-radius-sm) !important;
-  font-weight: 700 !important;
-}
-.wm-gradient-btn:hover{ background: var(--wm-brand-deep) !important; }
-
-/***********************
- Hero
-***********************/
-/* Ledger "perforation" divider — a dashed tear line with a punch-hole
-   circle at each end, used between major sections to reinforce the
-   ticket/ledger-paper identity instead of a plain <hr>. */
+/* ---------- perforation / ledger dividers ---------- */
 .wm-ledger-divider{
-  position: relative;
-  height: 0;
-  border-top: 1px dashed var(--wm-line-strong);
-  margin: 0 0 24px;
+  height:10px;
+  border-top:2px dashed var(--wm-line);
+  margin:10px 0;
+  position:relative;
 }
-.wm-ledger-divider:before,
-.wm-ledger-divider:after{
-  content: "";
-  position: absolute;
-  top: -6px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--wm-bg);
-  border: 1px solid var(--wm-line-strong);
+.wm-ledger-divider::before,.wm-ledger-divider::after{
+  content:"";
+  position:absolute; top:-7px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--wm-cream);
+  box-shadow:inset 0 0 0 2px var(--wm-line);
 }
-.wm-ledger-divider:before{ left: 0; transform: translateX(-50%); }
-.wm-ledger-divider:after{ right: 0; transform: translateX(50%); }
+.wm-ledger-divider::before{left:-31px;}
+.wm-ledger-divider::after{right:-31px;}
 
-/* Small dashed-trailing label used to separate a primary metric row
-   from a secondary/supporting one within the same section, so a
-   grid of 8 KPI cards doesn't read as one undifferentiated block. */
-.wm-subsection-label{
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 28px 0 12px;
-  font-family: var(--wm-font-mono);
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  font-size: .7rem;
-  font-weight: 600;
-  color: var(--wm-muted);
-}
-.wm-subsection-label:after{
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: repeating-linear-gradient(90deg, var(--wm-line-strong) 0 6px, transparent 6px 12px);
-}
+/* Header + sidebar styles are already in header.css; distributor.css focuses on page blocks.
+   Still, many JSPs rely on wm-* tokens below.
+*/
 
-.wm-home-hero{ position: relative; padding: 18px 0 26px; }
-.wm-home-hero:before{
-  content: "";
-  position: absolute;
-  inset: -80px -20px auto -20px;
-  height: 340px;
-  background:
-    radial-gradient(circle at 8% 15%, rgba(27,94,60,.12), transparent 50%),
-    radial-gradient(circle at 92% 8%, rgba(227,167,59,.14), transparent 46%),
-    radial-gradient(rgba(18,24,31,.06) 1px, transparent 1px);
-  background-size: auto, auto, 22px 22px;
-  pointer-events: none;
-  z-index: 0;
+/* ---------- shared section typography ---------- */
+.wm-kicker{
+  font-family:var(--wm-font-mono);
+  font-size:.7rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--wm-mint-deep);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
 }
-.wm-home-hero-grid{
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 1.08fr .92fr;
-  gap: 24px;
-  align-items: stretch;
+.wm-live-dot{width:6px;height:6px;border-radius:50%;background:var(--wm-mint-deep);animation:wm-pulse 1.6s infinite;}
+@keyframes wm-pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+.home-section-head{margin-bottom:20px;}
+.home-section-head h2{font-family:var(--wm-font-sans);font-weight:800;font-size:1.5rem;margin:6px 0 4px;}
+.home-section-head p{color:var(--wm-ink-soft);margin:0;font-size:.92rem;}
+
+/* ---------- hero ---------- */
+.wm-home-container{padding-top:10px;}
+.wm-home-hero{padding-top:10px;}
+.wm-home-hero-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:stretch;}
+.wm-home-title{font-family:var(--wm-font-sans);font-weight:800;font-size:2.1rem;margin:14px 0 10px;}
+.wm-home-subtitle{color:var(--wm-ink-soft);max-width:46ch;line-height:1.5;}
+
+.wm-home-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+
+.home-btn{
+  font-family:var(--wm-font-mono);
+  font-size:.8rem;
+  font-weight:600;
+  padding:11px 18px;
+  border-radius:var(--wm-radius);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid transparent;
+  cursor:pointer;
+  transition:transform .16s ease, background-color .16s ease, box-shadow .16s ease, border-color .16s ease;
 }
 
-.wm-home-hero-copy{ padding: 8px 0; display: flex; flex-direction: column; justify-content: center; }
+.home-btn-primary{background:var(--wm-dark);color:var(--wm-mint);}
+.home-btn-primary:hover{background:var(--wm-dark-soft);transform:translateY(-2px);}
 
-.wm-home-title{
-  font-family: var(--wm-font-display);
-  font-weight: 700;
-  color: var(--wm-ink);
-  font-size: clamp(1.9rem, 3.1vw, 2.8rem);
-  line-height: 1.15;
-  margin: 12px 0 12px;
-  letter-spacing: -.02em;
-}
-.wm-home-title strong{ color: var(--wm-brand-deep); }
+.home-btn-secondary{background:var(--wm-paper);color:var(--wm-ink);border-color:var(--wm-line);}
+.home-btn-secondary:hover{border-color:var(--wm-mint-deep);transform:translateY(-2px);}
 
-.wm-home-subtitle{ color: var(--wm-muted); font-size: 1.02rem; line-height: 1.75; margin-bottom: 20px; max-width: 520px; }
-
-.wm-home-actions{ display: flex; gap: 12px; flex-wrap: wrap; }
-
-/***********************
- Pulse card — "Today's Performance" console
- (mirrors the dark dispatch-console treatment used for the
- AI panel/CTA on the homepage, so it feels like the same site)
-***********************/
+/* ---------- pulse / snapshot card ---------- */
 .wm-pulse-card{
-  background:
-    radial-gradient(circle at 15% 0%, rgba(227,167,59,.16), transparent 55%),
-    linear-gradient(165deg, #0D1116 0%, #1B3226 100%);
-  color: #EAF3EC;
-  border-radius: var(--wm-radius-lg);
-  padding: 24px;
-  box-shadow: var(--wm-shadow-md);
-  position: relative;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.10);
-  display: flex;
-  flex-direction: column;
+  background:var(--wm-dark);
+  color:var(--wm-cream);
+  border-radius:6px;
+  padding:26px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  clip-path:polygon(0 0,100% 0,100% 100%,92% 96%,84% 100%,76% 96%,68% 100%,60% 96%,52% 100%,44% 96%,36% 100%,28% 96%,20% 100%,12% 96%,4% 100%,0 96%);
+  padding-bottom:34px;
+  box-shadow:var(--wm-shadow);
 }
-.wm-pulse-card:after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 16px 16px;
-  pointer-events: none;
-}
-.wm-pulse-eyebrow{
-  color: rgba(234,243,236,.7);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-family: var(--wm-font-mono);
-  font-weight: 600;
-  font-size: .7rem;
-  margin-bottom: 6px;
-  position: relative;
-  z-index: 1;
-}
-.wm-pulse-card h3{
-  font-family: var(--wm-font-display);
-  font-weight: 700;
-  font-size: 1.4rem;
-  margin: 0 0 14px;
-  color: #fff;
-  position: relative;
-  z-index: 1;
-}
-
-#performanceBrief{
-  position: relative;
-  z-index: 1;
-  color: rgba(234,243,236,.86);
-  line-height: 1.7;
-  margin-top: 8px;
-  min-height: 48px;
-  font-size: .98rem;
-}
-#performanceBrief strong{ color: #fff; font-family: var(--wm-font-mono); }
-
-.wm-pulse-card hr{ border: none; border-top: 1px dashed rgba(255,255,255,.18); margin: 20px 0; position: relative; z-index: 1; }
-
-.wm-pulse-stats{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 4px; position: relative; z-index: 1; }
-.wm-pulse-stats h5{ font-family: var(--wm-font-mono); font-size: 1.6rem; font-weight: 600; color: #fff; margin: 0; }
-.wm-pulse-stats small{ display: block; margin-top: 6px; color: rgba(234,243,236,.6); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; font-size: .68rem; }
+.wm-pulse-eyebrow{font-family:var(--wm-font-mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--wm-mint);}
+.wm-pulse-card h3{margin:4px 0 0;font-size:1.15rem;font-weight:700;}
 
 .home-logo{
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: rgba(227,167,59,.16);
-  color: var(--wm-amber);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--wm-font-mono);
-  font-weight: 700;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
+  width:36px;height:36px;border-radius:var(--wm-radius);
+  background:var(--wm-mint);
+  color:var(--wm-dark);
+  font-family:var(--wm-font-mono);
+  font-weight:700;
+  font-size:.75rem;
+  display:flex;align-items:center;justify-content:center;
 }
 
-/***********************
- Generic cards
-***********************/
+#performanceBrief{font-size:.88rem;line-height:1.6;color:#D9E6DC;}
+.wm-pulse-card hr{border-color:rgba(255,255,255,.14);margin:18px 0;}
+.wm-pulse-stats{display:flex;justify-content:space-between;text-align:center;gap:16px;}
+.wm-pulse-stats h5{font-family:var(--wm-font-mono);font-size:1.4rem;font-weight:700;margin:0;color:var(--wm-mint);}
+.wm-pulse-stats small{font-size:.68rem;color:#9FB0A4;text-transform:uppercase;letter-spacing:.08em;}
+
+/* ---------- generic ledger card ---------- */
 .wm-card{
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-line);
-  border-radius: var(--wm-radius-lg);
-  box-shadow: var(--wm-shadow-sm);
-  padding: 24px;
-  overflow: hidden;
+  background:var(--wm-paper);
+  border:1px solid var(--wm-line);
+  border-radius:6px;
+  box-shadow:var(--wm-shadow);
+  padding:24px;
 }
 
-/* AI panel variant on dashboard.jsp — the "dispatch console" treatment.
-   Deliberately dark, matching the AI panel on the public homepage, so
-   the assistant reads as one consistent feature rather than a
-   different component. Every color below is restated explicitly
-   (not inherited from .wm-card) so contrast is guaranteed regardless
-   of stylesheet load order — this fixes the low-contrast text/chips
-   seen when the panel rendered dark but its children stayed styled
-   for a light surface. */
-.wm-ai-panel{
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(165deg, #0D1116 0%, #1B3226 100%);
-  border: 1px solid rgba(255,255,255,.08);
-  box-shadow: var(--wm-shadow-hover);
+/* ---------- priority center rows ---------- */
+.home-pill{
+  font-family:var(--wm-font-mono);
+  font-size:.68rem;
+  font-weight:600;
+  padding:4px 10px;
+  border-radius:20px;
+  background:var(--wm-mint-pale);
+  color:var(--wm-mint-deep);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  white-space:nowrap;
 }
-.wm-ai-panel:before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
-  background-size: 16px 16px;
-  pointer-events: none;
-}
-.wm-ai-panel h2{ color: #fff; font-family: var(--wm-font-display); font-weight: 700; letter-spacing: -.01em; }
-.wm-ai-panel .text-muted{ color: rgba(234,243,236,.66) !important; }
-.wm-ai-panel h5{ color: #fff; font-family: var(--wm-font-display); font-weight: 700; margin-bottom: 14px; }
+.home-pill.is-warning{background:#F5E6CC;color:var(--wm-warning);}
+.home-pill.is-danger{background:#F2DAD2;color:var(--wm-danger);}
 
-/***********************
- KPI grid — numerals in mono for easy scanning/comparison
-***********************/
-.wm-kpi-headline,
-.wm-kpi-secondary{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-top: 18px;
+.wm-home-ops-row{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 4px;
+  border-bottom:1px dashed var(--wm-line);
 }
+.wm-home-ops-row:last-child{border-bottom:none;}
 
-.wm-kpi-card{
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-line);
-  border-radius: var(--wm-radius-md);
-  padding: 20px;
-  box-shadow: var(--wm-shadow-sm);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-  position: relative;
-  overflow: hidden;
+.wm-ops-icon{
+  width:38px;height:38px;
+  flex:0 0 auto;
+  border-radius:var(--wm-radius);
+  background:var(--wm-mint-pale);
+  color:var(--wm-mint-deep);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;
 }
-.wm-kpi-card:before{
-  content: "";
-  position: absolute;
-  top: 0; left: 20px; right: 20px; height: 3px;
-  background: repeating-linear-gradient(90deg, var(--wm-line-strong) 0 8px, transparent 8px 14px);
-}
-.wm-kpi-card:hover{ transform: translateY(-3px); box-shadow: var(--wm-shadow-hover); border-color: rgba(27,94,60,.22); }
+.wm-ops-body{flex:1;display:flex;flex-direction:column;}
+.wm-ops-body span{font-size:.82rem;color:var(--wm-ink-soft);line-height:1.4;}
 
-.wm-kpi-secondary .wm-kpi-card{ background: linear-gradient(180deg, var(--wm-brand-tint), rgba(27,94,60,.02)); }
-.wm-subsection-label + .wm-kpi-secondary{ margin-top: 0; }
+/* ---------- KPI grid ---------- */
+.wm-home-impact{padding-top:20px;}
 
-.wm-kpi-top{ display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.wm-kpi-label{ color: var(--wm-muted); font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; font-family: var(--wm-font-mono); }
-.wm-kpi-value{
-  display: block;
-  font-family: var(--wm-font-mono);
-  font-weight: 600;
-  font-size: 1.85rem;
-  color: var(--wm-ink);
-  margin-top: 8px;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -.01em;
-}
-.wm-kpi-foot{ margin-top: 12px; color: var(--wm-muted); font-size: .92rem; line-height: 1.6; }
-.wm-trend-up{ color: var(--wm-success); font-weight: 700; }
-.wm-trend-down{ color: var(--wm-danger); font-weight: 700; }
+.wm-kpi-headline{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.wm-subsection-label{font-family:var(--wm-font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm-ink-soft);margin:26px 0 12px;}
+.wm-kpi-secondary{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+
+.wm-kpi-card{background:var(--wm-paper);border:1px solid var(--wm-line);border-radius:6px;padding:18px;}
+.wm-kpi-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.wm-kpi-label{font-family:var(--wm-font-mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--wm-ink-soft);}
+.wm-kpi-value{display:block;font-family:var(--wm-font-mono);font-weight:700;font-size:1.5rem;margin-top:4px;font-variant-numeric:tabular-nums;}
+.wm-kpi-foot{font-size:.78rem;color:var(--wm-ink-soft);margin:14px 0 0;}
+.wm-trend-up{color:var(--wm-success);font-weight:600;}
 
 .home-role-mark{
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--wm-brand-tint);
-  color: var(--wm-brand-deep);
-  flex-shrink: 0;
+  width:34px;height:34px;border-radius:var(--wm-radius);
+  background:var(--wm-mint-pale);
+  color:var(--wm-mint-deep);
+  display:flex;align-items:center;justify-content:center;
 }
-.home-role-mark.is-warning{ background: var(--wm-warn-tint); color: #92650E; }
-.home-role-mark.is-danger{ background: var(--wm-danger-tint); color: var(--wm-danger); }
-.home-role-mark.is-success{ background: var(--wm-success-tint); color: var(--wm-success); }
+.home-role-mark.is-success{background:#DCEEE1;color:var(--wm-success);}
+.home-role-mark.is-danger{background:#F2DAD2;color:var(--wm-danger);}
 
-/***********************
- AI assistant
- Amber is used as the accent throughout this panel (avatar, chip
- icons, primary CTA) — the same role it plays in the homepage's AI
- console — so it reads as "the AI's color" rather than competing
- with the brand ink used for every other primary button on the page.
-***********************/
-.wm-ai-header{
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 16px; padding-bottom: 16px;
-  border-bottom: 1px dashed rgba(255,255,255,.16);
-  position: relative; z-index: 1;
+/* progress ring */
+.wm-ring{--pct:0; width:44px;height:44px;border-radius:50%;background:conic-gradient(var(--wm-mint-deep) calc(var(--pct)*1%), var(--wm-mint-pale) 0);display:flex;align-items:center;justify-content:center;position:relative;}
+.wm-ring::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--wm-paper);}
+.wm-ring span{position:relative;font-family:var(--wm-font-mono);font-size:.62rem;font-weight:700;}
+.wm-ring.is-success{background:conic-gradient(var(--wm-success) calc(var(--pct)*1%), var(--wm-mint-pale) 0);}
+
+/* ---------- AI panel ---------- */
+.wm-ai-panel{background:var(--wm-dark);color:var(--wm-cream);border:none;position:relative;overflow:hidden;}
+.wm-ai-panel::after{content:"WHOLEMART";position:absolute;right:-10px;bottom:-18px;font-family:var(--wm-font-mono);font-weight:800;font-size:4.5rem;color:rgba(191,216,196,.05);letter-spacing:.02em;pointer-events:none;}
+
+.wm-ai-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:20px;}
+.wm-ai-avatar{width:44px;height:44px;border-radius:var(--wm-radius);background:var(--wm-mint);color:var(--wm-dark);display:flex;align-items:center;justify-content:center;font-family:var(--wm-font-mono);font-weight:700;flex:0 0 auto;}
+
+.wm-ai-panel h2{font-size:1.25rem;font-weight:800;}
+.wm-ai-panel .text-muted{color:#9FB0A4 !important;}
+
+.wm-ai-response{background:rgba(255,255,255,.05);border:1px dashed rgba(191,216,196,.3);border-radius:var(--wm-radius);padding:18px;font-size:.9rem;line-height:1.7;}
+.wm-ai-response ul{padding-left:18px;color:#D9E6DC;}
+
+.wm-ai-chips{display:flex;flex-direction:column;gap:8px;}
+.wm-ai-chip{font-family:var(--wm-font-mono);font-size:.78rem;text-align:left;background:rgba(255,255,255,.05);color:var(--wm-cream);border:1px solid rgba(191,216,196,.25);border-radius:var(--wm-radius);padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.wm-ai-chip:hover{background:rgba(191,216,196,.12);border-color:var(--wm-mint);}
+
+#wmDashboardAiForm{display:flex;gap:10px;align-items:center;}
+#wmDashboardAiForm .form-control,
+#wmDashboardAiForm input.form-control{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(191,216,196,.25);
+  color:var(--wm-cream);
+  font-family:var(--wm-font-mono);
+  font-size:.85rem;
+  border-radius:var(--wm-radius);
+  padding:12px 14px;
+  flex:1;
+  outline:none;
 }
-.wm-ai-avatar{
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: rgba(227,167,59,.16);
-  color: var(--wm-amber);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--wm-font-mono);
-  font-weight: 700;
-  font-size: 1.05rem;
-  flex-shrink: 0;
-}
+#wmDashboardAiForm .form-control::placeholder{color:#7C8C81;}
 
-.wm-ai-response{
-  position: relative;
-  z-index: 1;
-  background: rgba(255,255,255,.97);
-  border: 1px solid rgba(255,255,255,.5);
-  border-left: 4px solid var(--wm-amber);
-  border-radius: var(--wm-radius-md);
-  padding: 18px 20px;
-  color: var(--wm-ink);
-  line-height: 1.65;
-  box-shadow: 0 12px 30px rgba(0,0,0,.28);
-}
-.wm-ai-response ul{ margin: 10px 0 0; padding-left: 20px; }
-.wm-ai-response li{ margin-bottom: 6px; }
+#wmDashboardAiForm .home-btn-primary{white-space:nowrap;border-radius:0 var(--wm-radius) var(--wm-radius) 0;}
+#wmDashboardAiForm .home-btn-secondary{white-space:nowrap;}
 
-.wm-ai-chips{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; position: relative; z-index: 1; }
-.wm-ai-chip{
-  border-radius: 999px;
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.16);
-  padding: 10px 14px;
-  font-weight: 600;
-  font-size: .86rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: #EAF3EC;
-  transition: transform .15s ease, border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
-}
-.wm-ai-chip i{ color: var(--wm-amber); }
-.wm-ai-chip:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,.34); background: rgba(255,255,255,.14); box-shadow: 0 10px 24px rgba(0,0,0,.35); }
-.wm-ai-chip:focus-visible{ outline: 2px solid var(--wm-amber); outline-offset: 2px; }
-
-#wmDashboardAiForm{ margin-top: 18px; position: relative; z-index: 1; }
-#wmDashboardAiForm .input-group{
-  border-radius: var(--wm-radius-md);
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,.14);
-  background: #fff;
-  box-shadow: 0 12px 30px rgba(0,0,0,.28);
-}
-#wmDashboardAiForm .form-control{ border: none; padding: 14px 16px; font-size: .95rem; background: transparent; color: var(--wm-ink); }
-#wmDashboardAiForm .form-control:focus{ outline: none; box-shadow: none; }
-#wmDashboardAiForm .form-control::placeholder{ color: var(--wm-faint); }
-#wmDashboardAiForm .home-btn{ border-radius: 0; height: 52px; }
-#wmDashboardAiForm .home-btn-secondary{ background: #fff; border-color: #fff; color: var(--wm-ink); }
-#wmDashboardAiForm .home-btn-secondary:hover{ background: #F2F1E9; transform: none; }
-#wmDashboardAiForm .home-btn-primary{ background: var(--wm-amber); border-color: var(--wm-amber); color: #12181F; box-shadow: none; }
-#wmDashboardAiForm .home-btn-primary:hover{ background: #EDBB5D; transform: none; box-shadow: none; }
-
-#wmDashboardAiActionBox{ margin-top: 12px; position: relative; z-index: 1; }
-
-/***********************
- Role grid
-***********************/
-.wm-home-roles,
-.wm-home-ops,
-.wm-home-reports{ padding: 44px 0 8px; }
-
-.wm-home-role-grid{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+/* ---------- role / fulfillment grid ---------- */
+.wm-home-roles{padding-top:10px;}
+.wm-home-role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
 
 .home-role-card{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding: 20px;
-  border-radius: var(--wm-radius-md);
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-line);
-  box-shadow: var(--wm-shadow-sm);
-  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  background:var(--wm-paper);
+  border:1px solid var(--wm-line);
+  border-radius:6px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  clip-path:polygon(0 0,100% 0,100% 92%,94% 100%,0 100%);
 }
-/* the ledger "stamp" line — same signature as the homepage's role cards */
-.home-role-card:before{
-  content: "";
-  position: absolute;
-  top: 0; left: 20px; right: 20px; height: 3px;
-  background: repeating-linear-gradient(90deg, var(--wm-brand) 0 8px, transparent 8px 13px);
-}
-.home-role-card:hover{ transform: translateY(-4px); box-shadow: var(--wm-shadow-hover); border-color: rgba(27,94,60,.22); }
-.home-role-card h3{ font-family: var(--wm-font-display); font-weight: 700; color: var(--wm-ink); font-size: 1.2rem; margin: 12px 0 8px; letter-spacing: -.01em; }
-.home-role-card p{ margin: 0; color: var(--wm-muted); line-height: 1.65; font-size: .95rem; }
-.home-role-card .home-btn{ margin-top: auto; width: 100%; }
+.home-role-card h3{font-size:1.05rem;font-weight:700;margin:14px 0 4px;}
+.home-role-card p{color:var(--wm-ink-soft);font-size:.85rem;margin:0;}
 
-.wm-role-metric-row{ display: flex; justify-content: space-between; align-items: baseline; padding: 9px 0; font-size: .88rem; color: var(--wm-muted); border-bottom: 1px dashed var(--wm-line); }
-.wm-role-metric-row:last-child{ border-bottom: none; }
-.wm-role-metric-row strong{ color: var(--wm-ink); font-family: var(--wm-font-mono); font-size: 1.05rem; font-weight: 600; }
+.wm-role-metric-row{display:flex;justify-content:space-between;font-family:var(--wm-font-mono);font-size:.82rem;padding:8px 0;border-bottom:1px dashed var(--wm-line);}
+.wm-role-metric-row:last-child{border-bottom:none;}
+.home-role-card .home-btn{margin-top:auto;justify-content:center;}
 
-/***********************
- Operations priority rows
-***********************/
-.home-pill{
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: .7rem;
-  font-weight: 600;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  font-family: var(--wm-font-mono);
-  background: var(--wm-accent-tint);
-  border: 1px solid rgba(46,90,168,.22);
-  color: var(--wm-accent);
-  white-space: nowrap;
-}
-.home-pill.is-warning{ background: var(--wm-warn-tint); border-color: rgba(227,167,59,.3); color: #92650E; }
-.home-pill.is-danger{ background: var(--wm-danger-tint); border-color: rgba(194,65,12,.28); color: var(--wm-danger); }
+/* ---------- reports ---------- */
+.wm-report-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;}
+.wm-report-card-head h3{margin:0;font-size:1.05rem;font-weight:800;}
 
-.wm-home-ops-row{ display: flex; align-items: center; gap: 16px; padding: 16px 4px; border-bottom: 1px dashed var(--wm-line-strong); }
-.wm-home-ops-row:last-child{ border-bottom: none; }
-.wm-home-ops-row .wm-ops-icon{ width: 38px; height: 38px; border-radius: 11px; background: var(--wm-brand-tint); color: var(--wm-brand-deep); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.wm-home-ops-row .wm-ops-body{ flex: 1; min-width: 0; }
-.wm-home-ops-row strong{ display: block; color: var(--wm-ink); font-size: .98rem; margin-bottom: 4px; }
-.wm-home-ops-row span{ color: var(--wm-muted); font-size: .9rem; line-height: 1.55; }
+.wm-report-item{display:flex;justify-content:space-between;font-size:.85rem;padding:9px 0;border-bottom:1px dashed var(--wm-line);font-family:var(--wm-font-mono);}
+.wm-report-item:last-child{border-bottom:none;}
 
-/***********************
- Reports
-***********************/
-.wm-report-card-head{ display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px dashed var(--wm-line-strong); }
-.wm-report-item{ display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--wm-line); color: var(--wm-muted); font-size: .92rem; }
-.wm-report-item:last-child{ border-bottom: none; }
-.wm-report-item strong{ color: var(--wm-ink); font-family: var(--wm-font-mono); font-weight: 600; }
+/* ---------- timeline ---------- */
+.wm-timeline-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px dashed var(--wm-line);}
+.wm-timeline-item:last-child{border-bottom:none;}
+.wm-timeline-icon{width:32px;height:32px;border-radius:50%;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.85rem;}
+.wm-timeline-icon.is-success{background:var(--wm-success);}
+.wm-timeline-icon.is-info{background:var(--wm-mint-deep);}
+.wm-timeline-icon.is-warning{background:var(--wm-warning);}
+.wm-timeline-item .text-muted{color:var(--wm-ink-soft);font-size:.8rem;}
 
-/***********************
- Timeline
-***********************/
-.wm-timeline{ display: flex; flex-direction: column; gap: 0; }
-.wm-timeline-item{ display: flex; align-items: flex-start; gap: 14px; padding: 13px 0; border-bottom: 1px dashed var(--wm-line-strong); }
-.wm-timeline-item:last-child{ border-bottom: none; }
-.wm-timeline-icon{ width: 40px; height: 40px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: .95rem; flex-shrink: 0; margin-top: 2px; border: 1px solid transparent; }
-.wm-timeline-icon.is-success{ background: var(--wm-success-tint); color: var(--wm-success); border-color: rgba(27,94,60,.22); }
-.wm-timeline-icon.is-info{ background: var(--wm-accent-tint); color: var(--wm-accent); border-color: rgba(46,90,168,.22); }
-.wm-timeline-icon.is-warning{ background: var(--wm-warn-tint); color: #92650E; border-color: rgba(227,167,59,.3); }
+.wm-quick-actions{display:flex;flex-direction:column;gap:10px;}
+.wm-quick-actions .home-btn{justify-content:flex-start;}
 
-.wm-timeline-item strong{ display: block; color: var(--wm-ink); font-size: .95rem; margin-bottom: 3px; }
-.wm-timeline-item .text-muted{ font-size: .86rem; color: var(--wm-muted) !important; }
-
-/***********************
- Quick actions (used on the dashboard's productivity card)
-***********************/
-.wm-quick-actions{ display: flex; flex-direction: column; gap: 10px; }
-.wm-quick-actions .home-btn{ width: 100%; justify-content: flex-start; }
-
-/***********************
- Ring progress
-***********************/
-.wm-ring{
-  --pct: 0;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: conic-gradient(var(--wm-accent) calc(var(--pct) * 1%), var(--wm-line) 0);
-  position: relative;
-  flex-shrink: 0;
-}
-.wm-ring.is-success{ background: conic-gradient(var(--wm-success) calc(var(--pct) * 1%), var(--wm-line) 0); }
-.wm-ring.is-warning{ background: conic-gradient(var(--wm-warn) calc(var(--pct) * 1%), var(--wm-line) 0); }
-.wm-ring.is-danger{ background: conic-gradient(var(--wm-danger) calc(var(--pct) * 1%), var(--wm-line) 0); }
-.wm-ring:before{ content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--wm-surface); }
-.wm-ring span{ position: relative; font-family: var(--wm-font-mono); font-weight: 600; font-size: .82rem; color: var(--wm-ink); }
-
-/***********************
- Distributor subpages (orders/products/delivery/etc)
-***********************/
-.wm-stats{ display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 18px; }
-.wm-stat{
-  flex: 1 1 210px;
-  min-width: 210px;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  padding: 14px 16px;
-  border-radius: var(--wm-radius-md);
-  border: 1px solid var(--wm-line);
-  background: var(--wm-surface);
-  box-shadow: var(--wm-shadow-sm);
-}
-.wm-stat-icon{
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  background: var(--wm-brand-tint);
-  color: var(--wm-brand-deep);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  font-family: var(--wm-font-mono);
-}
-.wm-stat b{ font-family: var(--wm-font-mono); font-weight: 600; font-size: 1.5rem; color: var(--wm-ink); display: block; line-height: 1.15; }
-.wm-stat span{ color: var(--wm-muted); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .06em; }
-
-.wm-toolbar{ margin-bottom: 16px; }
-
-.wm-input,
-.wm-select{
-  width: 100%;
-  padding: 12px 14px;
-  border-radius: var(--wm-radius-sm);
-  border: 1px solid var(--wm-line-strong);
-  background: var(--wm-surface);
-  color: var(--wm-ink);
-  box-shadow: var(--wm-shadow-sm);
-  font-size: .95rem;
-  font-family: var(--wm-font-body);
-}
-.wm-input::placeholder{ color: var(--wm-faint); }
-.wm-select:focus,
-.wm-input:focus{
-  outline: none;
-  border-color: var(--wm-accent);
-  box-shadow: 0 0 0 4px var(--wm-accent-tint);
+/* ---------- responsive ---------- */
+@media (max-width:1080px){
+  .wm-home-hero-grid{grid-template-columns:1fr;}
+  .wm-kpi-headline,.wm-kpi-secondary{grid-template-columns:repeat(2,1fr);}
+  .wm-home-role-grid{grid-template-columns:repeat(2,1fr);}
 }
 
-.wm-table{
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  background: var(--wm-surface);
-  border: 1px solid var(--wm-line);
-  border-radius: var(--wm-radius-lg);
-  overflow: hidden;
-  box-shadow: var(--wm-shadow-sm);
-}
-.wm-table thead th{
-  text-align: left;
-  padding: 14px 16px;
-  background: var(--wm-brand-tint);
-  color: var(--wm-ink);
-  font-weight: 600;
-  font-size: .8rem;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  font-family: var(--wm-font-mono);
-  border-bottom: 1px solid var(--wm-line);
-}
-.wm-table tbody td{
-  padding: 14px 16px;
-  border-bottom: 1px solid var(--wm-line);
-  color: var(--wm-muted);
-  vertical-align: middle;
-}
-.wm-table tbody tr:hover{ background: rgba(27,94,60,.03); }
-.wm-table tbody tr:last-child td{ border-bottom: none; }
-.wm-table tbody td strong{ color: var(--wm-ink); font-weight: 600; }
-
-/***********************
- Responsive
-***********************/
-@media (max-width: 1200px){
-  .wm-kpi-headline,.wm-kpi-secondary{ grid-template-columns: repeat(2, 1fr); }
-  .wm-home-role-grid{ grid-template-columns: repeat(2, 1fr); }
+@media (max-width:720px){
+  .wm-kpi-headline,.wm-kpi-secondary,.wm-home-role-grid{grid-template-columns:1fr;}
+  .wm-ai-chips{flex-direction:column;}
+  #wmDashboardAiForm{flex-direction:column;align-items:stretch;}
+  #wmDashboardAiForm .home-btn-primary,
+  #wmDashboardAiForm .home-btn-secondary{border-radius:var(--wm-radius);}
+  .wm-app{padding:0 16px 60px;}
 }
 
-@media (max-width: 992px){
-  .wm-home-hero-grid{ grid-template-columns: 1fr; }
-  .wm-home-hero-copy{ max-width: 100%; }
-}
-
-@media (max-width: 576px){
-  .wm-kpi-headline,.wm-kpi-secondary,.wm-home-role-grid{ grid-template-columns: 1fr; }
-  .wm-home-actions{ flex-direction: column; }
-  .wm-home-actions .home-btn{ width: 100%; }
-  .wm-pulse-stats{ grid-template-columns: repeat(3, 1fr); }
-  .wm-stats{ gap: 10px; }
-  .wm-stat{ min-width: 100%; }
-}
-
-@media (max-width: 420px){
-  .wm-table thead{ display: none; }
-  .wm-table, .wm-table tbody, .wm-table tr, .wm-table td{ display: block; width: 100%; }
-  .wm-table tbody tr{ border-bottom: 1px solid var(--wm-line); }
-  .wm-table tbody td{ border-bottom: none; }
-}

@@ -1,5 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Delivery Management</title><%@ include file="../common/wholemart-shell-start.jsp" %>
-<h1 class="wm-title">Delivery Management</h1><p class="wm-subtitle">Track and manage your shipments</p>
+<link href="/css/delivery.css" rel="stylesheet">
+<h1 class="wm-title">Delivery Management</h1>
 <div class="wm-stats"><div class="wm-stat"><div class="wm-stat-icon">T</div><div><b id="totalDeliveries">0</b><span>Total Deliveries</span></div></div><div class="wm-stat"><div class="wm-stat-icon">P</div><div><b id="pickedDeliveries">0</b><span>Picked Up</span></div></div><div class="wm-stat"><div class="wm-stat-icon">D</div><div><b id="deliveredDeliveries">0</b><span>Delivered</span></div></div></div>
 <div class="wm-toolbar"><div class="row g-4"><div class="col-md-6"><input id="deliverySearch" class="wm-input" type="search" placeholder="Search by delivery ID, order ID, or driver"></div><div class="col-md-3"><select id="statusFilter" class="wm-select"><option value="">All Statuses</option><option>ASSIGNED</option><option>PICKED_UP</option><option>DELIVERED</option><option>FAILED</option></select></div></div></div>
 <table class="wm-table"><thead><tr><th>S.No</th><th>Delivery ID</th><th>Order ID</th><th>Status</th><th>Driver</th><th>Date</th></tr></thead><tbody id="deliveriesBody"><tr><td colspan="6">Loading deliveries...</td></tr></tbody></table>

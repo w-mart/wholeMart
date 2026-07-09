@@ -1,0 +1,36 @@
+/* AI Assistant — distributor feature styles */
+
+.wm-title {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.8rem;
+    margin: 6px 0 6px;
+}
+
+.wm-subtitle {
+    color: #5B6158;
+    margin: 0 0 18px;
+    font-size: .95rem;
+}
+
+#wm-ai-log,
+#log {
+    background: rgba(255, 255, 255, .95) !important;
+    border-radius: 10px;
+    border: 1px dashed rgba(18,24,31,.25);
+}
+
+#chat {
+    margin-top: 10px;
+}
+
+.wm-input {
+    height: 44px;
+    border-radius: 8px;
+    border: 1px solid #D8D0B8;
+    background: #FFFDF7;
+    padding: 0 14px;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: #20261F;
+}
+
