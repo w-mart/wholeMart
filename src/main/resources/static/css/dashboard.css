@@ -170,19 +170,21 @@ a {
 
 .wm-sidebar {
     position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: 280px;
-    background: var(--wm-dark);
-    color: var(--wm-cream);
-    transform: translateX(100%);
-    transition: transform .25s ease;
+    top: 76px;
+    left: -270px;
+    width: 270px;
+    height: calc(100vh - 76px);
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+    transition: left .3s ease;
     z-index: 50;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    box-shadow: var(--shadow);
+     --surface: var(--wm-paper, #FFFFFF);
+    --line: var(--wm-line, rgba(0,0,0,.12));
+    --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    box-shadow: var(--shadow);
 }
 
 .wm-sidebar.is-open {

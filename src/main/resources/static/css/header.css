@@ -158,9 +158,6 @@
      --surface: var(--wm-paper, #FFFFFF);
     --line: var(--wm-line, rgba(0,0,0,.12));
     --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
-    
-
-
     background: var(--surface);
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow);
@@ -311,3 +308,52 @@
 /* No @media(min-width:992px) override on purpose: the sidebar stays
    off-canvas and the #wmSidebarToggle button stays visible at every
    breakpoint, so it behaves the same on desktop and mobile. */
+
+/* ============================================================
+   Distributor header responsive tweaks
+   Ensures logo + nav + user area don't overflow on small screens
+   ============================================================ */
+
+@media (max-width: 991.98px) {
+  .wm-header .navbar {
+    min-height: 68px;
+  }
+
+  .wm-header .container-fluid.px-3 {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .wm-logo-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+
+  .wm-logo-title {
+    font-size: 16px;
+  }
+
+  /* When nav is collapsed, make items readable and stacked */
+  #wmDistributorNav {
+    padding: 10px 0;
+  }
+
+  #wmDistributorNav .navbar-nav {
+    padding: 6px 8px;
+    width: 100%;
+  }
+
+  #wmDistributorNav .nav-link {
+    width: 100%;
+    margin-left: 0;
+    padding: 10px 12px !important;
+  }
+
+  /* Keep user button from causing overflow */
+  .wm-user-btn {
+    padding: 6px 10px 6px 6px;
+  }
+}
+

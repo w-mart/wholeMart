@@ -1,20 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-    <% String initials="" ; if (wmUserName !=null && !wmUserName.trim().isEmpty()) { String[]
-        names=wmUserName.trim().split("\\s+"); for (String n : names) { initials +=n.substring(0, 1).toUpperCase(); } if
-        (initials.length()> 2) {
-        initials = initials.substring(0, 2);
+<%
+        // distributor-header.jsp is included by multiple JSPs.
+        // Avoid "Duplicate local variable" compilation errors when this JSP is
+        // inlined into other JSPs. Use a unique variable name.
+        String wmUserNameHeader = (String) request.getAttribute("wmUserName");
+        if (wmUserNameHeader == null) {
+            wmUserNameHeader = session.getAttribute("name") == null
+                    ? (session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username")))
+                    : String.valueOf(session.getAttribute("name"));
         }
+
+
+        String initials = "";
+if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
+            
+            String[] names = wmUserNameHeader.trim().split("\\s+");
+            for (String n : names) {
+                if (n != null && !n.isEmpty()) {
+                    initials += n.substring(0, 1).toUpperCase();
+                }
+            }
+            if (initials.length() > 2) {
+                initials = initials.substring(0, 2);
+            }
         }
 
         if (initials.isEmpty()) {
-        initials = "WM";
+            initials = "WM";
         }
 
         String wmUri = request.getRequestURI();
-        // Defensive: JSP compilation fails if a variable referenced in expressions is missing.
         if (wmUri == null) {
-        wmUri = "";
+            wmUri = "";
         }
         %>
 
@@ -55,15 +73,20 @@
                                 placeholder="Search products, retailers, orders...">
                         </div>
                     </form>
-                    <ul class="navbar-nav ms-auto align-items-lg-center">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/revenue">Dashboard</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/products">Product</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai">Ask AI</a></li>
-                        <li class="nav-item"><a class="nav-link"
-                                href="${pageContext.request.contextPath}/uuserRegister">Help</a></li>
-                        
-                    </ul>
+                    <button class="navbar-toggler ms-auto d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#wmDistributorNav" aria-controls="wmDistributorNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="wmDistributorNav">
+                        <ul class="navbar-nav ms-auto align-items-lg-center">
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/revenue">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/products">Product</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai">Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister">Help</a></li>
+                        </ul>
+                    </div>
+
 
 
                     <!-- Right -->
@@ -74,14 +97,14 @@
                                 <span class="wm-user-avatar">
                                     <%= initials %>
                                 </span>
-                                <span class="fw-semibold d-none d-lg-inline">
-                                    <%= wmUserName %>
+<span class="fw-semibold d-none d-lg-inline">
+                                    <%= wmUserNameHeader %>
                                 </span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end wm-user-menu">
                                 <li>
                                     <h6 class="dropdown-header wm-user-menu-header">
-                                        <%= wmUserName %>
+<%= wmUserNameHeader %>
                                     </h6>
                                 </li>
                                 <li>
@@ -209,3 +232,4 @@
                 });
             });
         </script>
+
