@@ -193,5 +193,21 @@
             </main>
 
             <%@ include file="/WEB-INF/common/footer.jsp" %>
+            <style>
+                @media (max-width: 720px) {
+                    .wm-bottom-bar {
+                        flex-direction: column;
+                        align-items: stretch;
+                        gap: 16px;
+                        padding: 16px;
+                    }
+            
+                    .wm-bottom-buttons {
+                        flex-direction: column;
+                        align-items: stretch;
+                        width: 100%;
+                    }
+                }
+            </style>
     </body>
     </html>
