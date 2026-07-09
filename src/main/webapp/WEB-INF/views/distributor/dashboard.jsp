@@ -43,8 +43,6 @@
                             <!-- HERO CAROUSEL -->
                             <!-- ========================================= -->
                             <section class="wm-home-hero" aria-label="Distributor hero">
-                                <div class="wm-ledger-divider"></div>
-
                                 <div class="wm-hero-carousel" data-hero-carousel>
                                     <div class="wm-hero-carousel-viewport" data-hero-viewport>
                                         <div class="wm-hero-carousel-track" data-hero-track>
@@ -324,6 +322,7 @@
                                     </div>
                                 </div>
                             </section>
+                            <hr>
 
                             <!-- ===================================================== -->
                             <!-- PRIORITY CENTER
@@ -363,6 +362,7 @@
                                 </div>
                             </section>
 
+                            <hr>
                             <!-- ========================================= -->
                             <!-- DASHBOARD KPI -->
                             <!-- ========================================= -->
@@ -474,6 +474,7 @@
 
                                 </div>
                             </section>
+                            <hr>
 
                             <!-- ===================================================== -->
                             <!-- BUSINESS SNAPSHOT (LEDGER) -->
@@ -554,6 +555,7 @@
                                 <div id="wmDashboardAiActionBox" class="mt-3"></div>
                             </section>
 
+                            <hr>
                             <!-- ===================================================== -->
                             <!-- FULFILLMENT & OPERATIONS -->
                             <!-- ===================================================== -->
@@ -642,13 +644,7 @@
                                 </div>
                             </section>
 
-                            <div class="wm-ledger-divider"></div>
-
-                            <!-- ===================================================== -->
-                            <!-- BUSINESS INTELLIGENCE -->
-                            <!-- ===================================================== -->
-
-                            <div class="wm-ledger-divider"></div>
+                            <hr>
 
                             <!-- ===================================================== -->
                             <!-- PRODUCTIVITY CENTER -->

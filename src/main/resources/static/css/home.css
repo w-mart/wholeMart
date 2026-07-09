@@ -27,6 +27,7 @@
   --brand-black:  #12181F;  /* logo square */
   --green:        #12181F;  /* Cargo Green — brand / primary, deepened to sit with the black mark */
   --green-deep:   rgba(18, 24, 31, .64);
+  --green-deep:   rgba(27, 94, 60, .10);
   --green-tint:   rgba(27, 94, 60, .10);
 
   --amber:        #E3A73B;  /* Manifest Amber — accent */
