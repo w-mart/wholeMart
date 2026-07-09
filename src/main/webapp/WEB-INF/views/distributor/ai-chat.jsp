@@ -69,8 +69,8 @@
                                                 href="${pageContext.request.contextPath}/web/distributor/dashboard">
                                                 <div class="wm-logo-circle">W</div>
                                                 <div class="wm-logo-line">
-                                                    <div class="wm-logo-title">WholeMart</div>
-                                                    <small class="text-muted">Local B2B Marketplace(Ask questions about inventory, orders, retailers, payments and business insights.)</small>
+                                                    <div class="wm-logo-title">WholeMart AI</div>
+                                                    <small style="color: var(--wm-ink-soft);">Ask about inventory, orders, retailers, payments, and business insights.</small>
                                                 </div>                                               
                                             </div> 
                                             <hr></hr>                                      

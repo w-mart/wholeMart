@@ -1,252 +1,44 @@
-/* ============================================================
-   WHOLEMART — ADD PRODUCT
-   ============================================================ */
+/*==============================================================
+    WholeMart — Add/Edit Product Page
+==============================================================*/
 
-.wm-body {
-    background: var(--wm-cream);
-    font-family: var(--wm-font-sans);
-    color: var(--wm-ink);
-}
-
-.wm-page {
-    max-width: 1350;
-    margin: -55px auto;
-    padding: 9px 25px;
-}
-
-/* --- Hero --- */
-.wm-hero {
-    padding-bottom: 24px;
-}
-
-.wm-hero h1 {
-    font-family: var(--wm-font-sans);
-    font-weight: 800;
-    font-size: 2rem;
-    margin: 10px 0;
-}
-
-.wm-hero p {
-    color: var(--wm-ink-soft);
-    max-width: 55ch;
-}
-
-.wm-badge {
-    font-family: var(--wm-font-mono);
-    font-size: .7rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--wm-mint-deep);
-    background: var(--wm-mint-pale);
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-weight: 600;
-}
-
-.wm-ai-box {
-    background: var(--wm-dark);
-    color: var(--wm-cream);
-    border-radius: 6px;
-    padding: 18px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    height: 100%;
-}
-
-.wm-ai-box .ai-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 4px;
-    background: var(--wm-mint);
-    color: var(--wm-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    flex-shrink: 0;
-}
-
-.wm-ai-box h5 {
-    font-weight: 700;
-    font-size: 1rem;
-    margin: 0 0 4px;
-}
-
-.wm-ai-box span {
-    font-size: .85rem;
-    color: #D9E6DC;
-    line-height: 1.5;
-}
-
-
-/* --- Main Form Sections --- */
-.wm-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding-bottom: 16px;
-    border-bottom: 1px dashed var(--wm-line);
-    margin-bottom: 24px;
-}
-
-.wm-section-tag {
-    font-family: var(--wm-font-mono);
-    font-size: .65rem;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--wm-mint-deep);
-    font-weight: 600;
-}
-
-.wm-card-header h3 {
-    font-weight: 700;
-    font-size: 1.2rem;
-    margin: 4px 0 6px;
-}
-
-.wm-card-header p {
-    color: var(--wm-ink-soft);
-    font-size: .9rem;
-    margin: 0;
-    max-width: 45ch;
-}
-
-/* --- Form Inputs --- */
-.wm-input,
-.wm-select,
-.wm-textarea {
-    width: 100%;
-    padding: 10px 14px;
-    border-radius: 4px;
-    border: 1px solid var(--wm-line);
-    background: var(--wm-paper);
-    font-size: .9rem;
-    transition: border-color .2s ease, box-shadow .2s ease;
-}
-
-.wm-input:focus,
-.wm-select:focus,
-.wm-textarea:focus {
-    outline: none;
-    border-color: var(--wm-mint-deep);
-    box-shadow: 0 0 0 3px var(--wm-mint-pale);
-}
-
-.wm-product-form label {
-    display: block;
-    font-weight: 600;
-    font-size: .85rem;
-    margin-bottom: 6px;
-}
-
-/* --- Buttons --- */
-.wm-ai-btn {
-    background: var(--wm-dark);
-    color: var(--wm-mint);
-    border: none;
-    padding: 10px 16px;
-    border-radius: 4px;
-    font-family: var(--wm-font-mono);
-    font-size: .8rem;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-}
-
-.wm-ai-btn:hover {
-    background: var(--wm-dark-soft);
-    color: #fff;
+.wm-product-form {
+    padding-bottom: 120px; /* Space for the sticky bottom bar */
 }
 
 .wm-bottom-bar {
-    position: sticky;
+    position: fixed;
     bottom: 0;
-    background: rgba(255, 253, 247, 0.85);
-    /* paper with transparency */
-    backdrop-filter: blur(8px);
-    border-top: 1px solid var(--wm-line);
+    left: 0;
+    right: 0;
+    background: var(--wm-paper);
     padding: 16px 24px;
+    border-top: 1px solid var(--wm-line);
+    box-shadow: 0 -8px 32px rgba(32,38,31,0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 24px -24px -24px -24px;
     z-index: 10;
 }
 
 .wm-bottom-bar h5 {
-    margin: 0 0 2px;
+    margin: 0 0 4px;
+    font-size: 1.1rem;
     font-weight: 700;
-    font-size: 1rem;
 }
 
 .wm-bottom-bar span {
-    font-size: .85rem;
+    font-size: .88rem;
     color: var(--wm-ink-soft);
 }
 
 .wm-bottom-buttons {
     display: flex;
-    gap: 10px;
+    gap: 12px;
 }
 
-.wm-btn-light {
-    background: var(--wm-paper);
-    color: var(--wm-ink);
-    border: 1px solid var(--wm-line);
-    font-weight: 600;
-    padding: 10px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.wm-btn-light:hover {
-    border-color: var(--wm-mint-deep);
-}
-
-.wm-btn-primary {
-    background: var(--wm-dark);
-    color: var(--wm-mint);
-    border: 1px solid var(--wm-dark);
-    font-weight: 600;
-    padding: 10px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.wm-btn-primary:hover {
-    background: var(--wm-dark-soft);
-}
-
-/* Other specific component styles */
-.wm-upload-card {
-    border: 2px dashed var(--wm-line);
-    border-radius: 6px;
-    padding: 24px;
-    text-align: center;
-    background: var(--wm-cream);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.wm-upload-card .upload-icon {
-    font-size: 2rem;
-    color: var(--wm-mint-deep);
-}
-
-.wm-upload-card h5 {
-    font-weight: 700;
-    font-size: 1rem;
-    margin-top: 10px;
-}
-
-.wm-upload-card p {
-    color: var(--wm-ink-soft);
-    font-size: .85rem;
-    margin: 0;
+/* Responsive styles for the bottom bar */
+@media (max-width: 720px) {
+    .wm-bottom-bar { flex-direction: column; align-items: stretch; gap: 16px; padding: 16px; }
+    .wm-bottom-buttons { flex-direction: column; align-items: stretch; width: 100%; }
 }
