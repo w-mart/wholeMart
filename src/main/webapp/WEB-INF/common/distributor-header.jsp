@@ -6,9 +6,13 @@
         // inlined into other JSPs. Use a unique variable name.
         String wmUserNameHeader = (String) request.getAttribute("wmUserName");
         if (wmUserNameHeader == null) {
-            wmUserNameHeader = session.getAttribute("name") == null
-                    ? (session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username")))
-                    : String.valueOf(session.getAttribute("name"));
+            wmUserNameHeader = (String) session.getAttribute("username");
+        }
+        if (wmUserNameHeader == null) {
+            wmUserNameHeader = (String) session.getAttribute("name");
+        }
+        if (wmUserNameHeader == null) {
+            wmUserNameHeader = "Guest";
         }
 
 

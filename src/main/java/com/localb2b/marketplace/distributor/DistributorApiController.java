@@ -19,9 +19,12 @@ public class DistributorApiController {
 
     @GetMapping("/nearby")
     public List<DistributorProfileDto> nearby() {
-        return distributorService.findNearbyApproved(currentUserProvider.requireCurrentUser().userId(), 30).stream()
+        Long userId = currentUserProvider.requireCurrentUser().userId();
+        List<DistributorProfileDto> result = distributorService.findNearbyApproved(userId, 30).stream()
                 .map(this::toDto)
                 .toList();
+        System.out.println("[API] /api/v1/distributors/nearby userId=" + userId + " -> size=" + result.size());
+        return result;
     }
 
     @GetMapping("/nearby/summary")

@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
-        // distributor-header.jsp is included by multiple JSPs.
+        // retailer-header.jsp is included by multiple JSPs.
         // Avoid "Duplicate local variable" compilation errors when this JSP is
         // inlined into other JSPs. Use a unique variable name.
         String wmUserNameHeader = (String) request.getAttribute("wmUserName");
         if (wmUserNameHeader == null) {
-            wmUserNameHeader = session.getAttribute("name") == null
-                    ? (session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username")))
-                    : String.valueOf(session.getAttribute("name"));
+            wmUserNameHeader = (String) session.getAttribute("name");
+        }
+        if (wmUserNameHeader == null) {
+            wmUserNameHeader = (String) session.getAttribute("username");
+        }
+        if (wmUserNameHeader == null) {
+            wmUserNameHeader = "Guest";
         }
 
 
@@ -54,7 +58,7 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                         </button>
 
                         <a class="navbar-brand wm-logo-wrap"
-                            href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                            href="${pageContext.request.contextPath}/web/retailer/dashboard">
                             <div class="wm-logo-circle">W</div>
                             <div class="wm-logo-line">
                                 <div class="wm-logo-title">WholeMart</div>
@@ -70,18 +74,18 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 <i class="bi bi-search"></i>
                             </span>
                             <input class="form-control border-start-0" type="text"
-                                placeholder="Search products, retailers, orders...">
+                                placeholder="Search products, distributors, orders...">
                         </div>
                     </form>
-                    <button class="navbar-toggler ms-auto d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#wmDistributorNav" aria-controls="wmDistributorNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler ms-auto d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#wmRetailerNav" aria-controls="wmRetailerNav" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="bi bi-list"></i>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="wmDistributorNav">
+                    <div class="collapse navbar-collapse" id="wmRetailerNav">
                         <ul class="navbar-nav ms-auto align-items-lg-center">
                             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-house me-2"></i>Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/orders"><i class="bi bi-bag me-2"></i>My Orders</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai"><i class="bi bi-stars me-2"></i>Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/orders"><i class="bi bi-bag me-2"></i>My Orders</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/ask-ai"><i class="bi bi-stars me-2"></i>Ask AI</a></li>
                             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"><i class="bi bi-question-circle me-2"></i>Help</a></li>
                         </ul>
                     </div>
@@ -108,13 +112,13 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 </li>
                                 <li>
                                     <a class="dropdown-item wm-user-menu-item"
-                                        href="${pageContext.request.contextPath}/web/distributor/profile">
+                                        href="${pageContext.request.contextPath}/web/retailer/profile">
                                         <i class="bi bi-person me-2"></i>Profile
                                     </a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item wm-user-menu-item"
-                                        href="${pageContext.request.contextPath}/web/distributor/settings">
+                                        href="${pageContext.request.contextPath}/web/retailer/settings">
                                         <i class="bi bi-gear me-2"></i>Settings
                                     </a>
                                 </li>
@@ -139,56 +143,50 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
         <aside id="wmSidebar" class="wm-sidebar">
             <ul class="list-unstyled m-0">
                 <li>
-                    <a class="<%= wmUri.contains(" /dashboard") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                    <a class="<%= wmUri.contains("/dashboard") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/dashboard">
                         <i class="bi bi-speedometer2"></i>Dashboard
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /orders") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/orders">
-                        <i class="bi bi-cart-check"></i>Orders
+                    <a class="<%= wmUri.contains("/orders") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/orders">
+                        <i class="bi bi-bag-check"></i>My Orders
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /products") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/products">
-                        <i class="bi bi-box-seam"></i>Products
+                    <a class="<%= wmUri.contains("/cart") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/cart">
+                        <i class="bi bi-cart"></i>My Cart
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /add-product") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/add-product">
-                        <i class="bi bi-plus-circle"></i>Add Product
+                    <a class="<%= wmUri.contains("/distributors") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/distributors">
+                        <i class="bi bi-shop"></i>Distributors
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /drivers") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/drivers">
-                        <i class="bi bi-truck"></i>Drivers
+                    <a class="<%= wmUri.contains("/dues") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/dues">
+                        <i class="bi bi-cash-coin"></i>My Dues
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /delivery") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/delivery">
-                        <i class="bi bi-geo-alt"></i>Delivery
-                    </a>
-                </li>
-                <li>
-                    <a class="<%= wmUri.contains(" /reports") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/reports">
+                    <a class="<%= wmUri.contains("/reports") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/reports">
                         <i class="bi bi-bar-chart"></i>Reports
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /alerts") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/alerts">
+                    <a class="<%= wmUri.contains("/alerts") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/alerts">
                         <i class="bi bi-bell"></i>Alerts
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /ai-chat") ? "active" : "" %>"
-                        href="${pageContext.request.contextPath}/web/distributor/ai-chat">
+                    <a class="<%= wmUri.contains("/ask-ai") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/retailer/ask-ai">
                         <i class="bi bi-robot"></i>AI Assistant
                     </a>
                 </li>

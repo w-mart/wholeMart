@@ -24,10 +24,7 @@
 
 <body class="wm-home">
 
-    <% String wmUserName=session.getAttribute("name")==null ? "Guest" : String.valueOf(session.getAttribute("name"));
-       String wmUserInitial=wmUserName.substring(0,1).toUpperCase(); %>
-
-        <%@ include file="/WEB-INF/common/retailer-header.jsp" %>
+    <%@ include file="/WEB-INF/common/retailer-header.jsp" %>
 
             <div class="wm-app">
 
@@ -42,7 +39,7 @@
                                             <div class="wm-home-hero-grid">
                                                 <div class="wm-home-hero-copy">
                                                     <span class="wm-kicker"><span class="wm-live-dot"></span> RETAILER WORKSPACE</span>
-                                                    <h1 class="wm-home-title">Welcome back, <strong><%=wmUserName%></strong></h1>
+                                                    <h1 class="wm-home-title">Welcome back, <strong><%=wmUserNameHeader%></strong></h1>
                                                     <p class="wm-home-subtitle">
                                                         Find distributors, build carts, place orders, and track dues from one centralized workspace.
                                                     </p>
@@ -179,7 +176,7 @@
                             <div class="row g-4 align-items-start">
                                 <div class="col-lg-7">
                                     <div id="wmDashboardAiResponse" class="wm-ai-response">
-                                        Welcome <strong><%= wmUserName %></strong> 👋
+                                        Welcome <strong><%= wmUserNameHeader %></strong> 👋
                                         <br><br>
                                         I'm ready to help you keep your shop stocked.
                                         <br><br>

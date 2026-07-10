@@ -21,7 +21,10 @@ public class DistributorService {
     @Transactional
     public List<DistributorProfile> findNearbyApproved(Long retailerUserId, double radiusKm) {
         syncMissingDistributorProfiles();
-        return distributorProfileRepository.findByApprovedTrue();
+        // UI expects the table count to match nearby/summary "total".
+        // Therefore, return all distributors (approved + unapproved) from /nearby.
+        // The DTO still includes profile.isApproved().
+        return distributorProfileRepository.findAll();
     }
 
     @Transactional

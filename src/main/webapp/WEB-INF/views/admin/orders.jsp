@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Order Management</title><%@ include file="../common/wholemart-shell-start.jsp" %>
+<%@ include file="/WEB-INF/common/header.jsp" %>
 <h1 class="wm-title">Order Management</h1><p class="wm-subtitle">Platform order monitoring</p>
 <div class="wm-stats"><div class="wm-stat"><div class="wm-stat-icon">T</div><div><b id="totalOrders">0</b><span>Total</span></div></div><div class="wm-stat"><div class="wm-stat-icon">P</div><div><b id="placedOrders">0</b><span>Placed</span></div></div><div class="wm-stat"><div class="wm-stat-icon">A</div><div><b id="acceptedOrders">0</b><span>Accepted</span></div></div></div>
 <div class="wm-toolbar"><div class="row g-4"><div class="col-md-6"><input id="orderSearch" class="wm-input" type="search" placeholder="Search"></div><div class="col-md-3"><select id="statusFilter" class="wm-select"><option value="">All Statuses</option><option>PLACED</option><option>ACCEPTED</option><option>REJECTED</option><option>CANCELLED</option><option>OUT_FOR_DELIVERY</option><option>DELIVERED</option></select></div></div></div>
@@ -23,4 +23,4 @@ document.addEventListener("DOMContentLoaded", function () {
     search.addEventListener("input", render); status.addEventListener("change", render);
 });
 </script>
-<%@ include file="../common/wholemart-shell-end.jsp" %>
+<%@ include file="/WEB-INF/common/footer.jsp" %>
