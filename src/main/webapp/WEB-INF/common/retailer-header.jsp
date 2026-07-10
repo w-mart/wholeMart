@@ -1,91 +1,233 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%
-    String retailerName = session.getAttribute("name") == null ? "Retailer" : String.valueOf(session.getAttribute("name"));
-    String retailerInitial = retailerName.substring(0, 1).toUpperCase();
-%>
+        // distributor-header.jsp is included by multiple JSPs.
+        // Avoid "Duplicate local variable" compilation errors when this JSP is
+        // inlined into other JSPs. Use a unique variable name.
+        String wmUserNameHeader = (String) request.getAttribute("wmUserName");
+        if (wmUserNameHeader == null) {
+            wmUserNameHeader = session.getAttribute("name") == null
+                    ? (session.getAttribute("username") == null ? "Guest" : String.valueOf(session.getAttribute("username")))
+                    : String.valueOf(session.getAttribute("name"));
+        }
 
-<header class="wm-header sticky-top">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid px-3">
 
-            <!-- Logo -->
-            <a class="wm-logo-wrap" href="/web/retailer/dashboard">
-                <div class="wm-logo-circle">M</div>
-                <div class="wm-logo-line">
-                    <span class="wm-logo-title">WholeMart</span>
-                    <small>Retailer Workspace</small>
-                </div>
-            </a>
+        String initials = "";
+if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
+            
+            String[] names = wmUserNameHeader.trim().split("\\s+");
+            for (String n : names) {
+                if (n != null && !n.isEmpty()) {
+                    initials += n.substring(0, 1).toUpperCase();
+                }
+            }
+            if (initials.length() > 2) {
+                initials = initials.substring(0, 2);
+            }
+        }
 
-            <!-- Mobile Nav Toggle -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wmRetailerNav"
-                aria-controls="wmRetailerNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        if (initials.isEmpty()) {
+            initials = "WM";
+        }
 
-            <!-- Nav Links (Collapsible) -->
-            <div class="collapse navbar-collapse" id="wmRetailerNav">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 20px;">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/web/retailer/dashboard"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/web/retailer/orders"><i class="bi bi-bag me-2"></i>Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/web/retailer/distributors"><i class="bi bi-shop me-2"></i>Distributors</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="/web/retailer/cart"><i class="bi bi-cart me-2"></i>Cart</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/web/retailer/dues"><i class="bi bi-cash-coin me-2"></i>Dues</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/web/retailer/reports"><i class="bi bi-bar-chart me-2"></i>Reports</a>
-                    </li>
-                </ul>
+        String wmUri = request.getRequestURI();
+        if (wmUri == null) {
+            wmUri = "";
+        }
+        %>
 
-                <!-- User Menu (Right Aligned) -->
-                <div class="d-flex align-items-center">
-                    <div class="dropdown">
-                        <button class="btn wm-user-btn d-flex align-items-center gap-2 dropdown-toggle" type="button"
-                            id="retailerUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="wm-user-avatar"><%= retailerInitial %></div>
-                            <span class="d-none d-lg-inline"><%= retailerName %></span>
+        <!--
+    Requires header.css to already be linked in <head>, with the
+    sidebar/toggle rules from header-sidebar-addon.css appended to it:
+    .wm-sidebar, .wm-sidebar.show, .wm-sidebar-backdrop, .wm-user-avatar, etc.
+-->
+
+        <header class="wm-header sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white">
+                <div class="container-fluid px-3">
+
+                    <!-- Left -->
+                    <div class="d-flex align-items-center">
+                        <button id="wmSidebarToggle" class="btn btn-light me-3" type="button"
+                            aria-label="Toggle sidebar">
+                            <i class="bi bi-list fs-4"></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end wm-user-menu" aria-labelledby="retailerUserMenu">
-                            <li>
-                                <h6 class="dropdown-header wm-user-menu-header">
-                                    Signed in as <strong><%= retailerName %></strong>
-                                </h6>
-                            </li>
-                            <li>
-                                <a class="dropdown-item wm-user-menu-item" href="/web/retailer/profile">
-                                    <i class="bi bi-person-circle"></i> Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item wm-user-menu-item" href="/web/retailer/settings">
-                                    <i class="bi bi-gear"></i> Settings
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider wm-user-menu-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item wm-user-menu-item wm-user-menu-logout" href="/logout">
-                                    <i class="bi bi-box-arrow-right"></i> Logout
-                                </a>
-                            </li>
+
+                        <a class="navbar-brand wm-logo-wrap"
+                            href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                            <div class="wm-logo-circle">W</div>
+                            <div class="wm-logo-line">
+                                <div class="wm-logo-title">WholeMart</div>
+                                <small class="text-muted">Local B2B Marketplace</small>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Search -->
+                    <form class="mx-auto wm-search d-none d-lg-block">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input class="form-control border-start-0" type="text"
+                                placeholder="Search products, retailers, orders...">
+                        </div>
+                    </form>
+                    <button class="navbar-toggler ms-auto d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#wmDistributorNav" aria-controls="wmDistributorNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="bi bi-list"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="wmDistributorNav">
+                        <ul class="navbar-nav ms-auto align-items-lg-center">
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-house me-2"></i>Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/orders"><i class="bi bi-bag me-2"></i>My Orders</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai"><i class="bi bi-stars me-2"></i>Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"><i class="bi bi-question-circle me-2"></i>Help</a></li>
                         </ul>
                     </div>
+
+
+
+                    <!-- Right -->
+                    <div class="d-flex align-items-center ms-auto">
+                        <div class="dropdown">
+                            <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
+                                data-bs-toggle="dropdown">
+                                <span class="wm-user-avatar">
+                                    <%= initials %>
+                                </span>
+<span class="fw-semibold d-none d-lg-inline">
+                                    <%= wmUserNameHeader %>
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end wm-user-menu">
+                                <li>
+                                    <h6 class="dropdown-header wm-user-menu-header">
+<%= wmUserNameHeader %>
+                                    </h6>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item wm-user-menu-item"
+                                        href="${pageContext.request.contextPath}/web/distributor/profile">
+                                        <i class="bi bi-person me-2"></i>Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item wm-user-menu-item"
+                                        href="${pageContext.request.contextPath}/web/distributor/settings">
+                                        <i class="bi bi-gear me-2"></i>Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider wm-user-menu-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item wm-user-menu-item wm-user-menu-logout"
+                                        href="${pageContext.request.contextPath}/web/auth/logout">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+            </nav>
+        </header>
 
-        </div>
-    </nav>
-</header>
+        <!-- Sidebar -->
+        <aside id="wmSidebar" class="wm-sidebar">
+            <ul class="list-unstyled m-0">
+                <li>
+                    <a class="<%= wmUri.contains(" /dashboard") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                        <i class="bi bi-speedometer2"></i>Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /orders") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/orders">
+                        <i class="bi bi-cart-check"></i>Orders
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /products") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/products">
+                        <i class="bi bi-box-seam"></i>Products
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /add-product") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/add-product">
+                        <i class="bi bi-plus-circle"></i>Add Product
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /drivers") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/drivers">
+                        <i class="bi bi-truck"></i>Drivers
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /delivery") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/delivery">
+                        <i class="bi bi-geo-alt"></i>Delivery
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /reports") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/reports">
+                        <i class="bi bi-bar-chart"></i>Reports
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /alerts") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/alerts">
+                        <i class="bi bi-bell"></i>Alerts
+                    </a>
+                </li>
+                <li>
+                    <a class="<%= wmUri.contains(" /ai-chat") ? "active" : "" %>"
+                        href="${pageContext.request.contextPath}/web/distributor/ai-chat">
+                        <i class="bi bi-robot"></i>AI Assistant
+                    </a>
+                </li>
+            </ul>
+        </aside>
 
-<!-- Bootstrap JS for dropdowns and collapse -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Sidebar Backdrop -->
+        <div id="wmSidebarBackdrop" class="wm-sidebar-backdrop"></div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const sidebar = document.getElementById("wmSidebar");
+                const toggle = document.getElementById("wmSidebarToggle");
+                const backdrop = document.getElementById("wmSidebarBackdrop");
+
+                function openSidebar() {
+                    sidebar.classList.add("show");
+                    backdrop.classList.add("show");
+                }
+
+                function closeSidebar() {
+                    sidebar.classList.remove("show");
+                    backdrop.classList.remove("show");
+                }
+
+                if (toggle) {
+                    toggle.addEventListener("click", function () {
+                        sidebar.classList.contains("show") ? closeSidebar() : openSidebar();
+                    });
+                }
+
+                if (backdrop) {
+                    backdrop.addEventListener("click", closeSidebar);
+                }
+
+                document.addEventListener("keydown", function (e) {
+                    if (e.key === "Escape") {
+                        closeSidebar();
+                    }
+                });
+            });
+        </script>

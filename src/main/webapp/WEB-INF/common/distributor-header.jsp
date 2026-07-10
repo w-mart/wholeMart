@@ -79,11 +79,10 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
 
                     <div class="collapse navbar-collapse" id="wmDistributorNav">
                         <ul class="navbar-nav ms-auto align-items-lg-center">
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/revenue">Dashboard</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/products">Product</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai">Ask AI</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister">Help</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-house me-2"></i>Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/orders"><i class="bi bi-bag me-2"></i>My Orders</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai"><i class="bi bi-stars me-2"></i>Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"><i class="bi bi-question-circle me-2"></i>Help</a></li>
                         </ul>
                     </div>
 
@@ -232,4 +231,3 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                 });
             });
         </script>
-
