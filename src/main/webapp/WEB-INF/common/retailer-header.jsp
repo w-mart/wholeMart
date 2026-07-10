@@ -41,14 +41,14 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
         %>
 
         <!--
-    Requires header.css to already be linked in <head>, with the
-    sidebar/toggle rules from header-sidebar-addon.css appended to it:
-    .wm-sidebar, .wm-sidebar.show, .wm-sidebar-backdrop, .wm-user-avatar, etc.
+    Requires header.css to already be linked in <head>.
+    Layout mirrors common/header.jsp.
 -->
 
         <header class="wm-header sticky-top">
-            <nav class="navbar navbar-expand-lg navbar-light bg-white">
-                <div class="container-fluid px-3">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+
 
                     <!-- Left -->
                     <div class="d-flex align-items-center">
@@ -77,16 +77,17 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 placeholder="Search products, distributors, orders...">
                         </div>
                     </form>
-                    <button class="navbar-toggler ms-auto d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#wmRetailerNav" aria-controls="wmRetailerNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="bi bi-list"></i>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wmRetailerNav">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <div class="collapse navbar-collapse" id="wmRetailerNav">
+
+                    <div id="wmRetailerNav">
                         <ul class="navbar-nav ms-auto align-items-lg-center">
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><i class="bi bi-house me-2"></i>Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/orders"><i class="bi bi-bag me-2"></i>My Orders</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/ask-ai"><i class="bi bi-stars me-2"></i>Ask AI</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"><i class="bi bi-question-circle me-2"></i>Help</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"></i>Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/orders"></i>My Orders</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/ask-ai"></i>Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"></i>Help</a></li>
                         </ul>
                     </div>
 
@@ -111,9 +112,9 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                     </h6>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item wm-user-menu-item"
+<a class="dropdown-item wm-user-menu-item"
                                         href="${pageContext.request.contextPath}/web/retailer/profile">
-                                        <i class="bi bi-person me-2"></i>Profile
+                                        Profile
                                     </a>
                                 </li>
                                 <li>

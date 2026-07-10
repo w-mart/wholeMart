@@ -9,13 +9,16 @@
     --surface: var(--wm-paper, #FFFFFF);
     --line: var(--wm-line, rgba(0,0,0,.12));
     --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
-    
 
+    /* Typography (use shared token-based font variables) */
+    font-family: var(--font-body, Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif);
 
     background: var(--surface);
+
     border-bottom: 1px solid var(--line);
     box-shadow: var(--shadow);
 }
+
 
 
 .navbar {
@@ -110,7 +113,7 @@
 
 .nav-link {
     color: var(--graphite) !important;
-    font-weight: 600;
+    font-weight: 800;
     margin-left: 8px;
     padding: 8px 12px !important;
     font-size: .95rem;
@@ -314,10 +317,17 @@
    Ensures logo + nav + user area don't overflow on small screens
    ============================================================ */
 
+@media (min-width: 1400px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 1390px;
+  }
+}
+
 @media (max-width: 991.98px) {
   .wm-header .navbar {
     min-height: 68px;
   }
+
 
   .wm-header .container-fluid.px-3 {
     padding-left: 12px !important;

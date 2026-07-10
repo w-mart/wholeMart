@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="wm-card">
-                    <form id="productForm" class="wm-product-form" action="/api/v1/products" method="POST">
+<form id="productForm" class="wm-product-form" action="/api/v1/products" method="POST">
                         <!-- Basic Information -->
                         <section class="wm-section is-active">
                             <div class="wm-card-header">
@@ -183,7 +183,7 @@
                              </div>
                              <div class="wm-bottom-buttons">
                                  <button type="button" class="btn wm-btn-light">Save as Draft</button>
-                                 <button type="submit" class="btn wm-btn-primary">Publish Product</button>
+                    <button type="button" class="btn wm-btn-primary" id="publishProductBtn">Publish Product</button>
                              </div>
                         </div>
 
