@@ -64,8 +64,8 @@
                                     <form action="${pageContext.request.contextPath}/web/auth/login" method="post">
                                         <div class="row">
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Mobile Number</label>
-                                                <input type="text" class="form-control" name="mobile" maxlength="10" required>
+                                                <label class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" name="email" required>
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Role</label>
@@ -117,7 +117,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" name="email">
+                                                <input type="text" class="form-control" name="email">
                                             </div>
                                             <div class="col-md-6 mb-3">
                                                 <label class="form-label">Role</label>
@@ -367,4 +367,3 @@
 
 </body>
 </html>
-

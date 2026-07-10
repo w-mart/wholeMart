@@ -19,6 +19,9 @@ public class UserAccount extends BaseEntity {
     @Column(nullable = false, unique = true, length = 20)
     private String mobile;
 
+    @Column(unique = true, length = 100)
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 40)
     private UserRole role;
@@ -37,11 +40,12 @@ public class UserAccount extends BaseEntity {
     protected UserAccount() {
     }
 
-    public UserAccount(String name, String mobile, UserRole role, String passwordHash) {
+    public UserAccount(String name, String mobile, String email, UserRole role, String passwordHash) {
         this.name = name;
         this.mobile = mobile;
         this.role = role;
         this.passwordHash = passwordHash;
+        this.email = email;
     }
 
     public void updatePassword(String passwordHash) {

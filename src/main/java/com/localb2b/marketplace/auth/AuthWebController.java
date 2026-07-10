@@ -33,7 +33,7 @@ public class AuthWebController {
     }
 
     @PostMapping("/login")
-    public String loginSubmit(@RequestParam String mobile,
+    public String loginSubmit(@RequestParam(required = false) String mobile,
                                @RequestParam UserRole role,
                                @RequestParam String password,
                                @RequestParam(required = false) String name,
@@ -45,14 +45,14 @@ public class AuthWebController {
                                @RequestParam(required = false) String state,
                                @RequestParam(required = false) String addressLine,
                                @RequestParam(required = false) String pincode,
-                               @RequestParam(required = false) String email,
+                               @RequestParam String email,
                                @RequestParam(required = false) String alternateMobile,
                                @RequestParam(required = false) BigDecimal latitude,
                                @RequestParam(required = false) BigDecimal longitude,
                                HttpSession session,
                                Model model) {
         try {
-            String normalizedMobile = AuthService.normalizeMobile(mobile);
+            String normalizedMobile = mobile != null ? AuthService.normalizeMobile(mobile) : null;
             var response = authService.login(new LoginRequest(
                     normalizedMobile,
                     role,
@@ -72,7 +72,7 @@ public class AuthWebController {
                     longitude));
             session.setAttribute("userId", response.userId());
             session.setAttribute("role", response.role().name());
-            session.setAttribute("mobile", normalizedMobile);
+            session.setAttribute("email", email);
             session.setAttribute("username", name == null || name.isBlank() ? response.role().name().replace("ROLE_", "") + " User" : name);
             return dashboardRedirect(response.role());
         } catch (RuntimeException ex) {

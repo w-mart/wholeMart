@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 public class AuthDtos {
 
     public record LoginRequest(
-            @NotBlank String mobile,
+            String mobile,
             @NotNull UserRole role,
             @NotBlank String password,
             String name,
@@ -20,14 +20,14 @@ public class AuthDtos {
             String state,
             String addressLine,
             String pincode,
-            String email,
+            @NotBlank String email,
             String alternateMobile,
             BigDecimal latitude,
             BigDecimal longitude) {
-        public LoginRequest(String mobile, UserRole role, String password, String name) {
-            this(mobile, role, password, name,
-                    null, null, null, null, null, null, null, null,
-                    null, null, null, null);
+        public LoginRequest(String email, UserRole role, String password, String name) {
+            this(null, role, password, name,
+                    null, null, null, null, null, null, null, null, email,
+                    null, null, null);
         }
     }
 
@@ -65,4 +65,3 @@ public class AuthDtos {
     public record AuthResponse(Long userId, UserRole role, String accessToken, String refreshToken) {
     }
 }
-

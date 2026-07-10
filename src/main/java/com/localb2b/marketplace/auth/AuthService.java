@@ -47,24 +47,24 @@ public class AuthService {
 
     @Transactional(rollbackOn = Exception.class)
     public AuthResponse login(LoginRequest request) {
-        String normalizedMobile = normalizeMobile(request.mobile());
-        if (normalizedMobile.isBlank()) {
-            throw new IllegalArgumentException("Mobile number is required");
+        if ((request.email() == null || request.email().isBlank())) {
+            throw new IllegalArgumentException("Email is required");
         }
 
         if (request.password() == null || request.password().isBlank()) {
             throw new IllegalArgumentException("Password is required");
         }
 
-        UserAccount user = userRepository.findByMobile(normalizedMobile)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid mobile or password"));
+        // Try finding user by email first, then by mobile as a fallback.
+        UserAccount user = userRepository.findByEmail(request.email())
+                .orElseGet(() -> {
+                    String normalizedMobile = normalizeMobile(request.mobile());
+                    return userRepository.findByMobile(normalizedMobile)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid credentials"));
+                });
 
         if (user.getStatus() != UserStatus.ACTIVE) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User account is not active");
-        }
-
-        if (!user.getRole().equals(request.role())) {
-            throw new IllegalArgumentException("Login role does not match existing account role");
         }
 
         if (!authPassword.matches(request.password(), user.getPasswordHash())) {
@@ -93,10 +93,17 @@ public class AuthService {
                     throw new ResponseStatusException(HttpStatus.CONFLICT, "Mobile number is already registered");
                 });
 
+        if (request.email() != null && !request.email().isBlank()) {
+            userRepository.findByEmail(request.email())
+                    .ifPresent(u -> {
+                        throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already registered");
+                    });
+        }
+
         String passwordHash = authPassword.hash(request.password());
         String displayName = request.fullName();
 
-        UserAccount user = userRepository.save(new UserAccount(displayName, normalizedMobile, request.role(), passwordHash));
+        UserAccount user = userRepository.save(new UserAccount(displayName, normalizedMobile, request.email(), request.role(), passwordHash));
         ensureRoleProfileOnRegister(user, request);
 
         return new AuthResponse(user.getId(), user.getRole(), jwtService.createAccessToken(user), jwtService.createRefreshToken(user));
@@ -254,4 +261,3 @@ public class AuthService {
         }
     }
 }
-

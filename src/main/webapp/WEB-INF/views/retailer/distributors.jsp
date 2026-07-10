@@ -110,10 +110,12 @@
                                 });
 
                                 distributorsBody.innerHTML = filtered.length ? filtered.map(function (distributor, index) {
-                                    var shopContact = [distributor.shopName, distributor.contactName].filter(Boolean).join(" / ") || "-";
-                                    var location = [distributor.city, distributor.state, distributor.pincode]
-                                        .filter(Boolean)
-                                        .join(", ") || distributor.addressLine || "-";
+                                    var shopContact = [distributor.shopName, distributor.contactName]
+                                        .map(function(s) { return (s || "").trim(); }).filter(Boolean).join(" / ") || "-";
+
+                                    var location = [distributor.city, distributor.state, distributor.pincode, distributor.addressLine]
+                                        .map(function(s) { return (s || "").toString().trim(); }).filter(Boolean).join(", ") || "-";
+
                                     var productsUrl = "/web/retailer/products?distributorUserId=" +
                                         encodeURIComponent(distributor.userId) +
                                         "&distributorName=" +
@@ -184,4 +186,3 @@
 </body>
 
 </html>
-

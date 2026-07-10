@@ -42,7 +42,6 @@
 }
 
 .wm-home main.container .nav-tabs .nav-link.active {
-  color: var(--green-deep) !important;
   background: var(--green-tint) !important;
   border-bottom-color: var(--green) !important;
 }
@@ -87,7 +86,7 @@
 
 /* Primary “tab switch” link buttons */
 .wm-home main.container .btn-link {
-  color: var(--green-deep) !important;
+  color: rgb(0 0 0) !important;
   text-decoration: none !important;
 }
 
