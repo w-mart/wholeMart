@@ -963,3 +963,154 @@ a {
     border-color: #4F8F6B;
     background: #E4EEE1;
 }
+
+/* ===== Reports & Business Intelligence ===== */
+.wm-reports {
+    padding: 48px 0 64px;
+}
+
+.wm-reports-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--green, #2f6b4f);
+    margin-bottom: 8px;
+}
+
+.wm-reports-title {
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--ink, #16231c);
+    margin-bottom: 6px;
+}
+
+.wm-reports-sub {
+    color: var(--muted, #6b7a70);
+    font-size: 15px;
+    margin-bottom: 28px;
+}
+
+.wm-reports-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .wm-reports-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.report-card {
+    background: #fff;
+    border: 1px solid var(--border, #e7e3d8);
+    border-radius: 20px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+}
+
+.report-card::after {
+    content: "";
+    position: absolute;
+    right: -30px;
+    bottom: -30px;
+    width: 90px;
+    height: 90px;
+    background: var(--sage, #eef1e8);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.report-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 1;
+}
+
+.report-card-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--ink, #16231c);
+}
+
+.ring {
+    width: 64px;
+    height: 64px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.ring svg {
+    transform: rotate(-90deg);
+}
+
+.ring circle.ring-bg {
+    fill: none;
+    stroke: var(--sage, #eef1e8);
+    stroke-width: 6;
+}
+
+.ring circle.ring-fg {
+    fill: none;
+    stroke: var(--green, #2f6b4f);
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset .6s ease;
+}
+
+.ring-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--ink, #16231c);
+}
+
+.report-stats {
+    position: relative;
+    z-index: 1;
+}
+
+.report-stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px dashed var(--border, #e7e3d8);
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+}
+
+.report-stat-row:last-child {
+    border-bottom: none;
+}
+
+.report-stat-label {
+    color: var(--muted, #6b7a70);
+}
+
+.report-stat-value {
+    font-weight: 700;
+    color: var(--ink, #16231c);
+    font-variant-numeric: tabular-nums;
+}
+
+.report-stat-value.up {
+    color: var(--green, #2f6b4f);
+}
+
+.report-stat-value.down {
+    color: #c0503f;
+}

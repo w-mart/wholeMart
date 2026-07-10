@@ -2,6 +2,8 @@ package com.localb2b.marketplace.product;
 
 import com.localb2b.marketplace.common.CurrentUserProvider;
 import com.localb2b.marketplace.common.Pageables;
+import com.localb2b.marketplace.inventory.InventoryItem;
+import com.localb2b.marketplace.inventory.InventoryRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,11 +25,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductApiController {
     private final ProductService productService;
     private final CurrentUserProvider currentUserProvider;
+    private final InventoryRepository inventoryRepository;
 
-    public ProductApiController(ProductService productService, CurrentUserProvider currentUserProvider) {
+    public ProductApiController(ProductService productService,
+                                 CurrentUserProvider currentUserProvider,
+                                 InventoryRepository inventoryRepository) {
         this.productService = productService;
         this.currentUserProvider = currentUserProvider;
+        this.inventoryRepository = inventoryRepository;
     }
+
 
     @GetMapping
     public Page<ProductDto> search(@RequestParam(required = false) String q,
@@ -57,8 +64,29 @@ public class ProductApiController {
     }
 
     private ProductDto toDto(Product product) {
-        return new ProductDto(product.getId(), product.getDistributorUserId(), product.getName(), product.getCategory(), product.getUnitPrice());
+        // Includes SKU and stock quantity so the distributor products page can render Qty/SKU.
+        // Inventory quantity is stored in InventoryItem, keyed by productId.
+        Integer stockQuantity = null; // default when inventory not present
+
+        try {
+            stockQuantity = inventoryRepository.findByProductId(product.getId())
+                    .map(inv -> inv.getAvailableQuantity())
+                    .orElse(null);
+        } catch (Exception ignored) {
+            // keep stockQuantity as null if lookup fails
+        }
+
+        return new ProductDto(
+                product.getId(),
+                product.getDistributorUserId(),
+                product.getName(),
+                product.getCategory(),
+                product.getUnitPrice(),
+                stockQuantity,
+                product.getSku());
     }
+
+
 
     public record ProductCreateRequest(
             @NotBlank String name,

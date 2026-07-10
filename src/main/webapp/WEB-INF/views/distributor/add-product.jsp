@@ -190,6 +190,71 @@
                     </form>
                 </div>
 
+                <script>
+                    (function () {
+                        const form = document.getElementById('productForm');
+                        const publishBtn = document.getElementById('publishProductBtn');
+                        if (!form || !publishBtn) return;
+
+
+                        function toNumber(v) {
+                            if (v === undefined || v === null || v === '') return null;
+                            const n = Number(v);
+                            return Number.isFinite(n) ? n : null;
+                        }
+
+                        function collectPayload() {
+                            const data = Object.fromEntries(new FormData(form).entries());
+
+                            // NOTE: backend expects JSON for @RequestBody ProductCreateRequest
+                            return {
+                                name: data.name,
+                                category: data.category,
+                                unitPrice: data.unitPrice !== undefined && data.unitPrice !== '' ? Number(data.unitPrice) : null,
+                                details: {
+                                    sku: data.sku || null,
+                                    brand: data.brand || null,
+                                    description: data.description || null,
+                                    gstRate: data.gstRate !== undefined && data.gstRate !== '' ? Number(data.gstRate) : null,
+                                    mrp: data.mrp !== undefined && data.mrp !== '' ? Number(data.mrp) : null,
+                                    // map UI -> ProductCreateRequest fields used by backend
+                                    stockQuantity: data.stockQuantity !== undefined && data.stockQuantity !== '' ? Number(data.stockQuantity) : 0,
+                                    unitOfMeasure: data.unitOfMeasure || null,
+                                    // backend uses storageType/origin/etc. No warehouse field in request; keep as null
+                                    imageUrl: data.imageUrl || null
+                                }
+                            };
+                        }
+
+                        publishBtn.addEventListener('click', async function (e) {
+                            e.preventDefault();
+
+                            const payload = collectPayload();
+
+                            const res = await fetch(form.action, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(payload)
+                            });
+
+                            if (!res.ok) {
+                                const text = await res.text().catch(() => '');
+                                alert('Product creation failed: ' + res.status + (text ? '\n' + text : ''));
+                                return;
+                            }
+
+                            alert('Product created successfully');
+                            window.location.href = (form.action.replace('/api/v1/products', '/web/distributor/products'));
+                        });
+
+                        // prevent normal form submit (which sends x-www-form-urlencoded)
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                        });
+                    })();
+                </script>
             </main>
 
             <%@ include file="/WEB-INF/common/footer.jsp" %>
