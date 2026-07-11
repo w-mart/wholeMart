@@ -96,7 +96,7 @@ public class AuthWebController {
                                   @RequestParam(required = false) String ownerName,
                                   @RequestParam(required = false) String city,
                                   @RequestParam(required = false) String state,
-                                  @RequestParam(required = false) String addressLine,
+                                  @RequestParam(required = false) String addressLine, // This was missing
                                   @RequestParam(required = false) String pincode,
                                   @RequestParam(required = false) String alternateMobile,
                                   @RequestParam(required = false) BigDecimal latitude,

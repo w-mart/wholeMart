@@ -1,0 +1,324 @@
+/* ============================================================
+   WHOLEMART — AUTHENTICATION (LOGIN & REGISTER)
+   "Dispatch Ledger" Theme
+   ============================================================ */
+
+/* Inherit design tokens from home.css if available */
+:root {
+    --surface: var(--paper, #f8f9fa);
+    --surface-card: var(--paper-raised, #ffffff);
+    --line: var(--line, rgba(0,0,0,.12));
+    --line-strong: var(--line-strong, rgba(0,0,0,.22));
+    --ink: var(--ink, #212529);
+    --ink-soft: var(--ink-soft, #6c757d);
+    --accent: var(--green, #198754);
+    --accent-tint: var(--green-tint, rgba(25,135,84,.1));
+    --radius: var(--radius-sm, 10px);
+    --radius-lg: var(--radius, 16px);
+    --shadow: var(--shadow, 0 10px 30px rgba(18,24,31,.08));
+    --font-display: var(--font-display, 'Space Grotesk', sans-serif);
+    --font-body: var(--font-body, 'Inter', sans-serif);
+}
+
+.wm-auth-page {
+    background:
+        linear-gradient(180deg, rgba(27,94,60,.05), transparent 360px),
+        radial-gradient(rgba(18,24,31,.07) 1px, transparent 1px),
+        var(--paper, #F5F4EC);
+    background-size: auto, 22px 22px;
+    padding: 20px 0;
+    min-height: calc(100vh - 76px); /* 76px is header height */
+    display: flex;
+    align-items: center;
+}
+
+.wm-auth-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+    gap: 48px;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+/* Left side (Benefits) */
+.wm-auth-left {
+    padding-right: 24px;
+    padding: 32px 36px;
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    padding-bottom: 263px;
+    padding-right: 24px;    
+}
+
+.wm-auth-left .badge-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: var(--accent-tint);
+    border: 1px solid rgba(27,94,60,.24);
+    color: var(--ink);
+    font-family: var(--font-mono, monospace);
+    font-weight: 600;
+    font-size: .75rem;
+}
+
+.wm-auth-left h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 44px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 20px 0;
+    color: var(--ink);
+}
+
+.wm-auth-left > p {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    max-width: 45ch;
+    line-height: 1.7;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 36px;
+}
+
+.feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.feature-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--accent-tint);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.feature h5 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0 0 4px;
+}
+
+.feature p {
+    font-size: .85rem;
+    color: var(--ink-soft);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Right side (Auth Card) */
+.auth-card {
+    background: var(--surface-card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 32px 36px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 680px; /* Wider card as per TODO */
+    margin: 0 auto;
+}
+
+.auth-header h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+.auth-header p {
+    color: var(--ink-soft);
+    font-size: .95rem;
+    margin-bottom: 24px;
+}
+
+.nav-pills .nav-link {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--ink-soft);
+    border-radius: var(--radius);
+    padding: 10px 20px;
+    border: 1px solid transparent;
+}
+
+.nav-pills .nav-link.active {
+    background: var(--accent-tint);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Form inputs */
+.form-label {
+    font-weight: 600;
+    font-size: .85rem;
+    color: var(--ink);
+}
+
+.form-control, .form-select {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    height: 48px;
+    padding: 0 16px;
+    font-size: .92rem;
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-tint);
+    background: var(--surface-card);
+    outline: none;
+}
+
+.input-group-text {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-right: none;
+    border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.input-group .form-control {
+    border-left: none;
+}
+
+.password-group {
+    position: relative;
+}
+.wm-eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--ink-soft);
+    padding: 4px;
+}
+
+/* Buttons */
+.btn-register {
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid var(--ink);
+    font-weight: 700;
+    border-radius: var(--radius);
+    transition: all .2s ease;
+}
+.btn-register:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* Stepper */
+.wizard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+}
+.wizard-step {
+    text-align: center;
+    position: relative;
+}
+.wizard-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    transition: all .3s ease;
+    margin: 0 auto 6px;
+}
+.wizard-step.active .wizard-circle {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+.wizard-step small {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+.wizard-step.active small {
+    color: var(--ink);
+}
+.wizard-line {
+    flex: 1;
+    height: 2px;
+    background: var(--line);
+    margin: 0 10px;
+    transform: translateY(-12px);
+}
+
+.register-step {
+    display: none;
+}
+.register-step.active-step {
+    display: block;
+    animation: fadeIn .4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Password Strength */
+.password-strength {
+    height: 5px;
+    background: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+#passwordBar {
+    height: 100%;
+    width: 0;
+    background: #dc3545;
+    transition: width .3s ease, background-color .3s ease;
+}
+/* Password strength colors */
+.password-strength-bar.strength-1 { background-color: #dc3545; } /* Weak */
+.password-strength-bar.strength-2 { background-color: #ffc107; } /* Medium */
+.password-strength-bar.strength-3 { background-color: #17a2b8; } /* Good */
+.password-strength-bar.strength-4 { background-color: #28a745; } /* Strong */
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, .25) !important;
+}
+
+@media (max-width: 991.98px) {
+    .wm-auth-layout {
+        grid-template-columns: 1fr;
+    }
+    .wm-auth-left {
+        display: none; /* Hide decorative left column on mobile */
+    }
+    .auth-card {
+        padding: 24px;
+    }
+}
