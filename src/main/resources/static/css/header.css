@@ -19,10 +19,59 @@
     box-shadow: var(--shadow);
 }
 
-
-
 .navbar {
     min-height: 76px;
+}
+
+/* ------------------------------------------------------------
+   Header row layout
+   Mobile (default):  [ left(logo) ] [ right(dropdown+hamburger) ]
+                       [ ------ nav links (wraps below, full width) ------ ]
+   Desktop (>=992px):  [ left(logo) ] [ search ] [ nav links ] [ right(dropdown) ]
+   ------------------------------------------------------------ */
+.wm-header-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.wm-header-left {
+    order: 1;
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.wm-header-right {
+    order: 2;
+    flex: 0 0 auto;
+    margin-left: auto;
+    gap: 10px;
+}
+
+.wm-header-collapse {
+    order: 3;
+    flex-basis: 100%;
+}
+
+.wm-search {
+    order: 2;
+}
+
+@media (min-width: 992px) {
+    .wm-header-collapse {
+        order: 3;
+        flex-basis: auto;
+    }
+
+    .wm-header-right {
+        order: 4;
+        margin-left: 0;
+    }
+
+    .wm-search {
+        order: 2;
+    }
 }
 
 .wm-logo-wrap {
@@ -323,49 +372,57 @@
   }
 }
 
-@media (max-width: 991.98px) {
-  .wm-header .navbar {
-    min-height: 68px;
-  }
+@media (max-width:991.98px){
 
+    .wm-header .container-fluid{
+        align-items:center;
+    }
 
-  .wm-header .container-fluid.px-3 {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
+    .wm-header-left{
+        min-width:0;
+    }
 
-  .wm-logo-circle {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    font-size: 16px;
-  }
+    .wm-logo-title{
+        font-size:1.1rem;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
 
-  .wm-logo-title {
-    font-size: 16px;
-  }
+    .wm-logo-line small{
+        white-space:nowrap;
+        font-size:.7rem;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
 
-  /* When nav is collapsed, make items readable and stacked */
-  #wmDistributorNav {
-    padding: 10px 0;
-  }
+    .wm-search{
+        display:none !important;
+    }
 
-  #wmDistributorNav .navbar-nav {
-    padding: 6px 8px;
-    width: 100%;
-  }
+    .wm-header-collapse{
+        margin-top:15px;
+        padding-top:15px;
+        border-top:1px solid #eee;
+    }
 
-  #wmDistributorNav .nav-item .nav-link {
-    width: 100%;
-    margin-left: 0;
-    padding: 10px 12px !important;
-    color: var(--graphite) !important;
-  }
+    .navbar-nav{
+        width:100%;
+    }
 
-  /* Keep user button from causing overflow */
-  .wm-user-btn {
-    padding: 6px 10px 6px 6px;
-  }
+    .navbar-nav .nav-link{
+        padding:12px 0;
+    }
+
+    /* Name label is hidden on mobile, so shrink padding + gap so the button
+       is just avatar + caret, not a wide pill */
+    .wm-user-btn{
+        padding:4px 8px 4px 4px;
+        gap:2px !important;
+    }
+
+    /* UX: only one hamburger (Bootstrap collapse). */
+    #wmSidebarToggle{
+        display:none;
+    }
 }
-
-

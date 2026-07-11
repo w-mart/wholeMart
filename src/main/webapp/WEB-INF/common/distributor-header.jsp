@@ -47,11 +47,11 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
 
         <header class="wm-header sticky-top">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container">
+                <div class="container-fluid px-3">
 
 
                     <!-- Left -->
-                    <div class="d-flex align-items-center">
+                    <div class="align-items-center">
                         <button id="wmSidebarToggle" class="btn btn-light me-3" type="button"
                             aria-label="Toggle sidebar">
                             <i class="bi bi-list fs-4"></i>
@@ -77,24 +77,29 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 placeholder="Search products, retailers, orders...">
                         </div>
                     </form>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wmDistributorNav">
+                    <button class="navbar-toggler" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#wmDistributorNav"
+                            aria-controls="wmDistributorNav" aria-expanded="false">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
 
                     <div class="collapse navbar-collapse" id="wmDistributorNav">
-                        <ul class="navbar-nav ms-auto align-items-lg-center">
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"></i>Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/orders"></i>My Orders</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai"></i>Ask AI</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"></i>Help</a></li>
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/orders">My Orders</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai">Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister">Help</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/web/auth/logout">Logout</a>
+                            </li>
                         </ul>
                     </div>
 
 
 
                     <!-- Right -->
-                    <div class="d-flex align-items-center ms-auto">
+                    <div class="d-flex align-items-center">
                         <div class="dropdown">
                             <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
                                 data-bs-toggle="dropdown">

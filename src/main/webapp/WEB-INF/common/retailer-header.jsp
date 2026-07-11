@@ -42,16 +42,20 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
 
         <!--
     Requires header.css to already be linked in <head>.
-    Layout mirrors common/header.jsp.
+    Layout: on desktop the order is [logo] [search] [nav links] [user dropdown],
+    with the custom sidebar toggle on the far left.
+    On mobile the order is [logo] [user dropdown + hamburger] on row 1,
+    with the collapsible nav links wrapping to a full-width row 2 when opened.
+    This grouping (dropdown + hamburger together in one flex container) is what
+    keeps them on the same line on small screens.
 -->
 
         <header class="wm-header sticky-top">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container">
+                <div class="container-fluid px-3 wm-header-row">
 
-
-                    <!-- Left -->
-                    <div class="d-flex align-items-center">
+                    <!-- Left: sidebar toggle + logo -->
+                    <div class="d-flex align-items-center wm-header-left">
                         <button id="wmSidebarToggle" class="btn btn-light me-3" type="button"
                             aria-label="Toggle sidebar">
                             <i class="bi bi-list fs-4"></i>
@@ -67,8 +71,8 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                         </a>
                     </div>
 
-                    <!-- Search -->
-                    <form class="mx-auto wm-search d-none d-lg-block">
+                    <!-- Search (desktop only) -->
+                    <form class="wm-search d-none d-lg-block">
                         <div class="input-group">
                             <span class="input-group-text bg-white border-end-0">
                                 <i class="bi bi-search"></i>
@@ -77,42 +81,40 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 placeholder="Search products, distributors, orders...">
                         </div>
                     </form>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#wmRetailerNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
 
-
-                    <div id="wmRetailerNav">
-                        <ul class="navbar-nav ms-auto align-items-lg-center">
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"></i>Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/orders"></i>My Orders</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/ask-ai"></i>Ask AI</a></li>
-                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister"></i>Help</a></li>
+                    <!-- Nav links: inline on desktop, wraps to full-width row on mobile when opened -->
+                    <div class="collapse navbar-collapse wm-header-collapse" id="wmRetailerNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/orders">My Orders</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/ask-ai">Ask AI</a></li>
+                            <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister">Help</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/web/auth/logout">Logout</a>
+                            </li>
                         </ul>
                     </div>
 
-
-
-                    <!-- Right -->
-                    <div class="d-flex align-items-center ms-auto">
+                    <!-- Right: user dropdown + mobile hamburger, grouped so they stay on one line -->
+                    <div class="d-flex align-items-center wm-header-right">
                         <div class="dropdown">
                             <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
                                 data-bs-toggle="dropdown">
                                 <span class="wm-user-avatar">
                                     <%= initials %>
                                 </span>
-<span class="fw-semibold d-none d-lg-inline">
+                                <span class="fw-semibold d-none d-lg-inline">
                                     <%= wmUserNameHeader %>
                                 </span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end wm-user-menu">
                                 <li>
                                     <h6 class="dropdown-header wm-user-menu-header">
-<%= wmUserNameHeader %>
+                                        <%= wmUserNameHeader %>
                                     </h6>
                                 </li>
                                 <li>
-<a class="dropdown-item wm-user-menu-item"
+                                    <a class="dropdown-item wm-user-menu-item"
                                         href="${pageContext.request.contextPath}/web/retailer/profile">
                                         Profile
                                     </a>
@@ -134,6 +136,12 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 </li>
                             </ul>
                         </div>
+
+                        <button class="navbar-toggler" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#wmRetailerNav"
+                                aria-controls="wmRetailerNav" aria-expanded="false">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
                     </div>
 
                 </div>
