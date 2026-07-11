@@ -42,16 +42,20 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
 
         <!--
     Requires header.css to already be linked in <head>.
-    Layout mirrors common/header.jsp.
+    Layout: on desktop the order is [logo] [search] [nav links] [user dropdown],
+    with the custom sidebar toggle on the far left.
+    On mobile the order is [logo] [user dropdown + hamburger] on row 1,
+    with the collapsible nav links wrapping to a full-width row 2 when opened.
+    This grouping (dropdown + hamburger together in one flex container) is what
+    keeps them on the same line on small screens. Mirrors retailer-header.jsp.
 -->
 
         <header class="wm-header sticky-top">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container-fluid px-3">
+                <div class="container-fluid px-3 wm-header-row">
 
-
-                    <!-- Left -->
-                    <div class="align-items-center">
+                    <!-- Left: sidebar toggle + logo -->
+                    <div class="d-flex align-items-center wm-header-left">
                         <button id="wmSidebarToggle" class="btn btn-light me-3" type="button"
                             aria-label="Toggle sidebar">
                             <i class="bi bi-list fs-4"></i>
@@ -67,8 +71,8 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                         </a>
                     </div>
 
-                    <!-- Search -->
-                    <form class="mx-auto wm-search d-none d-lg-block">
+                    <!-- Search (desktop only) -->
+                    <form class="wm-search d-none d-lg-block">
                         <div class="input-group">
                             <span class="input-group-text bg-white border-end-0">
                                 <i class="bi bi-search"></i>
@@ -77,14 +81,9 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 placeholder="Search products, retailers, orders...">
                         </div>
                     </form>
-                    <button class="navbar-toggler" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#wmDistributorNav"
-                            aria-controls="wmDistributorNav" aria-expanded="false">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
 
-
-                    <div class="collapse navbar-collapse" id="wmDistributorNav">
+                    <!-- Nav links: inline on desktop, wraps to full-width row on mobile when opened -->
+                    <div class="collapse navbar-collapse wm-header-collapse" id="wmDistributorNav">
                         <ul class="navbar-nav">
                             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/orders">My Orders</a></li>
@@ -96,28 +95,26 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                         </ul>
                     </div>
 
-
-
-                    <!-- Right -->
-                    <div class="d-flex align-items-center">
+                    <!-- Right: user dropdown + mobile hamburger, grouped so they stay on one line -->
+                    <div class="d-flex align-items-center wm-header-right">
                         <div class="dropdown">
                             <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
                                 data-bs-toggle="dropdown">
                                 <span class="wm-user-avatar">
                                     <%= initials %>
                                 </span>
-<span class="fw-semibold d-none d-lg-inline">
+                                <span class="fw-semibold d-none d-lg-inline">
                                     <%= wmUserNameHeader %>
                                 </span>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end wm-user-menu">
                                 <li>
                                     <h6 class="dropdown-header wm-user-menu-header">
-<%= wmUserNameHeader %>
+                                        <%= wmUserNameHeader %>
                                     </h6>
                                 </li>
                                 <li>
-<a class="dropdown-item wm-user-menu-item"
+                                    <a class="dropdown-item wm-user-menu-item"
                                         href="${pageContext.request.contextPath}/web/distributor/profile">
                                         Profile
                                     </a>
@@ -139,6 +136,12 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
                                 </li>
                             </ul>
                         </div>
+
+                        <button class="navbar-toggler" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#wmDistributorNav"
+                                aria-controls="wmDistributorNav" aria-expanded="false">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
                     </div>
 
                 </div>
@@ -149,55 +152,55 @@ if (wmUserNameHeader != null && !wmUserNameHeader.trim().isEmpty()) {
         <aside id="wmSidebar" class="wm-sidebar">
             <ul class="list-unstyled m-0">
                 <li>
-                    <a class="<%= wmUri.contains(" /dashboard") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/dashboard") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/dashboard">
                         <i class="bi bi-speedometer2"></i>Dashboard
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /orders") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/orders") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/orders">
                         <i class="bi bi-cart-check"></i>Orders
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /products") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/products") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/products">
                         <i class="bi bi-box-seam"></i>Products
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /add-product") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/add-product") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/add-product">
                         <i class="bi bi-plus-circle"></i>Add Product
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /drivers") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/drivers") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/drivers">
                         <i class="bi bi-truck"></i>Drivers
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /delivery") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/delivery") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/delivery">
                         <i class="bi bi-geo-alt"></i>Delivery
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /reports") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/reports") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/reports">
                         <i class="bi bi-bar-chart"></i>Reports
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /alerts") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/alerts") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/alerts">
                         <i class="bi bi-bell"></i>Alerts
                     </a>
                 </li>
                 <li>
-                    <a class="<%= wmUri.contains(" /ai-chat") ? "active" : "" %>"
+                    <a class="<%= wmUri.contains("/ai-chat") ? "active" : "" %>"
                         href="${pageContext.request.contextPath}/web/distributor/ai-chat">
                         <i class="bi bi-robot"></i>AI Assistant
                     </a>

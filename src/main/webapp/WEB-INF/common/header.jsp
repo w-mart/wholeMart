@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <header class="wm-header sticky-top">
-        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container">
                 <a class="navbar-brand wm-logo-wrap" href="${pageContext.request.contextPath}/">
                     <div class="wm-logo-circle">W</div>
@@ -37,8 +37,6 @@
                         </li>
                     </ul>
                 </div>
-            </div>
-
             </div>
         </nav>
     </header>
