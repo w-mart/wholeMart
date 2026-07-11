@@ -33,8 +33,8 @@ public class AuthWebController {
     }
 
     @PostMapping("/login")
-    public String loginSubmit(@RequestParam(required = false) String mobile,
-                               @RequestParam UserRole role,
+    public String loginSubmit(@RequestParam(required = false) String mobile, 
+                               @RequestParam String role,
                                @RequestParam String password,
                                @RequestParam(required = false) String name,
                                @RequestParam(required = false) String businessName,
@@ -53,9 +53,16 @@ public class AuthWebController {
                                Model model) {
         try {
             String normalizedMobile = mobile != null ? AuthService.normalizeMobile(mobile) : null;
+            // UI sends ROLE_* values; support also Admin/Retailer style just in case.
+            String normalizedRole = role == null ? null : role.trim();
+            if (normalizedRole != null && !normalizedRole.startsWith("ROLE_")) {
+                normalizedRole = "ROLE_" + normalizedRole.toUpperCase();
+            }
+            UserRole userRole = UserRole.valueOf(normalizedRole);
+
             var response = authService.login(new LoginRequest(
                     normalizedMobile,
-                    role,
+                    userRole,
                     password,
                     name,
                     businessName,

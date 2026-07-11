@@ -5,10 +5,10 @@
                 <a class="navbar-brand wm-logo-wrap" href="${pageContext.request.contextPath}/">
                     <div class="wm-logo-circle">W</div>
                     <div class="wm-logo-line">
-                    <div class="wm-logo-title">WholeMart</div>
-                    <small class="text-muted">
-                        Local B2B Marketplace
-                    </small>
+                        <div class="wm-logo-title">WholeMart</div>
+                        <small class="text-muted">
+                            Local B2B Marketplace
+                        </small>
                     </div>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
@@ -29,15 +29,16 @@
                         <li class="nav-item"><a class="nav-link" href="#roles">Roles</a></li>
                         <li class="nav-item"><a class="nav-link" href="#operations">Operations</a></li>
                         <li class="nav-item"><a class="nav-link" href="#security">Security</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/auth/login">Sign up</a></li>
-                    </ul>                    
+                        <li class="nav-item"><a class="nav-link"
+                                href="${pageContext.request.contextPath}/web/auth/login">Sign up</a></li>
+                        <li class="d-flex flex-wrap gap-3 mt-0">
+                            <a href="${pageContext.request.contextPath}/web/auth/login"
+                                class="btn wm-btn-primary">Login</a>
+                        </li>
+                    </ul>
                 </div>
-                    <a class="navbar-brand wm-logo-wrap" href="${pageContext.request.contextPath}/web/auth/login">
-                    <div class="wm-logo-circle" style="width:92px; padding:5px; margin-left: 2rem;">Login</div>
-                    </a>
-                </div>
+            </div>
 
             </div>
         </nav>
     </header>
-    

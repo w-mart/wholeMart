@@ -129,12 +129,12 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Login As</label>
-                                        <select class="form-select" name="role" required>
+<select class="form-select" name="role" required>
                                             <option value="" disabled selected>Select your role</option>
-                                            <option value="Admin">Admin</option>
-                                            <option value="Retailer">Retailer</option>
-                                            <option value="Distributor">Distributor</option>
-                                            <option value="Driver">Driver</option>
+                                            <option value="ROLE_ADMIN">Admin</option>
+                                            <option value="ROLE_RETAILER">Retailer</option>
+                                            <option value="ROLE_DISTRIBUTOR">Distributor</option>
+                                            <option value="ROLE_DRIVER">Driver</option>
                                         </select>
                                     </div>
 
@@ -425,7 +425,9 @@
     const urlParamsForLogin = new URLSearchParams(window.location.search);
     const roleForLogin = urlParamsForLogin.get('role');
     if (roleForLogin && loginRoleSelect) {
-        loginRoleSelect.value = roleForLogin.charAt(0).toUpperCase() + roleForLogin.slice(1);
+        // Accept both ROLE_RETAILER and Retailer styles
+        const normalized = String(roleForLogin).trim();
+        loginRoleSelect.value = normalized.startsWith('ROLE_') ? normalized : 'ROLE_' + normalized.toUpperCase();
     }
 
     // Multi-step register
