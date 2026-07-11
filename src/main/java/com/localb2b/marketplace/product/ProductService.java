@@ -53,6 +53,15 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    public List<Product> productsByDistributor(Long distributorUserId) {
+        if (distributorUserId == null) {
+            return List.of();
+        }
+        return productRepository.findByDistributorUserId(distributorUserId);
+    }
+
+
+    @Transactional(readOnly = true)
     public List<Product> myProducts(CurrentUser currentUser) {
         return productRepository.findByDistributorUserId(currentUser.userId());
     }

@@ -159,7 +159,12 @@
                     var productsUrl = "/api/v1/products" +
                         (distributorUserId ? "?distributorUserId=" + encodeURIComponent(distributorUserId) : "");
 
+                    if (distributorUserId) {
+                        productsUrl = "/api/v1/products/by-distributor?distributorUserId=" + encodeURIComponent(distributorUserId);
+                    }
+
                     fetch(productsUrl)
+
                         .then(function (response) { return response.json(); })
                         .then(function (data) {
                             products = wmRows(data);

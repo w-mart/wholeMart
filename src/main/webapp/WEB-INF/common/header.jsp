@@ -29,10 +29,15 @@
                         <li class="nav-item"><a class="nav-link" href="#roles">Roles</a></li>
                         <li class="nav-item"><a class="nav-link" href="#operations">Operations</a></li>
                         <li class="nav-item"><a class="nav-link" href="#security">Security</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister">Sign up</a></li>
-                        <li class="nav-item"><a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary js-auth-open" style="height: 42px; padding: 0 18px;">Sign In</a></li>
-                    </ul>
+                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/auth/login">Sign up</a></li>
+                    </ul>                    
                 </div>
+                    <a class="navbar-brand wm-logo-wrap" href="${pageContext.request.contextPath}/web/auth/login">
+                    <div class="wm-logo-circle" style="width:92px; padding:5px; margin-left: 2rem;">Login</div>
+                    </a>
+                </div>
+
             </div>
         </nav>
     </header>
+    

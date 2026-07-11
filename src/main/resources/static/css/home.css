@@ -110,7 +110,7 @@ img { max-width: 100%; }
   border-radius: 999px;
   background: var(--green-tint);
   border: 1px solid rgba(27,94,60,.24);
-  color: var(--green-deep);
+  color: var(--ink);
   font-family: var(--font-mono);
   font-weight: 600;
   letter-spacing: .08em;
@@ -129,13 +129,13 @@ img { max-width: 100%; }
   padding: 0 22px;
   font-weight: 600;
   border: 1px solid var(--green);
-  background: var(--green);
+  background: var(--ink);
   color: #fff !important;
   box-shadow: 0 10px 24px rgba(27,94,60,.24);
   transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
 }
 .wm-btn-primary:hover {
-  background: var(--green-deep);
+  background: var(--ink);
   transform: translateY(-2px);
   box-shadow: 0 16px 32px rgba(21,79,52,.28);
 }
@@ -161,7 +161,7 @@ img { max-width: 100%; }
 /* ============================================================
    HERO
    ============================================================ */
-.wm-hero { padding: 60px 0 52px; position: relative; }
+.wm-hero { padding: 10px 0 10px; position: relative; }
 .wm-hero .row { align-items: center; }
 
 .wm-hero-title {
@@ -219,7 +219,6 @@ img { max-width: 100%; }
   font-weight: 600;
   letter-spacing: .04em;
   text-transform: uppercase;
-  color: var(--green-deep);
   margin: 0 0 6px;
   display: flex;
   align-items: center;
@@ -236,7 +235,7 @@ img { max-width: 100%; }
 /* ============================================================
    HOW IT WORKS — the route line
    ============================================================ */
-#how-it-works { padding: 56px 0 68px; }
+#how-it-works { padding: 0px 0 20px; }
 .how-card { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
 .how-head { text-align: center; max-width: 640px; margin: 0 auto 42px; }
 .how-head .eyebrow {
@@ -245,7 +244,6 @@ img { max-width: 100%; }
   text-transform: uppercase;
   letter-spacing: .1em;
   font-size: .72rem;
-  color: var(--green-deep);
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -316,11 +314,10 @@ img { max-width: 100%; }
   content: 'LEDGER · ';
   font-family: var(--font-mono);
   font-size: .62em;
-  color: var(--green-deep);
   letter-spacing: .08em;
   vertical-align: 2px;
 }
-#snapshot .card-body { padding: 22px 26px !important; }
+#snapshot .card-body { padding: 28px 25px !important; }
 #snapshot .row > div { border-right: 1px dashed var(--line); }
 #snapshot .row > div:last-child { border-right: none; }
 #snapshot canvas { max-width: 100%; height: 230px !important; }

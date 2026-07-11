@@ -46,6 +46,15 @@ public class ProductApiController {
         return results.map(this::toDto);
     }
 
+    @GetMapping("/by-distributor")
+    public List<ProductDto> productsByDistributor(@RequestParam Long distributorUserId) {
+        return productService.productsByDistributor(distributorUserId)
+                .stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+
     @GetMapping("/mine")
     public List<ProductDto> mine() {
         return productService.myProducts(currentUserProvider.requireCurrentUser()).stream()

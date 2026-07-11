@@ -43,6 +43,7 @@
                         <a href="#roles" class="btn wm-btn-outline">Choose Workspace</a>
                     </div>                   
                 </div>
+                
                 <div class="col-lg-6">
                     <div class="wm-hero-image">
                         <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
@@ -63,9 +64,11 @@
                     </div>
                     </div>
                 </div>
-            </div>            
+            </div>
+                        
         </div>
     </section>
+    <hr>
     <section id="how-it-works">
         <div class="how-card">
             <div class="how-head">
