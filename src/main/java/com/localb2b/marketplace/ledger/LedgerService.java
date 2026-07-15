@@ -1,6 +1,5 @@
 package com.localb2b.marketplace.ledger;
 
-import com.localb2b.marketplace.ai.dto.DistributorLedgerSummary;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
