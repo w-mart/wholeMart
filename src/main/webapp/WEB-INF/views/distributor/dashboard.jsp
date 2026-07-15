@@ -225,63 +225,137 @@
                                         aria-label="Hero slide indicators"></div>
                                 </div>
                             </section>
+
                             <hr>
-                            <section class="wm-home-reports mb-4">
+
+                            <!-- ===================================================== -->
+                            <!-- BUSINESS INTELLIGENCE + AI ASSISTANT
+                 Merged into a single section: report tiles (2x2) on the
+                 left, AI assistant on the right. -->
+                            <!-- ===================================================== -->
+                            <section class="wm-bi-ai-combo mb-4">
                                 <div class="home-section-head">
                                     <span class="wm-kicker">ANALYTICS</span>
-                                    <h2>Reports & Business Intelligence</h2>
-                                    <p>Real-time insights into inventory, fulfillment and business growth.</p>
+                                    <h2>Business Intelligence & AI Assistant</h2>
+                                    <p>Real-time insights into inventory, fulfillment and business growth — with AI
+                                        help right beside it.</p>
                                 </div>
 
-                                <div class="row g-4">
+                                <div class="row g-4 align-items-stretch">
 
-                                    <div class="col-lg-4">
-                                        <article class="home-role-card h-100">
-                                            <div class="wm-report-card-head">
-                                                <h3 class="mb-0">Inventory Health</h3>
-                                                <div class="wm-ring is-success" style="--pct:92"><span>92%</span></div>
+                                    <!-- Left: report tiles, 2 per row, 2 rows -->
+                                    <div class="col-lg-8">
+                                        <div class="row g-4 h-100">
+
+                                            <div class="col-md-6">
+                                                <article class="home-role-card wm-report-tile h-100">
+                                                    <div class="wm-report-card-head">
+                                                        <h3 class="mb-0">Inventory Health</h3>
+                                                        <div class="wm-ring is-success" style="--pct:92"><span>92%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Total Products</span><strong
+                                                            id="reportTotalItems">0</strong></div>
+                                                    <div class="wm-report-item"><span>Categories</span><strong
+                                                            id="reportCategoryCount">0</strong></div>
+                                                    <div class="wm-report-item"><span>Availability</span><strong
+                                                            style="color:var(--wm-success)">92%</strong></div>
+                                                    <div class="wm-report-item"><span>Out of Stock</span><strong
+                                                            style="color:var(--wm-danger)">0</strong></div>
+                                                </article>
                                             </div>
-                                            <div class="wm-report-item"><span>Total Products</span><strong
-                                                    id="reportTotalItems">0</strong></div>
-                                            <div class="wm-report-item"><span>Categories</span><strong
-                                                    id="reportCategoryCount">0</strong></div>
-                                            <div class="wm-report-item"><span>Availability</span><strong
-                                                    style="color:var(--wm-success)">92%</strong></div>
-                                            <div class="wm-report-item"><span>Out of Stock</span><strong
-                                                    style="color:var(--wm-danger)">0</strong></div>
-                                        </article>
+
+                                            <div class="col-md-6">
+                                                <article class="home-role-card wm-report-tile h-100">
+                                                    <div class="wm-report-card-head">
+                                                        <h3 class="mb-0">Order Performance</h3>
+                                                        <div class="wm-ring is-success" style="--pct:98"><span>98%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Total Orders</span><strong
+                                                            id="reportTotalOrders">0</strong></div>
+                                                    <div class="wm-report-item"><span>Running Orders</span><strong
+                                                            id="reportActiveOrders">0</strong></div>
+                                                    <div class="wm-report-item"><span>Success Rate</span><strong
+                                                            style="color:var(--wm-success)">98.4%</strong></div>
+                                                    <div class="wm-report-item"><span>Rejected</span><strong>0</strong>
+                                                    </div>
+                                                </article>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <article class="home-role-card wm-report-tile h-100">
+                                                    <div class="wm-report-card-head">
+                                                        <h3 class="mb-0">Business Growth</h3>
+                                                        <div class="wm-ring" style="--pct:78"><span>78%</span></div>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Retailers</span><strong>84</strong>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Revenue Trend</span><strong
+                                                            style="color:var(--wm-success)">+12%</strong></div>
+                                                    <div class="wm-report-item"><span>Expansion</span><strong>2
+                                                            Cities</strong>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Target
+                                                            Achievement</span><strong>78%</strong></div>
+                                                </article>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <article class="home-role-card wm-report-tile h-100">
+                                                    <div class="wm-report-card-head">
+                                                        <h3 class="mb-0">Payment Health</h3>
+                                                        <div class="wm-ring is-success" style="--pct:88"><span>88%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Pending Settlements</span><strong
+                                                            id="reportPendingSettlements">0</strong></div>
+                                                    <div class="wm-report-item"><span>Overdue Amount</span><strong
+                                                            style="color:var(--wm-danger)">₹0</strong></div>
+                                                    <div class="wm-report-item"><span>Disputes</span><strong>0</strong>
+                                                    </div>
+                                                    <div class="wm-report-item"><span>Collection Rate</span><strong
+                                                            style="color:var(--wm-success)">88%</strong></div>
+                                                </article>
+                                            </div>
+
+                                        </div>
                                     </div>
 
+                                    <!-- Right: AI Assistant -->
                                     <div class="col-lg-4">
-                                        <article class="home-role-card h-100">
-                                            <div class="wm-report-card-head">
-                                                <h3 class="mb-0">Order Performance</h3>
-                                                <div class="wm-ring is-success" style="--pct:98"><span>98%</span></div>
+                                        <div class="wm-card wm-ai-panel wm-ai-panel--compact h-100">
+                                            <div class="wm-ai-glow"></div>
+                                            <div class="wm-ai-header">
+                                                <div class="wm-ai-avatar"><i class="bi bi-stars"></i></div>
+                                                <div>
+                                                    <span class="wm-ai-badge"><span class="wm-live-dot"></span> AI
+                                                        ASSISTANT</span>
+                                                    <h2 class="mb-0">Ask WholeMart AI</h2>
+                                                </div>
                                             </div>
-                                            <div class="wm-report-item"><span>Total Orders</span><strong
-                                                    id="reportTotalOrders">0</strong></div>
-                                            <div class="wm-report-item"><span>Running Orders</span><strong
-                                                    id="reportActiveOrders">0</strong></div>
-                                            <div class="wm-report-item"><span>Success Rate</span><strong
-                                                    style="color:var(--wm-success)">98.4%</strong></div>
-                                            <div class="wm-report-item"><span>Rejected</span><strong>0</strong></div>
-                                        </article>
-                                    </div>
 
-                                    <div class="col-lg-4">
-                                        <article class="home-role-card h-100">
-                                            <div class="wm-report-card-head">
-                                                <h3 class="mb-0">Business Growth</h3>
-                                                <div class="wm-ring" style="--pct:78"><span>78%</span></div>
+
+                                            <div id="wmDashboardAiResponse" class="wm-ai-response">
+                                                Welcome <strong>
+                                                    <%= wmUserName %>
+                                                </strong> 👋 I'm ready to help with orders, stock, payments and more —
+                                                try a suggestion below or type your own question.
                                             </div>
-                                            <div class="wm-report-item"><span>Retailers</span><strong>84</strong></div>
-                                            <div class="wm-report-item"><span>Revenue Trend</span><strong
-                                                    style="color:var(--wm-success)">+12%</strong></div>
-                                            <div class="wm-report-item"><span>Expansion</span><strong>2 Cities</strong>
-                                            </div>
-                                            <div class="wm-report-item"><span>Target
-                                                    Achievement</span><strong>78%</strong></div>
-                                        </article>
+
+                                            <form id="wmDashboardAiForm" class="mt-3">
+                                                <div class="input-group">
+                                                    <input id="wmDashboardAiMessage" type="text" class="form-control"
+                                                        placeholder="Ask WholeMart AI anything...">
+                                                    <button class="wm-ai-mic-btn" type="button"><i
+                                                            class="bi bi-mic-fill"></i></button>
+                                                    <button class="wm-ai-send-btn" type="submit"><i
+                                                            class="bi bi-send"></i></button>
+                                                </div>
+                                            </form>
+
+                                            <div id="wmDashboardAiActionBox" class="mt-3"></div>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -476,86 +550,6 @@
                             </section>
                             <hr>
 
-                            <!-- ===================================================== -->
-                            <!-- BUSINESS SNAPSHOT (LEDGER) -->
-                            <!-- ===================================================== -->
-
-                            <!-- ===================================================== -->
-                            <!-- WHOLEMART AI ASSISTANT -->
-                            <!-- ===================================================== -->
-                            <section class="wm-card wm-ai-panel mb-4 mt-5">
-                                <div class="wm-ai-header">
-                                    <div class="wm-ai-avatar">AI</div>
-                                    <div>
-                                        <h2 class="mb-1">WholeMart AI Assistant</h2>
-                                        <p class="text-muted mb-0">
-                                            Ask anything about orders, products, payments,
-                                            retailers, deliveries or business performance.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="row g-4 align-items-start">
-                                    <div class="col-lg-7">
-                                        <div id="wmDashboardAiResponse" class="wm-ai-response">
-                                            Welcome <strong>
-                                                <%= wmUserName %>
-                                            </strong> 👋
-                                            <br><br>
-                                            I'm ready to help you with your distributor business.
-                                            <br><br>
-                                            You can ask things like:
-                                            <ul class="mb-0 mt-2">
-                                                <li>Show today's orders</li>
-                                                <li>Which products are running low?</li>
-                                                <li>Pending retailer payments</li>
-                                                <li>Suggest products to restock</li>
-                                                <li>Business performance summary</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-5">
-                                        <h5 class="mb-3">Suggested Questions</h5>
-                                        <div id="wmDashboardAiQuickButtons" class="wm-ai-chips">
-                                            <button type="button" class="wm-ai-chip"
-                                                data-ai-message="Show today's order summary"><i
-                                                    class="bi bi-box-seam"></i> Today's Orders</button>
-                                            <button type="button" class="wm-ai-chip"
-                                                data-ai-message="Show low stock products"><i
-                                                    class="bi bi-graph-down-arrow"></i> Low Stock</button>
-                                            <button type="button" class="wm-ai-chip"
-                                                data-ai-message="Show pending retailer payments"><i
-                                                    class="bi bi-cash-coin"></i> Pending Payments</button>
-                                            <button type="button" class="wm-ai-chip"
-                                                data-ai-message="Business performance summary"><i
-                                                    class="bi bi-bar-chart"></i> Business Summary</button>
-                                            <button type="button" class="wm-ai-chip"
-                                                data-ai-message="Suggest products to reorder"><i
-                                                    class="bi bi-arrow-repeat"></i> Restock Suggestions</button>
-                                            <button type="button" class="wm-ai-chip"
-                                                data-ai-message="Today's priorities"><i
-                                                    class="bi bi-lightning-charge"></i> Today's Priorities</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <form id="wmDashboardAiForm" class="mt-4">
-                                    <div class="input-group">
-                                        <input id="wmDashboardAiMessage" type="text" class="form-control"
-                                            placeholder="Ask WholeMart AI anything...">
-                                        <button class="home-btn home-btn-secondary" type="button"><i
-                                                class="bi bi-mic-fill"></i></button>
-                                        <button class="home-btn home-btn-primary" type="submit"><i
-                                                class="bi bi-send"></i> Ask AI</button>
-                                    </div>
-                                </form>
-
-                                <div id="wmDashboardAiActionBox" class="mt-3"></div>
-                            </section>
-
-                            <hr>
                             <!-- ===================================================== -->
                             <!-- FULFILLMENT & OPERATIONS -->
                             <!-- ===================================================== -->
@@ -898,7 +892,7 @@
                                             dashboardState.payments = payments;
 
                                             const pendingCount = payments.filter(p => p.status === "PENDING").length;
-                                            setTextAll(["pendingSettlements", "heroPendingSettlements", "bizPendingSettlements"], pendingCount);
+                                            setTextAll(["pendingSettlements", "heroPendingSettlements", "bizPendingSettlements", "reportPendingSettlements"], pendingCount);
 
                                             renderRecommendedActions();
                                         }
