@@ -3,6 +3,7 @@ package com.localb2b.marketplace;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.ApplicationRunner;
@@ -11,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.util.StringUtils;
 
 @SpringBootApplication
@@ -33,6 +37,7 @@ public class LocalB2bMarketplaceApplication {
         String model = environment.getProperty("spring.ai.openai.chat.options.model", "llama-3.1-8b-instant");
         Double temperature = environment.getProperty("spring.ai.openai.chat.options.temperature", Double.class);
         Integer maxTokens = environment.getProperty("spring.ai.openai.chat.options.max-tokens", Integer.class);
+        Boolean streamUsage = environment.getProperty("spring.ai.openai.chat.options.stream-usage", Boolean.class);
         Boolean parallelToolCalls = environment.getProperty("spring.ai.openai.chat.options.parallel-tool-calls", Boolean.class);
 
         OpenAiChatOptions chatOptions = new OpenAiChatOptions();
@@ -42,6 +47,9 @@ public class LocalB2bMarketplaceApplication {
         }
         if (maxTokens != null) {
             chatOptions.setMaxTokens(maxTokens);
+        }
+        if (streamUsage != null) {
+            chatOptions.setStreamUsage(streamUsage);
         }
         if (parallelToolCalls != null) {
             chatOptions.setParallelToolCalls(parallelToolCalls);

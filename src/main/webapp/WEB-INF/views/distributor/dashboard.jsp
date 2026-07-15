@@ -1179,7 +1179,7 @@
                                             responseBox.textContent = "Thinking...";
 
                                             try {
-                                                const res = await fetch("/api/v1/ai/query", {
+                                                const res = await fetch("/api/v1/ai/agent/chat", {
                                                     method: "POST",
                                                     headers: { "Content-Type": "application/json" },
                                                     body: JSON.stringify({ message: message })
@@ -1191,7 +1191,7 @@
 
                                                 const data = await res.json();
 
-                                                responseBox.textContent = data.reply || "Sorry, I couldn't find an answer for that.";
+                                                responseBox.textContent = data.answer || "Sorry, I couldn't find an answer for that.";
 
                                                 if (data.requiresConfirmation && data.actionId) {
                                                     showAiConfirmation(data.actionId, data.actionType || "Confirm action");
@@ -1223,7 +1223,7 @@
                                         // Exposed globally since it's invoked from inline onclick handlers above.
                                         window.confirmAiAction = async function (id, confirmed) {
                                             try {
-                                                const res = await fetch("/api/v1/ai/confirm-action", {
+                                                const res = await fetch("/api/v1/ai/actions/confirm", {
                                                     method: "POST",
                                                     headers: { "Content-Type": "application/json" },
                                                     body: JSON.stringify({ actionId: id, confirmed: confirmed })

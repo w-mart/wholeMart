@@ -48,6 +48,7 @@ public class AiAgentService {
         this.chatClient = chatClientBuilder == null ? null : chatClientBuilder
                 .defaultSystem("""
                         You are WholeMart AI for a local B2B wholesale marketplace.
+                        Answer all questions in Hinlish. Use simple, clear Hinglish that business users can easily understand.
                         Be concise, practical, and human. Use live-data tools only when attached.
                         Follow RBAC. Never expose another account's data or accept IDs from user text.
                         Format useful answers as short, neat paragraphs in clear business language.
@@ -131,9 +132,9 @@ public class AiAgentService {
 
     private String generateAnswer(UserContext user, String message, AiConversation conversation) {
         if (containsCrossUserRequest(message)) {
-            return "I can only show data for your logged-in "
+            return "मैं केवल आपके लॉगिन किए हुए "
                     + user.role().replace("ROLE_", "").toLowerCase()
-                    + " account.";
+                    + " खाते का डेटा दिखा सकता हूँ।";
         }
 
         if ("ROLE_DISTRIBUTOR".equals(user.role()) && isSalesRequest(normalize(message))) {
@@ -172,20 +173,20 @@ public class AiAgentService {
             String lowerRootMessage = rootMessage.toLowerCase();
             log.warn("AI request failed: {} - {}", root.getClass().getSimpleName(), rootMessage);
             if (lowerRootMessage.contains("api key not valid") || lowerRootMessage.contains("invalid api key")) {
-                return "AI is not working. Groq API key is invalid. Set a valid GROQ_API_KEY from Groq Console, then restart the app.";
+                return "AI काम नहीं कर रहा है। Groq API कुंजी अमान्य है। एक मान्य GROQ_API_KEY सेट करें और फिर ऐप को पुनरारंभ करें।";
             }
             if (lowerRootMessage.contains("quota exceeded")
                     || lowerRootMessage.contains("rate limit")
                     || rootMessage.contains("429")) {
-                return "AI is not working. Groq rate limit or quota is exceeded. Please wait, check Groq Console limits, or use another valid key.";
+                return "AI काम नहीं कर रहा है। Groq की दर सीमा या कोटा पार हो गया है। कृपया प्रतीक्षा करें, Groq कंसोल में सीमा देखें, या कोई अन्य मान्य कुंजी उपयोग करें।";
             }
 
-            return "AI is not working. " + root.getClass().getSimpleName() + " - " + rootMessage;
+            return "AI काम नहीं कर रहा है। कारण: " + root.getClass().getSimpleName() + " - " + rootMessage;
         }
     }
 
     private String aiNotWorkingMessage() {
-        return "AI is not working. Please enable Groq with SPRING_AI_MODEL_CHAT=openai and set a valid GROQ_API_KEY.";
+        return "AI काम नहीं कर रहा है। कृपया SPRING_AI_MODEL_CHAT=openai सक्षम करें और एक मान्य GROQ_API_KEY सेट करें।";
     }
 
     private Object[] getToolsByRole(String role) {
@@ -260,7 +261,7 @@ public class AiAgentService {
             if (isPaymentRequest(normalized)) {
                 var ledger = distributorAiTools.getLedgerSummary();
                 return """
-                        Payment and dues summary: Rs. %s has been captured, Rs. %s is pending settlement, and Rs. %s is overdue. Please follow up on pending retailer payments first and recheck the ledger after updates.
+                        भुगतान और देनदारियों का सारांश: आपके पास अभी तक Rs. %s की वसूली हो चुकी है, Rs. %s निपटान के लिए लंबित हैं, और Rs. %s ओवरड्यू हैं। कृपया पहले लंबित रिटेलर भुगतानों का अनुसरण करें और अपडेट के बाद लेज़र की फिर से जांच करें।
                         """.formatted(
                         ledger.capturedRevenue(),
                         ledger.pendingSettlements(),
@@ -269,13 +270,13 @@ public class AiAgentService {
             }
             if (isInventoryValueRequest(normalized)) {
                 return """
-                        Inventory value: Your current inventory is worth Rs. %s. Review high-value stock, refill fast-moving products, and check low-stock items before accepting large orders.
+                        इन्वेंटरी का मूल्य: आपकी वर्तमान इन्वेंटरी की कीमत Rs. %s है। उच्च-मूल्य वाले स्टॉक की समीक्षा करें, तेज़ी से बिकने वाले उत्पादों को फिर से भरें, और नए ऑर्डर स्वीकार करने से पहले कम स्टॉक वाले आइटम देखें।
                         """.formatted(distributorAiTools.getInventoryValue()).trim();
             }
             if (isInventoryRequest(normalized)) {
                 var inventory = distributorAiTools.getInventorySummary();
                 return """
-                        Inventory summary: You have %s items in stock, with %s low-stock items and %s expired items. Refill low-stock products first, review expired stock, and update quantities before checking new orders.
+                        इन्वेंटरी सारांश: आपके पास %s आइटम स्टॉक में हैं, जिनमें %s कम स्टॉक वाले आइटम और %s एक्सपायर्ड आइटम शामिल हैं। पहले कम स्टॉक वाले उत्पादों को फिर से भरें, एक्सपायर्ड स्टॉक की समीक्षा करें, और नई ऑर्डरों को देखने से पहले मात्रा अपडेट करें।
                         """.formatted(
                         inventory.totalItems(),
                         inventory.lowStockItems(),
@@ -288,7 +289,7 @@ public class AiAgentService {
             return fallbackDistributorSummary();
         }
 
-        return "AI model is temporarily unavailable. I can answer with live data once the model is available.";
+        return "AI मॉडल अस्थायी रूप से उपलब्ध नहीं है। मॉडल उपलब्ध होने पर मैं लाइव डेटा के साथ जवाब दे सकता हूँ।";
     }
 
     private String fallbackDistributorSummary() {
@@ -313,8 +314,8 @@ public class AiAgentService {
         List<String> safeActions = actions == null || actions.isEmpty()
                 ? List.of("No urgent issue right now. Review sales report and update fast-moving stock.")
                 : actions;
-        return "Recommended next action: " + String.join(" ", safeActions)
-                + " You can also ask for today's order summary, low-stock details, or payment and dues status.";
+        return "अनुशंसित अगला कदम: " + String.join(" ", safeActions)
+                + " आप मुझसे आज के ऑर्डर सारांश, कम स्टॉक विवरण, या भुगतान व देनदारियों की स्थिति भी पूछ सकते हैं।";
     }
 
     private boolean needsLiveData(String message) {

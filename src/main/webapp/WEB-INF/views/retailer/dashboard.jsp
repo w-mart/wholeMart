@@ -522,7 +522,7 @@
                         responseBox.textContent = "Thinking...";
 
                         try {
-                            const res = await fetch("/api/v1/ai/query", {
+                            const res = await fetch("/api/v1/ai/agent/chat", {
                                 method: "POST",
                                 headers: {
                                     "Content-Type": "application/json"
@@ -535,7 +535,7 @@
                             if (!res.ok) throw new Error("AI request failed");
 
                             const data = await res.json();
-                            responseBox.textContent = data.reply || "Sorry, I couldn't find an answer for that.";
+                            responseBox.textContent = data.answer || "Sorry, I couldn't find an answer for that.";
 
                         } catch (e) {
                             console.error("AI request error:", e);
