@@ -24,13 +24,52 @@ public class LocalB2bMarketplaceApplication {
     }
 
     @Bean
+    ChatModel chatModel(Environment environment) {
+        String apiKey = environment.getProperty("spring.ai.openai.api-key", "").trim();
+        if (!StringUtils.hasText(apiKey)) {
+            apiKey = null;
+        }
+        String baseUrl = environment.getProperty("spring.ai.openai.base-url", "https://api.groq.com/openai");
+        String model = environment.getProperty("spring.ai.openai.chat.options.model", "llama-3.1-8b-instant");
+        Double temperature = environment.getProperty("spring.ai.openai.chat.options.temperature", Double.class);
+        Integer maxTokens = environment.getProperty("spring.ai.openai.chat.options.max-tokens", Integer.class);
+        Boolean parallelToolCalls = environment.getProperty("spring.ai.openai.chat.options.parallel-tool-calls", Boolean.class);
+
+        OpenAiChatOptions chatOptions = new OpenAiChatOptions();
+        chatOptions.setModel(model);
+        if (temperature != null) {
+            chatOptions.setTemperature(temperature);
+        }
+        if (maxTokens != null) {
+            chatOptions.setMaxTokens(maxTokens);
+        }
+        if (parallelToolCalls != null) {
+            chatOptions.setParallelToolCalls(parallelToolCalls);
+        }
+
+        OpenAiApi openAiApi = OpenAiApi.builder()
+                .baseUrl(baseUrl)
+                .apiKey(apiKey)
+                .build();
+
+        return OpenAiChatModel.builder()
+                .openAiApi(openAiApi)
+                .defaultOptions(chatOptions)
+                .build();
+    }
+
+    @Bean
+    ChatClient.Builder chatClientBuilder(ChatModel chatModel) {
+        return ChatClient.builder(chatModel);
+    }
+
+    @Bean
     ApplicationRunner aiStartupDiagnostics(Environment environment,
                                            ObjectProvider<ChatClient.Builder> chatClientBuilderProvider) {
         return args -> {
             String chatModel = environment.getProperty("spring.ai.model.chat", "not-set");
-            String aiKey = environment.getProperty("spring.ai.openai.api-key", "");
-            boolean hasConfiguredKey = StringUtils.hasText(aiKey)
-                    && !"PASTE_VALID_GROQ_API_KEY_HERE".equals(aiKey);
+            String aiKey = environment.getProperty("spring.ai.openai.api-key", "").trim();
+            boolean hasConfiguredKey = StringUtils.hasText(aiKey);
             boolean chatClientAvailable = false;
             String chatClientError = null;
 
