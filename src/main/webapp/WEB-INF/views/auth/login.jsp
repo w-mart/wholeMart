@@ -173,11 +173,13 @@
                                     </div>
                                 </div>
 
-                                <div class="text-center mt-4">
-                                    <p class="text-muted mb-0">
-                                        New to WholeMart?
-                                        <a href="#" class="fw-bold text-decoration-none wm-show-register" role="button">Create Account</a>
-                                    </p>
+                                <div class="wm-auth-card-footer">
+                                    <div class="text-center mt-4">
+                                        <p class="text-muted mb-0">
+                                            New to WholeMart?
+                                            <a href="#" class="fw-bold text-decoration-none wm-show-register" role="button">Create Account</a>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 

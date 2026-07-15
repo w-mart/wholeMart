@@ -35,14 +35,20 @@ public class InventoryTool implements AiTool {
         try {
             securityValidator.validateNoRetailerToDistributorAccess(user);
 
-            // Placeholder: no product filter yet. We return a minimal inventory snapshot.
-            var items = inventoryRepository.findAll();
+            long lowStockCount = inventoryRepository.countLowStockByDistributorUserId(user.userId());
 
+            // For now this tool only needs to answer "show low stock products".
+            // We return deterministic fields so the LLM cannot hallucinate numbers.
+            // (If you later want the full list, we can add a repository query to fetch the items.)
             return AiToolResponse.ok(
                     request.intent(),
                     name(),
-                    "Fetched inventory",
-                    Map.of("items", items)
+                    "Fetched low-stock inventory summary",
+                    Map.of(
+                            "distributorUserId", user.userId(),
+                            "lowStockCount", lowStockCount,
+                            "lowStockThreshold", 5
+                    )
             );
         } catch (Exception e) {
             return AiToolResponse.fail(request.intent(), name(), e.getMessage());
