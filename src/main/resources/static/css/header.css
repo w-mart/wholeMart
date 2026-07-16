@@ -256,37 +256,28 @@
 
 /* Responsive — public header (search + nav in one collapse panel) */
 @media (max-width: 991px) {
-    .wm-header .container {
+    .wm-header .navbar > .container { /* Scoping to public header */
         flex-wrap: wrap;
-    }
 
-    .wm-search.d-none {
-        display: none !important;
-    }
+        .wm-search.d-none {
+            display: none !important;
+        }
 
-    .wm-nav-links {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
-        margin: 16px 0 0;
-    }
+        .wm-nav-links {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 14px;
+            margin: 16px 0 0;
+        }
 
-    .wm-nav-links .nav-link::after {
-        display: none;
-    }
+        .wm-nav-links .nav-link::after {
+            display: none;
+        }
 
-    .collapse .wm-search {
-        margin: 8px 0 16px;
-        max-width: 100%;
-    }
-
-    .wm-nav-actions {
-        margin: 12px 0 4px;
-        width: 100%;
-    }
-
-    .wm-nav-actions .btn {
-        text-align: center;
+        .collapse .wm-search {
+            margin: 8px 0 16px;
+            max-width: 100%;
+        }
     }
 }
 
@@ -320,42 +311,50 @@
     gap: 24px;
 }
 
-@media (max-width: 991.98px) {
+/* Tablet */
+@media (min-width: 577px) and (max-width: 991.98px) {
     .wm-header-row {
         flex-wrap: wrap;
     }
-
+    
     .wm-header-collapse {
         flex-basis: 100%;
-        flex-direction: column;
-        align-items: flex-start;
         margin-top: 15px;
         padding-top: 15px;
         border-top: 1px solid #ECECE6;
-        gap: 0;
     }
 
     .wm-header-collapse .wm-search {
         width: 100%;
         max-width: 100%;
-        margin-bottom: 16px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .wm-header-row .wm-header-collapse,
+    .wm-header-row .wm-header-right {
+        display: none; /* Hide main nav links and search on mobile */
+    }
+
+    .wm-header-row .wm-header-left {
+        flex: 1; /* Allow left section to take full width */
+        justify-content: space-between; /* Pushes logo to the left and toggle to the right */
+    }
+    
+    .wm-lang-toggle {
+        margin-right: 4px;
     }
 
     .wm-logo-title {
-        font-size: 1.05rem;
+        font-size: 1rem;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .wm-logo-sub {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .wm-lang-toggle {
-        margin-right: 4px;
+        display: none; /* Hide sub-title on small mobile screens */
     }
 }
 

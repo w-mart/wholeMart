@@ -145,12 +145,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#wmDistributorNav"
-                        aria-controls="wmDistributorNav" aria-expanded="false">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
             </div>
 
         </div>
