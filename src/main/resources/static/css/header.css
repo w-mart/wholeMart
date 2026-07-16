@@ -45,7 +45,7 @@
 .wm-header .container-fluid {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 2px;
 }
 
 /* Logo */
@@ -100,6 +100,7 @@
     flex: 1 1 320px;
     max-width: 420px;
     transition: border-color 0.15s ease, background 0.15s ease;
+    margin-left: 80px;
 }
 
 .wm-search:focus-within {
@@ -130,7 +131,7 @@
     display: flex;
     align-items: center;
     gap: 28px;
-    margin: 0;
+    margin-left: 80px;
     flex-shrink: 0;
 }
 
@@ -337,8 +338,7 @@
         display: none; /* Hide main nav links and search on mobile */
     }
 
-    .wm-header-row .wm-header-left {
-        flex: 1; /* Allow left section to take full width */
+    .wm-header-row .wm-header-left {     
         justify-content: space-between; /* Pushes logo to the left and toggle to the right */
     }
     
@@ -354,7 +354,7 @@
     }
 
     .wm-logo-sub {
-        display: none; /* Hide sub-title on small mobile screens */
+        display: block; /* Ensure sub-title is visible on mobile */
     }
 }
 

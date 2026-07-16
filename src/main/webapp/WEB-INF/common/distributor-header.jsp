@@ -57,7 +57,7 @@
 
             <!-- Left: sidebar toggle + logo -->
             <div class="d-flex align-items-center wm-header-left">
-                <button id="wmSidebarToggle" class="wm-sidebar-toggle-btn me-3" type="button"
+                <button id="wmSidebarToggle" class="wm-sidebar-toggle-btn me-2" type="button"
                     aria-label="Toggle sidebar">
                     <i class="bi bi-list fs-4"></i>
                 </button>
