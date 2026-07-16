@@ -100,12 +100,6 @@
 
             <!-- Right: lang toggle + user dropdown + mobile hamburger, grouped so they stay on one line -->
             <div class="d-flex align-items-center wm-header-right">
-                <div class="wm-lang-toggle">
-                    <a href="?lang=en" class="wm-lang-option <%= "en".equals(wmLang) ? "active" : "" %>">EN</a>
-                    <span class="wm-lang-sep">|</span>
-                    <a href="?lang=hi" class="wm-lang-option <%= "hi".equals(wmLang) ? "active" : "" %>">HI</a>
-                </div>
-
                 <div class="dropdown">
                     <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
                         data-bs-toggle="dropdown">
@@ -207,6 +201,16 @@
                 href="${pageContext.request.contextPath}/web/distributor/ai-chat">
                 <i class="bi bi-robot"></i>AI Assistant
             </a>
+        </li>
+        <li>
+            <hr class="dropdown-divider wm-user-menu-divider">
+        </li>
+        <li>
+            <div class="wm-lang-toggle">
+                <a href="?lang=en" class="wm-lang-option <%= "en".equals(wmLang) ? "active" : "" %>">EN</a>
+                <span class="wm-lang-sep">|</span>
+                <a href="?lang=hi" class="wm-lang-option <%= "hi".equals(wmLang) ? "active" : "" %>">HI</a>
+            </div>
         </li>
     </ul>
 </aside>
