@@ -87,7 +87,7 @@
                         placeholder="Search products, retailers, orders...">
                 </form>
 
-                <ul class="navbar-nav wm-nav-links">
+                <ul class="navbar-nav wm-nav-links d-none d-lg-flex">
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/pruducts">Inventory</a></li>
                     <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai">Ask AI</a></li>

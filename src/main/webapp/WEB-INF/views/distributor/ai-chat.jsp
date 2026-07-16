@@ -40,78 +40,76 @@
 
     <%@ include file="/WEB-INF/common/distributor-header.jsp" %>
 
-    <div class="wm-app">
-        <main>
-            <div class="wm-chat-container">
-                <div class="wm-chat-grid">
+    <main class="wm-app">
+        <div class="wm-chat-container">
+            <div class="wm-chat-grid">
 
-                    <!-- Sidebar for conversations -->
-                    <aside class="wm-chat-sidebar">
-                        <div class="wm-chat-sidebar-header">
-                            <h4 class="mb-0">Conversations</h4>
-                            <button id="newChatBtn" class="btn btn-sm btn-primary" title="New Chat">
-                                <i class="bi bi-plus-lg"></i>
-                            </button>
-                        </div>
+                <!-- Sidebar for conversations -->
+                <aside class="wm-chat-sidebar">
+                    <div class="wm-chat-sidebar-header">
+                        <h4 class="mb-0">Conversations</h4>
+                        <button id="newChatBtn" class="btn btn-sm btn-primary" title="New Chat">
+                            <i class="bi bi-plus-lg"></i>
+                        </button>
+                    </div>
 
-                        <div id="conversationList" class="wm-chat-list">
-                            <div class="p-3 text-muted small">Loading chats...</div>
-                        </div>
+                    <div id="conversationList" class="wm-chat-list">
+                        <div class="p-3 text-muted small">Loading chats...</div>
+                    </div>
 
-                        <div class="wm-chat-sidebar-footer">
-                            <span class="wm-text-muted">Tip:</span> Ask about inventory, orders, retailers, payments.
-                        </div>
-                    </aside>
+                    <div class="wm-chat-sidebar-footer">
+                        <span class="wm-text-muted">Tip:</span> Ask about inventory, orders, retailers, payments.
+                    </div>
+                </aside>
 
-                    <!-- Main chat panel -->
-                    <div class="wm-chat-main">
-                        <section class="wm-card wm-ai-panel">
-                            <div class="navbar-brand wm-logo-wrap"
-                                href="${pageContext.request.contextPath}/web/distributor/dashboard">
-                                <div class="wm-logo-circle">W</div>
-                                <div class="wm-logo-line">
-                                    <div class="wm-logo-title">WholeMart AI</div>
-                                    <small style="color: var(--wm-ink-soft);">Ask about inventory, orders, retailers, payments, and business insights.</small>
-                                </div>
+                <!-- Main chat panel -->
+                <div class="wm-chat-main">
+                    <section class="wm-card wm-ai-panel">
+                        <div class="navbar-brand wm-logo-wrap"
+                            href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                            <div class="wm-logo-circle">W</div>
+                            <div class="wm-logo-line">
+                                <div class="wm-logo-title">WholeMart AI</div>
+                                <small style="color: var(--wm-ink-soft);">Ask about inventory, orders, retailers, payments, and business insights.</small>
                             </div>
-                            <hr></hr>
+                        </div>
+                        <hr>
 
-                            <div class="wm-chat-log">
-                                <div id="chatLog" class="wm-ai-response wm-chat-log">
-                                    <div class="wm-chat-message">
-                                        <div class="wm-chat-avatar">AI</div>
-                                        <div class="wm-chat-bubble">
-                                            Welcome <strong><%= wmUserName %></strong> 👋
-                                            <br><br>
-                                            I'm ready to help you with your distributor business. Pick a conversation or start a new one.
-                                        </div>
+                        <div class="wm-chat-log">
+                            <div id="chatLog" class="wm-ai-response wm-chat-log">
+                                <div class="wm-chat-message">
+                                    <div class="wm-chat-avatar">AI</div>
+                                    <div class="wm-chat-bubble">
+                                        Welcome <strong><%= wmUserName %></strong> 👋
+                                        <br><br>
+                                        I'm ready to help you with your distributor business. Pick a conversation or start a new one.
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="wm-ai-chips" aria-label="Quick suggestions">
-                                <% for (String q : suggestedQuestions) { %>
-                                    <button class="wm-ai-chip" type="button" data-ai-message="<%= q.replace("\"", "\\\"") %>"><%= q %></button>
-                                <% } %>
+                        <div class="wm-ai-chips" aria-label="Quick suggestions">
+                            <% for (String q : suggestedQuestions) { %>
+                                <button class="wm-ai-chip" type="button" data-ai-message="<%= q.replace("\"", "\\\"") %>"><%= q %></button>
+                            <% } %>
+                        </div>
+
+                        <form id="chatForm" class="mt-3">
+                            <div class="input-group">
+                                <input id="chatInput" type="text" class="form-control"
+                                    placeholder="Ask WholeMart AI anything..." autocomplete="off" required>
+                                <button class="home-btn home-btn-primary" type="submit">
+                                    <i class="bi bi-send"></i> Ask
+                                </button>
                             </div>
-
-                            <form id="chatForm" class="mt-3">
-                                <div class="input-group">
-                                    <input id="chatInput" type="text" class="form-control"
-                                        placeholder="Ask WholeMart AI anything..." autocomplete="off" required>
-                                    <button class="home-btn home-btn-primary" type="submit">
-                                        <i class="bi bi-send"></i> Ask
-                                    </button>
-                                </div>
-                            </form>
-                        </section>
-                    </div>
+                        </form>
+                    </section>
                 </div>
             </div>
-        </main>
+        </div>
+    </main>
 
-        <%@ include file="/WEB-INF/common/footer.jsp" %>
-    </div>
+    <%@ include file="/WEB-INF/common/footer.jsp" %>
 
     <script>
         $(function () {
