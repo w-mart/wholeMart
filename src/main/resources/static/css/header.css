@@ -1,7 +1,29 @@
 /* ============================================================
    WHOLEMART — HEADER & NAVIGATION
-   Contains styles for the main header, logo, search bar,
-   navigation links, and mobile responsive behavior.
+   Contains design tokens, main header, logo, search bar,
+   navigation links, distributor sidebar, and user dropdown.
+   ============================================================ */
+
+:root {
+    --wm-paper: #FFFFFF;
+    --wm-line: rgba(0, 0, 0, .08);
+    --wm-shadow: 0 10px 30px rgba(20, 20, 15, .10);
+
+    --surface: var(--wm-paper);
+    --line: var(--wm-line);
+    --shadow: var(--wm-shadow);
+    --bg: #F5F5F1;
+
+    --ink: #14140F;
+    --graphite: #3F3F38;
+    --muted: #8A8A80;
+
+    --accent: #7C9A73;
+    --wash-mint: #EEF3EC;
+}
+
+/* ============================================================
+   Main header
    ============================================================ */
 
 .wm-header {
@@ -19,33 +41,11 @@
     gap: 24px;
 }
 
-.wm-header .container {
+.wm-header .container,
+.wm-header .container-fluid {
     display: flex;
     align-items: center;
-    gap: 80px;
-}
-/* Language toggle */
-.wm-lang-toggle {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.wm-lang-option {
-    color: #8A8A80;
-    text-decoration: none;
-    transition: color 0.15s ease;
-}
-
-.wm-lang-option.active,
-.wm-lang-option:hover {
-    color: #14140F;
-}
-
-.wm-lang-sep {
-    color: #C8C8BE;
+    gap: 24px;
 }
 
 /* Logo */
@@ -61,7 +61,7 @@
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    background: #14140F;
+    background: var(--ink);
     color: #fff;
     display: flex;
     align-items: center;
@@ -80,20 +80,20 @@
 .wm-logo-title {
     font-weight: 700;
     font-size: 17px;
-    color: #14140F;
+    color: var(--ink);
 }
 
 .wm-logo-sub {
     font-size: 12px;
-    color: #8A8A80;
+    color: var(--muted);
 }
 
-/* Search — sits right after the logo */
+/* Search */
 .wm-search {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #F5F5F1;
+    background: var(--bg);
     border: 1px solid #E5E5DF;
     border-radius: 999px;
     padding: 8px 16px;
@@ -103,8 +103,8 @@
 }
 
 .wm-search:focus-within {
-    background: #ffffff;
-    border-color: #14140F;
+    background: var(--surface);
+    border-color: var(--ink);
 }
 
 .wm-search-icon {
@@ -117,7 +117,7 @@
     background: transparent;
     outline: none;
     font-size: 13.5px;
-    color: #14140F;
+    color: var(--ink);
     width: 100%;
 }
 
@@ -137,7 +137,7 @@
 .wm-nav-links .nav-link {
     font-size: 14.5px;
     font-weight: 500;
-    color: #55554D !important;
+    color: var(--graphite) !important;
     padding: 6px 0 !important;
     position: relative;
     transition: color 0.15s ease;
@@ -150,12 +150,12 @@
     bottom: -2px;
     width: 0;
     height: 2px;
-    background: #7C9A73;
+    background: var(--accent);
     transition: width 0.18s ease;
 }
 
 .wm-nav-links .nav-link:hover {
-    color: #14140F !important;
+    color: var(--ink) !important;
 }
 
 .wm-nav-links .nav-link:hover::after {
@@ -174,7 +174,7 @@
 .wm-btn-ghost {
     font-weight: 600;
     font-size: 14px;
-    color: #14140F;
+    color: var(--ink);
     background: transparent;
     border: 1px solid #DEDED6;
     border-radius: 10px;
@@ -183,17 +183,17 @@
 }
 
 .wm-btn-ghost:hover {
-    background: #F5F5F1;
+    background: var(--bg);
     border-color: #C8C8BE;
-    color: #14140F;
+    color: var(--ink);
 }
 
 .wm-btn-primary {
     font-weight: 600;
     font-size: 14px;
     color: #ffffff;
-    background: #14140F;
-    border: 1px solid #14140F;
+    background: var(--ink);
+    border: 1px solid var(--ink);
     border-radius: 10px;
     padding: 9px 20px;
     transition: background 0.15s ease;
@@ -202,6 +202,31 @@
 .wm-btn-primary:hover {
     background: #2A2A22;
     color: #ffffff;
+}
+
+/* Language toggle */
+.wm-lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.wm-lang-option {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+.wm-lang-option.active,
+.wm-lang-option:hover {
+    color: var(--ink);
+}
+
+.wm-lang-sep {
+    color: #C8C8BE;
 }
 
 /* Toggler */
@@ -214,7 +239,22 @@
     box-shadow: none;
 }
 
-/* Responsive */
+.wm-sidebar-toggle-btn {
+    background: transparent;
+    border: 1px solid #E5E5DF;
+    border-radius: 10px;
+    padding: 6px 10px;
+    color: var(--ink);
+    line-height: 1;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.wm-sidebar-toggle-btn:hover {
+    background: var(--bg);
+    border-color: #C8C8BE;
+}
+
+/* Responsive — public header (search + nav in one collapse panel) */
 @media (max-width: 991px) {
     .wm-header .container {
         flex-wrap: wrap;
@@ -246,8 +286,76 @@
     }
 
     .wm-nav-actions .btn {
-        flex: 1;
         text-align: center;
+    }
+}
+
+/* ============================================================
+   Distributor / retailer header — flex row layout
+   ============================================================ */
+
+.wm-header-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+}
+
+.wm-header-left {
+    flex: 0 0 auto;
+    min-width: 0;
+}
+
+.wm-header-right {
+    flex: 0 0 auto;
+    margin-left: auto;
+    gap: 14px;
+}
+
+.wm-header-collapse {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+@media (max-width: 991.98px) {
+    .wm-header-row {
+        flex-wrap: wrap;
+    }
+
+    .wm-header-collapse {
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #ECECE6;
+        gap: 0;
+    }
+
+    .wm-header-collapse .wm-search {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .wm-logo-title {
+        font-size: 1.05rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .wm-logo-sub {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .wm-lang-toggle {
+        margin-right: 4px;
     }
 }
 
@@ -263,16 +371,12 @@
     left: -270px;
     width: 270px;
     height: calc(100vh - 76px);
+    background: var(--surface);
     border-right: 1px solid var(--line);
     overflow-y: auto;
     transition: left .3s ease;
     z-index: 1040;
     box-shadow: var(--shadow);
-    --surface: var(--wm-paper, #FFFFFF);
-    --line: var(--wm-line, rgba(0,0,0,.12));
-    --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
-    background: var(--surface);
-    border-bottom: 1px solid var(--line);
 }
 
 .wm-sidebar.show {
@@ -300,7 +404,8 @@
     transition: color .2s ease, background-color .2s ease;
 }
 
-.wm-sidebar a:hover {
+.wm-sidebar a:hover,
+.wm-sidebar a.active {
     background: var(--wash-mint);
     color: var(--accent);
 }
@@ -321,6 +426,10 @@
     display: block;
 }
 
+/* ============================================================
+   User avatar + dropdown
+   ============================================================ */
+
 .wm-user-avatar {
     width: 36px;
     height: 36px;
@@ -335,7 +444,6 @@
     flex-shrink: 0;
 }
 
-/* User menu button (avatar + name + chevron) */
 .wm-user-btn {
     background: var(--surface);
     border: 1px solid var(--line);
@@ -359,89 +467,94 @@
     vertical-align: middle;
 }
 
-/* Dropdown panel */
 .wm-user-menu {
-    margin-top: 10px;
-    padding: 8px;
-    min-width: 190px;
+    margin-top: 12px;
+    padding: 10px;
+    min-width: 210px;
     background: var(--surface);
     border: 1px solid var(--line);
-    border-radius: 12px;
+    border-radius: 14px;
     box-shadow: var(--shadow);
 }
 
 .wm-user-menu-header {
-    padding: 6px 10px 10px;
-    font-size: .82rem;
+    padding: 6px 10px 12px;
+    font-size: 13px;
     font-weight: 700;
-    color: var(--muted);
-    text-transform: none;
+    color: var(--ink);
+    letter-spacing: 0;
 }
 
 .wm-user-menu-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 9px 10px;
-    border-radius: 8px;
+    padding: 10px 12px;
+    border-radius: 10px;
     color: var(--graphite);
     font-weight: 500;
-    font-size: .92rem;
-    transition: background-color .2s ease, color .2s ease;
+    font-size: 14px;
+    transition: background-color .15s ease, color .15s ease;
 }
 
 .wm-user-menu-item:hover,
 .wm-user-menu-item:focus {
     background: var(--wash-mint);
-    color: var(--accent);
+    color: var(--ink);
 }
 
 .wm-user-menu-item i {
     font-size: 16px;
     line-height: 1;
+    width: 18px;
+    text-align: center;
+    color: var(--muted);
+}
+
+.wm-user-menu-item:hover i {
+    color: var(--accent);
 }
 
 .wm-user-menu-divider {
-    margin: 6px 4px;
-    border-color: var(--line);
+    margin: 8px 4px;
+    border-top: 1px solid var(--line);
     opacity: 1;
 }
 
 .wm-user-menu-logout {
-    color: #d3455b;
+    color: #B3463F;
+}
+
+.wm-user-menu-logout i {
+    color: #B3463F;
 }
 
 .wm-user-menu-logout:hover,
 .wm-user-menu-logout:focus {
-    background: rgba(211, 69, 91, .1);
-    color: #d3455b;
+    background: #FBEDEC;
+    color: #B3463F;
 }
 
-/* No @media(min-width:992px) override on purpose: the sidebar stays
-   off-canvas and the #wmSidebarToggle button stays visible at every
-   breakpoint, so it behaves the same on desktop and mobile. */
+.wm-user-menu-logout:hover i {
+    color: #B3463F;
+}
 
-/* ============================================================
-   Distributor header responsive tweaks
-   Ensures logo + nav + user area don't overflow on small screens
-   ============================================================ */
+/* Neutralize Bootstrap's default .dropdown-item border/hover styling so
+   only the wm-user-menu-item rules above apply — this is what was causing
+   the stray hairlines under Profile and Settings. */
+.wm-user-menu .dropdown-item {
+    border: none;
+    background: none;
+}
+
+.wm-user-menu .dropdown-item:hover,
+.wm-user-menu .dropdown-item:focus,
+.wm-user-menu .dropdown-item:active {
+    background: none;
+}
 
 @media (min-width: 1400px) {
-  .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
-    max-width: 1380px;
-  }
-}
-
-@media (max-width: 991.98px) {
-    /* Name label is hidden on mobile, so shrink padding + gap so the button
-       is just avatar + caret, not a wide pill */
-    .wm-user-btn {
-        padding: 4px 8px 4px 4px;
-        gap: 2px !important;
-    }
-
-    /* UX: only one hamburger (Bootstrap collapse). */
-    #wmSidebarToggle {
-        display: none;
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 1380px;
     }
 }

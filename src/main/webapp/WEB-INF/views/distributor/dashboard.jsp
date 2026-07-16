@@ -22,6 +22,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/distributor.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hero-carousel.css">
 
     </head>
