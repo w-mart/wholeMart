@@ -125,6 +125,7 @@
                                         <th>S.No</th>
                                         <th>SKU</th>
                                         <th>Product Name</th>
+                                        <th>Brand</th>
                                         <th>Category</th>
                                         <th>Qty</th>
                                         <th>Price</th>
@@ -133,7 +134,7 @@
                                 </thead>
                                 <tbody id="productsBody">
                                     <tr>
-                                        <td colspan="7" style="text-align: center; padding: 2rem;">
+                                        <td colspan="8" style="text-align: center; padding: 2rem;">
                                             <div class="wm-loader"></div>
                                         </td>
                                     </tr>
@@ -187,8 +188,9 @@
                             productsBody.innerHTML = paginatedItems.length ? paginatedItems.map(function (product, index) {
                                 var qty = product.stockQuantity == null ? "-" : product.stockQuantity;
                                 var sku = product.sku || ("PRD-" + String(product.id).padStart(5, "0"));
-                                return "<tr><td>" + (start + index + 1) + "</td><td>" + sku + "</td><td>" + product.name + "</td><td>" + product.category + "</td><td>" + qty + "</td><td>" + money(product.unitPrice) + "</td><td><button class=\"wm-btn wm-btn-secondary\" type=\"button\">View</button></td></tr>";
-                            }).join("") : "<tr><td colspan=\"7\">No inventory found for your distributor account.</td></tr>";
+                                var brand = product.brand || "-";
+                                return "<tr><td>" + (start + index + 1) + "</td><td>" + sku + "</td><td>" + product.name + "</td><td>" + brand + "</td><td>" + product.category + "</td><td>" + qty + "</td><td>" + money(product.unitPrice) + "</td><td><button class=\"wm-btn wm-btn-secondary\" type=\"button\">View</button></td></tr>";
+                            }).join("") : "<tr><td colspan=\"8\">No inventory found for your distributor account.</td></tr>";
 
                             prevPageBtn.disabled = currentPage === 1;
                             nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;

@@ -31,6 +31,11 @@
         <% String wmUserName=session.getAttribute("name")==null ? "Guest" :
             String.valueOf(session.getAttribute("name")); String wmUserInitial=wmUserName.substring(0,1).toUpperCase();
             %>
+        <% java.util.List<String> suggestedQuestions = java.util.List.of(
+                "Show today's order summary",
+                "Show low stock products",
+                "Show pending retailer payments"
+            ); %>
 
             <%@ include file="/WEB-INF/common/distributor-header.jsp" %>
 
@@ -341,6 +346,12 @@
                                                     <%= wmUserName %>
                                                 </strong> 👋 I'm ready to help with orders, stock, payments and more —
                                                 try a suggestion below or type your own question.
+                                            </div>
+
+                                            <div id="wmDashboardAiQuickButtons" class="wm-ai-chips mt-3">
+                                                <% for (String q : suggestedQuestions) { %>
+                                                    <button class="wm-ai-chip" type="button" data-ai-message="<%= q.replace("\"", "\\\"") %>"><%= q %></button>
+                                                <% } %>
                                             </div>
 
                                             <form id="wmDashboardAiForm" class="mt-3">
@@ -727,7 +738,7 @@
                                         const input = document.getElementById("wmDashboardAiMessage");
                                         const responseBox = document.getElementById("wmDashboardAiResponse");
                                         const actionBox = document.getElementById("wmDashboardAiActionBox");
-                                        const quickButtons = document.getElementById("wmDashboardAiQuickButtons");
+                                        const quickButtonsContainer = document.getElementById("wmDashboardAiQuickButtons");
                                         const performanceBrief = document.getElementById("performanceBrief");
                                         const attentionList = document.getElementById("wmAttentionList");
 
@@ -746,6 +757,8 @@
                                             payments: [],
                                             deliveries: []
                                         };
+
+                                        let currentConversationId = null;
 
                                         if (!form || !input) {
                                             return;
@@ -1172,26 +1185,64 @@
 
                                             responseBox.textContent = "Thinking...";
 
+                                            // Ensure we have a conversation to post to.
+                                            if (!currentConversationId) {
+                                                try {
+                                                    const createRes = await fetch("/api/v1/ai/conversations", {
+                                                        method: 'POST',
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify({ title: 'Dashboard Chat' })
+                                                    });
+                                                    if (!createRes.ok) throw new Error("Failed to create conversation");
+                                                    const createData = await createRes.json();
+                                                    if (!createData.conversation || !createData.conversation.id) {
+                                                        throw new Error("Invalid response from conversation creation");
+                                                    }
+                                                    currentConversationId = createData.conversation.id;
+                                                } catch (e) {
+                                                    console.error("AI conversation creation error:", e);
+                                                    responseBox.textContent = "Could not start a new conversation. Please try again.";
+                                                    return;
+                                                }
+                                            }
+
                                             try {
                                                 const res = await fetch("/api/v1/ai/agent/chat", {
                                                     method: "POST",
                                                     headers: { "Content-Type": "application/json" },
-                                                    body: JSON.stringify({ message: message })
+                                                    body: JSON.stringify({
+                                                        conversationId: currentConversationId,
+                                                        message: message
+                                                    })
                                                 });
 
                                                 if (!res.ok) {
-                                                    throw new Error("AI request failed");
+                                                    throw new Error("AI request failed with status " + res.status);
                                                 }
 
                                                 const data = await res.json();
 
-                                                responseBox.textContent = data.answer || "Sorry, I couldn't find an answer for that.";
+                                                // Find the assistant's message from the response, similar to ai-chat.jsp
+                                                const messages = (data && data.messages) ? data.messages : null;
+                                                const sortedMessages = (messages && messages.length)
+                                                    ? messages.slice().sort((a, b) => new Date(a.createdAt || 0) - new Date(b.createdAt || 0))
+                                                    : null;
+                                                const assistantMessage = (sortedMessages && sortedMessages.length)
+                                                    ? sortedMessages.filter(m => (m.role || '').toLowerCase() === 'assistant').pop()
+                                                    : null;
+
+                                                const answer = (assistantMessage && assistantMessage.message) 
+                                                    ? assistantMessage.message 
+                                                    : (data.answer || "Sorry, I could not find an answer.");
+
+                                                responseBox.textContent = answer;
 
                                                 if (data.requiresConfirmation && data.actionId) {
                                                     showAiConfirmation(data.actionId, data.actionType || "Confirm action");
                                                 } else if (actionBox) {
                                                     actionBox.innerHTML = "";
                                                 }
+
                                             } catch (e) {
                                                 console.error("AI request error:", e);
                                                 responseBox.textContent = "Something went wrong reaching the AI assistant. Please try again.";
@@ -1205,13 +1256,7 @@
                                                 return;
                                             }
                                             actionBox.innerHTML =
-                                                '<div class="alert alert-warning mt-3">' +
-                                                '<b>' + type + '</b>' +
-                                                '<div class="mt-3">' +
-                                                '<button class="btn btn-success btn-sm" onclick="confirmAiAction(' + id + ',true)">Confirm</button>' +
-                                                '<button class="btn btn-secondary btn-sm ms-2" onclick="confirmAiAction(' + id + ',false)">Cancel</button>' +
-                                                '</div>' +
-                                                '</div>';
+                                                '<div class="alert alert-warning mt-3">' + '<b>' + type + '</b>' + '<div class="mt-3">' + '<button class="btn btn-success btn-sm" onclick="confirmAiAction(' + id + ',true)">Confirm</button>' + '<button class="btn btn-secondary btn-sm ms-2" onclick="confirmAiAction(' + id + ',false)">Cancel</button>' + '</div>' + '</div>';
                                         }
 
                                         // Exposed globally since it's invoked from inline onclick handlers above.
@@ -1226,8 +1271,7 @@
                                                 const data = await res.json();
 
                                                 if (responseBox) {
-                                                    responseBox.textContent = data.reply ||
-                                                        (confirmed ? "Action confirmed." : "Action cancelled.");
+                                                    responseBox.textContent = data.reply || (confirmed ? "Action confirmed." : "Action cancelled.");
                                                 }
                                             } catch (e) {
                                                 console.error("Confirm action error:", e);
@@ -1270,8 +1314,7 @@
                                             // Build dots if missing
                                             if (dotsEl && dotsEl.children.length === 0) {
                                                 dotsEl.innerHTML = slides.map(function (_, i) {
-                                                    return '<button type="button" class="wm-hero-dot" data-hero-goto="' + i + '" aria-label="Go to slide ' + (i + 1) + '">' +
-                                                        '<span></span></button>';
+                                                    return '<button type="button" class="wm-hero-dot" data-hero-goto="' + i + '" aria-label="Go to slide ' + (i + 1) + '">' + '<span></span></button>';
                                                 }).join("");
                                             }
 
@@ -1380,7 +1423,7 @@
                                             askAi();
                                         });
 
-                                        quickButtons.addEventListener("click", function (e) {
+                                        quickButtonsContainer.addEventListener("click", function (e) {
                                             const btn = e.target.closest("[data-ai-message]");
                                             if (!btn) return;
                                             input.value = btn.dataset.aiMessage;

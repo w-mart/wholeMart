@@ -73,11 +73,13 @@ public class Product extends BaseEntity {
     protected Product() {
     }
 
-    public Product(Long distributorUserId, String name, String category, BigDecimal unitPrice) {
+    public Product(Long distributorUserId, String sku, String name, String category, BigDecimal unitPrice, Integer stockQuantity, ProductDetails details) {
         this.distributorUserId = distributorUserId;
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
+        this.stockQuantity = stockQuantity;
+        this.sku = sku;
     }
 
     public void updateDetails(ProductDetails details) {

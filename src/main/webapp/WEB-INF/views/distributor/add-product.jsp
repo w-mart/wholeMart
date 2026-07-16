@@ -211,14 +211,14 @@
                                 name: data.name,
                                 category: data.category,
                                 unitPrice: data.unitPrice !== undefined && data.unitPrice !== '' ? Number(data.unitPrice) : null,
+                                stockQuantity: data.stockQuantity !== undefined && data.stockQuantity !== '' ? Number(data.stockQuantity) : 0,
+                                mrp: data.mrp !== undefined && data.mrp !== '' ? Number(data.mrp) : null,
+                                brand: data.brand || null,
                                 details: {
                                     sku: data.sku || null,
-                                    brand: data.brand || null,
                                     description: data.description || null,
                                     gstRate: data.gstRate !== undefined && data.gstRate !== '' ? Number(data.gstRate) : null,
-                                    mrp: data.mrp !== undefined && data.mrp !== '' ? Number(data.mrp) : null,
                                     // map UI -> ProductCreateRequest fields used by backend
-                                    stockQuantity: data.stockQuantity !== undefined && data.stockQuantity !== '' ? Number(data.stockQuantity) : 0,
                                     unitOfMeasure: data.unitOfMeasure || null,
                                     // backend uses storageType/origin/etc. No warehouse field in request; keep as null
                                     imageUrl: data.imageUrl || null

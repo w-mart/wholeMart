@@ -22,15 +22,16 @@ public class ProductService {
     }
 
     @Transactional
-    public Product create(CurrentUser currentUser, String name, String category, BigDecimal unitPrice, Product.ProductDetails details) {
+    public Product create(CurrentUser currentUser, ProductApiController.ProductCreateRequest request) {
         if (currentUser.role() != UserRole.ROLE_DISTRIBUTOR) {
             throw new IllegalStateException("Only distributors can create products");
         }
-        Product product = new Product(currentUser.userId(), name, category, unitPrice);
+        Product.ProductDetails details = request.details();
+        Product product = new Product(currentUser.userId(), details.sku(), request.name(), request.category(), request.unitPrice(), details.stockQuantity(), details);
         product.updateDetails(details);
         Product saved = productRepository.save(product);
-        if (details != null && details.stockQuantity() != null) {
-            inventoryRepository.save(new InventoryItem(saved.getId(), Math.max(0, details.stockQuantity())));
+        if (request.stockQuantity() != null) {
+            inventoryRepository.save(new InventoryItem(saved.getId(), Math.max(0, request.stockQuantity())));
         }
         return saved;
     }

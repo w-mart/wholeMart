@@ -64,26 +64,11 @@ public class ProductApiController {
 
     @PostMapping
     public ProductDto create(@Valid @RequestBody ProductCreateRequest request) {
-        return toDto(productService.create(
-                currentUserProvider.requireCurrentUser(),
-                request.name(),
-                request.category(),
-                request.unitPrice(),
-                request.details()));
+        return toDto(productService.create(currentUserProvider.requireCurrentUser(), request));
     }
 
     private ProductDto toDto(Product product) {
         // Includes SKU and stock quantity so the distributor products page can render Qty/SKU.
-        // Inventory quantity is stored in InventoryItem, keyed by productId.
-        Integer stockQuantity = null; // default when inventory not present
-
-        try {
-            stockQuantity = inventoryRepository.findByProductId(product.getId())
-                    .map(inv -> inv.getAvailableQuantity())
-                    .orElse(null);
-        } catch (Exception ignored) {
-            // keep stockQuantity as null if lookup fails
-        }
 
         return new ProductDto(
                 product.getId(),
@@ -91,8 +76,10 @@ public class ProductApiController {
                 product.getName(),
                 product.getCategory(),
                 product.getUnitPrice(),
-                stockQuantity,
-                product.getSku());
+                product.getStockQuantity(),
+                product.getSku(),
+                product.getBrand(),
+                product.getMrp());
     }
 
 

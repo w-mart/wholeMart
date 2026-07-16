@@ -9,6 +9,7 @@ public record ProductDto(
         String category,
         BigDecimal unitPrice,
         Integer stockQuantity,
-        String sku) {
+        String sku,
+        String brand,
+        BigDecimal mrp) {
 }
-
