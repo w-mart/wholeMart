@@ -5,94 +5,69 @@
    ============================================================ */
 
 .wm-header {
-    /* Ensure tokens exist even if header.css is used without other dashboard styles */
-    --surface: var(--wm-paper, #FFFFFF);
-    --line: var(--wm-line, rgba(0,0,0,.12));
-    --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
-
-    /* Typography (use shared token-based font variables) */
-    font-family: var(--font-body, Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif);
-
-    background: var(--surface);
-
-    border-bottom: 1px solid var(--line);
-    box-shadow: var(--shadow);
+    background: #ffffff;
+    border-bottom: 1px solid #ECECE6;
+    box-shadow: 0 1px 2px rgba(20, 20, 18, 0.04);
+    padding: 0;
+    z-index: 1030;
 }
 
-.navbar {
-    min-height: 76px;
-}
-
-/* ------------------------------------------------------------
-   Header row layout
-   Mobile (default):  [ left(logo) ] [ right(dropdown+hamburger) ]
-                       [ ------ nav links (wraps below, full width) ------ ]
-   Desktop (>=992px):  [ left(logo) ] [ search ] [ nav links ] [ right(dropdown) ]
-   ------------------------------------------------------------ */
-.wm-header-row {
+.wm-header .navbar {
+    padding: 14px 0;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    width: 100%;
+    gap: 24px;
 }
 
-.wm-header-left {
-    order: 1;
-    flex: 0 1 auto;
-    min-width: 0;
+.wm-header .container {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+}
+/* Language toggle */
+.wm-lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-.wm-header-right {
-    order: 2;
-    flex: 0 0 auto;
-    margin-left: auto;
-    gap: 10px;
+.wm-lang-option {
+    color: #8A8A80;
+    text-decoration: none;
+    transition: color 0.15s ease;
 }
 
-.wm-header-collapse {
-    order: 3;
-    flex-basis: 100%;
+.wm-lang-option.active,
+.wm-lang-option:hover {
+    color: #14140F;
 }
 
-.wm-search {
-    order: 2;
+.wm-lang-sep {
+    color: #C8C8BE;
 }
 
-@media (min-width: 992px) {
-    .wm-header-collapse {
-        order: 3;
-        flex-basis: auto;
-    }
-
-    .wm-header-right {
-        order: 4;
-        margin-left: 0;
-    }
-
-    .wm-search {
-        order: 2;
-    }
-}
-
+/* Logo */
 .wm-logo-wrap {
     display: flex;
     align-items: center;
     gap: 12px;
     text-decoration: none;
+    flex-shrink: 0;
 }
 
-.wm-logo-circle {
-    width: 42px;
-    height: 42px;
-    border-radius: 11px;
-    background: var(--ink);
+.wm-logo-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #14140F;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 800;
-    font-size: 17px;
-    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
     flex-shrink: 0;
 }
 
@@ -103,91 +78,177 @@
 }
 
 .wm-logo-title {
-    font-size: 19px;
-    font-weight: 800;
-    font-family: var(--font-display);
-    color: var(--ink);
+    font-weight: 700;
+    font-size: 17px;
+    color: #14140F;
 }
 
-.wm-logo-line small {
-    font-size: .74rem;
-    color: var(--muted);
-    font-weight: 500;
+.wm-logo-sub {
+    font-size: 12px;
+    color: #8A8A80;
 }
 
+/* Search — sits right after the logo */
 .wm-search {
-    width: 420px;
-    max-width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F5F5F1;
+    border: 1px solid #E5E5DF;
+    border-radius: 999px;
+    padding: 8px 16px;
+    flex: 1 1 320px;
+    max-width: 420px;
+    transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.wm-search .input-group {
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    overflow: hidden;
-    background: var(--bg);
-    transition: border-color .2s ease, box-shadow .2s ease;
+.wm-search:focus-within {
+    background: #ffffff;
+    border-color: #14140F;
 }
 
-.wm-search .input-group:focus-within {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(44, 75, 212, .14);
-    background: var(--surface);
+.wm-search-icon {
+    color: #9A9A90;
+    font-size: 14px;
 }
 
-.wm-search .input-group-text {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    padding-left: 16px;
-}
-
-.wm-search input.form-control {
+.wm-search-input {
     border: none;
     background: transparent;
-    font-size: .92rem;
-    padding: 10px 14px 10px 4px;
-    color: var(--text);
-    box-shadow: none;
-}
-
-.wm-search input.form-control:focus {
-    box-shadow: none;
     outline: none;
+    font-size: 13.5px;
+    color: #14140F;
+    width: 100%;
+}
+
+.wm-search-input::placeholder {
+    color: #A8A89E;
+}
+
+/* Nav links */
+.wm-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.wm-nav-links .nav-link {
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #55554D !important;
+    padding: 6px 0 !important;
+    position: relative;
+    transition: color 0.15s ease;
+}
+
+.wm-nav-links .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 2px;
+    background: #7C9A73;
+    transition: width 0.18s ease;
+}
+
+.wm-nav-links .nav-link:hover {
+    color: #14140F !important;
+}
+
+.wm-nav-links .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Actions */
+.wm-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.wm-btn-ghost {
+    font-weight: 600;
+    font-size: 14px;
+    color: #14140F;
     background: transparent;
+    border: 1px solid #DEDED6;
+    border-radius: 10px;
+    padding: 9px 18px;
+    transition: border-color 0.15s ease, background 0.15s ease;
 }
 
-.wm-search input.form-control::placeholder {
-    color: #9AA0AC;
+.wm-btn-ghost:hover {
+    background: #F5F5F1;
+    border-color: #C8C8BE;
+    color: #14140F;
 }
 
-.nav-link {
-    color: var(--graphite) !important;
-    font-weight: 800;
-    margin-left: 8px;
-    padding: 8px 12px !important;
-    font-size: .95rem;
-    border-radius: 8px;
-    transition: color .2s ease, background-color .2s ease;
+.wm-btn-primary {
+    font-weight: 600;
+    font-size: 14px;
+    color: #ffffff;
+    background: #14140F;
+    border: 1px solid #14140F;
+    border-radius: 10px;
+    padding: 9px 20px;
+    transition: background 0.15s ease;
 }
 
-.nav-link:hover {
-    color: var(--accent) !important;
-    background: var(--wash-mint);
+.wm-btn-primary:hover {
+    background: #2A2A22;
+    color: #ffffff;
 }
 
-/* Mobile toggler + collapse panel */
+/* Toggler */
 .navbar-toggler {
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 7px 10px;
+    border: none;
+    padding: 4px 8px;
 }
 
 .navbar-toggler:focus {
-    box-shadow: 0 0 0 3px rgba(44, 75, 212, .14);
+    box-shadow: none;
 }
 
-.navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2822, 35, 63, 0.9%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+/* Responsive */
+@media (max-width: 991px) {
+    .wm-header .container {
+        flex-wrap: wrap;
+    }
+
+    .wm-search.d-none {
+        display: none !important;
+    }
+
+    .wm-nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+        margin: 16px 0 0;
+    }
+
+    .wm-nav-links .nav-link::after {
+        display: none;
+    }
+
+    .collapse .wm-search {
+        margin: 8px 0 16px;
+        max-width: 100%;
+    }
+
+    .wm-nav-actions {
+        margin: 12px 0 4px;
+        width: 100%;
+    }
+
+    .wm-nav-actions .btn {
+        flex: 1;
+        text-align: center;
+    }
 }
 
 /* ============================================================
@@ -207,12 +268,11 @@
     transition: left .3s ease;
     z-index: 1040;
     box-shadow: var(--shadow);
-     --surface: var(--wm-paper, #FFFFFF);
+    --surface: var(--wm-paper, #FFFFFF);
     --line: var(--wm-line, rgba(0,0,0,.12));
     --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
     background: var(--surface);
     border-bottom: 1px solid var(--line);
-    box-shadow: var(--shadow);
 }
 
 .wm-sidebar.show {
@@ -372,57 +432,16 @@
   }
 }
 
-@media (max-width:991.98px){
-
-    .wm-header .container-fluid{
-        align-items:center;
-    }
-
-    .wm-header-left{
-        min-width:0;
-    }
-
-    .wm-logo-title{
-        font-size:1.1rem;
-        white-space:nowrap;
-        overflow:hidden;
-        text-overflow:ellipsis;
-    }
-
-    .wm-logo-line small{
-        white-space:nowrap;
-        font-size:.7rem;
-        overflow:hidden;
-        text-overflow:ellipsis;
-    }
-
-    .wm-search{
-        display:none !important;
-    }
-
-    .wm-header-collapse{
-        margin-top:15px;
-        padding-top:15px;
-        border-top:1px solid #eee;
-    }
-
-    .navbar-nav{
-        width:100%;
-    }
-
-    .navbar-nav .nav-link{
-        padding:12px 0;
-    }
-
+@media (max-width: 991.98px) {
     /* Name label is hidden on mobile, so shrink padding + gap so the button
        is just avatar + caret, not a wide pill */
-    .wm-user-btn{
-        padding:4px 8px 4px 4px;
-        gap:2px !important;
+    .wm-user-btn {
+        padding: 4px 8px 4px 4px;
+        gap: 2px !important;
     }
 
     /* UX: only one hamburger (Bootstrap collapse). */
-    #wmSidebarToggle{
-        display:none;
+    #wmSidebarToggle {
+        display: none;
     }
 }
