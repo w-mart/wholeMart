@@ -118,7 +118,8 @@
                                             href="/web/distributor/add-product">Add Product</a></div>
                                 </div>
                             </div>
-                            <table class="wm-table">
+                            <div class="wm-table-container">
+                                <table class="wm-table">
                                 <thead>
                                     <tr>
                                         <th>S.No</th>
@@ -132,10 +133,18 @@
                                 </thead>
                                 <tbody id="productsBody">
                                     <tr>
-                                        <td colspan="7">Loading inventory...</td>
+                                        <td colspan="7" style="text-align: center; padding: 2rem;">
+                                            <div class="wm-loader"></div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
+                            </div>
+                            <div class="wm-pagination">
+                                <button id="prevPage" class="wm-btn wm-btn-secondary" disabled>Prev</button>
+                                <span id="pageInfo"></span>
+                                <button id="nextPage" class="wm-btn wm-btn-secondary" disabled>Next</button>
+                            </div>
                         </div>
                     </main>
                     <%@ include file="/WEB-INF/common/footer.jsp" %>
@@ -144,6 +153,11 @@
                     document.addEventListener("DOMContentLoaded", function () {
                         var productsBody = document.getElementById("productsBody");
                         var productSearch = document.getElementById("productSearch");
+                        var prevPageBtn = document.getElementById("prevPage");
+                        var nextPageBtn = document.getElementById("nextPage");
+                        var pageInfo = document.getElementById("pageInfo");
+                        var currentPage = 1;
+                        var rowsPerPage = 5;
                         var products = [];
 
                         function money(value) {
@@ -160,11 +174,31 @@
                             var filtered = products.filter(function (product) {
                                 return !query || [product.name, product.category].join(" ").toLowerCase().indexOf(query) !== -1;
                             });
-                            productsBody.innerHTML = filtered.length ? filtered.map(function (product, index) {
+
+                            var totalPages = Math.ceil(filtered.length / rowsPerPage);
+                            if (currentPage > totalPages && totalPages > 0) {
+                                currentPage = totalPages;
+                            }
+
+                            var start = (currentPage - 1) * rowsPerPage;
+                            var end = start + rowsPerPage;
+                            var paginatedItems = filtered.slice(start, end);
+
+                            productsBody.innerHTML = paginatedItems.length ? paginatedItems.map(function (product, index) {
                                 var qty = product.stockQuantity == null ? "-" : product.stockQuantity;
                                 var sku = product.sku || ("PRD-" + String(product.id).padStart(5, "0"));
-                                return "<tr><td>" + (index + 1) + "</td><td>" + sku + "</td><td>" + product.name + "</td><td>" + product.category + "</td><td>" + qty + "</td><td>" + money(product.unitPrice) + "</td><td><button class=\"wm-btn wm-btn-secondary\" type=\"button\">View</button></td></tr>";
+                                return "<tr><td>" + (start + index + 1) + "</td><td>" + sku + "</td><td>" + product.name + "</td><td>" + product.category + "</td><td>" + qty + "</td><td>" + money(product.unitPrice) + "</td><td><button class=\"wm-btn wm-btn-secondary\" type=\"button\">View</button></td></tr>";
                             }).join("") : "<tr><td colspan=\"7\">No inventory found for your distributor account.</td></tr>";
+
+                            prevPageBtn.disabled = currentPage === 1;
+                            nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
+
+                            if (totalPages > 0) {
+                                pageInfo.textContent = "Page " + currentPage + " of " + totalPages;
+                            } else {
+                                pageInfo.textContent = "";
+                            }
+
                             setText("totalProducts", products.length);
                             setText("activeProducts", products.length);
                             setText("categoryCount", new Set(products.map(function (product) { return product.category; })).size);
@@ -197,6 +231,21 @@
                                 productsBody.innerHTML = "<tr><td colspan=\"7\">Unable to load inventory from the database.</td></tr>";
                             });
                         productSearch.addEventListener("input", render);
+
+                        productSearch.addEventListener("input", function() {
+                            currentPage = 1;
+                            render();
+                        });
+
+                        prevPageBtn.addEventListener("click", function() {
+                            if (currentPage > 1) currentPage--;
+                            render();
+                        });
+
+                        nextPageBtn.addEventListener("click", function() {
+                            if (!nextPageBtn.disabled) currentPage++;
+                            render();
+                        });
                     });
                 </script>
     </body>
