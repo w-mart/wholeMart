@@ -167,9 +167,9 @@
 }
 
 .nav-pills .nav-link.active {
-    background: var(--accent-tint);
-    color: var(--accent);
-    border-color: var(--accent);
+    background: var(--surface);
+    color: var(--ink);
+    border-color: var(--ink);
 }
 
 /* Form inputs */
@@ -190,8 +190,8 @@
 }
 
 .form-control:focus, .form-select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-tint);
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(18, 24, 31, .1);
     background: var(--surface-card);
     outline: none;
 }
@@ -262,8 +262,8 @@
     margin: 0 auto 6px;
 }
 .wizard-step.active .wizard-circle {
-    background: var(--accent);
-    border-color: var(--accent);
+    background: var(--ink);
+    border-color: var(--ink);
     color: #fff;
 }
 .wizard-step small {
