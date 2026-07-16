@@ -332,3 +332,11 @@
         padding: 24px;
     }
 }
+
+@media (max-width: 576px) {
+    .auth-card {
+        margin-left: 16px;
+        margin-right: 16px;
+        padding: 24px;
+    }
+}

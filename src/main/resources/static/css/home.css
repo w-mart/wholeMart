@@ -628,6 +628,15 @@ img { max-width: 100%; }
   margin-bottom: 2.25rem !important;
 }
 
+/* Responsive — login modal on small screens */
+@media (max-width: 576px) {
+  .modal-content {
+    padding: 24px;
+    margin: 0 16px;
+    max-width: none;
+  }
+}
+
 /* ============================================================
    RESPONSIVE — general section rhythm on small screens
    ============================================================ */
