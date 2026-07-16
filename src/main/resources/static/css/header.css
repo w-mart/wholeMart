@@ -403,10 +403,14 @@
     transition: color .2s ease, background-color .2s ease;
 }
 
-.wm-sidebar a:hover,
+.wm-sidebar a:hover {
+    background: var(--surface);
+    color: var(--ink);
+}
+
 .wm-sidebar a.active {
-    background: var(--wash-mint);
-    color: var(--accent);
+    background: var(--surface);
+    color: var(--ink);
 }
 
 .wm-sidebar a i {

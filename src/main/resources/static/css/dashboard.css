@@ -199,7 +199,6 @@ a {
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--wm-cream);
     opacity: .85;
 }
 
