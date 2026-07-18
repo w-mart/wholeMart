@@ -47,7 +47,7 @@ public class AdminApiController {
     public Page<DistributorDto> distributors(@RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = Pageables.bounded(page, size);
-        return distributorService.findAllProfiles(pageable);
+        return distributors(page, size);//distributorService.findAllProfiles(pageable);
     }
 
     @GetMapping("/orders")
@@ -105,7 +105,7 @@ public class AdminApiController {
         if (auth != null && auth.getPrincipal() instanceof com.localb2b.marketplace.security.MarketplacePrincipal p) {
             actor = p.userId();
         }
-        DistributorDto dto = distributorService.approve(id);
+        DistributorDto dto = null;//distributorService.approve(id);
         auditRepository.save(new com.localb2b.marketplace.audit.AuditEvent(actor, "APPROVE_DISTRIBUTOR", "DistributorProfile", id));
         return dto;
     }
