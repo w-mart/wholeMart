@@ -42,7 +42,7 @@ public class CartApiController {
         cartService.removeFromCart(currentUserProvider.requireCurrentUser(), id);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/all")
     public void clear() {
         cartService.clear(currentUserProvider.requireCurrentUser());
     }

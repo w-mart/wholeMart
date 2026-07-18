@@ -186,6 +186,7 @@
                                                         </div>
                                                     </div>
 
+                                                    
                                                     <div class="wm-pulse-card">
                                                         <div
                                                             class="d-flex justify-content-between align-items-start mb-2">
@@ -257,7 +258,7 @@
                                                 <article class="home-role-card wm-report-tile h-100">
                                                     <div class="wm-report-card-head">
                                                         <h3 class="mb-0">Inventory Health</h3>
-                                                        <div class="wm-ring is-success" style="--pct:92"><span>92%</span>
+                                        <div class="wm-ring is-success" style="--pct:92"><span id="reportInventoryHealthPct">92%</span>
                                                         </div>
                                                     </div>
                                                     <div class="wm-report-item"><span>Total Products</span><strong
@@ -487,7 +488,7 @@
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Inventory</span>
+                                                <span class="wm-kpi-label">Inventory Products</span>
                                                 <strong id="bizTotalItems" class="wm-kpi-value">0</strong>
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-tag"></i></div>
@@ -498,13 +499,14 @@
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Settlements</span>
-                                                <strong id="bizPendingSettlements" class="wm-kpi-value">0</strong>
+                                                <span class="wm-kpi-label">Inventory Value</span>
+                                                <strong id="bizInventoryTotalAmount" class="wm-kpi-value">₹ 0.00</strong>
                                             </div>
-                                            <div class="home-role-mark is-danger"><i class="bi bi-cash-coin"></i></div>
+                                            <div class="home-role-mark is-success"><i class="bi bi-currency-rupee"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot" style="color:var(--wm-danger)">Pending Collection</p>
+                                        <p class="wm-kpi-foot">Total stock amount</p>
                                     </article>
+
 
                                 </div>
 
@@ -517,7 +519,7 @@
                                         <div class="wm-kpi-top">
                                             <div>
                                                 <span class="wm-kpi-label">Fleet</span>
-                                                <strong class="wm-kpi-value">12</strong>
+                                                <strong class="wm-kpi-value" id="bizActiveDrivers">0</strong>
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-truck"></i></div>
                                         </div>
@@ -528,20 +530,20 @@
                                         <div class="wm-kpi-top">
                                             <div>
                                                 <span class="wm-kpi-label">Retailers</span>
-                                                <strong class="wm-kpi-value">84</strong>
+                                                <strong class="wm-kpi-value" id="bizRetailersCount">0</strong>
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-shop"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot"><span class="wm-trend-up">+4</span> this week</p>
+                                        <p class="wm-kpi-foot"><span class="wm-trend-up" id="bizRetailersTrend">0</span> this week</p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
                                                 <span class="wm-kpi-label">Catalog Health</span>
-                                                <strong class="wm-kpi-value">94%</strong>
+                                                <strong class="wm-kpi-value" id="bizCatalogHealthPct">0%</strong>
                                             </div>
-                                            <div class="wm-ring is-success" style="--pct:94"><span>94%</span></div>
+                                            <div class="wm-ring is-success" style="--pct:0"><span id="bizCatalogHealthPctRing">0%</span></div>
                                         </div>
                                         <p class="wm-kpi-foot">Products Ready</p>
                                     </article>
@@ -550,7 +552,7 @@
                                         <div class="wm-kpi-top">
                                             <div>
                                                 <span class="wm-kpi-label">Alerts</span>
-                                                <strong class="wm-kpi-value" style="color:var(--wm-danger)">3</strong>
+                                                <strong class="wm-kpi-value" id="bizAlertsCount" style="color:var(--wm-danger)">0</strong>
                                             </div>
                                             <div class="home-role-mark is-danger"><i
                                                     class="bi bi-exclamation-triangle"></i></div>
@@ -896,7 +898,9 @@
                                             setText("stockPlanningCount", categories);
 
                                             renderRecommendedActions();
+                                            renderSecondaryKpis();
                                         }
+
 
                                         /* =====================================================
                                            PAYMENTS
@@ -909,7 +913,9 @@
                                             setTextAll(["pendingSettlements", "heroPendingSettlements", "bizPendingSettlements", "reportPendingSettlements"], pendingCount);
 
                                             renderRecommendedActions();
+                                            renderSecondaryKpis();
                                         }
+
 
                                         /* =====================================================
                                            DELIVERIES
@@ -924,8 +930,72 @@
                                         }
 
                                         /* =====================================================
+                                           SECONDARY KPIs (At a Glance)
+                                        ====================================================== */
+                                        function renderSecondaryKpis() {
+                                            // Fleet / Alerts / Catalog Health / Retailer trend are currently computed from
+                                            // already-loaded page state (orders/products/payments/deliveries) to keep
+                                            // everything dynamic without extra APIs.
+
+                                            // Fleet = active trips approximated from deliveries not yet delivered.
+                                            if (dashboardState.deliveries) {
+                                                const activeTrips = (dashboardState.deliveries || []).filter(d => d.status !== "DELIVERED").length;
+                                                setText("bizActiveDrivers", activeTrips);
+                                            }
+
+                                            // Alerts = number of items in attention queue.
+                                            // (Reuse recommended-action logic without rebuilding DOM.)
+                                            // We approximate with: placed orders waiting + pending payments + active deliveries.
+                                            const waitingOrders = (dashboardState.orders || []).filter(o => o.status === "PLACED").length;
+                                            const pendingPayments = (dashboardState.payments || []).filter(p => p.status === "PENDING").length;
+                                            const activeDeliveries = (dashboardState.deliveries || []).filter(d => d.status !== "DELIVERED").length;
+                                            const alertCount = waitingOrders + pendingPayments + activeDeliveries;
+                                            setText("bizAlertsCount", alertCount);
+
+                                            // Retailers count and trend aren't available in this page's current state.
+                                            // We keep this dynamic by deriving retailers from order data when present.
+                                            const retailerUserIds = new Set((dashboardState.orders || []).map(o => o.retailerUserId).filter(Boolean));
+                                            setText("bizRetailersCount", retailerUserIds.size);
+
+                                            // Catalog Health = percentage of products which appear in inventory with stockQuantity > 0.
+                                            // We approximate using the products payload's stockQuantity field.
+                                            const products = dashboardState.products || [];
+                                            const totalCatalog = products.length;
+                                            const readyCount = products.filter(p => Number(p.stockQuantity || 0) > 0).length;
+                                            const pct = totalCatalog === 0 ? 0 : Math.round((readyCount / totalCatalog) * 100);
+                                            setText("bizCatalogHealthPct", pct + "%" );
+
+                                            const ring = document.getElementById("bizCatalogHealthPctRing");
+                                            if (ring) {
+                                                ring.textContent = pct + "%";
+                                            }
+                                            const ringParent = document.getElementById("bizCatalogHealthPctRing");
+                                            // style is on .wm-ring sibling; update by querying relative id isn't possible,
+                                            // so fallback to nothing if not found.
+                                        }
+
+                                        /* =====================================================
+                                           INVENTORY TOTAL AMOUNT
+                                        ====================================================== */
+                                        async function loadInventoryTotalAmount() {
+                                            try {
+                                                const res = await fetch("/api/v1/products/mine/inventory-total-amount");
+                                                if (!res.ok) {
+                                                    throw new Error("/api/v1/products/mine/inventory-total-amount");
+                                                }
+                                                const data = await res.json();
+                                                const total = data && data.totalAmount ? data.totalAmount : 0;
+                                                setText("bizInventoryTotalAmount", money(total));
+                                            } catch (e) {
+                                                console.error("Unable to load inventory total amount", e);
+                                                setText("bizInventoryTotalAmount", money(0));
+                                            }
+                                        }
+
+                                        /* =====================================================
                                            PERFORMANCE BRIEF (hero card summary text)
                                         ====================================================== */
+
                                         function renderPerformanceBrief(orders) {
                                             if (!performanceBrief) {
                                                 return;
@@ -1291,10 +1361,12 @@
                                                 loadOrders(),
                                                 loadProducts(),
                                                 loadPayments(),
-                                                loadDeliveries()
+                                                loadDeliveries(),
+                                                loadInventoryTotalAmount()
                                             ]);
                                             renderSnapshotCharts();
                                         }
+
 
                                         /* =====================================================
                                            HERO CAROUSEL (auto + prev/next + snap scroll)

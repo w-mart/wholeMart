@@ -41,13 +41,13 @@ public class DistributorService {
                 .orElseThrow(() -> new IllegalArgumentException("Distributor profile not found"));
         profile.approve();
         distributorProfileRepository.save(profile);
-        return new DistributorDto(profile.getId(), profile.getUserId(), profile.getBusinessName(), profile.isApproved());
+        return new DistributorDto(profile.getId(), profile.getUserId(), profile.getBusinessName(), profile.isApproved(), profile.getGstin());
     }
 
     @Transactional(readOnly = true)
     public Page<DistributorDto> findAllProfiles(Pageable pageable) {
         syncMissingDistributorProfiles();
-        return distributorProfileRepository.findAll(pageable).map(p -> new DistributorDto(p.getId(), p.getUserId(), p.getBusinessName(), p.isApproved()));
+        return distributorProfileRepository.findAll(pageable).map(p -> new DistributorDto(p.getId(), p.getUserId(), p.getBusinessName(), p.isApproved(), p.getGstin()));
     }
 
     private void syncMissingDistributorProfiles() {
@@ -58,5 +58,8 @@ public class DistributorService {
     }
 
     public record DistributorSummary(int total, long approved) {
+    }
+
+    public record DistributorDto(Long id, Long userId, String businessName, boolean isApproved, String gstin) {
     }
 }

@@ -322,6 +322,7 @@
                     const dashboardState = {
                         orders: [],
                         cart: [],
+                        productsById: {},
                         payments: [],
                         distributors: []
                     };
@@ -384,11 +385,12 @@
 
                         setTextAll(["bizTotalOrders"], orders.length);
 
-                        const activeCount = orders.filter(o =>
-                            o.status !== "DELIVERED" &&
-                            o.status !== "REJECTED" &&
-                            o.status !== "CANCELLED"
-                        ).length;
+                        const activeCount = orders.filter(o => o.status !== "DELIVERED" && o.status !== "REJECTED" && o.status !== "CANCELLED").length;
+                        const processingCount = orders.filter(o => o.status === 'PLACED' || o.status === 'ACCEPTED').length;
+
+                        setTextAll(["bizActiveOrders", "heroTotalOrders"], activeCount);
+                        setText("ordersWaiting", processingCount);
+
                         setTextAll(["bizActiveOrders", "heroTotalOrders", "ordersWaiting"], activeCount);
 
                         const inTransitCount = orders.filter(o => o.status === "SHIPPED").length;
@@ -410,6 +412,14 @@
                         setText("checkoutReadyCount", itemCount > 0 ? "Yes" : "No");
 
                         renderRecommendedActions();
+                    }
+
+                    async function loadProducts() {
+                        const products = await loadApi("/api/v1/products");
+                        dashboardState.productsById = products.reduce((map, p) => {
+                            map[p.id] = p;
+                            return map;
+                        }, {});
                     }
 
                     async function loadPayments() {
@@ -443,7 +453,11 @@
                     function renderPerformanceBrief() {
                         if (!performanceBrief) return;
                         const activeOrders = dashboardState.orders.filter(o => o.status !== "DELIVERED" && o.status !== "REJECTED").length;
-                        const cartValue = dashboardState.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                        const cartValue = dashboardState.cart.reduce((sum, item) => {
+                            const product = dashboardState.productsById[item.productId];
+                            const price = product ? (product.unitPrice || 0) : 0;
+                            return sum + (price * (item.quantity || 0));
+                        }, 0);
 
                         performanceBrief.innerHTML =
                             "You have <strong>" + activeOrders + "</strong> active order(s) and " +
@@ -550,6 +564,7 @@
                      ====================================================== */
                     async function initializeDashboard() {
                         await Promise.all([
+                            loadProducts(),
                             loadOrders(),
                             loadCart(),
                             loadPayments(),

@@ -62,6 +62,15 @@ public class ProductApiController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/mine/inventory-total-amount")
+    public InventoryTotalAmountDto mineInventoryTotalAmount() {
+        var currentUser = currentUserProvider.requireCurrentUser();
+        // Only distributors should use this endpoint.
+        var total = inventoryRepository.totalInventoryValueByDistributorUserId(currentUser.userId());
+        return new InventoryTotalAmountDto(total);
+    }
+
+
     @PostMapping
     public ProductDto create(@Valid @RequestBody ProductCreateRequest request) {
         return toDto(productService.create(currentUserProvider.requireCurrentUser(), request));
@@ -83,6 +92,8 @@ public class ProductApiController {
     }
 
 
+
+    public record InventoryTotalAmountDto(java.math.BigDecimal totalAmount) {}
 
     public record ProductCreateRequest(
             @NotBlank String name,

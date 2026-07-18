@@ -70,15 +70,23 @@ public class DistributorProfile extends BaseEntity {
                               BigDecimal latitude,
                               BigDecimal longitude) {
         updateProfile(businessName, latitude, longitude);
-        this.contactName = valueOrCurrent(contactName, this.contactName);
-        this.shopName = valueOrCurrent(shopName, this.shopName);
-        this.gstin = valueOrCurrent(gstin, this.gstin);
-        this.city = valueOrCurrent(city, this.city);
-        this.state = valueOrCurrent(state, this.state);
-        this.addressLine = valueOrCurrent(addressLine, this.addressLine);
-        this.pincode = valueOrCurrent(pincode, this.pincode);
-        this.email = valueOrCurrent(email, this.email);
-        this.alternateMobile = valueOrCurrent(alternateMobile, this.alternateMobile);
+        this.contactName = valueOrCurrent(clean(contactName), this.contactName);
+        this.shopName = valueOrCurrent(clean(shopName), this.shopName);
+        this.gstin = valueOrCurrent(clean(gstin), this.gstin);
+        this.city = valueOrCurrent(clean(city), this.city);
+        this.state = valueOrCurrent(clean(state), this.state);
+        this.addressLine = valueOrCurrent(clean(addressLine), this.addressLine);
+        this.pincode = valueOrCurrent(clean(pincode), this.pincode);
+        this.email = valueOrCurrent(clean(email), this.email);
+        this.alternateMobile = valueOrCurrent(clean(alternateMobile), this.alternateMobile);
+    }
+
+    private String clean(String value) {
+        if (value == null) {
+            return null;
+        }
+        // Strip leading/trailing whitespace, then leading/trailing commas
+        return value.trim().replaceAll("^,+|,+$", "").trim();
     }
 
     private String valueOrCurrent(String nextValue, String currentValue) {

@@ -1,0 +1,89 @@
+/* Order Details / Bill / Cost Estimation (Distributor) */
+
+:root{
+  --wm-ink:#20261F;
+  --wm-ink-soft:#5B6158;
+  --wm-line:#D8D0B8;
+  --wm-paper:#FFFDF7;
+  --wm-shadow:0 1px 0 rgba(32,38,31,0.06), 0 8px 24px -16px rgba(32,38,31,0.25);
+  --wm-mint-deep:#4F8F6B;
+}
+
+.wm-order-page{padding:0 0 60px;}
+
+.wm-page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:18px 0 18px;}
+.wm-order-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end;}
+
+.wm-modern-card{background:var(--wm-paper);border:1px solid var(--wm-line);border-radius:10px;box-shadow:var(--wm-shadow);padding:22px;}
+
+.wm-skeleton{background:linear-gradient(90deg, rgba(216,208,184,.15), rgba(216,208,184,.35), rgba(216,208,184,.15));background-size:200% 100%;animation:wm-skel 1.2s ease-in-out infinite;}
+@keyframes wm-skel{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+.wm-muted{color:var(--wm-ink-soft);}
+
+.wm-order-detail-layout{display:flex;flex-direction:column;gap:18px;}
+
+.wm-order-hero{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;}
+.wm-order-hero h2{font-family:'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:1.5rem;margin:0 0 8px;}
+.wm-order-hero p{margin:0;color:var(--wm-ink-soft);font-size:.95rem;line-height:1.5;}
+
+.wm-order-badge{font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;background:rgba(191,216,196,.22);border:1px solid rgba(191,216,196,.35);color:var(--wm-mint-deep);padding:8px 12px;border-radius:999px;white-space:nowrap;}
+
+.wm-order-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+.wm-order-metric{background:var(--wm-paper);border:1px dashed var(--wm-line);border-radius:10px;padding:14px;}
+.wm-order-metric span{display:block;font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--wm-ink-soft);}
+.wm-order-metric strong{display:block;margin-top:6px;font-family:var(--wm-font-mono, 'IBM Plex Mono');font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums;color:var(--wm-ink);}
+
+.wm-order-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.wm-order-info-card{background:var(--wm-paper);border:1px solid var(--wm-line);border-radius:10px;padding:16px;}
+.wm-order-info-card h3{margin:0 0 10px;font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm-mint-deep);}
+.wm-order-info-card p{margin:0;color:var(--wm-ink-soft);line-height:1.6;font-size:.95rem;}
+.wm-order-info-card p strong{color:var(--wm-ink);}
+
+.wm-order-table{width:100%;border-collapse:separate;border-spacing:0;margin-top:8px;}
+.wm-order-table thead th{text-align:left;font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm-ink);background:rgba(239,233,216,.7);padding:12px;}
+.wm-order-table tbody td{padding:12px;border-top:1px dashed var(--wm-line);vertical-align:middle;color:var(--wm-ink);}
+.wm-order-total td{border-top:1px solid var(--wm-line);}
+.wm-order-empty{color:var(--wm-ink-soft);padding:18px 10px;font-style:italic;}
+
+/* Documents */
+.wm-estimate-bill{display:flex;flex-direction:column;gap:16px;}
+.wm-bill-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;}
+.wm-shop-block{flex:1 1 280px;background:rgba(239,233,216,.6);border:1px dashed var(--wm-line);border-radius:10px;padding:14px 16px;}
+.wm-shop-block h3{margin:0 0 8px;font-family:'Plus Jakarta Sans', system-ui, sans-serif;font-weight:800;font-size:1.15rem;}
+.wm-shop-block p{margin:0;color:var(--wm-ink-soft);line-height:1.6;font-size:.95rem;}
+
+.wm-bill-title{flex:1 1 320px;}
+.wm-bill-title h2{margin:0 0 10px;font-family:'Plus Jakarta Sans', system-ui, sans-serif;font-weight:900;font-size:1.65rem;}
+.wm-bill-meta{width:100%;border-collapse:separate;border-spacing:0;}
+.wm-bill-meta td{padding:8px 10px;border-top:1px dashed var(--wm-line);font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.78rem;color:var(--wm-ink-soft);}
+.wm-bill-meta tr:first-child td{border-top:none;}
+
+.wm-bill-parties{display:flex;gap:14px;flex-wrap:wrap;}
+.wm-bill-to{flex:1 1 280px;background:var(--wm-paper);border:1px solid var(--wm-line);border-radius:10px;padding:14px 16px;}
+.wm-bill-to h3{margin:0 0 10px;font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm-mint-deep);}
+.wm-bill-to p{margin:0;color:var(--wm-ink-soft);line-height:1.6;font-size:.95rem;}
+
+.wm-bill-table{width:100%;border-collapse:separate;border-spacing:0;}
+.wm-bill-table thead th{text-align:left;font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--wm-ink);background:rgba(239,233,216,.7);padding:12px;}
+.wm-bill-table tbody td{padding:12px;border-top:1px dashed var(--wm-line);vertical-align:middle;color:var(--wm-ink);}
+
+.wm-bill-footer{display:flex;justify-content:flex-end;}
+.wm-bill-total-box{min-width:320px;background:rgba(239,233,216,.45);border:1px dashed var(--wm-line);border-radius:10px;padding:14px 16px;}
+.wm-bill-total-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px dashed var(--wm-line);}
+.wm-bill-total-row:first-child{border-top:none;}
+.wm-bill-total-row span{font-family:var(--wm-font-mono, 'IBM Plex Mono');font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--wm-ink-soft);}
+.wm-bill-total-row strong{font-family:var(--wm-font-mono, 'IBM Plex Mono');font-weight:900;font-size:1.1rem;color:var(--wm-ink);}
+
+@media (max-width:1080px){
+  .wm-order-metrics{grid-template-columns:repeat(2,1fr);} 
+  .wm-order-card-grid{grid-template-columns:1fr;} 
+  .wm-bill-footer{justify-content:stretch;} 
+  .wm-bill-total-box{min-width:auto;width:100%;}
+}
+
+@media print{
+  body{background:#fff;}
+  .wm-modern-card{box-shadow:none;}
+}
+

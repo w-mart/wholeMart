@@ -86,12 +86,12 @@ public class AiConversationController {
      * Phase 4: Get messages for a conversation, with ownership/admin enforcement.
      */
     @GetMapping("/{id}/messages")
-    public ResponseEntity<?> getMessages(@PathVariable("id") @NotNull Long id,
+    public ResponseEntity<?> getMessages(@PathVariable("id") @NotNull String id,
                                          @RequestParam(defaultValue = "20") int limit) {
 
 
 
-        var conversation = conversationManager.loadConversationOwned(id);
+        var conversation = conversationManager.loadConversationOwned(Long.parseLong(id));
         var messages = conversationManager.loadLastMessages(conversation, limit);
 
         var dtos = messages.stream().map(m -> new AiMessageDto(
@@ -111,6 +111,3 @@ public class AiConversationController {
         ));
     }
 }
-
-
-

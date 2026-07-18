@@ -92,6 +92,7 @@
                         </tbody>
                     </table>
 
+                    <script src="${pageContext.request.contextPath}/js/common.js"></script>
                     <script>
                         document.addEventListener("DOMContentLoaded", function () {
                             var cartBody = document.getElementById("cartBody");
@@ -267,7 +268,7 @@
 
                             clearCart.addEventListener("click", function () {
                                 if (!items.length) return;
-                                fetch("/api/v1/cart", {method: "DELETE"})
+                                fetch("/api/v1/cart/all", {method: "DELETE"})
                                     .then(function (response) {
                                         if (!response.ok) throw new Error("clear");
                                         setStatus("Cart cleared.", false);
@@ -322,4 +323,3 @@
 </body>
 
 </html>
-

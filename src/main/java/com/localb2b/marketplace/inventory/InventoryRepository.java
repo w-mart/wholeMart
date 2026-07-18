@@ -23,4 +23,13 @@ public interface InventoryRepository extends JpaRepository<InventoryItem, Long> 
     default long countExpiredItemsByDistributorUserId(Long distributorUserId) {
         return 0;
     }
+
+    @Query("""
+            select coalesce(sum(i.availableQuantity * p.unitPrice), 0)
+            from InventoryItem i
+            join Product p on p.id = i.productId
+            where p.distributorUserId = :distributorUserId
+            """)
+    java.math.BigDecimal totalInventoryValueByDistributorUserId(@Param("distributorUserId") Long distributorUserId);
+
 }
