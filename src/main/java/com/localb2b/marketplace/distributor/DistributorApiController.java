@@ -35,7 +35,22 @@ public class DistributorApiController {
     private DistributorProfileDto toDto(DistributorProfile profile) {
         return new DistributorProfileDto(profile.getId(), profile.getUserId(), profile.getBusinessName(),
                 profile.getContactName(), profile.getShopName(), profile.getGstin(), profile.getCity(),
-                profile.getState(), profile.getAddressLine(), profile.getPincode(), profile.getLatitude(),
-                profile.getLongitude(), profile.isApproved());
+                profile.getState(), profile.getAddressLine(), profile.getPincode(),
+                profile.getLatitude(), profile.getLongitude(), profile.isApproved(),
+                profile.getBusinessPan(),
+                profile.getBankAccountNumber(),
+                profile.getBankIfscCode(),
+                profile.getBankName(),
+                profile.getGstCertificateUrl(),
+                profile.getShopImageUrl(),
+                profile.getWarehouseAddress(),
+                profile.getWarehouseCity(),
+                profile.getWarehouseState(),
+                profile.getWarehousePincode(),
+                profile.getWarehouseLatitude(),
+                profile.getWarehouseLongitude(),
+                profile.getBusinessType(),
+                profile.getWebsite(),
+                profile.getDescription());
     }
 }

@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DeliveryRepository extends JpaRepository<DeliveryAssignment, Long> {
     List<DeliveryAssignment> findByDriverUserId(Long driverUserId);
-
+    List<DeliveryAssignment> findByDriverUserIdAndStatusIn(Long driverUserId, Collection<DeliveryStatus> statuses);
+    List<DeliveryAssignment> findByDriverUserIdAndStatus(Long driverUserId, DeliveryStatus status);
     Page<DeliveryAssignment> findByDriverUserId(Long driverUserId, Pageable pageable);
-
     Page<DeliveryAssignment> findByOrderIdIn(Collection<Long> orderIds, Pageable pageable);
 }

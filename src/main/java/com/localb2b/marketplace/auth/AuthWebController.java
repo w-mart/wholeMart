@@ -80,6 +80,7 @@ public class AuthWebController {
             session.setAttribute("userId", response.userId());
             session.setAttribute("role", response.role().name());
             session.setAttribute("email", email);
+            session.setAttribute("mobile", normalizedMobile);
             session.setAttribute("username", name == null || name.isBlank() ? response.role().name().replace("ROLE_", "") + " User" : name);
             return dashboardRedirect(response.role());
         } catch (RuntimeException ex) {
@@ -93,7 +94,7 @@ public class AuthWebController {
     public String registerSubmit(@RequestParam String fullName,
                                   @RequestParam String mobile,
                                   @RequestParam(required = false) String email,
-                                  @RequestParam UserRole role,
+                                  @RequestParam String role,
                                   @RequestParam String password,
                                   @RequestParam String confirmPassword,
                                   @RequestParam(required = false) String businessName,
@@ -103,21 +104,31 @@ public class AuthWebController {
                                   @RequestParam(required = false) String ownerName,
                                   @RequestParam(required = false) String city,
                                   @RequestParam(required = false) String state,
-                                  @RequestParam(required = false) String addressLine, // This was missing
+                                  @RequestParam(required = false) String addressLine,
                                   @RequestParam(required = false) String pincode,
                                   @RequestParam(required = false) String alternateMobile,
                                   @RequestParam(required = false) BigDecimal latitude,
                                   @RequestParam(required = false) BigDecimal longitude,
+                                  @RequestParam(required = false) String licenseNumber,
+                                  @RequestParam(required = false) String aadhaarNumber,
+                                  @RequestParam(required = false) String vehicleType,
+                                  @RequestParam(required = false) String vehicleNumber,
                                   HttpSession session,
                                   Model model) {
         try {
+            // Normalize role from "Retailer" to "ROLE_RETAILER"
+            String normalizedRole = role == null ? null : role.trim();
+            if (normalizedRole != null && !normalizedRole.startsWith("ROLE_")) {
+                normalizedRole = "ROLE_" + normalizedRole.toUpperCase();
+            }
+            UserRole userRole = UserRole.valueOf(normalizedRole);
+
             String normalizedMobile = AuthService.normalizeMobile(mobile);
             var response = authService.register(new com.localb2b.marketplace.auth.dto.AuthDtos.RegisterRequest(
-
                     fullName,
                     normalizedMobile,
                     email,
-                    role,
+                    userRole,
                     password,
                     confirmPassword,
                     businessName,
@@ -132,11 +143,11 @@ public class AuthWebController {
                     alternateMobile,
                     latitude,
                     longitude,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
+                    fullName,
+                    licenseNumber,
+                    aadhaarNumber,
+                    vehicleType,
+                    vehicleNumber,
                     null,
                     null));
 
@@ -151,7 +162,6 @@ public class AuthWebController {
             return "auth/login";
         }
     }
-
 
     private String dashboardRedirect(UserRole role) {
         return switch (role) {

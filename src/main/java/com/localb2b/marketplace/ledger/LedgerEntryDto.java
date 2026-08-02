@@ -8,5 +8,8 @@ public record LedgerEntryDto(Long id,
                              Long distributorUserId,
                              BigDecimal amount,
                              String reason,
+                             LedgerEntryType type,
+                             Long orderId,
+                             BigDecimal balanceAfter,
                              Instant createdAt) {
 }

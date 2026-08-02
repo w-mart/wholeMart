@@ -30,6 +30,23 @@ public class DistributorProfile extends BaseEntity {
     private BigDecimal longitude = BigDecimal.ZERO;
     private boolean approved;
 
+    // Enhanced KYC / Business Fields
+    private String businessPan;
+    private String bankAccountNumber;
+    private String bankIfscCode;
+    private String bankName;
+    private String gstCertificateUrl;
+    private String shopImageUrl;
+    private String warehouseAddress;
+    private String warehouseCity;
+    private String warehouseState;
+    private String warehousePincode;
+    private BigDecimal warehouseLatitude = BigDecimal.ZERO;
+    private BigDecimal warehouseLongitude = BigDecimal.ZERO;
+    private String businessType;
+    private String website;
+    private String description;
+
     protected DistributorProfile() {
     }
 
@@ -58,17 +75,17 @@ public class DistributorProfile extends BaseEntity {
     }
 
     public void updateProfile(String businessName,
-                              String contactName,
-                              String shopName,
-                              String gstin,
-                              String city,
-                              String state,
-                              String addressLine,
-                              String pincode,
-                              String email,
-                              String alternateMobile,
-                              BigDecimal latitude,
-                              BigDecimal longitude) {
+            String contactName,
+            String shopName,
+            String gstin,
+            String city,
+            String state,
+            String addressLine,
+            String pincode,
+            String email,
+            String alternateMobile,
+            BigDecimal latitude,
+            BigDecimal longitude) {
         updateProfile(businessName, latitude, longitude);
         this.contactName = valueOrCurrent(clean(contactName), this.contactName);
         this.shopName = valueOrCurrent(clean(shopName), this.shopName);
@@ -85,7 +102,6 @@ public class DistributorProfile extends BaseEntity {
         if (value == null) {
             return null;
         }
-        // Strip leading/trailing whitespace, then leading/trailing commas
         return value.trim().replaceAll("^,+|,+$", "").trim();
     }
 

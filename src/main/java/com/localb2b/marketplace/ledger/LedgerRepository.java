@@ -12,23 +12,33 @@ public interface LedgerRepository extends JpaRepository<LedgerEntry, Long> {
 
     List<LedgerEntry> findByDistributorUserId(Long distributorUserId);
 
-    @Query("""
-            select coalesce(sum(l.amount), 0)
-            from LedgerEntry l
-            where l.distributorUserId = :distributorUserId
-            """)
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.distributorUserId = :distributorUserId")
     BigDecimal sumAmountByDistributorUserId(@Param("distributorUserId") Long distributorUserId);
 
-    @Query("""
-            select coalesce(sum(l.amount), 0)
-            from LedgerEntry l
-            where l.distributorUserId = :distributorUserId
-              and l.createdAt >= :start
-              and l.createdAt < :end
-            """)
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.distributorUserId = :distributorUserId and l.createdAt >= :start and l.createdAt < :end")
     BigDecimal sumAmountByDistributorUserIdBetween(
             @Param("distributorUserId") Long distributorUserId,
             @Param("start") Instant start,
             @Param("end") Instant end
     );
+
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.retailerUserId = :retailerUserId and l.type = 'DEBIT'")
+    BigDecimal sumDebitsByRetailerUserId(@Param("retailerUserId") Long retailerUserId);
+
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.retailerUserId = :retailerUserId and l.type = 'CREDIT'")
+    BigDecimal sumCreditsByRetailerUserId(@Param("retailerUserId") Long retailerUserId);
+
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.distributorUserId = :distributorUserId and l.type = 'DEBIT'")
+    BigDecimal sumDebitsByDistributorUserId(@Param("distributorUserId") Long distributorUserId);
+
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.distributorUserId = :distributorUserId and l.type = 'CREDIT'")
+    BigDecimal sumCreditsByDistributorUserId(@Param("distributorUserId") Long distributorUserId);
+
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.orderId = :orderId and l.type = 'DEBIT'")
+    BigDecimal sumDebitsByOrderId(@Param("orderId") Long orderId);
+
+    @Query("select coalesce(sum(l.amount), 0) from LedgerEntry l where l.orderId = :orderId and l.type = 'CREDIT'")
+    BigDecimal sumCreditsByOrderId(@Param("orderId") Long orderId);
+
+    List<LedgerEntry> findByDistributorUserIdAndRetailerUserIdOrderByCreatedAtDesc(Long distributorUserId, Long retailerUserId);
 }

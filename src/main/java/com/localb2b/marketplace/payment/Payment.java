@@ -8,8 +8,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "payments")
 public class Payment extends BaseEntity {
@@ -22,6 +24,8 @@ public class Payment extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private PaymentStatus status;
+    private String paymentMethod;
+    private String paymentReference;
 
     protected Payment() {
     }
@@ -30,6 +34,14 @@ public class Payment extends BaseEntity {
         this.orderId = orderId;
         this.amount = amount;
         this.status = status;
+    }
+
+    public Payment(Long orderId, BigDecimal amount, PaymentStatus status, String paymentMethod, String paymentReference) {
+        this.orderId = orderId;
+        this.amount = amount;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.paymentReference = paymentReference;
     }
 
 }

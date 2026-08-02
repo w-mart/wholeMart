@@ -17,7 +17,6 @@ import com.localb2b.marketplace.user.UserStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -178,8 +177,20 @@ public class AuthService {
                                 distributorProfileRepository.save(profile);
                             });
         } else if (request.role() == UserRole.ROLE_DRIVER) {
-            driverProfileRepository.findByUserId(user.getId())
-                    .orElseGet(() -> driverProfileRepository.save(new DriverProfile(user.getId(), displayName)));
+            DriverProfile profile = driverProfileRepository.findByUserId(user.getId())
+                    .orElseGet(() -> new DriverProfile(user.getId(), displayName));
+            // Capture KYC and vehicle details from registration form
+            if (request.licenseNumber() != null && !request.licenseNumber().isBlank()) profile.setLicenseNumber(request.licenseNumber());
+            if (request.aadhaarNumber() != null && !request.aadhaarNumber().isBlank()) profile.setAadhaarNumber(request.aadhaarNumber());
+            if (request.vehicleType() != null && !request.vehicleType().isBlank()) profile.setVehicleType(request.vehicleType());
+            if (request.vehicleNumber() != null && !request.vehicleNumber().isBlank()) profile.setVehicleNumber(request.vehicleNumber());
+            if (request.city() != null && !request.city().isBlank()) profile.setCity(request.city());
+            if (request.state() != null && !request.state().isBlank()) profile.setState(request.state());
+            if (request.addressLine() != null && !request.addressLine().isBlank()) profile.setAddressLine(request.addressLine());
+            if (request.pincode() != null && !request.pincode().isBlank()) profile.setPincode(request.pincode());
+            if (profile.getId() == null) {
+                driverProfileRepository.save(profile);
+            }
         }
     }
 
@@ -256,8 +267,17 @@ public class AuthService {
                         return distributorProfileRepository.save(profile);
                     });
         } else if (request.role() == UserRole.ROLE_DRIVER) {
-            driverProfileRepository.findByUserId(user.getId())
-                    .orElseGet(() -> driverProfileRepository.save(new DriverProfile(user.getId(), displayName)));
+            DriverProfile profile = driverProfileRepository.findByUserId(user.getId())
+                    .orElseGet(() -> new DriverProfile(user.getId(), displayName));
+            // Capture KYC and vehicle details on login if available
+            if (request.businessName() != null && !request.businessName().isBlank()) profile.setDisplayName(request.businessName());
+            if (request.city() != null && !request.city().isBlank()) profile.setCity(request.city());
+            if (request.state() != null && !request.state().isBlank()) profile.setState(request.state());
+            if (request.addressLine() != null && !request.addressLine().isBlank()) profile.setAddressLine(request.addressLine());
+            if (request.pincode() != null && !request.pincode().isBlank()) profile.setPincode(request.pincode());
+            if (profile.getId() == null) {
+                driverProfileRepository.save(profile);
+            }
         }
     }
 }

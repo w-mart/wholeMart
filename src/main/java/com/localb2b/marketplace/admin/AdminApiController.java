@@ -1,6 +1,5 @@
 package com.localb2b.marketplace.admin;
 
-import com.localb2b.marketplace.distributor.DistributorProfile;
 import com.localb2b.marketplace.distributor.DistributorDto;
 import com.localb2b.marketplace.common.Pageables;
 import com.localb2b.marketplace.order.OrderDto;
@@ -14,6 +13,8 @@ import com.localb2b.marketplace.payment.PaymentRepository;
 import com.localb2b.marketplace.user.UserAccount;
 import com.localb2b.marketplace.user.UserDto;
 import com.localb2b.marketplace.user.UserRepository;
+import com.localb2b.marketplace.driver.DriverProfile;
+import com.localb2b.marketplace.driver.DriverProfileRepository;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,15 +32,18 @@ public class AdminApiController {
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
+    private final DriverProfileRepository driverProfileRepository;
     private final com.localb2b.marketplace.audit.AuditRepository auditRepository;
 
     public AdminApiController(DistributorService distributorService,
             OrderRepository orderRepository, PaymentRepository paymentRepository, UserRepository userRepository,
+            DriverProfileRepository driverProfileRepository,
             com.localb2b.marketplace.audit.AuditRepository auditRepository) {
         this.distributorService = distributorService;
         this.orderRepository = orderRepository;
         this.paymentRepository = paymentRepository;
         this.userRepository = userRepository;
+        this.driverProfileRepository = driverProfileRepository;
         this.auditRepository = auditRepository;
     }
 
@@ -47,7 +51,8 @@ public class AdminApiController {
     public Page<DistributorDto> distributors(@RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "20") int size) {
         Pageable pageable = Pageables.bounded(page, size);
-        return distributors(page, size);//distributorService.findAllProfiles(pageable);
+        return distributorService.findAllProfiles(pageable)
+                .map(serviceDto -> new DistributorDto(serviceDto.id(), serviceDto.userId(), serviceDto.businessName(), serviceDto.isApproved(), serviceDto.gstin()));
     }
 
     @GetMapping("/orders")
@@ -99,24 +104,66 @@ public class AdminApiController {
 
     @PostMapping("/distributors/{id}/approve")
     public DistributorDto approveDistributor(@PathVariable Long id) {
-        // record actor
-        Long actor = null;
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null && auth.getPrincipal() instanceof com.localb2b.marketplace.security.MarketplacePrincipal p) {
-            actor = p.userId();
-        }
-        DistributorDto dto = null;//distributorService.approve(id);
+        Long actor = getActorUserId();
+        // The approve method in DistributorService returns its nested DistributorDto, which needs to be converted to the top-level DistributorDto.
+        com.localb2b.marketplace.distributor.DistributorService.DistributorDto serviceDto = distributorService.approve(id);
         auditRepository.save(new com.localb2b.marketplace.audit.AuditEvent(actor, "APPROVE_DISTRIBUTOR", "DistributorProfile", id));
-        return dto;
+        return new DistributorDto(serviceDto.id(), serviceDto.userId(), serviceDto.businessName(), serviceDto.isApproved(), serviceDto.gstin());
+    }
+
+    // ===== KYC & DRIVER APPROVAL =====
+
+    @GetMapping("/drivers/pending")
+    public List<DriverProfile> pendingDrivers() {
+        return driverProfileRepository.findByApprovedFalse();
+    }
+
+    @PostMapping("/drivers/{id}/approve")
+    public DriverProfile approveDriver(@PathVariable Long id) {
+        DriverProfile profile = driverProfileRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Driver profile not found"));
+        profile.approve();
+        profile = driverProfileRepository.save(profile);
+        auditRepository.save(new com.localb2b.marketplace.audit.AuditEvent(getActorUserId(), "APPROVE_DRIVER", "DriverProfile", id));
+        return profile;
+    }
+
+    @PostMapping("/gst/verify/{distributorId}")
+    public DistributorDto verifyGst(@PathVariable Long distributorId) {
+        // The approve method in DistributorService returns its nested DistributorDto, which needs to be converted to the top-level DistributorDto.
+        com.localb2b.marketplace.distributor.DistributorService.DistributorDto serviceDto = distributorService.approve(distributorId);
+        return new DistributorDto(serviceDto.id(), serviceDto.userId(), serviceDto.businessName(), serviceDto.isApproved(), serviceDto.gstin());
     }
 
     private OrderDto toOrderDto(MarketplaceOrder order) {
-        return new OrderDto(order.getId(), order.getRetailerUserId(), order.getDistributorUserId(),
-                order.getTotalAmount(), order.getPaymentMode(), order.getStatus(), order.getCreatedAt());
+        return new OrderDto(
+                order.getId(),
+                order.getRetailerUserId(),
+                order.getDistributorUserId(),
+                order.getTotalAmount(),
+                order.getPartialAmount(),
+                order.getPaidAmount(),
+                order.getPaymentMode(),
+                order.getStatus(),
+                order.getDeliveryAddress(),
+                order.getDeliverySlot(),
+                order.getDeliveryPincode(),
+                order.getPickupOtp(),
+                order.getDeliveryOtp(),
+                order.getRejectionReason(),
+                order.getDistributorNotes(),
+                order.getCodCollected(),
+                order.getCodCollectedAmount(),
+                order.getPackedAt(),
+                order.getReadyForPickupAt(),
+                order.getPickedUpAt(),
+                order.getDeliveredAt(),
+                order.getCompletedAt(),
+                order.getCreatedAt());
     }
 
     private PaymentDto toPaymentDto(Payment payment) {
-        return new PaymentDto(payment.getId(), payment.getOrderId(), payment.getAmount(), payment.getStatus(), payment.getCreatedAt());
+        return new PaymentDto(payment.getId(), payment.getOrderId(), payment.getAmount(), payment.getStatus(), payment.getPaymentMethod(), payment.getPaymentReference(), payment.getCreatedAt());
     }
 
     private UserDto toUserDto(UserAccount user) {

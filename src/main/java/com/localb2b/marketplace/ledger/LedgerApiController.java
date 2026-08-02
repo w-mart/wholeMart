@@ -30,6 +30,6 @@ public class LedgerApiController {
 
     private LedgerEntryDto toDto(LedgerEntry entry) {
         return new LedgerEntryDto(entry.getId(), entry.getRetailerUserId(), entry.getDistributorUserId(),
-                entry.getAmount(), entry.getReason(), entry.getCreatedAt());
+                entry.getAmount(), entry.getReason(), entry.getType(), entry.getOrderId(), entry.getBalanceAfter(), entry.getCreatedAt());
     }
 }
