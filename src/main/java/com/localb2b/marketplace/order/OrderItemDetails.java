@@ -7,5 +7,7 @@ public record OrderItemDetails(Long productId,
                                String sku,
                                BigDecimal unitPrice,
                                int quantity,
-                               BigDecimal lineTotal) {
+                               BigDecimal lineTotal,
+                               String packSize,
+                               BigDecimal weightKg) {
 }

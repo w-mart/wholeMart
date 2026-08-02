@@ -49,14 +49,17 @@ class OrderServiceTest {
         when(orderRepository.save(any(MarketplaceOrder.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(distributorProfileRepository.findByUserId(20L))
                 .thenReturn(Optional.of(new DistributorProfile(20L, "Acme Dist", new BigDecimal("19.1234"), new BigDecimal("72.5678"))));
+        // driverMatchingService may auto-match; stub to return empty and also no-op the broadcast
         when(driverMatchingService.autoMatchDriver(any(MarketplaceOrder.class), any(BigDecimal.class), any(BigDecimal.class)))
-                .thenReturn(Optional.empty());
+            .thenReturn(Optional.empty());
+        org.mockito.Mockito.doNothing().when(driverMatchingService).broadcastPickupRequest(any(MarketplaceOrder.class), any(BigDecimal.class), any(BigDecimal.class));
 
         MarketplaceOrder acceptedOrder = orderService.acceptOrder(distributor, 42L);
 
         assertThat(acceptedOrder.getStatus()).isEqualTo(OrderStatus.WAITING_FOR_DRIVER);
         assertThat(acceptedOrder.getPickupOtp()).isNotBlank();
         assertThat(acceptedOrder.getDeliveryOtp()).isNotBlank();
-        verify(driverMatchingService).autoMatchDriver(any(MarketplaceOrder.class), eq(new BigDecimal("19.1234")), eq(new BigDecimal("72.5678")));
+        // Verify broadcast pickup request to drivers is triggered
+        verify(driverMatchingService).broadcastPickupRequest(any(MarketplaceOrder.class), eq(new BigDecimal("19.1234")), eq(new BigDecimal("72.5678")));
     }
 }

@@ -14,6 +14,7 @@ import com.localb2b.marketplace.retailer.RetailerProfileRepository;
 import com.localb2b.marketplace.user.UserRole;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -103,16 +104,30 @@ public class OrderService {
     @Transactional
     public MarketplaceOrder acceptOrder(CurrentUser currentUser, Long orderId) {
         MarketplaceOrder order = ownedDistributorOrder(currentUser, orderId);
+        if (order.getStatus() != OrderStatus.PLACED) {
+            throw new IllegalStateException("Order cannot be accepted as it is not in PLACED state.");
+        }
         order.distributorAccept();
         order.setPickupOtp(generateOtp());
         order.setDeliveryOtp(generateOtp());
         order.markReadyForPickup();
         order.waitForDriver();
+
+        if (order.getReadyForPickupAt() == null) {
+            order.setReadyForPickupAt(Instant.now());
+        }
+
         MarketplaceOrder savedOrder = orderRepository.save(order);
 
-        distributorProfileRepository.findByUserId(currentUser.userId()).ifPresent(profile -> {
-            driverMatchingService.autoMatchDriver(savedOrder, profile.getLatitude(), profile.getLongitude());
-        });
+        var distributorProfileOpt = distributorProfileRepository.findByUserId(currentUser.userId());
+        if (distributorProfileOpt.isPresent()) {
+            var profile = distributorProfileOpt.get();
+            var match = driverMatchingService.autoMatchDriver(savedOrder, profile.getLatitude(), profile.getLongitude());
+            if (match.isEmpty()) {
+                // No immediate match — notify all available drivers
+                driverMatchingService.broadcastPickupRequest(savedOrder, profile.getLatitude(), profile.getLongitude());
+            }
+        }
 
         notificationService.publish(NotificationEvent.now(savedOrder.getRetailerUserId(), "ORDER",
                 "Order #" + orderId + " has been accepted by distributor"));
@@ -280,17 +295,25 @@ public class OrderService {
                 orders.stream().map(MarketplaceOrder::getDistributorUserId).distinct().toList())
                 .stream()
                 .collect(Collectors.toMap(DistributorProfile::getUserId, Function.identity()));
-        Map<Long, List<OrderItemDetails>> itemsByOrderId = orderItemRepository.findByOrderIdIn(
-                orders.stream().map(MarketplaceOrder::getId).toList())
-                .stream()
+        List<OrderItem> orderItems = orderItemRepository.findByOrderIdIn(
+                orders.stream().map(MarketplaceOrder::getId).toList());
+        Map<Long, Product> productsById = productRepository.findAllById(
+                orderItems.stream().map(OrderItem::getProductId).distinct().toList()).stream()
+                .collect(Collectors.toMap(Product::getId, Function.identity()));
+        Map<Long, List<OrderItemDetails>> itemsByOrderId = orderItems.stream()
                 .collect(Collectors.groupingBy(OrderItem::getOrderId,
-                        Collectors.mapping(item -> new OrderItemDetails(
-                                item.getProductId(),
-                                item.getProductName(),
-                                item.getSku(),
-                                item.getUnitPrice(),
-                                item.getQuantity(),
-                                item.getLineTotal()), Collectors.toList())));
+                        Collectors.mapping(item -> {
+                            Product product = productsById.get(item.getProductId());
+                            return new OrderItemDetails(
+                                    item.getProductId(),
+                                    item.getProductName(),
+                                    item.getSku(),
+                                    item.getUnitPrice(),
+                                    item.getQuantity(),
+                                    item.getLineTotal(),
+                                    product != null ? product.getPackSize() : null,
+                                    product != null ? product.getWeightKg() : null);
+                        }, Collectors.toList())));
         return orders.stream()
                 .map(order -> buildOrderDetails(order, retailerProfiles, distributorProfiles, itemsByOrderId))
                 .toList();
@@ -305,17 +328,24 @@ public class OrderService {
                 List.of(order.getDistributorUserId()))
                 .stream()
                 .collect(Collectors.toMap(DistributorProfile::getUserId, Function.identity()));
-        Map<Long, List<OrderItemDetails>> itemsByOrderId = orderItemRepository.findByOrderIdIn(
-                List.of(order.getId()))
-                .stream()
+        List<OrderItem> orderItems = orderItemRepository.findByOrderIdIn(List.of(order.getId()));
+        Map<Long, Product> productsById = productRepository.findAllById(
+                orderItems.stream().map(OrderItem::getProductId).distinct().toList()).stream()
+                .collect(Collectors.toMap(Product::getId, Function.identity()));
+        Map<Long, List<OrderItemDetails>> itemsByOrderId = orderItems.stream()
                 .collect(Collectors.groupingBy(OrderItem::getOrderId,
-                        Collectors.mapping(item -> new OrderItemDetails(
-                                item.getProductId(),
-                                item.getProductName(),
-                                item.getSku(),
-                                item.getUnitPrice(),
-                                item.getQuantity(),
-                                item.getLineTotal()), Collectors.toList())));
+                        Collectors.mapping(item -> {
+                            Product product = productsById.get(item.getProductId());
+                            return new OrderItemDetails(
+                                    item.getProductId(),
+                                    item.getProductName(),
+                                    item.getSku(),
+                                    item.getUnitPrice(),
+                                    item.getQuantity(),
+                                    item.getLineTotal(),
+                                    product != null ? product.getPackSize() : null,
+                                    product != null ? product.getWeightKg() : null);
+                        }, Collectors.toList())));
         return buildOrderDetails(order, retailerProfiles, distributorProfiles, itemsByOrderId);
     }
 

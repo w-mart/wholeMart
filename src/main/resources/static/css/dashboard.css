@@ -818,6 +818,303 @@ a {
     gap: 8px;
 }
 
+/*==========================================================
+    DRIVER DELIVERY MODAL
+    Tidy modal sizing, rounded corners and scrolling behavior
+==========================================================*/
+
+/* Constrain dialog width so the large header doesn't stretch too far */
+#driverDeliveryModal .modal-dialog{
+    max-width: 980px; /* comfortable desktop width */
+    margin: 1.5rem auto;
+}
+
+/* Visual card for the modal */
+#driverDeliveryModal .modal-content{
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(0,0,0,.18);
+    background-clip: padding-box;
+}
+
+/* Header: slightly smaller padding and consistent rounded top */
+#driverDeliveryModal .modal-header{
+    background: linear-gradient(135deg,#1d4ed8 0%,#2563eb 100%);
+    border: none;
+    padding: 14px 20px;
+    align-items: center;
+}
+
+#driverDeliveryModal .modal-title{
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Make modal body scrollable when content is tall */
+#driverDeliveryModal .modal-body{
+    background: #f8fafc;
+    padding: 20px 22px;
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
+}
+
+/* Footer: keep buttons aligned to the right on desktop, center on mobile */
+#driverDeliveryModal .modal-footer{
+    background: #fff;
+    border-top: 1px solid #eef2f7;
+    padding: 14px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    #driverDeliveryModal .modal-dialog{
+        max-width: 95%;
+        margin: 0.5rem auto;
+    }
+    #driverDeliveryModal .modal-footer{
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+
+/*==========================================================
+    ADDRESS CARDS
+==========================================================*/
+
+#driverDeliveryModal .card{
+    border:none;
+    border-radius:18px;
+    transition:.25s;
+}
+
+#driverDeliveryModal .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 18px 40px rgba(0,0,0,.10);
+}
+
+#driverDeliveryModal .card-body{
+    padding:22px;
+}
+
+#driverDeliveryModal .rounded-circle{
+    flex-shrink:0;
+}
+
+
+/*==========================================================
+    SUMMARY CARDS
+==========================================================*/
+
+#driverDeliveryModal .summary-card{
+    border-radius:18px;
+    background:#fff;
+}
+
+#driverDeliveryModal h3{
+    font-weight:700;
+}
+
+#driverDeliveryModal h4{
+    font-weight:700;
+}
+
+#driverDeliveryModal .text-muted{
+    color:#64748b !important;
+}
+
+
+/*==========================================================
+    STATUS BADGE
+==========================================================*/
+
+#modalOrderStatus{
+    border-radius:30px;
+    font-size:.90rem;
+    font-weight:700;
+    padding:8px 18px;
+    letter-spacing:.4px;
+}
+
+
+/* Optional Status Colors */
+
+.status-waiting{
+    background:#fff7cc !important;
+    color:#946200 !important;
+}
+
+.status-assigned{
+    background:#dbeafe !important;
+    color:#1d4ed8 !important;
+}
+
+.status-picked{
+    background:#ede9fe !important;
+    color:#6d28d9 !important;
+}
+
+.status-delivered{
+    background:#dcfce7 !important;
+    color:#166534 !important;
+}
+
+.status-cancelled{
+    background:#fee2e2 !important;
+    color:#b91c1c !important;
+}
+
+
+/*==========================================================
+    TABLE
+==========================================================*/
+
+#driverDeliveryModal table{
+    margin-bottom:0;
+}
+
+#driverDeliveryModal thead{
+    background:#f1f5f9;
+}
+
+#driverDeliveryModal th{
+    font-size:.86rem;
+    font-weight:700;
+    color:#475569;
+    border:none;
+    padding:14px;
+}
+
+#driverDeliveryModal td{
+    padding:16px 14px;
+    border-top:1px solid #edf2f7;
+    vertical-align:middle;
+}
+
+#driverDeliveryModal tbody tr:hover{
+    background:#f8fafc;
+}
+
+
+/*==========================================================
+    BUTTONS
+==========================================================*/
+
+#modalAcceptBtn{
+
+    min-width:180px;
+    border-radius:12px;
+    font-weight:600;
+    padding:12px 28px;
+    transition:.25s;
+
+}
+
+#modalAcceptBtn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 25px rgba(22,163,74,.25);
+
+}
+
+#modalRejectBtn{
+
+    min-width:140px;
+    border-radius:12px;
+    font-weight:600;
+    padding:12px 24px;
+    transition:.25s;
+
+}
+
+#modalRejectBtn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+
+/*==========================================================
+    KPI NUMBERS
+==========================================================*/
+
+#modalOrderTotal{
+
+    color:#2563eb;
+
+}
+
+#modalDeliveryFee{
+
+    color:#16a34a;
+
+}
+
+#modalPickupOtp,
+#modalDeliveryOtp{
+
+    letter-spacing:2px;
+
+}
+
+
+/*==========================================================
+    SCROLLBAR
+==========================================================*/
+
+#driverDeliveryModal ::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#driverDeliveryModal ::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+    border-radius:20px;
+
+}
+
+
+/*==========================================================
+    MOBILE
+==========================================================*/
+
+@media(max-width:768px){
+
+    #driverDeliveryModal .modal-body{
+
+        padding:18px;
+
+    }
+
+    #driverDeliveryModal .modal-header{
+
+        padding:18px;
+
+    }
+
+    #driverDeliveryModal .modal-footer{
+
+        justify-content:center;
+
+    }
+
+    #modalAcceptBtn,
+    #modalRejectBtn{
+
+        width:100%;
+
+    }
+
+}
+
 .wm-ai-panel--compact #wmDashboardAiForm .input-group {
     display: flex;
     width: 100%;

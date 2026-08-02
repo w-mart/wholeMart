@@ -62,6 +62,7 @@ public class MarketplaceOrder extends BaseEntity {
     private String deliveryOtp;
 
     private Instant packedAt;
+    @Setter
     private Instant readyForPickupAt;
     private Instant pickedUpAt;
     private Instant deliveredAt;
@@ -115,6 +116,9 @@ public class MarketplaceOrder extends BaseEntity {
 
     public void waitForDriver() {
         this.status = OrderStatus.WAITING_FOR_DRIVER;
+        if (this.readyForPickupAt == null) {
+            this.readyForPickupAt = Instant.now();
+        }
     }
 
     public void assignDriver() {
@@ -159,10 +163,8 @@ public class MarketplaceOrder extends BaseEntity {
     // === Helpers ===
 
     public BigDecimal getOutstandingAmount() {
-        if (partialAmount != null && paidAmount != null) {
-            return partialAmount.subtract(paidAmount);
-        }
-        return totalAmount.subtract(paidAmount);
+        BigDecimal paid = paidAmount == null ? BigDecimal.ZERO : paidAmount;
+        return totalAmount.subtract(paid);
     }
 
     public boolean isPartialPayment() {

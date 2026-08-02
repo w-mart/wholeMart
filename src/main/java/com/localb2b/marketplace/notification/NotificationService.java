@@ -12,7 +12,16 @@ public class NotificationService {
     //     this.kafkaTemplate = kafkaTemplate;
     // }
 
+    private final NotificationRepository notificationRepository;
+
+    public NotificationService(NotificationRepository notificationRepository) {
+        this.notificationRepository = notificationRepository;
+    }
+
     public void publish(NotificationEvent event) {
+        // Previously we used Kafka for notifications. For now persist to DB instead.
+        Notification n = new Notification(event.userId(), event.channel(), event.message());
+        notificationRepository.save(n);
         // kafkaTemplate.send(TOPIC, String.valueOf(event.userId()), event);
     }
 }

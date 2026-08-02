@@ -2,6 +2,7 @@ package com.localb2b.marketplace.driver;
 
 import com.localb2b.marketplace.delivery.DeliveryAssignment;
 import com.localb2b.marketplace.delivery.DeliveryRepository;
+import com.localb2b.marketplace.notification.NotificationEvent;
 //import com.localb2b.marketplace.delivery.DeliveryStatus;
 //import com.localb2b.marketplace.notification.NotificationEvent;
 import com.localb2b.marketplace.notification.NotificationService;
@@ -149,6 +150,22 @@ public class DriverMatchingService {
             return Optional.of(assignment);
         }
         return Optional.empty();
+    }
+
+    @Transactional
+    public void broadcastPickupRequest(MarketplaceOrder order, BigDecimal distLat, BigDecimal distLng) {
+        List<DriverLocation> availableDrivers = driverLocationRepository.findByIsOnlineTrueAndIsBusyFalse();
+        for (DriverLocation dl : availableDrivers) {
+            DeliveryAssignment da = new DeliveryAssignment(order.getId(), dl.getDriverUserId());
+            da.setPickupLatitude(distLat);
+            da.setPickupLongitude(distLng);
+            da.setPickupOtp(order.getPickupOtp());
+            da.setDeliveryOtp(order.getDeliveryOtp());
+            da = deliveryRepository.save(da);
+            notificationService.publish(
+                    NotificationEvent.now(dl.getDriverUserId(), "DRIVER_REQUEST",
+                            "New pickup request: Order #" + order.getId() + " (assignment " + da.getId() + ")"));
+        }
     }
 
     /**
