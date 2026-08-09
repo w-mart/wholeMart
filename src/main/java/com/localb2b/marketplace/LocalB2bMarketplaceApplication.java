@@ -10,6 +10,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -27,11 +28,15 @@ public class LocalB2bMarketplaceApplication {
         SpringApplication.run(LocalB2bMarketplaceApplication.class, args);
     }
 
-    @Bean
+@Bean
+    @Lazy
     ChatModel chatModel(Environment environment) {
         String apiKey = environment.getProperty("spring.ai.openai.api-key", "").trim();
         if (!StringUtils.hasText(apiKey)) {
-            apiKey = null;
+            // No AI key configured (e.g. fresh Render deploy). Use a placeholder so the
+            // bean can still instantiate and the app can start; AI calls will fail at
+            // request time with a clear message rather than blocking application startup.
+            apiKey = "not-configured";
         }
         String baseUrl = environment.getProperty("spring.ai.openai.base-url", "https://api.groq.com/openai");
         String model = environment.getProperty("spring.ai.openai.chat.options.model", "llama-3.1-8b-instant");
@@ -66,7 +71,8 @@ public class LocalB2bMarketplaceApplication {
                 .build();
     }
 
-    @Bean
+@Bean
+    @Lazy
     ChatClient.Builder chatClientBuilder(ChatModel chatModel) {
         return ChatClient.builder(chatModel);
     }
