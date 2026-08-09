@@ -116,6 +116,7 @@
     </dependencies>
 
     <build>
+        <finalName>localb2b-ai-marketplace</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
