@@ -42,7 +42,7 @@ String error = request.getParameter("error");
 </div>
 </aside>
 <div class="auth-card">
-<div class="auth-header mb-3"><h3><fmt:message key="auth.welcome_back"/></h3><p class="text-muted mb-0 mt-2"><fmt:message key="auth.please_sign_in"/></p></div>
+<div class="auth-header mb-3"><h3><fmt:message key="auth.welcome_back"/></h3></div>
 <ul class="nav nav-pills wm-auth-pills mb-3" id="authTabs">
 <li class="nav-item"><button type="button" class="nav-link active" id="tabLogin" data-target="login"><fmt:message key="nav.login"/></button></li>
 <li class="nav-item"><button type="button" class="nav-link" id="tabRegister" data-target="register"><fmt:message key="nav.register"/></button></li>
@@ -54,7 +54,7 @@ String error = request.getParameter("error");
 <% if (error != null && !error.isEmpty()) { %>
 <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center gap-2 mb-3 shadow-sm border-danger border-opacity-25" role="alert">
   <i class="bi bi-exclamation-triangle-fill fs-5 text-danger flex-shrink-0"></i>
-  <div><strong><fmt:message key="auth.login_failed"/>:</strong> <%= error %></div>
+  <div><strong>Login Failed:</strong> <%= error %></div>
   <button class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <% } %>
@@ -67,9 +67,9 @@ String error = request.getParameter("error");
 <% } %>
 <form action="${pageContext.request.contextPath}/web/auth/login" method="post" class="wm-login-form">
 <div class="mb-3">
-<label class="form-label"><fmt:message key="auth.username"/></label>
+<label class="form-label"><fmt:message key="auth.email"/></label>
 <div class="input-group"><span class="input-group-text"><i class="bi bi-envelope"></i></span>
-<input type="text" class="form-control" name="email" placeholder="<fmt:message key="auth.username"/>" required>
+<input type="text" class="form-control" name="email" placeholder="<fmt:message key="auth.email"/>" required>
 </div>
 </div>
 <div class="mb-3">

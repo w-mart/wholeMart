@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="wm-auth-container">
 
@@ -8,6 +9,7 @@
             <div class="wm-logo">W</div>
             <h2>WholeMart</h2>
             <p>Local B2B AI Marketplace</p>
+            <p class="mt-2 mb-0 text-muted"><fmt:message key="auth.please_sign_in"/></p>
         </div>
         <!-- Error & Message Banner -->
         <% 
@@ -39,46 +41,46 @@
                    name="${_csrf.parameterName}"
                    value="${_csrf.token}" />
             <div class="wm-form-group">
-                <label>Username or Mobile</label>
+                <label><fmt:message key="auth.username_or_mobile"/></label>
                 <input
                         type="text"
                         class="wm-input"
                         id="loginMobile"
                         name="username"
-                        placeholder="Enter Username or Mobile (10 digits)"
+                        placeholder="<fmt:message key='auth.enter_username_or_mobile'/>"
                         required>
                 <div id="mobileError" class="text-danger" style="display:none; font-size: .9rem; margin-top: 6px;">
-                    Please enter a valid 10-digit mobile number.
+                    <fmt:message key="auth.mobile_error"/>
                 </div>
             </div>
 
             <div class="wm-form-group">
-                <label>Password</label>
+                <label><fmt:message key="auth.password"/></label>
                 <input
                         type="password"
                         class="wm-input"
                         name="password"
-                        placeholder="Password"
+                        placeholder="<fmt:message key='auth.password'/>"
                         required>
             </div>
             <div class="wm-form-group">
-                <label>Select Role</label>
+                <label><fmt:message key="auth.select_role"/></label>
                 <select class="wm-input" name="role" id="role" required>
-                    <option value="">Choose Role</option>
-                    <option value="ROLE_ADMIN">Admin</option>
-                    <option value="ROLE_RETAILER">Retailer</option>
-                    <option value="ROLE_DISTRIBUTOR">Distributor</option>
-                    <option value="ROLE_DRIVER">Driver</option>
+                    <option value=""><fmt:message key="auth.choose_role"/></option>
+                    <option value="ROLE_ADMIN"><fmt:message key="auth.admin"/></option>
+                    <option value="ROLE_RETAILER"><fmt:message key="auth.retailer"/></option>
+                    <option value="ROLE_DISTRIBUTOR"><fmt:message key="auth.distributor"/></option>
+                    <option value="ROLE_DRIVER"><fmt:message key="auth.driver"/></option>
                 </select>
             </div>
             <button class="wm-login-btn" type="submit">
-                Login
+                <fmt:message key="nav.login"/>
             </button>
         </form>
         <div class="wm-form-group text-center mt-3">
-            <div class="position-relative my-3"><hr style="border-color: var(--line);"><span class="position-absolute top-50 start-50 translate-middle bg-white px-2 text-muted" style="font-size:0.8rem;">OR</span></div>
+            <div class="position-relative my-3"><hr style="border-color: var(--line);"><span class="position-absolute top-50 start-50 translate-middle bg-white px-2 text-muted" style="font-size:0.8rem;"><fmt:message key="auth.or"/></span></div>
             <a href="${pageContext.request.contextPath}/web/auth/google" class="wm-btn-outline w-100 py-2 d-flex align-items-center justify-content-center gap-2" style="border-radius: var(--radius-sm); border: 1px solid var(--line-strong); width: 100%; text-decoration: none;">
-                <i class="bi bi-google text-danger"></i> Sign in with Google
+                <i class="bi bi-google text-danger"></i> <fmt:message key="auth.google_login"/>
             </a>
         </div>
     </div>
