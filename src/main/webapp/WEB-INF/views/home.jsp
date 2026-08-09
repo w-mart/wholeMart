@@ -43,10 +43,10 @@
                 
                 <div class="col-lg-6">
                     <div class="wm-hero-image shadow-lg rounded-4 overflow-hidden border border-1 border-secondary-subtle">
-                        <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg"
+                        <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
                              class="img-fluid w-100 object-fit-cover"
                              style="max-height: 420px; display: block;"
-                             onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
+                             onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png';"
                              alt="WholeMart operations dashboard showing live inventory, orders and delivery status">
                         <div class="wm-mini-card-container">
                             <div class="wm-mini-card">
@@ -73,9 +73,9 @@
     <section id="operations" class="container my-5">
         <div class="wm-operations-hub">
             <div class="wm-operations-hero-wrap">
-                <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg"
+                <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
                      class="wm-operations-hero-img"
-                     onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
+                     onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png';"
                      alt="WholeMart Live Operations Hub showing inventory, orders and delivery van dispatch">
                 <div class="wm-operations-overlay">
                     <div>
