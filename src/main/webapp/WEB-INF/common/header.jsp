@@ -57,7 +57,7 @@
                             <button type="button" onclick="setWmLanguage('hin')" class="btn btn-sm p-0 border-0 <%= wmHinActive %> px-1">HI</button>
                         </div>
                         <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-ghost"><fmt:message key="nav.register"/></a>
-                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary"><fmt:message key="nav.login"/></a>
+                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-ghost"><fmt:message key="nav.login"/></a>
                     </div>
                 </div>
             </div>
