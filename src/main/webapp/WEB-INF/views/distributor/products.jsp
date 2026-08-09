@@ -133,10 +133,45 @@
                                     </tr>
                                 </thead>
                                 <tbody id="productsBody">
-                                    <tr>
-                                        <td colspan="8" style="text-align: center; padding: 2rem;">
-                                            <div class="wm-loader"></div>
-                                        </td>
+                                    <tr class="wm-skel-tr">
+                                        <td><div class="wm-shimmer" style="height:16px; width:24px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:80px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:160px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:70px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:90px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:45px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:65px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:26px; width:55px; border-radius:4px;"></div></td>
+                                    </tr>
+                                    <tr class="wm-skel-tr">
+                                        <td><div class="wm-shimmer" style="height:16px; width:24px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:80px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:140px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:70px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:85px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:45px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:65px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:26px; width:55px; border-radius:4px;"></div></td>
+                                    </tr>
+                                    <tr class="wm-skel-tr">
+                                        <td><div class="wm-shimmer" style="height:16px; width:24px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:80px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:180px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:70px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:75px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:45px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:65px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:26px; width:55px; border-radius:4px;"></div></td>
+                                    </tr>
+                                    <tr class="wm-skel-tr">
+                                        <td><div class="wm-shimmer" style="height:16px; width:24px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:80px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:150px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:70px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:95px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:45px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:16px; width:65px; border-radius:4px;"></div></td>
+                                        <td><div class="wm-shimmer" style="height:26px; width:55px; border-radius:4px;"></div></td>
                                     </tr>
                                 </tbody>
                             </table>

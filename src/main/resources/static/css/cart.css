@@ -1,0 +1,906 @@
+/* ============================================================
+   WholeMart — Retailer Cart & Delivery Settlement
+   Design system: "Dispatch Ledger" (Harmonized with home.jsp & home.css)
+   ============================================================ */
+
+@import 'common.css';
+
+/* Page Canvas & Atmosphere */
+.wm-cart-page {
+  padding-bottom: 72px;
+  min-height: calc(100vh - 140px);
+}
+
+/* Faint ledger-grid texture behind hero and steps */
+.wm-cart-hero-section {
+  background-image: radial-gradient(rgba(18,24,31,.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  padding: 32px 0 24px;
+  border-bottom: 1px dashed var(--line-strong);
+  margin-bottom: 32px;
+}
+
+/* Section Header Typography */
+.wm-cart-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wm-cart-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(24px, 3.2vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 8px 0 4px;
+}
+
+.wm-cart-subtitle {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  max-width: 640px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Section Badges */
+.wm-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--green-tint);
+  border: 1px solid rgba(27,94,60,.24);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: .68rem;
+  width: fit-content;
+}
+.wm-section-badge i { font-size: .8rem; }
+
+/* ============================================================
+   TELEMETRY METRICS RIBBON (Matching Home Operations Hub)
+   ============================================================ */
+.wm-cart-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.wm-telemetry-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wm-telemetry-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 16px; right: 16px;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 10px);
+}
+
+.wm-telemetry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: rgba(27,94,60,.3);
+}
+
+.wm-telemetry-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.wm-telemetry-icon.inventory { background: var(--green-tint); color: var(--green-deep); }
+.wm-telemetry-icon.orders    { background: var(--blue-tint); color: var(--blue); }
+.wm-telemetry-icon.delivery  { background: var(--amber-tint); color: #B45309; }
+.wm-telemetry-icon.credit    { background: rgba(194, 65, 12, 0.12); color: var(--red); }
+
+.wm-telemetry-content { min-width: 0; flex: 1; }
+.wm-telemetry-content h5 {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wm-telemetry-content small {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+@media (max-width: 992px) {
+  .wm-cart-telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 576px) {
+  .wm-cart-telemetry-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   STEPS TRACK — Visual Route / Process Ribbon (Matching Home)
+   ============================================================ */
+.wm-cart-steps-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.wm-cart-steps-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wm-cart-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.wm-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--line-strong);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wm-cart-step.active .wm-step-num {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.wm-cart-step.complete .wm-step-num {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+
+.wm-step-text { min-width: 0; }
+.wm-step-text strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.wm-step-text span {
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  font-family: var(--font-mono);
+}
+
+.wm-step-sep {
+  color: var(--line-strong);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 860px) {
+  .wm-cart-steps-track {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .wm-step-sep { display: none; }
+}
+
+/* ============================================================
+   CARD CONTAINERS & LEDGER SHEETS (Matching #snapshot)
+   ============================================================ */
+.wm-ledger-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.wm-ledger-card-header {
+  padding: 18px 24px;
+  background: transparent;
+  border-bottom: 1px dashed var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wm-ledger-card-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 0;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wm-ledger-card-title::before {
+  content: 'LEDGER · ';
+  font-family: var(--font-mono);
+  font-size: .65em;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+}
+
+.wm-ledger-card-body {
+  padding: 24px;
+}
+
+/* ============================================================
+   TOOLBAR & CONTROLS
+   ============================================================ */
+.wm-cart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.wm-cart-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+
+.wm-cart-search-wrap i {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.wm-cart-search-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 16px 0 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
+
+.wm-cart-search-input:focus {
+  background: #fff;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-tint);
+}
+
+/* ============================================================
+   TABLE STYLING — Clean Commodity Manifest
+   ============================================================ */
+.wm-manifest-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.wm-manifest-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  text-align: left;
+}
+
+.wm-manifest-table thead th {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line-strong);
+  white-space: nowrap;
+}
+
+.wm-manifest-table tbody td {
+  padding: 16px 18px;
+  vertical-align: middle;
+  border-bottom: 1px dashed var(--line);
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+
+.wm-manifest-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.wm-manifest-table tbody tr:hover td {
+  background-color: rgba(27,94,60,.02);
+}
+
+/* Commodity Item Presentation */
+.wm-item-cell {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wm-item-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green-deep);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.wm-item-info { min-width: 0; }
+.wm-item-name {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--ink);
+  margin: 0 0 3px;
+  display: block;
+}
+
+.wm-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.wm-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.wm-meta-pill.sku { color: var(--ink); font-weight: 600; }
+.wm-meta-pill.dist { background: var(--green-tint); color: var(--green-deep); border-color: rgba(27,94,60,.2); }
+.wm-meta-pill.pack { background: var(--amber-tint); color: #B45309; border-color: rgba(227,167,59,.25); }
+
+/* Quantity Stepper Controls */
+.wm-qty-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--paper-raised);
+  overflow: hidden;
+}
+
+.wm-qty-stepper-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color .12s ease, color .12s ease;
+}
+
+.wm-qty-stepper-btn:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+.wm-qty-stepper-btn:active {
+  transform: scale(0.95);
+}
+
+.wm-qty-stepper-input {
+  width: 44px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink);
+  outline: none;
+  padding: 0;
+}
+
+/* Price & Mono Amounts */
+.wm-mono-price {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.wm-mono-amount {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+/* Remove button */
+.wm-btn-remove {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid rgba(194, 65, 12, 0.2);
+  background: rgba(194, 65, 12, 0.05);
+  color: var(--red);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color .15s ease, transform .15s ease, border-color .15s ease;
+}
+
+.wm-btn-remove:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  transform: scale(1.05);
+}
+
+/* ============================================================
+   EMPTY CART STATE (Matching home.jsp dashed circle icons)
+   ============================================================ */
+.wm-empty-cart {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.wm-empty-icon-outer {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.wm-empty-icon-inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px dashed var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: var(--ink-soft);
+}
+
+.wm-empty-cart h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+
+.wm-empty-cart p {
+  color: var(--ink-soft);
+  max-width: 420px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+
+/* ============================================================
+   LOGISTICS ROUTE CARD
+   ============================================================ */
+.wm-route-banner {
+  background: linear-gradient(135deg, rgba(27,94,60,.06) 0%, rgba(46,90,168,.06) 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wm-route-hub-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.wm-route-details { min-width: 0; flex: 1; }
+.wm-route-details strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+.wm-route-details span {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  display: block;
+}
+
+/* Form selects & inputs */
+.wm-form-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.wm-form-select,
+.wm-form-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s ease, background-color .15s ease, box-shadow .15s ease;
+}
+
+.wm-form-select:focus,
+.wm-form-input:focus {
+  background: #fff;
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px var(--green-tint);
+}
+
+/* ============================================================
+   SETTLEMENT LEDGER & BILL SUMMARY (Right Column)
+   ============================================================ */
+.wm-settlement-sheet {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wm-settlement-sheet::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 24px; right: 24px;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, var(--green) 0 10px, transparent 10px 16px);
+}
+
+.wm-settlement-head {
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--line-strong);
+  margin-bottom: 18px;
+}
+
+.wm-settlement-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.wm-settlement-title::before {
+  content: 'BILL · ';
+  font-family: var(--font-mono);
+  font-size: .65em;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+}
+
+.wm-bill-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wm-bill-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.wm-bill-row span.label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wm-bill-row span.val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.wm-bill-divider {
+  height: 1px;
+  border-top: 1px dashed var(--line-strong);
+  margin: 14px 0;
+}
+
+.wm-bill-row.total {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 12px 0 6px;
+  border-top: 2px solid var(--ink);
+}
+
+.wm-bill-row.total span.val {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+/* B2B Khata / Credit Badge */
+.wm-khata-box {
+  background: var(--paper);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.wm-khata-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.wm-khata-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green-deep);
+}
+
+.wm-khata-amount {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.wm-khata-sub {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Payment Mode Radio Cards */
+.wm-payment-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.wm-payment-option {
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  background: var(--paper-raised);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color .15s ease, background-color .15s ease, transform .12s ease;
+}
+
+.wm-payment-option:hover {
+  border-color: var(--green);
+  background: var(--green-tint);
+}
+
+.wm-payment-option input[type="radio"] {
+  accent-color: var(--ink);
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.wm-payment-option.selected {
+  border-color: var(--ink);
+  background: var(--paper);
+  box-shadow: 0 0 0 1px var(--ink);
+}
+
+.wm-payment-info { min-width: 0; flex: 1; }
+.wm-payment-title {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.wm-payment-desc {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* CTA Checkout Button */
+.wm-checkout-btn {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--ink);
+  color: #fff !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  border: 1px solid var(--green);
+  box-shadow: 0 10px 24px rgba(27,94,60,.24);
+  cursor: pointer;
+  transition: transform .16s ease, box-shadow .16s ease, background-color .16s ease;
+}
+
+.wm-checkout-btn:hover:not(:disabled) {
+  background: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(21,79,52,.28);
+}
+
+.wm-checkout-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Trust Badges */
+.wm-trust-ribbon {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--line);
+}
+
+.wm-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.wm-trust-item i {
+  color: var(--green);
+  font-size: 0.9rem;
+}
+
+/* Inline status / toast */
+.wm-inline-status {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  display: none;
+}
+
+.wm-inline-status.show {
+  display: block;
+}
+
+.wm-inline-status.is-success {
+  background: var(--green-tint);
+  border: 1px solid rgba(27,94,60,.25);
+  color: var(--green-deep);
+}
+
+.wm-inline-status.is-error {
+  background: rgba(194, 65, 12, 0.12);
+  border: 1px solid rgba(194, 65, 12, 0.25);
+  color: var(--red);
+}
+
+/* Responsive tweaks */
+@media (max-width: 992px) {
+  .wm-settlement-sheet {
+    margin-top: 16px;
+  }
+}

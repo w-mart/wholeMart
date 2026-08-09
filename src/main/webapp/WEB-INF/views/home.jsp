@@ -1,11 +1,12 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WholeMart | Local B2B Marketplace</title>
+    <title><fmt:message key="app.title"/></title>
     <meta name="description" content="WholeMart connects retailers, distributors, drivers and administrators on one AI-powered platform for wholesale ordering, inventory, credit and delivery.">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -17,7 +18,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/footer.css">
-    <!-- Removed non-existent style.css (home page already has home.css/common.css/header.css/login.css/footer.css) -->
 </head>
 <body class="wm-home">
 <%@ include file="/WEB-INF/common/header.jsp"%>
@@ -30,51 +30,113 @@
         <div class="container">
             <div class="row align-items-center gy-5">
                 <div class="col-lg-6">
-                    <span class="badge wm-section-badge"><i class="bi bi-stars" aria-hidden="true"></i> AI Powered Local B2B Marketplace</span>
-                    <h1 class="wm-hero-title">Wholesale ordering that keeps local commerce moving.</h1>
+                    <span class="badge wm-section-badge"><i class="bi bi-stars" aria-hidden="true"></i> <fmt:message key="hero.badge"/></span>
+                    <h1 class="wm-hero-title"><fmt:message key="hero.title"/></h1>
                     <p class="wm-hero-subtitle">
-                        WholeMart connects retailers, distributors, drivers and
-                        administrators into one intelligent operating platform
-                        for ordering, inventory, delivery, credit and AI powered
-                        business decisions &mdash; built for how wholesale actually runs.
+                        <fmt:message key="hero.subtitle"/>
                     </p>
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary">Start Now</a>
-                        <a href="#roles" class="btn wm-btn-outline">Choose Workspace</a>
+                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary"><fmt:message key="hero.start_now"/></a>
+                        <a href="#roles" class="btn wm-btn-outline"><fmt:message key="hero.choose_workspace"/></a>
                     </div>                   
                 </div>
                 
                 <div class="col-lg-6">
-                    <div class="wm-hero-image">
-                        <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
-                             class="img-fluid"
+                    <div class="wm-hero-image shadow-lg rounded-4 overflow-hidden border border-1 border-secondary-subtle">
+                        <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg"
+                             class="img-fluid w-100 object-fit-cover"
+                             style="max-height: 420px; display: block;"
+                             referrerpolicy="no-referrer"
+                             onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
                              alt="WholeMart operations dashboard showing live inventory, orders and delivery status">
                         <div class="wm-mini-card-container">
-                    <div class="wm-mini-card">
-                        <h6><i class="bi bi-arrow-repeat" aria-hidden="true"></i> Inventory Sync</h6>
-                        <small>Real-time stock updates across all branches.</small>
-                    </div>
-                    <div class="wm-mini-card">
-                        <h6><i class="bi bi-signpost-split" aria-hidden="true"></i> Smart Logistics</h6>
-                        <small>AI-optimized delivery routes for faster dispatch.</small>
-                    </div>
-                    <div class="wm-mini-card">
-                        <h6><i class="bi bi-graph-up-arrow" aria-hidden="true"></i> Actionable Insights</h6>
-                        <small>AI-powered sales analytics and demand forecasting.</small>
-                    </div>
+                            <div class="wm-mini-card">
+                                <h6><i class="bi bi-boxes text-success" aria-hidden="true"></i> <fmt:message key="ops.live_inventory"/></h6>
+                                <small><fmt:message key="hero.live_inventory_desc"/></small>
+                            </div>
+                            <div class="wm-mini-card">
+                                <h6><i class="bi bi-cart-check text-primary" aria-hidden="true"></i> <fmt:message key="ops.active_orders"/></h6>
+                                <small><fmt:message key="hero.active_orders_desc"/></small>
+                            </div>
+                            <div class="wm-mini-card">
+                                <h6><i class="bi bi-truck text-warning" aria-hidden="true"></i> <fmt:message key="ops.delivery_status"/></h6>
+                                <small><fmt:message key="hero.delivery_status_desc"/></small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
                         
         </div>
     </section>
+
+    <!-- LIVE OPERATIONS HUB SECTION -->
+    <section id="operations" class="container my-5">
+        <div class="wm-operations-hub">
+            <div class="wm-operations-hero-wrap">
+                <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg" 
+                     class="wm-operations-hero-img" 
+                     referrerpolicy="no-referrer"
+                     onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
+                     alt="WholeMart Live Operations Hub showing inventory, orders and delivery van dispatch">
+                <div class="wm-operations-overlay">
+                    <div>
+                        <span class="wm-operations-live-badge mb-2">
+                            <span class="wm-live-pulse-dot"></span> <fmt:message key="ops.hub_title"/>
+                        </span>
+                        <h2 class="wm-operations-title"><fmt:message key="ops.sync_title"/></h2>
+                        <p class="wm-operations-subtitle">
+                            <fmt:message key="ops.subtitle"/>
+                        </p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-check-circle-fill text-success me-1"></i> <fmt:message key="ops.live_inventory"/></span>
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-arrow-repeat text-info me-1"></i> <fmt:message key="ops.active_orders"/></span>
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-geo-alt-fill text-warning me-1"></i> <fmt:message key="ops.delivery_status"/></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wm-operations-telemetry-grid">
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon inventory">
+                        <i class="bi bi-boxes"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.sku_count"/></h5>
+                        <small><fmt:message key="ops.live_inventory"/> • <fmt:message key="ops.in_stock"/></small>
+                    </div>
+                </div>
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon orders">
+                        <i class="bi bi-bag-check"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.orders_count"/></h5>
+                        <small><fmt:message key="ops.active_orders"/></small>
+                    </div>
+                </div>
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon delivery">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.vans_count"/></h5>
+                        <small><fmt:message key="ops.delivery_status"/> • <fmt:message key="ops.avg_time"/></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <hr>
+    <!-- HOW IT WORKS -->
     <section id="how-it-works">
         <div class="how-card">
             <div class="how-head">
-                <span class="eyebrow">How It Works</span>
-                <h2>Simple Steps to Scale Your Business</h2>
-                <p>Whether you're buying, selling, or delivering — WholeMart simplifies every step of your wholesale business.</p>
+                <span class="eyebrow"><fmt:message key="how.eyebrow"/></span>
+                <h2><fmt:message key="how.title"/></h2>
+                <p><fmt:message key="how.subtitle"/></p>
             </div>
 
             <div class="steps-track">
@@ -88,8 +150,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h4>Register</h4>
-                    <p>Create your account and select your business role.</p>
+                    <h4><fmt:message key="how.step1_title"/></h4>
+                    <p><fmt:message key="how.step1_desc"/></p>
                 </div>
 
                 <div class="connector">
@@ -108,8 +170,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h4>Connect</h4>
-                    <p>Browse distributors, discover products and establish trusted relationships.</p>
+                    <h4><fmt:message key="how.step2_title"/></h4>
+                    <p><fmt:message key="how.step2_desc"/></p>
                 </div>
 
                 <div class="connector">
@@ -128,8 +190,8 @@
                             </svg>
                         </div>
                     </div>
-                    <h4>Order</h4>
-                    <p>Place wholesale orders, monitor payments and receive AI recommendations.</p>
+                    <h4><fmt:message key="how.step3_title"/></h4>
+                    <p><fmt:message key="how.step3_desc"/></p>
                 </div>
 
                 <div class="connector">
@@ -148,13 +210,15 @@
                             </svg>
                         </div>
                     </div>
-                    <h4>Deliver</h4>
-                    <p>Drivers deliver orders while customers receive live updates.</p>
+                    <h4><fmt:message key="how.step4_title"/></h4>
+                    <p><fmt:message key="how.step4_desc"/></p>
                 </div>
 
             </div>
         </div>
     </section>
+
+    <!-- SNAPSHOT -->
     <section id="snapshot">
         <div class="container">
             <div class="row justify-content-center">
@@ -162,22 +226,22 @@
                     <div class="card shadow-sm border-0 rounded-4">
                         <div class="card-header bg-white border-0 pt-4">
                             <h4 class="fw-bold text-center">
-                                Business Snapshot
+                                <fmt:message key="snap.title"/>
                             </h4>
                         </div>
                         <div class="card-body px-lg-4">
                             <div class="row g-4">
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="salesDoughnutChart" role="img" aria-label="Sales channel breakdown: online vs offline sales"></canvas>
+                                    <canvas id="salesDoughnutChart" role="img" aria-label="Sales channel breakdown"></canvas>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="salesTrendChart" role="img" aria-label="Monthly sales trend, January through June"></canvas>
+                                    <canvas id="salesTrendChart" role="img" aria-label="Monthly sales trend"></canvas>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="activityBarChart" role="img" aria-label="Activity count across distributors, retailers, cities covered, orders fulfilled and new retailers"></canvas>
+                                    <canvas id="activityBarChart" role="img" aria-label="Activity count"></canvas>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="expiryManagementChart" role="img" aria-label="AI expiry management: value saved versus value at risk"></canvas>
+                                    <canvas id="expiryManagementChart" role="img" aria-label="AI expiry management"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -187,48 +251,47 @@
         </div>
     </section>
 
+    <!-- ROLES -->
     <section id="roles">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge wm-section-badge">ROLE BASED EXPERIENCE</span>
-                <h2 class="wm-section-title">One Platform. Four Powerful Workspaces.</h2>
+                <span class="badge wm-section-badge"><fmt:message key="roles.badge"/></span>
+                <h2 class="wm-section-title"><fmt:message key="roles.title"/></h2>
                 <p class="wm-section-subtitle">
-                    Every user gets a personalized dashboard designed for
-                    their daily work&mdash;from ordering inventory to managing
-                    deliveries and monitoring marketplace operations.
+                    <fmt:message key="roles.subtitle"/>
                 </p>
             </div>
 
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-role-card h-100">
-                        <h4>Admin</h4>
-                        <p>Manage approvals, monitor activity, verify, control users and keep the marketplace healthy.</p>
-                        <a href="${pageContext.request.contextPath}/web/auth/login?role=admin" class="btn wm-btn-primary w-100 mt-4">Admin Login</a>
+                        <h4><fmt:message key="roles.admin_title"/></h4>
+                        <p><fmt:message key="roles.admin_desc"/></p>
+                        <a href="${pageContext.request.contextPath}/web/auth/login?role=admin" class="btn wm-btn-primary w-100 mt-4"><fmt:message key="roles.admin_login"/></a>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-role-card h-100">
-                        <h4>Retailer</h4>
-                        <p>Search distributors, compare prices, place wholesale orders and monitor dues.</p>
-                        <a href="${pageContext.request.contextPath}/web/auth/login?role=retailer" class="btn wm-btn-primary w-100 mt-4">Retailer Login</a>
+                        <h4><fmt:message key="roles.retailer_title"/></h4>
+                        <p><fmt:message key="roles.retailer_desc"/></p>
+                        <a href="${pageContext.request.contextPath}/web/auth/login?role=retailer" class="btn wm-btn-primary w-100 mt-4"><fmt:message key="roles.retailer_login"/></a>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-role-card h-100">
-                        <h4>Distributor</h4>
-                        <p>Manage products, inventory, wholesale pricing, payments and delivery requests.</p>
-                        <a href="${pageContext.request.contextPath}/web/auth/login?role=distributor" class="btn wm-btn-primary w-100 mt-4">Distributor Login</a>
+                        <h4><fmt:message key="roles.distributor_title"/></h4>
+                        <p><fmt:message key="roles.distributor_desc"/></p>
+                        <a href="${pageContext.request.contextPath}/web/auth/login?role=distributor" class="btn wm-btn-primary w-100 mt-4"><fmt:message key="roles.distributor_login"/></a>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-role-card h-100">
-                        <h4>Driver</h4>
-                        <p>View assigned deliveries, update order status, optimize delivery routes and track earnings.</p>
-                        <a href="${pageContext.request.contextPath}/web/auth/login?role=driver" class="btn wm-btn-primary w-100 mt-4">Driver Login</a>
+                        <h4><fmt:message key="roles.driver_title"/></h4>
+                        <p><fmt:message key="roles.driver_desc"/></p>
+                        <a href="${pageContext.request.contextPath}/web/auth/login?role=driver" class="btn wm-btn-primary w-100 mt-4"><fmt:message key="roles.driver_login"/></a>
                     </div>
                 </div>
             </div>
@@ -236,17 +299,15 @@
     </section>
 
     <!-- ===================================================== -->
-    <!-- OPERATIONS -->
+    <!-- DAILY OPERATIONS -->
     <!-- ===================================================== -->
-    <section id="operations">
+    <section id="operations-detail" class="my-5">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge wm-section-badge">DAILY OPERATIONS</span>
-                <h2 class="wm-section-title">Built For The Work After The Order Is Placed</h2>
+                <span class="badge wm-section-badge"><fmt:message key="ops.today_ops"/></span>
+                <h2 class="wm-section-title"><fmt:message key="ops.built_for_work"/></h2>
                 <p class="wm-section-subtitle">
-                    WholeMart keeps inventory, approvals, payments,
-                    deliveries and AI recommendations connected
-                    inside one operational dashboard.
+                    <fmt:message key="app.short_desc"/>
                 </p>
             </div>
 
@@ -254,36 +315,36 @@
                 <div class="col-lg-7">
                     <div class="wm-dashboard h-100">
                         <div class="wm-dashboard-header">
-                            <h4>Today's Operations</h4>
+                            <h4><fmt:message key="ops.today_ops"/></h4>
                             <span class="badge bg-transparent text-dark fw-normal"><span class="badge bg-success text-white">LIVE</span></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5>Low Stock Products <small class="text-muted fw-normal">(17 items)</small></h5>
+                                <h5><fmt:message key="ops.low_stock_prods"/> <small class="text-muted fw-normal">(17 items)</small></h5>
                             </div>
-                            <span class="badge bg-warning">Inventory</span>
+                            <span class="badge bg-warning"><fmt:message key="nav.products"/></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-person-check" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5>Distributor Approval <small class="text-muted fw-normal">(5 pending)</small></h5>
+                                <h5><fmt:message key="ops.dist_approval"/> <small class="text-muted fw-normal">(5 pending)</small></h5>
                             </div>
-                            <span class="badge bg-info">Pending</span>
+                            <span class="badge bg-info"><fmt:message key="status.pending"/></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-credit-card" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5>Retailer Payments <small class="text-muted fw-normal">(₹2.8L due)</small></h5>
+                                <h5><fmt:message key="ops.ret_payments"/> <small class="text-muted fw-normal">(₹2.8L due)</small></h5>
                             </div>
-                            <span class="badge bg-primary">Finance</span>
+                            <span class="badge bg-primary"><fmt:message key="nav.payments"/></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-truck" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5>Driver Deliveries <small class="text-muted fw-normal">(38 in progress)</small></h5>
+                                <h5><fmt:message key="ops.driver_deliv"/> <small class="text-muted fw-normal">(38 in progress)</small></h5>
                             </div>
-                            <span class="badge bg-success">Delivery</span>
+                            <span class="badge bg-success"><fmt:message key="nav.deliveries"/></span>
                         </div>
                     </div>
                 </div>
@@ -292,24 +353,24 @@
                     <div class="wm-ai-panel h-100">
                         <div class="wm-ai-header">
                             <i class="bi bi-robot" aria-hidden="true"></i>
-                            <h4>AI Assistant</h4>
+                            <h4><fmt:message key="nav.ai_chat"/></h4>
                             <span class="live-indicator" aria-hidden="true"></span>
                         </div>
-                        <p>WholeMart AI continuously monitors your marketplace and recommends actions.</p>
+                        <p><fmt:message key="ai.ask_placeholder"/></p>
 
                         <div class="wm-ai-priority high"><i class="bi bi-fire" aria-hidden="true"></i> High Priority</div>
                         <a href="#" class="wm-ai-card text-decoration-none text-white">
                             <i class="bi bi-box-seam fs-4" aria-hidden="true"></i>
                             <div class="wm-ai-card-content">
-                                <div>Recommend reorder for 17 products</div>
-                                <small class="wm-ai-card-action">Generate Purchase Order &rarr;</small>
+                                <div><fmt:message key="ai.quick_query1"/></div>
+                                <small class="wm-ai-card-action"><fmt:message key="btn.order_now"/> &rarr;</small>
                             </div>
                         </a>
                         <a href="#" class="wm-ai-card text-decoration-none text-white mt-2">
                             <i class="bi bi-sign-merge-right fs-4" aria-hidden="true"></i>
                             <div class="wm-ai-card-content">
-                                <div>Optimize tomorrow's delivery routes</div>
-                                <small class="wm-ai-card-action">Open Route Planner &rarr;</small>
+                                <div><fmt:message key="ai.quick_query2"/></div>
+                                <small class="wm-ai-card-action"><fmt:message key="btn.track"/> &rarr;</small>
                             </div>
                         </a>
 
@@ -320,18 +381,18 @@
                             </div>
                             <div class="col-6 col-md-3 wm-ai-stat">
                                 <h6>96%</h6>
-                                <small class="text-white-50">Forecast Accuracy</small>
+                                <small class="text-white-50">Forecast</small>
                             </div>
                             <div class="col-6 col-md-3 wm-ai-stat">
                                 <h6>24</h6>
-                                <small class="text-white-50">Recommendations</small>
+                                <small class="text-white-50">Alerts</small>
                             </div>
                             <div class="col-6 col-md-3 wm-ai-stat">
-                                <h6>&#8377;3.4L</h6>
-                                <small class="text-white-50">Inventory Saved</small>
+                                <h6>₹3.4L</h6>
+                                <small class="text-white-50">Saved</small>
                             </div>
                         </div>
-                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn btn-light w-100 mt-4">Open AI Workspace</a>
+                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn btn-light w-100 mt-4"><fmt:message key="ai.ai_studio"/></a>
                     </div>
                 </div>
             </div>
@@ -341,92 +402,89 @@
     <!-- ===================================================== -->
     <!-- FEATURES & PROCESS -->
     <!-- ===================================================== -->
-    <section id="features" class="bg-light">
+    <section id="features" class="bg-light py-5">
         <div class="container">
             <div id="features-content">
-                <!-- WHY WHOLEMART -->
                 <div id="why-content">
                     <div class="text-center mb-5">
-                        <h2 class="wm-section-title">The Complete Wholesale Operating System</h2>
-                        <p class="wm-section-subtitle">Powerful tools built for retailers, distributors, delivery partners and administrators to manage the complete wholesale lifecycle.</p>
+                        <h2 class="wm-section-title"><fmt:message key="feat.title"/></h2>
+                        <p class="wm-section-subtitle"><fmt:message key="feat.subtitle"/></p>
                     </div>
                     <div class="row g-4">
                         <div class="col-lg-4 col-md-6">
                             <div class="wm-card h-100">
                                 <div class="wm-feature-icon"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
-                                <h4>Smart Inventory</h4>
-                                <p>AI predicts inventory shortages, recommends reorder quantities and prevents stock-outs before they happen.</p>
+                                <h4><fmt:message key="feat.smart_inv_title"/></h4>
+                                <p><fmt:message key="feat.smart_inv_desc"/></p>
                                 <ul class="wm-feature-list">
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Low stock alerts</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Auto reorder suggestions</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Product forecasting</li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.smart_inv_item1"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.smart_inv_item2"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.smart_inv_item3"/></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="wm-card h-100">
                                 <div class="wm-feature-icon bg-success-subtle"><i class="bi bi-wallet2" aria-hidden="true"></i></div>
-                                <h4>Digital Credit Ledger</h4>
-                                <p>Keep retailer dues, distributor collections, and payment history synchronized automatically.</p>
+                                <h4><fmt:message key="feat.credit_title"/></h4>
+                                <p><fmt:message key="feat.credit_desc"/></p>
                                 <ul class="wm-feature-list">
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Credit tracking</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Payment reminders</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Digital statements</li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.credit_item1"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.credit_item2"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.credit_item3"/></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="wm-card h-100">
                                 <div class="wm-feature-icon bg-warning-subtle"><i class="bi bi-truck" aria-hidden="true"></i></div>
-                                <h4>Smart Delivery</h4>
-                                <p>Assign deliveries, optimize routes and track every shipment in real time.</p>
+                                <h4><fmt:message key="feat.delivery_title"/></h4>
+                                <p><fmt:message key="feat.delivery_desc"/></p>
                                 <ul class="wm-feature-list">
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Live tracking</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Driver assignment</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Route optimization</li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.delivery_item1"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.delivery_item2"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.delivery_item3"/></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="wm-card h-100">
                                 <div class="wm-feature-icon icon-lavender"><i class="bi bi-cart-check" aria-hidden="true"></i></div>
-                                <h4>Order Management</h4>
-                                <p>From quote to dispatch &mdash; approvals, revisions and order history stay in one thread instead of scattered calls.</p>
+                                <h4><fmt:message key="feat.order_mgmt_title"/></h4>
+                                <p><fmt:message key="feat.order_mgmt_desc"/></p>
                                 <ul class="wm-feature-list">
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Bulk order builder</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Approval workflows</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Full order history</li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.order_mgmt_item1"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.order_mgmt_item2"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.order_mgmt_item3"/></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="wm-card h-100">
                                 <div class="wm-feature-icon icon-pink"><i class="bi bi-diagram-3" aria-hidden="true"></i></div>
-                                <h4>Multi-Branch Support</h4>
-                                <p>Run several outlets or godowns under one account with branch-level stock, staff and pricing control.</p>
+                                <h4><fmt:message key="feat.branch_title"/></h4>
+                                <p><fmt:message key="feat.branch_desc"/></p>
                                 <ul class="wm-feature-list">
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Branch-wise inventory</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Role-based staff access</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Consolidated reporting</li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.branch_item1"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.branch_item2"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.branch_item3"/></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="wm-card h-100">
                                 <div class="wm-feature-icon icon-mint"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></div>
-                                <h4>Business Intelligence</h4>
-                                <p>Understand demand, margins and slow-moving stock with reports built for wholesale, not generic retail.</p>
+                                <h4><fmt:message key="feat.bi_title"/></h4>
+                                <p><fmt:message key="feat.bi_desc"/></p>
                                 <ul class="wm-feature-list">
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Sales &amp; margin trends</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Slow-mover flags</li>
-                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> Exportable reports</li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.bi_item1"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.bi_item2"/></li>
+                                    <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i> <fmt:message key="feat.bi_item3"/></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                
             </div>
         </div>
     </section>
@@ -434,34 +492,34 @@
     <!-- ===================================================== -->
     <!-- DISTRIBUTOR BENEFITS -->
     <!-- ===================================================== -->
-    <section id="distributor-benefits" class="bg-light">
+    <section id="distributor-benefits" class="bg-light py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge wm-section-badge">DISTRIBUTOR ADVANTAGE</span>
-                <h2 class="wm-section-title">Grow Your Distribution Network Faster</h2>
+                <span class="badge wm-section-badge"><fmt:message key="dist_adv.badge"/></span>
+                <h2 class="wm-section-title"><fmt:message key="dist_adv.title"/></h2>
                 <p class="wm-section-subtitle">
-                    See how joining WholeMart helps distributors expand their reach, increase sales, and streamline operations.
+                    <fmt:message key="dist_adv.subtitle"/>
                 </p>
             </div>
             <div class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
                     <div class="wm-stat-card h-100">
-                        <span class="wm-stat-label">Wider Market Reach</span>
-                        <h3>Connect with 800+ Retailers Instantly</h3>
+                        <span class="wm-stat-label"><fmt:message key="dist_adv.card1_label"/></span>
+                        <h3><fmt:message key="dist_adv.card1_title"/></h3>
                         <div class="wm-snapshot-bar-bg"><div class="wm-snapshot-bar bar-blue" style="--w: 70;"></div></div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="wm-stat-card h-100">
-                        <span class="wm-stat-label">Up to 25% Sales Growth</span>
-                        <h3>Increase Your Order Volume</h3>
+                        <span class="wm-stat-label"><fmt:message key="dist_adv.card2_label"/></span>
+                        <h3><fmt:message key="dist_adv.card2_title"/></h3>
                         <div class="wm-snapshot-bar-bg"><div class="wm-snapshot-bar bar-green" style="--w: 85;"></div></div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="wm-stat-card h-100">
-                        <span class="wm-stat-label">Faster Payment Cycles</span>
-                        <h3>Reduce Credit Reconciliation Time</h3>
+                        <span class="wm-stat-label"><fmt:message key="dist_adv.card3_label"/></span>
+                        <h3><fmt:message key="dist_adv.card3_title"/></h3>
                         <div class="wm-snapshot-bar-bg"><div class="wm-snapshot-bar bar-red" style="--w: 60;"></div></div>
                     </div>
                 </div>
@@ -472,41 +530,41 @@
     <!-- ===================================================== -->
     <!-- TESTIMONIALS -->
     <!-- ===================================================== -->
-    <section id="testimonials" class="bg-light">
+    <section id="testimonials" class="bg-light py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge wm-section-badge">FROM THE FLOOR</span>
-                <h2 class="wm-section-title">What Running On WholeMart Looks Like</h2>
-                <p class="wm-section-subtitle">Real day-to-day moments from the four roles WholeMart is built around.</p>
+                <span class="badge wm-section-badge"><fmt:message key="test.badge"/></span>
+                <h2 class="wm-section-title"><fmt:message key="test.title"/></h2>
+                <p class="wm-section-subtitle"><fmt:message key="test.subtitle"/></p>
             </div>
             <div class="row g-4">
                 <div class="col-lg-4">
                     <div class="wm-testimonial-card h-100 shadow-sm">
                         <i class="bi bi-quote" aria-hidden="true"></i>
-                        <p>Month-end reconciliation used to take three days of matching bahi-khata entries. Now the ledger is already settled by the time I sit down.</p>
+                        <p><fmt:message key="test.ret_quote"/></p>
                         <div class="wm-testimonial-who">
                             <div class="wm-testimonial-avatar bg-success-subtle text-success"><i class="bi bi-shop" aria-hidden="true"></i></div>
-                            <div><strong>Retailer</strong><span>Kirana store owner, 3 branches</span></div>
+                            <div><strong><fmt:message key="roles.retailer_title"/></strong><span><fmt:message key="test.ret_role"/></span></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="wm-testimonial-card h-100 shadow-sm">
                         <i class="bi bi-quote" aria-hidden="true"></i>
-                        <p>The AI flagged a stock-out on a fast-moving SKU three days before it would have cost us a repeat order. That alone paid for the switch.</p>
+                        <p><fmt:message key="test.dist_quote"/></p>
                         <div class="wm-testimonial-who">
                             <div class="wm-testimonial-avatar bg-warning-subtle text-warning"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
-                            <div><strong>Distributor</strong><span>Regional FMCG supplier</span></div>
+                            <div><strong><fmt:message key="roles.distributor_title"/></strong><span><fmt:message key="test.dist_role"/></span></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="wm-testimonial-card h-100 shadow-sm">
                         <i class="bi bi-quote" aria-hidden="true"></i>
-                        <p>My route is already planned before I start the engine, and updating a delivery status takes one tap, not a phone call back to the office.</p>
+                        <p><fmt:message key="test.driver_quote"/></p>
                         <div class="wm-testimonial-who">
                             <div class="wm-testimonial-avatar bg-danger-subtle text-danger"><i class="bi bi-truck" aria-hidden="true"></i></div>
-                            <div><strong>Driver</strong><span>Local delivery partner</span></div>
+                            <div><strong><fmt:message key="roles.driver_title"/></strong><span><fmt:message key="test.driver_role"/></span></div>
                         </div>
                     </div>
                 </div>
@@ -517,14 +575,13 @@
     <!-- ===================================================== -->
     <!-- FAQ -->
     <!-- ===================================================== -->
-    <section id="faq">
+    <section id="faq" class="py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge wm-section-badge">FREQUENTLY ASKED QUESTIONS</span>
-                <h2 class="wm-section-title">Everything You Need To Know</h2>
+                <span class="badge wm-section-badge"><fmt:message key="faq.badge"/></span>
+                <h2 class="wm-section-title"><fmt:message key="faq.title"/></h2>
                 <p class="wm-section-subtitle">
-                    Find answers to common questions about WholeMart,
-                    onboarding, ordering, delivery and AI-powered operations.
+                    <fmt:message key="faq.subtitle"/>
                 </p>
             </div>
 
@@ -535,66 +592,66 @@
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
-                                    Who can use WholeMart?
+                                    <fmt:message key="faq.q1"/>
                                 </button>
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">WholeMart is designed for retailers, distributors, delivery partners and marketplace administrators.</div>
+                                <div class="accordion-body"><fmt:message key="faq.a1"/></div>
                             </div>
                         </div>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
-                                    Can retailers buy from multiple distributors?
+                                    <fmt:message key="faq.q2"/>
                                 </button>
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">Yes. Retailers can compare distributors, prices and availability before placing wholesale orders.</div>
+                                <div class="accordion-body"><fmt:message key="faq.a2"/></div>
                             </div>
                         </div>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
-                                    Does WholeMart support AI recommendations?
+                                    <fmt:message key="faq.q3"/>
                                 </button>
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">Yes. AI helps predict demand, optimize inventory, recommend reorders and improve delivery efficiency.</div>
+                                <div class="accordion-body"><fmt:message key="faq.a3"/></div>
                             </div>
                         </div>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
-                                    Is delivery tracking available?
+                                    <fmt:message key="faq.q4"/>
                                 </button>
                             </h2>
                             <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">Yes. Drivers can update delivery status while retailers and distributors can track orders in real time.</div>
+                                <div class="accordion-body"><fmt:message key="faq.a4"/></div>
                             </div>
                         </div>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
-                                    How is my business data kept secure?
+                                    <fmt:message key="faq.q5"/>
                                 </button>
                             </h2>
                             <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">All data is encrypted in transit and at rest, access is role-based, and every critical action is recorded in an audit log.</div>
+                                <div class="accordion-body"><fmt:message key="faq.a5"/></div>
                             </div>
                         </div>
 
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#faq6" aria-expanded="false" aria-controls="faq6">
-                                    Can I run more than one branch or godown under one account?
+                                    <fmt:message key="faq.q6"/>
                                 </button>
                             </h2>
                             <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">Yes. Multi-branch support keeps stock, staff access and pricing separate per location while reporting rolls up to one account.</div>
+                                <div class="accordion-body"><fmt:message key="faq.a6"/></div>
                             </div>
                         </div>
 
@@ -607,40 +664,40 @@
     <!-- ===================================================== -->
     <!-- SECURITY / COMPLIANCE -->
     <!-- ===================================================== -->
-    <section class="wm-security-section bg-light">
+    <section id="security" class="wm-security-section bg-light py-5">
         <div class="container">
             <div class="text-center mb-5">
-                <span class="badge wm-section-badge">ENTERPRISE GRADE</span>
-                <h2 class="wm-section-title">Secure, Compliant, and Reliable</h2>
-                <p class="wm-section-subtitle">Built on a foundation of trust and security to protect your business data and operations.</p>
+                <span class="badge wm-section-badge"><fmt:message key="sec.badge"/></span>
+                <h2 class="wm-section-title"><fmt:message key="sec.title"/></h2>
+                <p class="wm-section-subtitle"><fmt:message key="sec.subtitle"/></p>
             </div>
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-security-tile">
                         <div class="icon"><i class="bi bi-shield-lock" aria-hidden="true"></i></div>
-                        <h6>Role-Based Access</h6>
-                        <p class="text-muted small">Ensure users only see data and tools relevant to their role.</p>
+                        <h6><fmt:message key="sec.role_access"/></h6>
+                        <p class="text-muted small"><fmt:message key="sec.role_access_desc"/></p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-security-tile">
                         <div class="icon"><i class="bi bi-key" aria-hidden="true"></i></div>
-                        <h6>Data Encryption</h6>
-                        <p class="text-muted small">All data is encrypted at rest and in transit using industry standards.</p>
+                        <h6><fmt:message key="sec.encryption"/></h6>
+                        <p class="text-muted small"><fmt:message key="sec.encryption_desc"/></p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-security-tile">
                         <div class="icon"><i class="bi bi-journal-check" aria-hidden="true"></i></div>
-                        <h6>Audit Logs</h6>
-                        <p class="text-muted small">Maintain a complete, immutable record of all critical platform activities.</p>
+                        <h6><fmt:message key="sec.audit_logs"/></h6>
+                        <p class="text-muted small"><fmt:message key="sec.audit_logs_desc"/></p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="wm-security-tile">
                         <div class="icon"><i class="bi bi-cloud-arrow-up" aria-hidden="true"></i></div>
-                        <h6>99.9% Uptime SLA</h6>
-                        <p class="text-muted small">Rely on a highly available platform backed by a service-level agreement.</p>
+                        <h6><fmt:message key="sec.uptime"/></h6>
+                        <p class="text-muted small"><fmt:message key="sec.uptime_desc"/></p>
                     </div>
                 </div>
             </div>
@@ -654,10 +711,10 @@
     <section class="wm-cta">
         <div class="container">
             <div class="wm-cta-box">
-                <h2>Ready To Modernize Your Wholesale Business?</h2>
-                <p>Join retailers, distributors and delivery partners using WholeMart to simplify operations and grow faster.</p>
+                <h2><fmt:message key="cta.title"/></h2>
+                <p><fmt:message key="cta.subtitle"/></p>
                 <div class="mt-4">
-                    <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary btn-lg">Continue To Login</a>
+                    <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary btn-lg"><fmt:message key="cta.btn"/></a>
                 </div>
             </div>
         </div>
@@ -669,7 +726,6 @@
 <div id="loginModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Log in to WholeMart">
     <div class="modal-content">
         <button class="close-button" onclick="closeLoginPopup()" aria-label="Close login form">&times;</button>
-
         <%@ include file="/WEB-INF/views/home/_loginForm.jsp" %>
     </div>
 </div>

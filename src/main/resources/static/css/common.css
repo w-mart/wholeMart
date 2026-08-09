@@ -1,0 +1,1206 @@
+/* ============================================================
+   WholeMart — Common Core Design System
+   Design System: "Dispatch Ledger"
+   Shared design tokens, global resets, typography, buttons,
+   cards, inputs, and layout utilities.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap');
+
+:root {
+  /* Type Scale & Fonts */
+  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Color Palette — Dispatch Ledger */
+  --ink:          #12181F;  /* Near-black primary text */
+  --ink-soft:     rgba(18, 24, 31, 0.68);
+  --ink-faint:    rgba(18, 24, 31, 0.40);
+  --paper:        #F5F4EC;  /* Off-white warm canvas */
+  --paper-raised: #FFFFFF;  /* Card surface */
+  --line:         rgba(18, 24, 31, 0.12);
+  --line-strong:  rgba(18, 24, 31, 0.22);
+
+  /* Brand Accents */
+  --brand-black:  #12181F;
+  --green:        #12181F;  /* Cargo Green / Brand Primary */
+  --green-deep:   #1B5E3C;
+  --green-tint:   rgba(27, 94, 60, 0.10);
+
+  --amber:        #E3A73B;  /* Manifest Amber */
+  --amber-tint:   rgba(227, 167, 59, 0.16);
+
+  --blue:         #2E5AA8;  /* Route Blue */
+  --blue-tint:    rgba(46, 90, 168, 0.12);
+
+  --red:          #C2410C;  /* Alert Red */
+  --red-tint:     rgba(194, 65, 12, 0.12);
+
+  /* Radii */
+  --radius-sm:    8px;
+  --radius:       14px;
+  --radius-lg:    22px;
+
+  /* Shadows */
+  --shadow-sm:    0 2px 8px rgba(18, 24, 31, 0.05);
+  --shadow:       0 8px 24px rgba(18, 24, 31, 0.08);
+  --shadow-lg:    0 20px 50px rgba(18, 24, 31, 0.12);
+}
+
+/* Base Resets & Hidden Scrollbars (Functional Scroll, Invisible Scrollbar) */
+*, *::before, *::after {
+  box-sizing: border-box;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+*::-webkit-scrollbar,
+::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, iOS, Opera, Android */
+  width: 0 !important;
+  height: 0 !important;
+  max-width: 0 !important;
+  max-height: 0 !important;
+  background: transparent !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+*::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-track,
+::-webkit-scrollbar-track,
+*::-webkit-scrollbar-button,
+::-webkit-scrollbar-button,
+*::-webkit-scrollbar-corner,
+::-webkit-scrollbar-corner {
+  display: none !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background-color: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 991.98px) {
+  html, body, .wm-app, .wm-driver-workspace, div, main, section, nav, aside, * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--amber-tint);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+/* Common Section Typography */
+.wm-section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.wm-section-subtitle {
+  color: var(--ink-soft);
+  max-width: 640px;
+  line-height: 1.7;
+  margin: 14px auto 0;
+  font-size: 1.02rem;
+}
+
+.wm-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--green-tint);
+  border: 1px solid rgba(27, 94, 60, 0.24);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+.wm-section-badge i { font-size: 0.8rem; }
+
+/* Common Buttons */
+.wm-btn-primary {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-sm);
+  padding: 0 22px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--green);
+  background: var(--ink);
+  color: #ffffff !important;
+  box-shadow: 0 8px 20px rgba(18, 24, 31, 0.2);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.16s ease;
+  cursor: pointer;
+}
+.wm-btn-primary:hover {
+  background: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(18, 24, 31, 0.28);
+}
+
+.wm-btn-outline {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius-sm);
+  padding: 0 22px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: transparent;
+  border: 1.5px solid var(--line-strong);
+  color: var(--ink) !important;
+  transition: transform 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
+  cursor: pointer;
+}
+.wm-btn-outline:hover {
+  border-color: var(--green);
+  background: var(--green-tint);
+  transform: translateY(-2px);
+}
+
+/* Common Form Inputs & Selects */
+.wm-input,
+.wm-select,
+select.wm-input,
+select.wm-select,
+select.form-select,
+.form-control,
+.form-select {
+  width: 100%;
+  height: 46px;
+  padding: 10px 14px;
+  border: 1px solid var(--line-strong, rgba(0, 0, 0, 0.2));
+  border-radius: var(--radius-sm, 8px);
+  background-color: var(--paper-raised, #ffffff);
+  color: var(--ink, #12181F);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  box-sizing: border-box;
+}
+
+.wm-input:focus,
+.wm-select:focus,
+select.wm-input:focus,
+select.wm-select:focus,
+select.form-select:focus,
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--green, #198754);
+  box-shadow: 0 0 0 3px var(--green-tint, rgba(25, 135, 84, 0.15));
+  background-color: #ffffff;
+}
+
+/* Custom Dropdown Arrow for Select elements */
+.wm-select,
+select.wm-input,
+select.wm-select,
+select.form-select,
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23198754' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px 16px;
+  padding-right: 42px !important;
+  cursor: pointer;
+}
+
+.wm-select:hover,
+select.wm-input:hover,
+select.wm-select:hover,
+select.form-select:hover,
+select:hover {
+  border-color: var(--green, #198754);
+}
+
+select option {
+  color: var(--ink, #12181F);
+  background-color: #ffffff;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: var(--font-body, 'Inter', sans-serif);
+}
+
+select option:disabled {
+  color: var(--ink-soft, #6c757d);
+}
+
+.wm-form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.wm-form-group label,
+.wm-form-label,
+.form-label {
+  display: block;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink, #12181F);
+  margin-bottom: 6px;
+}
+
+/* Modal Login Form Card Styling */
+.wm-auth-container {
+  width: 100%;
+}
+
+.wm-auth-card {
+  position: relative;
+}
+
+.wm-brand {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.wm-brand .wm-logo {
+  width: 44px;
+  height: 44px;
+  background: var(--green, #198754);
+  color: #ffffff;
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 700;
+  font-size: 1.4rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 12px rgba(25, 135, 84, 0.25);
+}
+
+.wm-brand h2 {
+  font-family: var(--font-display, 'Space Grotesk', sans-serif);
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--ink, #12181F);
+  margin: 0 0 4px;
+}
+
+.wm-brand p {
+  font-size: 0.85rem;
+  color: var(--ink-soft, #6c757d);
+  margin: 0;
+}
+
+.wm-login-btn {
+  width: 100%;
+  height: 46px;
+  background: #0f172a !important;
+  color: #ffffff !important;
+  border: 1px solid #0f172a;
+  border-radius: 9999px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wm-login-btn:hover {
+  background: #1e293b !important;
+  border-color: #1e293b !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);
+}
+
+.wm-close-btn {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 32px;
+  height: 32px;
+  background: #f8f9fa;
+  border: 1px solid var(--line, rgba(0, 0, 0, 0.12));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--ink-soft, #6c757d);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wm-close-btn:hover {
+  background: #ffffff;
+  color: var(--ink, #12181F);
+  border-color: var(--ink, #12181F);
+}
+
+/* Common Cards */
+.wm-card {
+  background: var(--paper-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 22px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.wm-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+/* Common Modal Overlay (for Custom Popups like Home Login) */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 24, 31, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 1050;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay .modal-content {
+  position: relative;
+  background: var(--paper-raised);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-lg);
+  padding: 32px;
+  width: 100%;
+  max-width: 440px;
+}
+.modal-overlay .close-button {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--ink-faint);
+  cursor: pointer;
+}
+.modal-overlay .close-button:hover {
+  color: var(--ink);
+}
+
+/* ============================================================
+   WholeMart Common Modal Design System (Bootstrap & Custom Modals)
+   Consistent with Home, Dashboard, and Global WholeMart Design Tokens
+   ============================================================ */
+.modal.wm-driver-order-modal .modal-dialog,
+.modal.wm-driver-modal .modal-dialog,
+.modal.wm-common-modal .modal-dialog {
+  max-width: 1040px;
+  width: 95%;
+  margin: 1.5rem auto;
+  transition: transform 0.25s ease-out;
+}
+
+.modal.wm-driver-order-modal .modal-content,
+.modal.wm-driver-modal .modal-content,
+.modal.wm-common-modal .modal-content {
+  background: var(--paper-raised, #ffffff);
+  border: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+  border-radius: var(--radius-lg, 20px);
+  box-shadow: var(--shadow-lg, 0 20px 50px rgba(18, 24, 31, 0.14));
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal.wm-driver-order-modal .modal-header,
+.modal.wm-driver-modal .modal-header,
+.modal.wm-common-modal .modal-header {
+  background: var(--ink, #12181F);
+  color: #ffffff;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 5;
+}
+
+.modal.wm-driver-order-modal .modal-title,
+.modal.wm-driver-modal .modal-title,
+.modal.wm-common-modal .modal-title {
+  font-family: var(--font-display, 'Space Grotesk', system-ui, sans-serif);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+}
+
+.modal.wm-driver-order-modal .modal-body,
+.modal.wm-driver-modal .modal-body,
+.modal.wm-common-modal .modal-body {
+  background: var(--paper, #F5F4EC);
+  padding: 24px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  color: var(--ink, #12181F);
+}
+
+.modal.wm-driver-order-modal .modal-footer,
+.modal.wm-driver-modal .modal-footer,
+.modal.wm-common-modal .modal-footer {
+  background: var(--paper-raised, #ffffff);
+  border-top: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  position: relative;
+  z-index: 5;
+}
+
+/* WholeMart Modal Cards & Blocks */
+.wm-modal-card {
+  background: var(--paper-raised, #ffffff);
+  border: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+  border-radius: var(--radius, 14px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(18, 24, 31, 0.05));
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wm-modal-card:hover {
+  box-shadow: var(--shadow, 0 8px 24px rgba(18, 24, 31, 0.08));
+}
+
+.wm-modal-card.wm-pickup-card {
+  border-left: 5px solid var(--amber, #E3A73B);
+}
+
+.wm-modal-card.wm-dropoff-card {
+  border-left: 5px solid var(--green-deep, #1B5E3C);
+}
+
+.wm-modal-icon-badge {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: var(--radius-sm, 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+.wm-modal-icon-badge.wm-pickup {
+  background: var(--amber-tint, rgba(227, 167, 59, 0.16));
+  color: #b45309;
+}
+.wm-modal-icon-badge.wm-dropoff {
+  background: var(--green-tint, rgba(27, 94, 60, 0.10));
+  color: var(--green-deep, #1B5E3C);
+}
+
+/* WholeMart Modal Metric Pill Cards */
+.wm-modal-metric {
+  background: var(--paper-raised, #ffffff);
+  border: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+  border-radius: var(--radius-sm, 10px);
+  padding: 12px 14px;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(18, 24, 31, 0.04));
+}
+.wm-modal-metric .wm-metric-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.70rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft, rgba(18, 24, 31, 0.68));
+  font-weight: 700;
+}
+.wm-modal-metric .wm-metric-value {
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--ink, #12181F);
+  margin-top: 3px;
+  margin-bottom: 2px;
+  letter-spacing: -0.01em;
+}
+
+/* WholeMart Modal Table / Manifest */
+.wm-modal-manifest {
+  background: var(--paper-raised, #ffffff);
+  border: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+  border-radius: var(--radius, 14px);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(18, 24, 31, 0.04));
+}
+.wm-modal-manifest-head {
+  padding: 12px 18px;
+  background: rgba(18, 24, 31, 0.03);
+  border-bottom: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.wm-modal-manifest table {
+  margin-bottom: 0;
+}
+.wm-modal-manifest th {
+  background: rgba(18, 24, 31, 0.02);
+  color: var(--ink-soft, rgba(18, 24, 31, 0.68));
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line, rgba(18, 24, 31, 0.12));
+}
+.wm-modal-manifest td {
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(18, 24, 31, 0.06);
+  color: var(--ink, #12181F);
+  vertical-align: middle;
+}
+.wm-modal-manifest tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================
+   Mobile View Redesign for WholeMart Modals (max-width: 768px / 576px)
+   Native App Bottom-Sheet Layout, Full-width Touch Targets, Sticky Controls
+   ============================================================ */
+@media (max-width: 768px) {
+  .modal.wm-driver-order-modal .modal-dialog,
+  .modal.wm-driver-modal .modal-dialog,
+  .modal.wm-common-modal .modal-dialog {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    min-height: 100%;
+    display: flex;
+    align-items: flex-end; /* Bottom sheet on mobile */
+  }
+
+  .modal.wm-driver-order-modal .modal-content,
+  .modal.wm-driver-modal .modal-content,
+  .modal.wm-common-modal .modal-content {
+    border-radius: 20px 20px 0 0;
+    max-height: 94vh;
+    border: none;
+    box-shadow: 0 -10px 40px rgba(18, 24, 31, 0.20);
+  }
+
+  .modal.wm-driver-order-modal .modal-header,
+  .modal.wm-driver-modal .modal-header,
+  .modal.wm-common-modal .modal-header {
+    padding: 12px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .modal.wm-driver-order-modal .modal-body,
+  .modal.wm-driver-modal .modal-body,
+  .modal.wm-common-modal .modal-body {
+    padding: 14px;
+    max-height: calc(94vh - 130px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .modal.wm-driver-order-modal .modal-footer,
+  .modal.wm-driver-modal .modal-footer,
+  .modal.wm-common-modal .modal-footer {
+    padding: 12px 14px;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+    background: #ffffff;
+    box-shadow: 0 -4px 18px rgba(18, 24, 31, 0.08);
+    flex-direction: column-reverse;
+    gap: 8px;
+    align-items: stretch;
+  }
+
+  .modal.wm-driver-order-modal .modal-footer button,
+  .modal.wm-driver-order-modal .modal-footer a,
+  .modal.wm-driver-modal .modal-footer button,
+  .modal.wm-common-modal .modal-footer button,
+  .wm-mobile-footer-btn {
+    width: 100%;
+    min-height: 46px;
+    font-size: 0.94rem;
+  }
+
+  .w-100-mobile {
+    width: 100%;
+  }
+
+  .wm-modal-card {
+    padding: 14px 14px;
+    border-radius: 12px;
+  }
+
+  .wm-modal-icon-badge {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    font-size: 1.15rem;
+  }
+
+  .wm-modal-metric {
+    padding: 10px 10px;
+    border-radius: 10px;
+  }
+
+  .wm-modal-metric .wm-metric-value {
+    font-size: 1.15rem;
+  }
+
+  .wm-modal-manifest-head {
+    padding: 10px 14px;
+  }
+
+  .wm-modal-manifest th,
+  .wm-modal-manifest td {
+    padding: 8px 10px;
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal.wm-driver-order-modal .modal-header,
+  .modal.wm-driver-modal .modal-header,
+  .modal.wm-common-modal .modal-header {
+    padding: 10px 14px;
+  }
+
+  .modal.wm-driver-order-modal .modal-body,
+  .modal.wm-driver-modal .modal-body,
+  .modal.wm-common-modal .modal-body {
+    padding: 12px 10px;
+  }
+
+  .wm-modal-card {
+    padding: 12px 12px;
+  }
+
+  .wm-modal-metric {
+    padding: 8px 10px;
+  }
+
+  .wm-modal-metric .wm-metric-label {
+    font-size: 0.65rem;
+  }
+
+  .wm-modal-metric .wm-metric-value {
+    font-size: 1.05rem;
+  }
+}
+
+/* WholeMart Operations Dashboard Hub */
+.wm-operations-hub {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+}
+
+.wm-operations-hero-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 280px;
+  background: #0f172a;
+  overflow: hidden;
+}
+
+.wm-operations-hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.wm-operations-hub:hover .wm-operations-hero-img {
+  transform: scale(1.03);
+}
+
+.wm-operations-overlay {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.32) 0%, rgba(15, 23, 42, 0.75) 100%);
+  padding: clamp(20px, 4vw, 36px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  color: #ffffff;
+}
+
+.wm-operations-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.wm-live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: wm-pulse-green 1.8s infinite;
+}
+
+@keyframes wm-pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.wm-operations-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 3vw, 1.85rem);
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 6px 0 8px 0;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.wm-operations-subtitle {
+  font-size: clamp(0.85rem, 1.8vw, 0.98rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0;
+  max-width: 640px;
+}
+
+.wm-operations-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: clamp(16px, 3vw, 24px);
+  background: #f8fafc;
+  border-top: 1px solid var(--line);
+}
+
+.wm-telemetry-card {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+}
+
+.wm-telemetry-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-color: var(--green);
+}
+
+.wm-telemetry-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.wm-telemetry-icon.inventory {
+  background: var(--green-tint);
+  color: var(--green-deep);
+}
+
+.wm-telemetry-icon.orders {
+  background: var(--blue-tint);
+  color: var(--blue);
+}
+
+.wm-telemetry-icon.delivery {
+  background: var(--amber-tint);
+  color: #b45309;
+}
+
+.wm-telemetry-content h5 {
+  margin: 0 0 2px 0;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.wm-telemetry-content small {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 500;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .wm-operations-overlay {
+    padding: 16px;
+  }
+  .wm-operations-title {
+    font-size: 1.35rem;
+  }
+  .wm-operations-telemetry-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   Global WholeMart API / Network Loader Component
+   ============================================================ */
+.wm-global-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5px;
+  z-index: 2147483647;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.wm-global-progress.is-active {
+  opacity: 1;
+}
+
+.wm-global-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #10b981 0%, #059669 35%, #2563eb 70%, #6366f1 100%);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.9), 0 0 6px rgba(37, 99, 235, 0.6);
+  border-radius: 0 3px 3px 0;
+  transition: width 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.wm-global-loader {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483646;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(14px) scale(0.95);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wm-global-loader.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.wm-loader-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(18, 24, 31, 0.94);
+  color: #ffffff;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 9999px;
+  padding: 8px 16px 8px 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32), 0 2px 8px rgba(0, 0, 0, 0.16);
+  font-family: var(--font-body, system-ui, -apple-system, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  user-select: none;
+}
+
+.wm-loader-spinner {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+.wm-loader-spinner svg.wm-spin-icon {
+  width: 100%;
+  height: 100%;
+  animation: wm-spin-animation 0.75s linear infinite;
+}
+
+@keyframes wm-spin-animation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.wm-loader-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.wm-loader-msg {
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.wm-loader-sub {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: var(--font-mono, monospace);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.wm-loader-badge {
+  background: #10b981;
+  color: #064e3b;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  margin-left: 2px;
+}
+
+/* Optional full backdrop loader when requested */
+.wm-modal-loader-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 24, 31, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2147483645;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.wm-modal-loader-backdrop.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.wm-modal-loader-box {
+  background: #ffffff;
+  color: #12181F;
+  border-radius: 16px;
+  padding: 24px 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+  max-width: 320px;
+}
+
+/* ==========================================
+   WHOLEMART DELIVERY FEE CALCULATOR & MEASURES
+   ========================================== */
+.wm-delivery-calc-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.wm-calc-badge {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+}
+
+.wm-calc-metric-pill {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+  height: 100%;
+}
+
+.wm-calc-metric-pill .wm-pill-sub {
+  font-size: 0.70rem;
+  color: #64748b;
+  font-family: var(--font-mono, monospace);
+  margin-top: 2px;
+}
+
+.wm-calc-breakdown-table {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.wm-calc-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 12px;
+  border-bottom: 1px dashed #e2e8f0;
+  font-size: 0.85rem;
+}
+
+.wm-calc-row:last-child {
+  border-bottom: none;
+}
+
+.wm-calc-row .wm-row-desc {
+  color: #334155;
+  line-height: 1.35;
+}
+
+.wm-calc-row .wm-row-val {
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.wm-calc-subtotal-row {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+
+.wm-calc-total-row {
+  background: #ecfdf5;
+  border-top: 1px solid #a7f3d0;
+  padding: 10px 14px;
+}
+
+.wm-calc-total-row .wm-row-val {
+  color: #059669;
+}
+
+/* ============================================================
+   SHARED SKELETON & SHIMMER DESIGN SYSTEM
+   ============================================================ */
+@keyframes wm-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.wm-shimmer {
+  background: linear-gradient(90deg, #EBE8E1 0%, #F8F7F3 35%, #EDEAE3 65%, #EBE8E1 100%);
+  background-size: 250% 100%;
+  animation: wm-shimmer 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  display: inline-block;
+}
+
+.wm-skel-tr td {
+  padding: 14px 16px;
+  vertical-align: middle;
+}
+
+

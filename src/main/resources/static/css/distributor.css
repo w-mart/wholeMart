@@ -26,9 +26,27 @@
   --wm-shadow: 0 1px 0 rgba(32,38,31,0.06), 0 8px 24px -16px rgba(32,38,31,0.25);
 }
 
-*{box-sizing:border-box;}
+*{
+  box-sizing:border-box;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
 
-body{background:var(--wm-cream);color:var(--wm-ink);font-family:var(--wm-font-sans);-webkit-font-smoothing:antialiased;}
+*::-webkit-scrollbar,
+::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+body{
+  background:var(--wm-cream);
+  color:var(--wm-ink);
+  font-family:var(--wm-font-sans);
+  -webkit-font-smoothing:antialiased;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
 a{text-decoration:none;color:inherit;}
 .wm-page-background { background-color: var(--wm-cream); }
 .wm-app{max-width:1350px;margin:0 auto;padding:-10px 28px 8px;}

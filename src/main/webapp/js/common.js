@@ -1,4 +1,305 @@
+function setWmLanguage(lang) {
+    try {
+        document.cookie = "wm_lang=" + encodeURIComponent(lang) + "; path=/; max-age=31536000";
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', lang);
+        window.location.href = url.toString();
+    } catch (e) {
+        window.location.search = '?lang=' + encodeURIComponent(lang);
+    }
+}
+window.setWmLanguage = setWmLanguage;
+if (typeof globalThis !== 'undefined') {
+    globalThis.setWmLanguage = setWmLanguage;
+}
+
+/* ============================================================
+   Global WholeMart API / Network Loader & Request Interceptor
+   ============================================================ */
 (function () {
+    var activeCount = 0;
+    var progressTimer = null;
+    var safetyTimer = null;
+    var currentProgress = 0;
+
+    function ensureLoaderDom() {
+        if (document.getElementById('wm-global-progress')) return;
+        if (!document.body && !document.documentElement) return;
+
+        // Top progress bar
+        var progressContainer = document.createElement('div');
+        progressContainer.id = 'wm-global-progress';
+        progressContainer.className = 'wm-global-progress';
+        progressContainer.innerHTML = '<div class="wm-global-progress-bar" id="wm-global-progress-bar"></div>';
+
+        // Floating pill loader
+        var loaderContainer = document.createElement('div');
+        loaderContainer.id = 'wm-global-loader';
+        loaderContainer.className = 'wm-global-loader';
+        loaderContainer.setAttribute('aria-live', 'polite');
+        loaderContainer.setAttribute('role', 'status');
+        loaderContainer.innerHTML = [
+            '<div class="wm-loader-card">',
+            '  <div class="wm-loader-spinner">',
+            '    <svg class="wm-spin-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round">',
+            '      <circle cx="12" cy="12" r="10" stroke-opacity="0.2"></circle>',
+            '      <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor"></path>',
+            '    </svg>',
+            '  </div>',
+            '  <div class="wm-loader-text">',
+            '    <span class="wm-loader-msg" id="wm-loader-msg">Loading...</span>',
+            '    <span class="wm-loader-sub" id="wm-loader-sub">WholeMart API</span>',
+            '  </div>',
+            '  <span class="wm-loader-badge" id="wm-loader-badge" style="display:none">1</span>',
+            '</div>'
+        ].join('');
+
+        // Ensure styles are present in head
+        if (!document.getElementById('wm-loader-dynamic-style')) {
+            var style = document.createElement('style');
+            style.id = 'wm-loader-dynamic-style';
+            style.textContent = [
+                '.wm-global-progress{position:fixed;top:0;left:0;width:100%;height:3.5px;z-index:2147483647;pointer-events:none;opacity:0;transition:opacity .25s ease;}',
+                '.wm-global-progress.is-active{opacity:1;}',
+                '.wm-global-progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#10b981 0%,#059669 35%,#2563eb 70%,#6366f1 100%);box-shadow:0 0 12px rgba(16,185,129,.9),0 0 6px rgba(37,99,235,.6);border-radius:0 3px 3px 0;transition:width .22s cubic-bezier(.4,0,.2,1);}',
+                '.wm-global-loader{position:fixed;bottom:24px;right:24px;z-index:2147483646;pointer-events:none;opacity:0;transform:translateY(14px) scale(.95);transition:opacity .25s cubic-bezier(.16,1,.3,1),transform .25s cubic-bezier(.16,1,.3,1);}',
+                '.wm-global-loader.is-active{opacity:1;transform:translateY(0) scale(1);pointer-events:auto;}',
+                '.wm-loader-card{display:flex;align-items:center;gap:10px;background:rgba(18,24,31,.94);color:#ffffff;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.16);border-radius:9999px;padding:8px 16px 8px 12px;box-shadow:0 12px 32px rgba(0,0,0,.32),0 2px 8px rgba(0,0,0,.16);font-family:system-ui,-apple-system,sans-serif;font-size:13px;font-weight:500;user-select:none;}',
+                '.wm-loader-spinner{width:20px;height:20px;display:flex;align-items:center;justify-content:center;color:#10b981;flex-shrink:0;}',
+                '.wm-loader-spinner svg.wm-spin-icon{width:100%;height:100%;animation:wm-spin-animation .75s linear infinite;}',
+                '@keyframes wm-spin-animation{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}',
+                '.wm-loader-text{display:flex;flex-direction:column;line-height:1.25;}',
+                '.wm-loader-msg{font-weight:600;color:#ffffff;letter-spacing:-0.01em;}',
+                '.wm-loader-sub{font-size:10px;color:rgba(255,255,255,.65);font-family:monospace;text-transform:uppercase;letter-spacing:.06em;}',
+                '.wm-loader-badge{background:#10b981;color:#064e3b;font-size:10px;font-weight:700;padding:1px 7px;border-radius:9999px;margin-left:2px;}',
+                'button.wm-btn-loading{opacity:.75;pointer-events:none;position:relative;}'
+            ].join('');
+            (document.head || document.documentElement).appendChild(style);
+        }
+
+        var root = document.body || document.documentElement;
+        root.appendChild(progressContainer);
+        root.appendChild(loaderContainer);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', ensureLoaderDom);
+    } else {
+        ensureLoaderDom();
+    }
+
+    function setProgress(percent) {
+        currentProgress = percent;
+        var bar = document.getElementById('wm-global-progress-bar');
+        var progress = document.getElementById('wm-global-progress');
+        if (bar && progress) {
+            progress.classList.add('is-active');
+            bar.style.width = percent + '%';
+        }
+    }
+
+    var WmLoader = {
+        start: function (method, url, customMsg) {
+            ensureLoaderDom();
+            activeCount++;
+
+            var msg = customMsg;
+            if (!msg) {
+                var m = (method || 'GET').toUpperCase();
+                if (m === 'POST') msg = 'Processing POST request...';
+                else if (m === 'PUT' || m === 'PATCH') msg = 'Updating records...';
+                else if (m === 'DELETE') msg = 'Deleting...';
+                else msg = 'Loading data...';
+            }
+
+            var msgEl = document.getElementById('wm-loader-msg');
+            var subEl = document.getElementById('wm-loader-sub');
+            var badgeEl = document.getElementById('wm-loader-badge');
+            var loaderEl = document.getElementById('wm-global-loader');
+            var progressEl = document.getElementById('wm-global-progress');
+
+            if (msgEl) msgEl.textContent = msg;
+            if (subEl) {
+                var urlLabel = '';
+                try {
+                    if (url) {
+                        var parsed = new URL(url, window.location.href);
+                        urlLabel = parsed.pathname;
+                        if (urlLabel.length > 28) urlLabel = urlLabel.slice(0, 26) + '…';
+                    }
+                } catch (e) {
+                    urlLabel = (url || '').slice(0, 28);
+                }
+                subEl.textContent = urlLabel ? (method ? method.toUpperCase() + ' ' : '') + urlLabel : 'WholeMart API';
+            }
+
+            if (badgeEl) {
+                if (activeCount > 1) {
+                    badgeEl.style.display = 'inline-block';
+                    badgeEl.textContent = activeCount;
+                } else {
+                    badgeEl.style.display = 'none';
+                }
+            }
+
+            if (loaderEl) loaderEl.classList.add('is-active');
+            if (progressEl) progressEl.classList.add('is-active');
+
+            if (activeCount === 1) {
+                setProgress(25);
+                clearInterval(progressTimer);
+                progressTimer = setInterval(function () {
+                    if (currentProgress < 85) {
+                        setProgress(currentProgress + (85 - currentProgress) * 0.18);
+                    }
+                }, 200);
+            }
+
+            clearTimeout(safetyTimer);
+            safetyTimer = setTimeout(function () {
+                activeCount = 0;
+                WmLoader.finish();
+            }, 15000);
+        },
+
+        finish: function () {
+            activeCount = Math.max(0, activeCount - 1);
+            var badgeEl = document.getElementById('wm-loader-badge');
+            if (badgeEl) {
+                if (activeCount > 1) {
+                    badgeEl.style.display = 'inline-block';
+                    badgeEl.textContent = activeCount;
+                } else {
+                    badgeEl.style.display = 'none';
+                }
+            }
+
+            if (activeCount === 0) {
+                clearInterval(progressTimer);
+                clearTimeout(safetyTimer);
+                setProgress(100);
+
+                setTimeout(function () {
+                    var progressEl = document.getElementById('wm-global-progress');
+                    var loaderEl = document.getElementById('wm-global-loader');
+                    var bar = document.getElementById('wm-global-progress-bar');
+                    if (progressEl) progressEl.classList.remove('is-active');
+                    if (loaderEl) loaderEl.classList.remove('is-active');
+                    setTimeout(function () {
+                        if (bar && activeCount === 0) bar.style.width = '0%';
+                    }, 250);
+                }, 200);
+            }
+        },
+
+        show: function (msg) {
+            this.start('API', null, msg || 'Loading...');
+        },
+
+        hide: function () {
+            activeCount = 0;
+            this.finish();
+        },
+
+        setProgress: setProgress
+    };
+
+    window.WmLoader = WmLoader;
+    window.showWmLoader = function (msg) { WmLoader.show(msg); };
+    window.hideWmLoader = function () { WmLoader.hide(); };
+    window.setWmProgress = setProgress;
+
+    // 1. Intercept Global window.fetch
+    if (typeof window.fetch === 'function' && !window.__wm_fetch_intercepted) {
+        window.__wm_fetch_intercepted = true;
+        var nativeFetch = window.fetch;
+        window.fetch = function (input, init) {
+            var method = 'GET';
+            var url = '';
+            if (typeof input === 'string') {
+                url = input;
+            } else if (input && input.url) {
+                url = input.url;
+            }
+            if (init && init.method) {
+                method = init.method.toUpperCase();
+            } else if (input && input.method) {
+                method = input.method.toUpperCase();
+            }
+
+            var skip = (init && init.__skipLoader) || false;
+            if (!skip) {
+                WmLoader.start(method, url);
+            }
+
+            try {
+                var fetchPromise = nativeFetch.apply(this, arguments);
+                return fetchPromise.then(
+                    function (res) {
+                        if (!skip) WmLoader.finish();
+                        return res;
+                    },
+                    function (err) {
+                        if (!skip) WmLoader.finish();
+                        throw err;
+                    }
+                );
+            } catch (err) {
+                if (!skip) WmLoader.finish();
+                throw err;
+            }
+        };
+    }
+
+    // 2. Intercept Global XMLHttpRequest
+    if (typeof window.XMLHttpRequest === 'function' && !window.__wm_xhr_intercepted) {
+        window.__wm_xhr_intercepted = true;
+        var originalOpen = XMLHttpRequest.prototype.open;
+        var originalSend = XMLHttpRequest.prototype.send;
+
+        XMLHttpRequest.prototype.open = function (method, url) {
+            this.__wm_method = method ? method.toUpperCase() : 'GET';
+            this.__wm_url = url || '';
+            return originalOpen.apply(this, arguments);
+        };
+
+        XMLHttpRequest.prototype.send = function () {
+            var self = this;
+            var isSkip = this.__wm_skipLoader || false;
+            if (!isSkip) {
+                WmLoader.start(this.__wm_method || 'GET', this.__wm_url || '');
+                var finished = false;
+                var onDone = function () {
+                    if (!finished) {
+                        finished = true;
+                        WmLoader.finish();
+                    }
+                };
+                this.addEventListener('loadend', onDone);
+                this.addEventListener('error', onDone);
+                this.addEventListener('abort', onDone);
+                this.addEventListener('timeout', onDone);
+            }
+            return originalSend.apply(this, arguments);
+        };
+    }
+
+    // 3. Intercept Form Submissions
+    document.addEventListener('submit', function (event) {
+        var form = event.target;
+        if (!form || form.dataset.noLoader === 'true' || form.dataset.wmNoLoader) return;
+        var method = (form.method || 'GET').toUpperCase();
+        var action = form.action || window.location.href;
+        var submitBtn = form.querySelector('button[type="submit"], input[type="submit"]');
+        if (submitBtn) {
+            submitBtn.classList.add('wm-btn-loading');
+        }
+        WmLoader.start(method, action, method === 'POST' ? 'Submitting form...' : 'Loading...');
+    }, true);
+})();
+
+(function () {
+
     function normalize(value) {
         return (value || "").toString().trim().toLowerCase();
     }

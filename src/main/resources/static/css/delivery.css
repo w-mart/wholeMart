@@ -110,6 +110,79 @@
     background: #F6F2E7;
 }
 
+@media (max-width: 768px) {
+    .wm-table {
+        display: block !important;
+        width: 100% !important;
+        background: transparent !important;
+        border: none !important;
+        border-radius: 0 !important;
+    }
+
+    .wm-table thead {
+        display: none !important;
+    }
+
+    .wm-table tbody {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        width: 100% !important;
+    }
+
+    .wm-table tbody tr {
+        display: block !important;
+        width: 100% !important;
+        background: #FFFDF7 !important;
+        border: 1px solid #D8D0B8 !important;
+        border-radius: 12px !important;
+        padding: 14px 16px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    .wm-table tbody tr:hover td {
+        background: transparent !important;
+    }
+
+    .wm-table tbody td {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 8px 0 !important;
+        border-top: none !important;
+        border-bottom: 1px dashed #E0D9C7 !important;
+        font-size: 0.9rem !important;
+        width: 100% !important;
+    }
+
+    .wm-table tbody td:last-child {
+        border-bottom: none !important;
+    }
+
+    .wm-table tbody td::before {
+        content: attr(data-label);
+        font-family: 'IBM Plex Mono', ui-monospace, monospace;
+        font-size: 0.74rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #5B6158;
+        margin-right: auto;
+        flex-shrink: 0;
+    }
+
+    .wm-table tbody tr td[colspan] {
+        display: block !important;
+        border: none !important;
+        padding: 24px 12px !important;
+        text-align: center !important;
+    }
+
+    .wm-table tbody tr td[colspan]::before {
+        display: none !important;
+    }
+}
+
 .wm-map-card {
     background: #FFFDF7;
     border: 1px solid #D8D0B8;

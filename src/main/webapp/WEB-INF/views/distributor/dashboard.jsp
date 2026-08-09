@@ -236,6 +236,67 @@
                             <hr>
 
                             <!-- ===================================================== -->
+                            <!-- LIVE OPERATIONS DASHBOARD HUB -->
+                            <!-- ===================================================== -->
+                            <section class="wm-operations-section mb-5">
+                                <div class="wm-operations-hub">
+                                    <div class="wm-operations-hero-wrap">
+                                        <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg" 
+                                             class="wm-operations-hero-img" 
+                                             referrerpolicy="no-referrer"
+                                             onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
+                                             alt="WholeMart Operations Dashboard live inventory, orders and delivery van dispatch">
+                                        <div class="wm-operations-overlay">
+                                            <div>
+                                                <span class="wm-operations-live-badge mb-2">
+                                                    <span class="wm-live-pulse-dot"></span> Live Operations Telemetry
+                                                </span>
+                                                <h2 class="wm-operations-title">Warehouse & Fulfillment Operations</h2>
+                                                <p class="wm-operations-subtitle">
+                                                    Monitor live stock replenishments, active retailer order queues, and real-time delivery van dispatches across your distribution zone.
+                                                </p>
+                                            </div>
+                                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                                <a href="/web/distributor/products" class="btn btn-sm btn-success fw-semibold"><i class="bi bi-boxes me-1"></i> Live Inventory Control</a>
+                                                <a href="/web/distributor/orders" class="btn btn-sm btn-primary fw-semibold"><i class="bi bi-cart-check me-1"></i> Active Orders Panel</a>
+                                                <a href="/web/distributor/delivery" class="btn btn-sm btn-warning text-dark fw-semibold"><i class="bi bi-truck me-1"></i> Delivery Fleet Tracking</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="wm-operations-telemetry-grid">
+                                        <div class="wm-telemetry-card">
+                                            <div class="wm-telemetry-icon inventory">
+                                                <i class="bi bi-boxes"></i>
+                                            </div>
+                                            <div class="wm-telemetry-content">
+                                                <h5 id="opsLiveInventory">1,280 Units</h5>
+                                                <small>Live Inventory • Stock Synced</small>
+                                            </div>
+                                        </div>
+                                        <div class="wm-telemetry-card">
+                                            <div class="wm-telemetry-icon orders">
+                                                <i class="bi bi-cart-check"></i>
+                                            </div>
+                                            <div class="wm-telemetry-content">
+                                                <h5 id="opsActiveOrders">42 Pending</h5>
+                                                <small>Live Orders Processing</small>
+                                            </div>
+                                        </div>
+                                        <div class="wm-telemetry-card">
+                                            <div class="wm-telemetry-icon delivery">
+                                                <i class="bi bi-truck"></i>
+                                            </div>
+                                            <div class="wm-telemetry-content">
+                                                <h5 id="opsDeliveryStatus">12 Dispatched</h5>
+                                                <small>Delivery Status • En-Route</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- ===================================================== -->
                             <!-- BUSINESS INTELLIGENCE + AI ASSISTANT
                  Merged into a single section: report tiles (2x2) on the
                  left, AI assistant on the right. -->

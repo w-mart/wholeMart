@@ -77,6 +77,63 @@
                         </section>
                         <hr>
 
+                        <section class="wm-operations-section mb-4">
+                            <div class="wm-operations-hub">
+                                <div class="wm-operations-hero-wrap">
+                                    <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg" 
+                                         class="wm-operations-hero-img" 
+                                         referrerpolicy="no-referrer"
+                                         onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
+                                         alt="WholeMart Operations Dashboard showing live inventory, orders and delivery status">
+                                    <div class="wm-operations-overlay">
+                                        <div>
+                                            <span class="wm-operations-live-badge mb-2">
+                                                <span class="wm-live-pulse-dot"></span> Live Fulfillment Status
+                                            </span>
+                                            <h2 class="wm-operations-title">Wholesale Operations & Delivery Dispatch</h2>
+                                            <p class="wm-operations-subtitle">
+                                                Track live distributor product inventory, active order status, and driver van dispatches straight to your retail store.
+                                            </p>
+                                        </div>
+                                        <div class="d-flex flex-wrap gap-2 mt-3">
+                                            <a href="/web/retailer/products" class="btn btn-sm btn-success fw-semibold"><i class="bi bi-shop me-1"></i> Browse Live Inventory</a>
+                                            <a href="/web/retailer/orders" class="btn btn-sm btn-primary fw-semibold"><i class="bi bi-bag-check me-1"></i> Track Orders</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="wm-operations-telemetry-grid">
+                                    <div class="wm-telemetry-card">
+                                        <div class="wm-telemetry-icon inventory">
+                                            <i class="bi bi-boxes"></i>
+                                        </div>
+                                        <div class="wm-telemetry-content">
+                                            <h5>Live Stock</h5>
+                                            <small>Distributor Stock Updated Live</small>
+                                        </div>
+                                    </div>
+                                    <div class="wm-telemetry-card">
+                                        <div class="wm-telemetry-icon orders">
+                                            <i class="bi bi-cart-check"></i>
+                                        </div>
+                                        <div class="wm-telemetry-content">
+                                            <h5>Active Orders</h5>
+                                            <small>Instant Order Dispatch</small>
+                                        </div>
+                                    </div>
+                                    <div class="wm-telemetry-card">
+                                        <div class="wm-telemetry-icon delivery">
+                                            <i class="bi bi-truck"></i>
+                                        </div>
+                                        <div class="wm-telemetry-content">
+                                            <h5>Doorstep Delivery</h5>
+                                            <small>Live GPS Driver Route</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
                         <section class="wm-home-ops mb-4">
                             <div class="home-section-head">
                                 <span class="wm-kicker">OPERATIONS</span>

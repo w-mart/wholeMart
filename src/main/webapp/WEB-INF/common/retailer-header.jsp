@@ -1,9 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
-        // distributor-header.jsp is included by multiple JSPs.
-        // Avoid "Duplicate local variable" compilation errors when this JSP is
-        // inlined into other JSPs. Use a unique variable name.
         String wmUserNameHeader = (String) request.getAttribute("wmUserName");
         if (wmUserNameHeader == null) {
             wmUserNameHeader = (String) session.getAttribute("username");
@@ -12,7 +9,7 @@
             wmUserNameHeader = (String) session.getAttribute("name");
         }
         if (wmUserNameHeader == null) {
-            wmUserNameHeader = "Guest";
+            wmUserNameHeader = "Retailer User";
         }
 
         String initials = "";
@@ -28,7 +25,7 @@
             }
         }
         if (initials.isEmpty()) {
-            initials = "WM";
+            initials = "RU";
         }
 
         String wmUri = request.getRequestURI();
@@ -36,218 +33,88 @@
             wmUri = "";
         }
 
-        String wmLang = (String) session.getAttribute("lang");
+String wmLang = (String) session.getAttribute("lang");
         if (wmLang == null) {
             wmLang = "en";
         }
+        String wmEngActive = (wmLang.equals("eng") || wmLang.equals("en")) ? "fw-bold text-success" : "text-muted";
+        String wmHinActive = (wmLang.equals("hin") || wmLang.equals("hi")) ? "fw-bold text-success" : "text-muted";
 %>
 
-<!--
-    Requires header.css to already be linked in <head>.
-    Layout: on desktop the order is [sidebar toggle + logo] [search] [nav links] [lang + user dropdown],
-    with the custom sidebar toggle on the far left.
-    On mobile the order is [logo] [lang + user dropdown + hamburger] on row 1,
-    with the collapsible nav links + search wrapping to a full-width row 2 when opened.
-    Mirrors retailer-header.jsp.
--->
+<script>
+  function setWmLanguage(lang) {
+    window.location.href = "<%= request.getContextPath() %>/web/lang/" + encodeURIComponent(lang);
+  }
+  window.setWmLanguage = setWmLanguage;
+</script>
 
 <header class="wm-header sticky-top">
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid px-3 wm-header-row">
-
-            <!-- Left: sidebar toggle + logo -->
             <div class="d-flex align-items-center wm-header-left">
-                <button id="wmSidebarToggle" class="wm-sidebar-toggle-btn me-2" type="button"
-                    aria-label="Toggle sidebar">
+                <button id="wmSidebarToggle" class="wm-sidebar-toggle-btn me-2" type="button" aria-label="Toggle sidebar">
                     <i class="bi bi-list fs-4"></i>
                 </button>
 
-                <a class="navbar-brand wm-logo-wrap"
-                    href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                <a class="navbar-brand wm-logo-wrap" href="${pageContext.request.contextPath}/web/retailer/dashboard">
                     <div class="wm-logo-mark">W</div>
                     <div class="wm-logo-line">
                         <div class="wm-logo-title">WholeMart</div>
-                        <small class="wm-logo-sub">Local B2B Marketplace</small>
+                        <small class="wm-logo-sub"><fmt:message key="nav.retailer_workspace"/></small>
                     </div>
                 </a>
             </div>
 
-            <!-- Search (desktop only) -->
             <form class="wm-search d-none d-lg-flex">
                 <i class="bi bi-search wm-search-icon"></i>
-                <input class="wm-search-input" type="text"
-                    placeholder="Search products, retailers, orders...">
+                <input class="wm-search-input" type="text" placeholder="<fmt:message key="nav.search_placeholder"/>">
             </form>
 
-            <!-- Nav links + mobile search: inline on desktop, wraps to full-width row on mobile when opened -->
-            <div class="collapse navbar-collapse wm-header-collapse" id="wmDistributorNav">
-                <form class="wm-search d-lg-none">
-                    <i class="bi bi-search wm-search-icon"></i>
-                    <input class="wm-search-input" type="text"
-                        placeholder="Search products, retailers, orders...">
-                </form>
-
+            <div class="collapse navbar-collapse wm-header-collapse" id="wmRetailerNav">
                 <ul class="navbar-nav wm-nav-links d-none d-lg-flex">
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/pruducts">Inventory</a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ask-ai">Ask AI</a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/uuserRegister">Help</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/web/auth/logout">Logout</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><fmt:message key="nav.home"/></a></li>
+                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/products"><fmt:message key="nav.products"/></a></li>
+                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/cart"><fmt:message key="nav.cart"/></a></li>
+                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/retailer/orders"><fmt:message key="nav.orders"/></a></li>
+                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/auth/logout"><fmt:message key="nav.logout"/></a></li>
                 </ul>
             </div>
 
-            <!-- Right: lang toggle + user dropdown + mobile hamburger, grouped so they stay on one line -->
-            <div class="d-flex align-items-center wm-header-right">
+            <div class="d-flex align-items-center wm-header-right gap-2">
+                <div class="wm-lang-toggle d-flex align-items-center gap-1 bg-white border rounded-pill px-2 py-1 shadow-sm fs-7 me-1">
+<button type="button" onclick="setWmLanguage('eng')" class="btn btn-sm p-0 border-0 <%= wmEngActive %> px-1">EN</button>
+                    <span class="wm-lang-sep text-black-50">|</span>
+                    <button type="button" onclick="setWmLanguage('hin')" class="btn btn-sm p-0 border-0 <%= wmHinActive %> px-1">HI</button>
+                </div>
                 <div class="dropdown">
-                    <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
-                        data-bs-toggle="dropdown">
-                        <span class="wm-user-avatar">
-                            <%= initials %>
-                        </span>
-                        <span class="fw-semibold d-none d-lg-inline">
-                            <%= wmUserNameHeader %>
-                        </span>
+                    <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown">
+                        <span class="wm-user-avatar"><%= initials %></span>
+                        <span class="fw-semibold d-none d-lg-inline"><%= wmUserNameHeader %></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end wm-user-menu">
-                        <li>
-                            <h6 class="dropdown-header wm-user-menu-header">
-                                <%= wmUserNameHeader %>
-                            </h6>
-                        </li>
-                        <li>
-                            <a class="dropdown-item wm-user-menu-item"
-                                href="${pageContext.request.contextPath}/web/distributor/profile">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item wm-user-menu-item"
-                                href="${pageContext.request.contextPath}/web/distributor/settings">
-                                <i class="bi bi-gear me-2"></i>Settings
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider wm-user-menu-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item wm-user-menu-item wm-user-menu-logout"
-                                href="${pageContext.request.contextPath}/web/auth/logout">
-                                <i class="bi bi-box-arrow-right me-2"></i>Logout
-                            </a>
-                        </li>
+                        <li><h6 class="dropdown-header wm-user-menu-header"><%= wmUserNameHeader %></h6></li>
+                        <li><a class="dropdown-item wm-user-menu-item" href="${pageContext.request.contextPath}/web/retailer/profile"><fmt:message key="nav.profile"/></a></li>
+                        <li><a class="dropdown-item wm-user-menu-item" href="${pageContext.request.contextPath}/web/retailer/settings"><i class="bi bi-gear me-2"></i><fmt:message key="nav.settings"/></a></li>
+                        <li><hr class="dropdown-divider wm-user-menu-divider"></li>
+                        <li><a class="dropdown-item wm-user-menu-item wm-user-menu-logout" href="${pageContext.request.contextPath}/web/auth/logout"><i class="bi bi-box-arrow-right me-2"></i><fmt:message key="nav.logout"/></a></li>
                     </ul>
                 </div>
             </div>
-
         </div>
     </nav>
 </header>
 
-<!-- Sidebar -->
 <aside id="wmSidebar" class="wm-sidebar">
     <ul class="list-unstyled m-0">
-        <li>
-            <a class="<%= wmUri.contains("/dashboard") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/dashboard">
-                <i class="bi bi-speedometer2"></i>Dashboard
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/orders") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/orders">
-                <i class="bi bi-cart-check"></i>Orders
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/products") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/products">
-                <i class="bi bi-box-seam"></i>Products
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/add-product") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/add-product">
-                <i class="bi bi-plus-circle"></i>Add Product
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/drivers") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/drivers">
-                <i class="bi bi-truck"></i>Drivers
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/delivery") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/delivery">
-                <i class="bi bi-geo-alt"></i>Delivery
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/reports") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/reports">
-                <i class="bi bi-bar-chart"></i>Reports
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/alerts") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/alerts">
-                <i class="bi bi-bell"></i>Alerts
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/ai-chat") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/ai-chat">
-                <i class="bi bi-robot"></i>AI Assistant
-            </a>
-        </li>
-        <li>
-            <hr class="dropdown-divider wm-user-menu-divider">
-        </li>
-        <li>
-            <div class="wm-lang-toggle">
-                <a href="?lang=en" class="wm-lang-option <%= "en".equals(wmLang) ? "active" : "" %>">EN</a>
-                <span class="wm-lang-sep">|</span>
-                <a href="?lang=hi" class="wm-lang-option <%= "hi".equals(wmLang) ? "active" : "" %>">HI</a>
-            </div>
-        </li>
+        <li><a class="<%= wmUri.contains("/dashboard") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/dashboard"><i class="bi bi-speedometer2"></i><fmt:message key="nav.dashboard"/></a></li>
+        <li><a class="<%= wmUri.contains("/products") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/products"><i class="bi bi-box-seam"></i><fmt:message key="nav.products"/></a></li>
+        <li><a class="<%= wmUri.contains("/cart") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/cart"><i class="bi bi-cart"></i><fmt:message key="nav.cart"/></a></li>
+        <li><a class="<%= wmUri.contains("/orders") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/orders"><i class="bi bi-bag"></i><fmt:message key="nav.orders"/></a></li>
+        <li><a class="<%= wmUri.contains("/distributors") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/distributors"><i class="bi bi-shop"></i><fmt:message key="nav.distributors"/></a></li>
+        <li><a class="<%= wmUri.contains("/ledger") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/ledger"><i class="bi bi-book"></i><fmt:message key="nav.ledger"/></a></li>
+        <li><a class="<%= wmUri.contains("/payments") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/payments"><i class="bi bi-cash-coin"></i><fmt:message key="nav.payments"/></a></li>
+        <li><a class="<%= wmUri.contains("/reports") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/reports"><i class="bi bi-bar-chart"></i><fmt:message key="nav.reports"/></a></li>
+        <li><a class="<%= wmUri.contains("/alerts") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/retailer/alerts"><i class="bi bi-bell"></i><fmt:message key="nav.alerts"/></a></li>
     </ul>
 </aside>
-
-<!-- Sidebar Backdrop -->
 <div id="wmSidebarBackdrop" class="wm-sidebar-backdrop"></div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const sidebar = document.getElementById("wmSidebar");
-        const toggle = document.getElementById("wmSidebarToggle");
-        const backdrop = document.getElementById("wmSidebarBackdrop");
-
-        function openSidebar() {
-            sidebar.classList.add("show");
-            backdrop.classList.add("show");
-        }
-
-        function closeSidebar() {
-            sidebar.classList.remove("show");
-            backdrop.classList.remove("show");
-        }
-
-        if (toggle) {
-            toggle.addEventListener("click", function () {
-                sidebar.classList.contains("show") ? closeSidebar() : openSidebar();
-            });
-        }
-
-        if (backdrop) {
-            backdrop.addEventListener("click", closeSidebar);
-        }
-
-        document.addEventListener("keydown", function (e) {
-            if (e.key === "Escape") {
-                closeSidebar();
-            }
-        });
-    });
-</script>
