@@ -46,7 +46,6 @@
                         <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg"
                              class="img-fluid w-100 object-fit-cover"
                              style="max-height: 420px; display: block;"
-                             referrerpolicy="no-referrer"
                              onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
                              alt="WholeMart operations dashboard showing live inventory, orders and delivery status">
                         <div class="wm-mini-card-container">
@@ -74,9 +73,8 @@
     <section id="operations" class="container my-5">
         <div class="wm-operations-hub">
             <div class="wm-operations-hero-wrap">
-                <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg" 
-                     class="wm-operations-hero-img" 
-                     referrerpolicy="no-referrer"
+                <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg"
+                     class="wm-operations-hero-img"
                      onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
                      alt="WholeMart Live Operations Hub showing inventory, orders and delivery van dispatch">
                 <div class="wm-operations-overlay">
