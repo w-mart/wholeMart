@@ -2,13 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%
-        String wmUserNameHeader = (String) request.getAttribute("wmUserName");
-        if (wmUserNameHeader == null) {
-            wmUserNameHeader = (String) session.getAttribute("username");
-        }
-        if (wmUserNameHeader == null) {
-            wmUserNameHeader = (String) session.getAttribute("name");
-        }
+        String wmUserNameHeader = (String) session.getAttribute("username");
         if (wmUserNameHeader == null) {
             wmUserNameHeader = "Distributor User";
         }
@@ -34,10 +28,8 @@
             wmUri = "";
         }
 
-String wmLang = (String) session.getAttribute("lang");
-        if (wmLang == null) {
-            wmLang = "en";
-        }
+        String wmLang = (String) session.getAttribute("lang");
+        if (wmLang == null) { wmLang = "en"; }
         String wmEngActive = (wmLang.equals("eng") || wmLang.equals("en")) ? "fw-bold text-success" : "text-muted";
         String wmHinActive = (wmLang.equals("hin") || wmLang.equals("hi")) ? "fw-bold text-success" : "text-muted";
 %>
@@ -50,94 +42,72 @@ String wmLang = (String) session.getAttribute("lang");
 </script>
 
 <header class="wm-header sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-light py-2">
         <div class="container-fluid px-3 wm-header-row">
 
             <!-- Left: sidebar toggle + logo -->
             <div class="d-flex align-items-center wm-header-left">
-                <button id="wmSidebarToggle" class="wm-sidebar-toggle-btn me-2" type="button"
-                    aria-label="Toggle sidebar">
+                <button id="wmSidebarToggle" class="wm-sidebar-toggle-btn me-2" type="button" aria-label="Toggle navigation drawer">
                     <i class="bi bi-list fs-4"></i>
                 </button>
 
-                <a class="navbar-brand wm-logo-wrap"
-                    href="${pageContext.request.contextPath}/web/distributor/dashboard">
+                <a class="navbar-brand wm-logo-wrap" href="${pageContext.request.contextPath}/web/distributor/dashboard">
                     <div class="wm-logo-mark">W</div>
                     <div class="wm-logo-line">
-                        <div class="wm-logo-title">WholeMart</div>
+                        <div class="wm-logo-title d-flex align-items-center gap-2">WholeMart <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill d-none d-sm-inline-flex" style="font-size: .6rem; letter-spacing: .05em;">DISTRIBUTOR</span></div>
                         <small class="wm-logo-sub"><fmt:message key="nav.distributor_workspace"/></small>
                     </div>
                 </a>
             </div>
 
-            <!-- Search (desktop only) -->
-            <form class="wm-search d-none d-lg-flex">
-                <i class="bi bi-search wm-search-icon"></i>
-                <input class="wm-search-input" type="text"
-                    placeholder="<fmt:message key="nav.search_placeholder"/>">
-            </form>
-
-            <div class="collapse navbar-collapse wm-header-collapse" id="wmDistributorNav">
-                <form class="wm-search d-lg-none">
+            <div class="wm-header-center d-none d-md-flex flex-grow-1 justify-content-center px-3">
+                <form class="wm-search" role="search" onsubmit="event.preventDefault();">
                     <i class="bi bi-search wm-search-icon"></i>
-                    <input class="wm-search-input" type="text"
-                        placeholder="<fmt:message key="nav.search_placeholder"/>">
+                    <input class="wm-search-input" type="text" placeholder="<fmt:message key="nav.search_placeholder"/>" aria-label="Search products, retailers, and orders">
                 </form>
-
-                <ul class="navbar-nav wm-nav-links d-none d-lg-flex">
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/"><fmt:message key="nav.home"/></a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/products"><fmt:message key="nav.products"/></a></li>
-                    <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/web/distributor/ai-chat"><fmt:message key="nav.ai_chat"/></a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/web/auth/logout"><fmt:message key="nav.logout"/></a>
-                    </li>
-                </ul>
             </div>
 
             <!-- Right: lang toggle + user dropdown -->
             <div class="d-flex align-items-center wm-header-right gap-2">
+                <a href="${pageContext.request.contextPath}/web/distributor/alerts" class="wm-driver-bell-btn d-none d-sm-inline-flex" title="Notifications & Alerts" aria-label="View Alerts">
+                    <i class="bi bi-bell"></i>
+                    <span class="wm-bell-dot"></span>
+                </a>
                 <div class="wm-lang-toggle d-flex align-items-center gap-1 bg-white border rounded-pill px-2 py-1 shadow-sm fs-7 me-1">
-<button type="button" onclick="setWmLanguage('eng')" class="btn btn-sm p-0 border-0 <%= wmEngActive %> px-1">EN</button>
+                    <button type="button" onclick="setWmLanguage('eng')" class="btn btn-sm p-0 border-0 <%= wmEngActive %> px-1">EN</button>
                     <span class="wm-lang-sep text-black-50">|</span>
                     <button type="button" onclick="setWmLanguage('hin')" class="btn btn-sm p-0 border-0 <%= wmHinActive %> px-1">HI</button>
                 </div>
                 <div class="dropdown">
-                    <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2"
-                        data-bs-toggle="dropdown">
-                        <span class="wm-user-avatar">
-                            <%= initials %>
-                        </span>
-                        <span class="fw-semibold d-none d-lg-inline">
-                            <%= wmUserNameHeader %>
-                        </span>
+                    <button class="btn wm-user-btn dropdown-toggle d-flex align-items-center gap-2" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Distributor profile menu">
+                        <div class="wm-driver-avatar-wrap">
+                            <span class="wm-user-avatar"><%= initials %></span>
+                            <span class="wm-avatar-online-pip" title="Online"></span>
+                        </div>
+                        <div class="d-none d-lg-flex flex-column text-start lh-1">
+                            <span class="fw-bold"><%= wmUserNameHeader %></span>
+                            <span class="text-muted small">Distributor</span>
+                        </div>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end wm-user-menu">
-                        <li>
-                            <h6 class="dropdown-header wm-user-menu-header">
-                                <%= wmUserNameHeader %>
-                            </h6>
+                        <li class="wm-driver-menu-hero">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="wm-driver-menu-avatar"><%= initials %></div>
+                                <div class="flex-grow-1 min-w-0">
+                                    <div class="fw-bold text-dark text-truncate fs-6"><%= wmUserNameHeader %></div>
+                                    <div class="d-flex align-items-center gap-2 mt-1">
+                                        <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle rounded-pill font-monospace fs-8">Distributor Account</span>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
-                        <li>
-                            <a class="dropdown-item wm-user-menu-item"
-                                href="${pageContext.request.contextPath}/web/distributor/profile">
-                                <fmt:message key="nav.profile"/>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item wm-user-menu-item"
-                                href="${pageContext.request.contextPath}/web/distributor/settings">
-                                <i class="bi bi-gear me-2"></i><fmt:message key="nav.settings"/>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider wm-user-menu-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item wm-user-menu-item wm-user-menu-logout"
-                                href="${pageContext.request.contextPath}/web/auth/logout">
-                                <i class="bi bi-box-arrow-right me-2"></i><fmt:message key="nav.logout"/>
-                            </a>
-                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item wm-user-menu-item" href="${pageContext.request.contextPath}/web/distributor/dashboard"><i class="bi bi-speedometer2"></i><fmt:message key="nav.dashboard"/></a></li>
+                        <li><a class="dropdown-item wm-user-menu-item" href="${pageContext.request.contextPath}/web/distributor/profile"><i class="bi bi-person-badge"></i><fmt:message key="nav.profile"/></a></li>
+                        <li><a class="dropdown-item wm-user-menu-item" href="${pageContext.request.contextPath}/web/distributor/settings"><i class="bi bi-gear"></i><fmt:message key="nav.settings"/></a></li>
+                        <li><a class="dropdown-item wm-user-menu-item" href="${pageContext.request.contextPath}/web/distributor/ai-chat"><i class="bi bi-robot"></i><fmt:message key="nav.ai_chat"/></a></li>
+                        <li><hr class="dropdown-divider wm-user-menu-divider"></li>
+                        <li><a class="dropdown-item wm-user-menu-item wm-user-menu-logout" href="${pageContext.request.contextPath}/web/auth/logout"><i class="bi bi-box-arrow-right me-2"></i><fmt:message key="nav.logout"/></a></li>
                     </ul>
                 </div>
             </div>
@@ -147,63 +117,61 @@ String wmLang = (String) session.getAttribute("lang");
 </header>
 
 <!-- Sidebar -->
-<aside id="wmSidebar" class="wm-sidebar">
-    <ul class="list-unstyled m-0">
-        <li>
-            <a class="<%= wmUri.contains("/dashboard") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/dashboard">
-                <i class="bi bi-speedometer2"></i><fmt:message key="nav.dashboard"/>
+<aside id="wmSidebar" class="wm-sidebar wm-driver-sidebar" aria-label="Distributor Navigation Sidebar">
+    <div class="wm-driver-sidebar-header">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <div class="d-flex align-items-center gap-3 min-w-0">
+                <div class="wm-driver-sidebar-avatar"><%= initials %></div>
+                <div class="flex-grow-1 min-w-0">
+                    <div class="fw-bold text-dark text-truncate"><%= wmUserNameHeader %></div>
+                    <div class="text-muted fs-8 d-flex align-items-center gap-1">
+                        <span class="wm-pulse-dot" style="background-color: var(--bs-warning);"></span> Distributor Account
+                    </div>
+                </div>
+            </div>
+            <button id="wmSidebarClose" class="wm-sidebar-close-btn" type="button" aria-label="Close sidebar" title="Close navigation">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="wm-driver-sidebar-scroll">
+        <div class="wm-driver-sidebar-section">
+            <div class="wm-driver-sidebar-kicker">OPERATIONS</div>
+            <ul class="list-unstyled m-0">
+                <li><a class="<%= wmUri.contains("/dashboard") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/dashboard"><i class="bi bi-speedometer2"></i><span><fmt:message key="nav.dashboard"/></span></a></li>
+                <li><a class="<%= wmUri.contains("/orders") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/orders"><i class="bi bi-cart-check"></i><span><fmt:message key="nav.orders"/></span></a></li>
+                <li><a class="<%= wmUri.contains("/products") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/products"><i class="bi bi-box-seam"></i><span><fmt:message key="nav.products"/></span></a></li>
+                <li><a class="<%= wmUri.contains("/add-product") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/add-product"><i class="bi bi-plus-circle"></i><span><fmt:message key="nav.add_product"/></span></a></li>
+            </ul>
+        </div>
+
+        <div class="wm-driver-sidebar-section">
+            <div class="wm-driver-sidebar-kicker">LOGISTICS</div>
+            <ul class="list-unstyled m-0">
+                <li><a class="<%= wmUri.contains("/drivers") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/drivers"><i class="bi bi-truck"></i><span><fmt:message key="nav.drivers"/></span></a></li>
+                <li><a class="<%= wmUri.contains("/delivery") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/delivery"><i class="bi bi-geo-alt"></i><span><fmt:message key="nav.deliveries"/></span></a></li>
+            </ul>
+        </div>
+
+        <div class="wm-driver-sidebar-section">
+            <div class="wm-driver-sidebar-kicker">ANALYTICS & TOOLS</div>
+            <ul class="list-unstyled m-0">
+                <li><a class="<%= wmUri.contains("/reports") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/reports"><i class="bi bi-bar-chart"></i><span><fmt:message key="nav.reports"/></span></a></li>
+                <li><a class="<%= wmUri.contains("/alerts") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/alerts"><i class="bi bi-bell"></i><span><fmt:message key="nav.alerts"/></span></a></li>
+                <li><a class="<%= wmUri.contains("/ai-chat") ? "active" : "" %>" href="${pageContext.request.contextPath}/web/distributor/ai-chat"><i class="bi bi-robot text-success"></i><span><fmt:message key="nav.ai_chat"/></span><span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill ms-auto px-2 py-0 fs-8">AI</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wm-driver-sidebar-footer">
+        <div class="d-flex align-items-center justify-content-between pt-2 border-top border-light-subtle">
+            <small class="text-muted fs-8">WholeMart Distributor v2.4</small>
+            <a href="${pageContext.request.contextPath}/web/auth/logout" class="text-danger fw-bold fs-8 text-decoration-none d-flex align-items-center gap-1">
+                <i class="bi bi-box-arrow-right"></i> <fmt:message key="nav.logout"/>
             </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/orders") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/orders">
-                <i class="bi bi-cart-check"></i><fmt:message key="nav.orders"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/products") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/products">
-                <i class="bi bi-box-seam"></i><fmt:message key="nav.products"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/add-product") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/add-product">
-                <i class="bi bi-plus-circle"></i><fmt:message key="nav.add_product"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/drivers") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/drivers">
-                <i class="bi bi-truck"></i><fmt:message key="nav.drivers"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/delivery") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/delivery">
-                <i class="bi bi-geo-alt"></i><fmt:message key="nav.deliveries"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/reports") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/reports">
-                <i class="bi bi-bar-chart"></i><fmt:message key="nav.reports"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/alerts") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/alerts">
-                <i class="bi bi-bell"></i><fmt:message key="nav.alerts"/>
-            </a>
-        </li>
-        <li>
-            <a class="<%= wmUri.contains("/ai-chat") ? "active" : "" %>"
-                href="${pageContext.request.contextPath}/web/distributor/ai-chat">
-                <i class="bi bi-robot"></i><fmt:message key="nav.ai_chat"/>
-            </a>
-        </li>
-    </ul>
+        </div>
+    </div>
 </aside>
 
 <!-- Sidebar Backdrop -->
@@ -213,22 +181,33 @@ String wmLang = (String) session.getAttribute("lang");
     document.addEventListener("DOMContentLoaded", function () {
         const sidebar = document.getElementById("wmSidebar");
         const toggle = document.getElementById("wmSidebarToggle");
+        const closeBtn = document.getElementById("wmSidebarClose");
         const backdrop = document.getElementById("wmSidebarBackdrop");
 
         function openSidebar() {
             if (sidebar) sidebar.classList.add("show");
             if (backdrop) backdrop.classList.add("show");
+            document.body.classList.add("wm-sidebar-open");
         }
 
         function closeSidebar() {
             if (sidebar) sidebar.classList.remove("show");
             if (backdrop) backdrop.classList.remove("show");
+            document.body.classList.remove("wm-sidebar-open");
         }
 
         if (toggle) {
             toggle.addEventListener("click", function () {
-                sidebar && sidebar.classList.contains("show") ? closeSidebar() : openSidebar();
+                if (sidebar && sidebar.classList.contains("show")) {
+                    closeSidebar();
+                } else {
+                    openSidebar();
+                }
             });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener("click", closeSidebar);
         }
 
         if (backdrop) {
