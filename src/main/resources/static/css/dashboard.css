@@ -31,13 +31,24 @@
 
 * {
     box-sizing: border-box;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+*::-webkit-scrollbar,
+::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 body {
-    background: var(--wm-cream);
+    background: #f8fafc;
     color: var(--wm-ink);
     font-family: var(--wm-font-sans);
     -webkit-font-smoothing: antialiased;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
 a {
@@ -152,69 +163,15 @@ a {
     font-weight: 600;
 }
 
-/* ---------- off-canvas sidebar ---------- */
-.wm-sidebar-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(26, 36, 32, .35);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .2s ease;
-    z-index: 49;
-}
-
+/* ---------- off-canvas sidebar (defined in header.css) ---------- */
 .wm-sidebar-backdrop.is-open {
+    display: block;
     opacity: 1;
     pointer-events: auto;
 }
 
-.wm-sidebar {
-    position: fixed;
-    top: 76px;
-    left: -270px;
-    width: 270px;
-    height: calc(100vh - 76px);
-    border-right: 1px solid var(--line);
-    overflow-y: auto;
-    transition: left .3s ease;
-    z-index: 50;
-    box-shadow: var(--shadow);
-     --surface: var(--wm-paper, #FFFFFF);
-    --line: var(--wm-line, rgba(0,0,0,.12));
-    --shadow: var(--wm-shadow, 0 6px 20px rgba(0,0,0,.08));
-    background: var(--surface);
-    border-bottom: 1px solid var(--line);
-    box-shadow: var(--shadow);
-}
-
 .wm-sidebar.is-open {
-    transform: translateX(0);
-}
-
-.wm-sidebar a {
-    padding: 12px 10px;
-    border-radius: var(--wm-radius);
-    font-family: var(--wm-font-mono);
-    font-size: .85rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    opacity: .85;
-}
-
-.wm-sidebar a:hover {
-    background: var(--wm-dark-soft);
-    opacity: 1;
-}
-
-.wm-sidebar-head {
-    font-family: var(--wm-font-mono);
-    font-size: .7rem;
-    letter-spacing: .12em;
-    color: var(--wm-mint);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    padding: 0 10px;
+    left: 0;
 }
 
 /* ---------- shared kicker / eyebrow ---------- */
@@ -798,16 +755,17 @@ a {
     background: rgba(255, 255, 255, .045);
     border: 1px solid rgba(191, 216, 196, .16);
     border-style: solid;
-    scrollbar-width: thin;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
 .wm-ai-panel--compact .wm-ai-response::-webkit-scrollbar {
-    width: 6px;
+    display: none !important;
+    width: 0 !important;
 }
 
 .wm-ai-panel--compact .wm-ai-response::-webkit-scrollbar-thumb {
-    background: rgba(191, 216, 196, .3);
-    border-radius: 6px;
+    display: none !important;
 }
 
 
@@ -819,127 +777,9 @@ a {
 }
 
 /*==========================================================
-    DRIVER DELIVERY MODAL
-    Tidy modal sizing, rounded corners and scrolling behavior
+    DRIVER MODALS & STATUS BADGES
+    Governed by WholeMart Common Design Tokens in common.css
 ==========================================================*/
-
-/* Constrain dialog width so the large header doesn't stretch too far */
-#driverDeliveryModal .modal-dialog{
-    max-width: 980px; /* comfortable desktop width */
-    margin: 1.5rem auto;
-}
-
-/* Visual card for the modal */
-#driverDeliveryModal .modal-content{
-    border: none;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 25px 70px rgba(0,0,0,.18);
-    background-clip: padding-box;
-}
-
-/* Header: slightly smaller padding and consistent rounded top */
-#driverDeliveryModal .modal-header{
-    background: linear-gradient(135deg,#1d4ed8 0%,#2563eb 100%);
-    border: none;
-    padding: 14px 20px;
-    align-items: center;
-}
-
-#driverDeliveryModal .modal-title{
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #fff;
-}
-
-/* Make modal body scrollable when content is tall */
-#driverDeliveryModal .modal-body{
-    background: #f8fafc;
-    padding: 20px 22px;
-    max-height: calc(100vh - 240px);
-    overflow-y: auto;
-}
-
-/* Footer: keep buttons aligned to the right on desktop, center on mobile */
-#driverDeliveryModal .modal-footer{
-    background: #fff;
-    border-top: 1px solid #eef2f7;
-    padding: 14px 20px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-@media (max-width: 768px) {
-    #driverDeliveryModal .modal-dialog{
-        max-width: 95%;
-        margin: 0.5rem auto;
-    }
-    #driverDeliveryModal .modal-footer{
-        justify-content: center;
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-
-/*==========================================================
-    ADDRESS CARDS
-==========================================================*/
-
-#driverDeliveryModal .card{
-    border:none;
-    border-radius:18px;
-    transition:.25s;
-}
-
-#driverDeliveryModal .card:hover{
-    transform:translateY(-4px);
-    box-shadow:0 18px 40px rgba(0,0,0,.10);
-}
-
-#driverDeliveryModal .card-body{
-    padding:22px;
-}
-
-#driverDeliveryModal .rounded-circle{
-    flex-shrink:0;
-}
-
-
-/*==========================================================
-    SUMMARY CARDS
-==========================================================*/
-
-#driverDeliveryModal .summary-card{
-    border-radius:18px;
-    background:#fff;
-}
-
-#driverDeliveryModal h3{
-    font-weight:700;
-}
-
-#driverDeliveryModal h4{
-    font-weight:700;
-}
-
-#driverDeliveryModal .text-muted{
-    color:#64748b !important;
-}
-
-
-/*==========================================================
-    STATUS BADGE
-==========================================================*/
-
-#modalOrderStatus{
-    border-radius:30px;
-    font-size:.90rem;
-    font-weight:700;
-    padding:8px 18px;
-    letter-spacing:.4px;
-}
 
 
 /* Optional Status Colors */
@@ -1065,20 +905,22 @@ a {
 
 
 /*==========================================================
-    SCROLLBAR
+    SCROLLBAR - Hidden across modal
 ==========================================================*/
 
 #driverDeliveryModal ::-webkit-scrollbar{
-
-    width:8px;
-
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 #driverDeliveryModal ::-webkit-scrollbar-thumb{
+    display: none !important;
+}
 
-    background:#cbd5e1;
-    border-radius:20px;
-
+#driverDeliveryModal * {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
 }
 
 

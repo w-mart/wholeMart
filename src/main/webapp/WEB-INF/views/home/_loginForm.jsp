@@ -9,14 +9,30 @@
             <h2>WholeMart</h2>
             <p>Local B2B AI Marketplace</p>
         </div>
-        <!-- Error Message -->
-        <c:if test="${not empty error}">
-            <div class="alert alert-danger mb-3">
-                ${error}
+        <!-- Error & Message Banner -->
+        <% 
+        Object errObj = request.getAttribute("error");
+        String errParam = request.getParameter("error");
+        String errMsg = errObj != null ? String.valueOf(errObj) : errParam;
+        
+        Object msgObj = request.getAttribute("msg");
+        String msgParam = request.getParameter("msg");
+        String infoMsg = msgObj != null ? String.valueOf(msgObj) : msgParam;
+        %>
+        <% if (errMsg != null && !errMsg.isEmpty()) { %>
+            <div class="alert alert-danger mb-3 d-flex align-items-center gap-2" style="font-size: 0.9rem;">
+                <i class="bi bi-exclamation-triangle-fill flex-shrink-0"></i>
+                <div><%= errMsg %></div>
             </div>
-        </c:if>
+        <% } %>
+        <% if (infoMsg != null && !infoMsg.isEmpty()) { %>
+            <div class="alert alert-info mb-3 d-flex align-items-center gap-2" style="font-size: 0.9rem;">
+                <i class="bi bi-info-circle-fill flex-shrink-0"></i>
+                <div><%= infoMsg %></div>
+            </div>
+        <% } %>
         <form method="post"
-              action="${pageContext.request.contextPath}/web/main/auth/login"
+              action="${pageContext.request.contextPath}/web/auth/login"
               id="loginForm">
             <!-- CSRF -->
             <input type="hidden"
@@ -49,27 +65,22 @@
                 <label>Select Role</label>
                 <select class="wm-input" name="role" id="role" required>
                     <option value="">Choose Role</option>
-                    <c:choose>
-                        <c:when test="${not empty roles}">
-                            <c:forEach items="${roles}" var="role">
-                                <option value="${role}">
-                                    ${role}
-                                </option>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <option value="ROLE_ADMIN">Admin</option>
-                            <option value="ROLE_RETAILER">Retailer</option>
-                            <option value="ROLE_DISTRIBUTOR">Distributor</option>
-                            <option value="ROLE_DRIVER">Driver</option>
-                        </c:otherwise>
-                    </c:choose>
+                    <option value="ROLE_ADMIN">Admin</option>
+                    <option value="ROLE_RETAILER">Retailer</option>
+                    <option value="ROLE_DISTRIBUTOR">Distributor</option>
+                    <option value="ROLE_DRIVER">Driver</option>
                 </select>
             </div>
             <button class="wm-login-btn" type="submit">
                 Login
             </button>
         </form>
+        <div class="wm-form-group text-center mt-3">
+            <div class="position-relative my-3"><hr style="border-color: var(--line);"><span class="position-absolute top-50 start-50 translate-middle bg-white px-2 text-muted" style="font-size:0.8rem;">OR</span></div>
+            <a href="${pageContext.request.contextPath}/web/auth/google" class="wm-btn-outline w-100 py-2 d-flex align-items-center justify-content-center gap-2" style="border-radius: var(--radius-sm); border: 1px solid var(--line-strong); width: 100%; text-decoration: none;">
+                <i class="bi bi-google text-danger"></i> Sign in with Google
+            </a>
+        </div>
     </div>
 </div>
 

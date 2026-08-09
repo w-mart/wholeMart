@@ -1,56 +1,9 @@
 /* ============================================================
    WholeMart — Public Home Page
    Design system: "Dispatch Ledger"
-   A wholesale-logistics + bahi-khata ledger aesthetic. A dotted
-   route-line motif carries the eye from the Hero through How It
-   Works to the final "delivered" CTA stamp. Numbers are set in
-   mono type like manifest codes; role cards read like ID stamps.
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap');
-
-:root {
-  /* Type */
-  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-
-  /* Palette — Dispatch Ledger (matched to the WholeMart logo mark) */
-  --ink:          #12181F;  /* near-black, matches the logo's dark square */
-  --ink-soft:     rgba(18, 24, 31, .64);
-  --ink-faint:    rgba(18, 24, 31, .40);
-  --paper:        #F5F4EC;
-  --paper-raised: #FFFFFF;
-  --line:         rgba(18, 24, 31, .12);
-  --line-strong:  rgba(18, 24, 31, .22);
-
-  --brand-black:  #12181F;  /* logo square */
-  --green:        #12181F;  /* Cargo Green — brand / primary, deepened to sit with the black mark */
-  --green-deep:   rgba(18, 24, 31, .64);
-  --green-deep:   rgba(27, 94, 60, .10);
-  --green-tint:   rgba(27, 94, 60, .10);
-
-  --amber:        #E3A73B;  /* Manifest Amber — accent */
-  --amber-tint:   rgba(227, 167, 59, .16);
-
-  --blue:         #2E5AA8;  /* Route Blue — secondary */
-  --blue-tint:    rgba(46, 90, 168, .12);
-
-  --red:          #C2410C;  /* Alert Red — urgency, used sparingly */
-  --red-tint:     rgba(194, 65, 12, .12);
-
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 24px;
-
-  --shadow-sm: 0 2px 10px rgba(18,24,31,.06);
-  --shadow:    0 10px 30px rgba(18,24,31,.08);
-  --shadow-lg: 0 24px 70px rgba(18,24,31,.14);
-}
-
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-html, body { height: 100%; }
+@import 'common.css';
 
 body.wm-home {
   margin: 0;
@@ -71,18 +24,6 @@ body.wm-home {
 
 main section { scroll-margin-top: 96px; }
 
-img { max-width: 100%; }
-
-::selection { background: var(--amber-tint); color: var(--ink); }
-
-:focus-visible {
-  outline: 2px solid var(--green);
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
-}
 
 /* ============================================================
    SHARED TYPE / SECTION UTILITIES
@@ -604,7 +545,7 @@ img { max-width: 100%; }
   z-index: 1050;
   align-items: center; justify-content: center;
 }
-.modal-content {
+.modal-overlay .modal-content {
   position: relative;
   background: var(--paper-raised);
   border-radius: var(--radius-lg);
@@ -613,12 +554,12 @@ img { max-width: 100%; }
   padding: 34px;
   width: 100%; max-width: 420px;
 }
-.close-button {
+.modal-overlay .close-button {
   position: absolute; top: 14px; right: 16px;
   border: none; background: transparent; font-size: 1.6rem; line-height: 1;
   color: var(--ink-faint); cursor: pointer;
 }
-.close-button:hover { color: var(--ink); }
+.modal-overlay .close-button:hover { color: var(--ink); }
 
 /* Section headers use Bootstrap's mb-5 (3rem) — tightened to match the
    more compact rhythm of this page without touching the JSP markup. */
@@ -630,7 +571,7 @@ img { max-width: 100%; }
 
 /* Responsive — login modal on small screens */
 @media (max-width: 576px) {
-  .modal-content {
+  .modal-overlay .modal-content {
     padding: 24px;
     margin: 0 16px;
     max-width: none;

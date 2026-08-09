@@ -1,0 +1,27 @@
+/* Shared variables that map site tokens (home.css) to dashboard tokens
+   This file ensures the dashboard uses the home page's color tokens when available.
+*/
+:root {
+    /* Site tokens (home.css) are preferred; fall back to sensible values */
+    --site-paper: var(--paper-raised, #FFFFFF);
+    --site-paper-soft: var(--paper, #F5F4EC);
+    --site-line: var(--line, rgba(18,24,31,.12));
+    --site-green: var(--green, #1B5E3C);
+    --site-green-deep: var(--green-deep, #1B5E3C);
+    --site-blue: var(--blue, #2E5AA8);
+    --site-ink: var(--ink, #12181F);
+    --site-ink-soft: var(--ink-soft, rgba(18,24,31,.64));
+    --site-radius: var(--radius, 16px);
+
+    /* Map dashboard variables to site tokens when present */
+    --wm-paper: var(--site-paper, #FFFDF7);
+    --wm-cream: var(--site-paper-soft, #F6F2E7);
+    --wm-line: var(--site-line, #D8D0B8);
+    --wm-mint: var(--site-green, #BFD8C4);
+    --wm-mint-deep: var(--site-green-deep, #4F8F6B);
+    --wm-success: var(--site-green, #3F7D53);
+    --wm-dark: var(--site-ink, #1A2420);
+    --wm-ink: var(--site-ink, #20261F);
+    --wm-ink-soft: var(--site-ink-soft, #5B6158);
+    --wm-radius: var(--site-radius, 3px);
+}

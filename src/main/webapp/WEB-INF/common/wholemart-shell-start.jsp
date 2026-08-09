@@ -1,6 +1,20 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="/css/common.css" rel="stylesheet">
 <link href="/css/wholemart.css?v=project-theme-refresh-61" rel="stylesheet">
+<script>
+  function setWmLanguage(lang) {
+    try {
+      document.cookie = "wm_lang=" + encodeURIComponent(lang) + "; path=/; max-age=31536000";
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', lang);
+      window.location.href = url.toString();
+    } catch (e) {
+      window.location.search = '?lang=' + encodeURIComponent(lang);
+    }
+  }
+  window.setWmLanguage = setWmLanguage;
+  if (typeof globalThis !== 'undefined') { globalThis.setWmLanguage = setWmLanguage; }
+</script>
 <%-- Shared shell start: opens body, app wrapper, sidebar, main, and panel. Closed by wholemart-shell-end.jsp. --%>
 <%
     String wmUri = request.getRequestURI();
@@ -13,7 +27,8 @@
         wmBodyClass = (wmBodyClass + " wm-dashboard-page").trim();
     }
     boolean wmUseDistHeader = Boolean.TRUE.equals(request.getAttribute("wmUseDistHeader"));
-    if (wmUseDistHeader) {
+    boolean wmUseDriverHeader = Boolean.TRUE.equals(request.getAttribute("wmUseDriverHeader"));
+    if (wmUseDistHeader || wmUseDriverHeader) {
         wmBodyClass = (wmBodyClass + " wm-home").trim();
     }
     String wmDashboardHref = "/web/distributor/dashboard";
@@ -48,6 +63,8 @@
 <div class="wm-app">
     <% if (wmUseDistHeader) { %>
         <%@ include file="distributor-header.jsp" %>
+    <% } else if (wmUseDriverHeader) { %>
+        <%@ include file="driver-header.jsp" %>
     <% } else { %>
     <header class="wm-topbar" role="banner">
         <div class="wm-topbar-left">
@@ -108,7 +125,7 @@
         </div>
     </header>
     <% } %>
-    <% if (!wmUseDistHeader) { %>
+    <% if (!wmUseDistHeader && !wmUseDriverHeader) { %>
     <aside class="wm-sidebar">
         <nav class="wm-nav">
             <%
