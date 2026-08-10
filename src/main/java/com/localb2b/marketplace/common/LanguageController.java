@@ -49,7 +49,7 @@ public class LanguageController {
         return switch (lang.toLowerCase()) {
 case "hi", "hin", "hindi" -> new Locale("hi", "IN");
             case "en", "eng", "english" -> Locale.ENGLISH;
-            default -> null;
+            default -> Locale.ENGLISH;
         };
     }
 }

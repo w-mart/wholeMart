@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -6,7 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>WholeMart | Distributor Dashboard</title>
+        <title>WholeMart | <fmt:message key="distributor.dashboard_title"/></title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -56,25 +57,21 @@
                                             <section class="wm-home-hero-slide" data-hero-slide="0">
                                                 <div class="wm-home-hero-grid">
                                                     <div class="wm-home-hero-copy">
-                                                        <span class="wm-kicker"><span class="wm-live-dot"></span>
-                                                            DISTRIBUTOR WORKSPACE</span>
+                                                        <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="nav.distributor_workspace"/></span>
                                                         <h1 class="wm-home-title">Welcome back, <strong>
                                                                 <%=wmUserName%>
                                                             </strong></h1>
-                                                        <p class="wm-home-subtitle">
-                                                            Manage your inventory, retailers, deliveries, payments
-                                                            and AI recommendations from one centralized workspace.
-                                                        </p>
+                                                        <p class="wm-home-subtitle"><fmt:message key="distributor.hero.subtitle"/></p>
                                                         <div class="wm-home-actions">
                                                             <a class="home-btn home-btn-primary"
                                                                 href="/web/distributor/orders"><i
-                                                                    class="bi bi-box-seam"></i> Orders</a>
+                                                                    class="bi bi-box-seam"></i> <fmt:message key="nav.orders"/></a>
                                                             <a class="home-btn home-btn-secondary"
                                                                 href="/web/distributor/products"><i
-                                                                    class="bi bi-tags"></i> Products</a>
+                                                                    class="bi bi-tags"></i> <fmt:message key="nav.products"/></a>
                                                             <a class="home-btn home-btn-secondary"
                                                                 href="/web/distributor/delivery"><i
-                                                                    class="bi bi-truck"></i> Deliveries</a>
+                                                                    class="bi bi-truck"></i> <fmt:message key="nav.deliveries"/></a>
                                                         </div>
                                                     </div>
 
@@ -82,29 +79,28 @@
                                                         <div
                                                             class="d-flex justify-content-between align-items-start mb-2">
                                                             <div>
-                                                                <span class="wm-pulse-eyebrow">Today's
-                                                                    Performance</span>
-                                                                <h3>Business Snapshot</h3>
+                                                                <span class="wm-pulse-eyebrow"><fmt:message key="distributor.hero.today_performance"/></span>
+                                                                <h3><fmt:message key="snap.title"/></h3>
                                                             </div>
                                                             <div class="home-logo">AI</div>
                                                         </div>
 
-                                                        <div id="performanceBrief">Loading business insights...</div>
+                                                        <div id="performanceBrief"><fmt:message key="distributor.hero.loading_insights"/></div>
 
                                                         <hr>
 
                                                         <div class="wm-pulse-stats">
                                                             <div>
                                                                 <h5 id="heroTotalOrders">0</h5>
-                                                                <small>Orders</small>
+                                                                <small><fmt:message key="nav.orders"/></small>
                                                             </div>
                                                             <div>
                                                                 <h5 id="heroTotalItems">0</h5>
-                                                                <small>Products</small>
+                                                                <small><fmt:message key="nav.products"/></small>
                                                             </div>
                                                             <div>
                                                                 <h5 id="heroPendingSettlements">0</h5>
-                                                                <small>Pending</small>
+                                                                <small><fmt:message key="status.pending"/></small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -115,21 +111,16 @@
                                             <section class="wm-home-hero-slide" data-hero-slide="1">
                                                 <div class="wm-home-hero-grid">
                                                     <div class="wm-home-hero-copy">
-                                                        <span class="wm-kicker"><span class="wm-live-dot"></span> SMART
-                                                            RESTOCK</span>
-                                                        <h1 class="wm-home-title">Run lean, stay in stock</h1>
-                                                        <p class="wm-home-subtitle">
-                                                            Get AI suggestions for low-stock products and recommended
-                                                            replenishment quantities.
-                                                            Reduce cancellations and keep your retailers happy.
-                                                        </p>
+                                                        <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="distributor.hero.smart_restock"/></span>
+                                                        <h1 class="wm-home-title"><fmt:message key="distributor.hero.restock_title"/></h1>
+                                                        <p class="wm-home-subtitle"><fmt:message key="distributor.hero.restock_subtitle"/></p>
                                                         <div class="wm-home-actions">
                                                             <a class="home-btn home-btn-primary"
                                                                 href="/web/distributor/products"><i
-                                                                    class="bi bi-graph-down-arrow"></i> Restock</a>
+                                                                    class="bi bi-graph-down-arrow"></i> <fmt:message key="distributor.hero.restock_btn"/></a>
                                                             <a class="home-btn home-btn-secondary"
                                                                 href="/web/distributor/reports"><i
-                                                                    class="bi bi-bar-chart"></i> Analytics</a>
+                                                                    class="bi bi-bar-chart"></i> <fmt:message key="distributor.hero.analytics_btn"/></a>
                                                         </div>
                                                     </div>
 
@@ -137,28 +128,28 @@
                                                         <div
                                                             class="d-flex justify-content-between align-items-start mb-2">
                                                             <div>
-                                                                <span class="wm-pulse-eyebrow">AI Recommendations</span>
-                                                                <h3>Low Stock Alerts</h3>
+                                                                <span class="wm-pulse-eyebrow"><fmt:message key="distributor.hero.ai_reco"/></span>
+                                                                <h3><fmt:message key="ops.low_stock_alerts"/></h3>
                                                             </div>
                                                             <div class="home-logo">AI</div>
                                                         </div>
 
-                                                        <div id="restockBrief">Loading suggestions...</div>
+                                                        <div id="restockBrief"><fmt:message key="distributor.hero.loading_suggestions"/></div>
 
                                                         <hr>
 
                                                         <div class="wm-pulse-stats">
                                                             <div>
                                                                 <h5 id="heroLowStockCount">0</h5>
-                                                                <small>Products</small>
+                                                                <small><fmt:message key="nav.products"/></small>
                                                             </div>
                                                             <div>
                                                                 <h5 id="heroRestockCities">0</h5>
-                                                                <small>Areas</small>
+                                                                <small><fmt:message key="distributor.hero.areas"/></small>
                                                             </div>
                                                             <div>
                                                                 <h5 id="heroRestockRisk">0</h5>
-                                                                <small>Risk</small>
+                                                                <small><fmt:message key="distributor.hero.risk"/></small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -169,20 +160,16 @@
                                             <section class="wm-home-hero-slide" data-hero-slide="2">
                                                 <div class="wm-home-hero-grid">
                                                     <div class="wm-home-hero-copy">
-                                                        <span class="wm-kicker"><span class="wm-live-dot"></span>
-                                                            PAYMENTS & SETTLEMENTS</span>
-                                                        <h1 class="wm-home-title">Clear dues. Stay profitable.</h1>
-                                                        <p class="wm-home-subtitle">
-                                                            Track pending settlements, monitor payment health, and get
-                                                            reminders before dues turn overdue.
-                                                        </p>
+                                                        <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="distributor.hero.payments_title"/></span>
+                                                        <h1 class="wm-home-title"><fmt:message key="distributor.hero.payments_subtitle"/></h1>
+                                                        <p class="wm-home-subtitle"><fmt:message key="distributor.hero.payments_desc"/></p>
                                                         <div class="wm-home-actions">
                                                             <a class="home-btn home-btn-primary"
                                                                 href="/web/distributor/dues"><i
-                                                                    class="bi bi-cash-coin"></i> Open Ledger</a>
+                                                                    class="bi bi-cash-coin"></i> <fmt:message key="distributor.hero.open_ledger"/></a>
                                                             <a class="home-btn home-btn-secondary"
                                                                 href="/web/distributor/orders"><i
-                                                                    class="bi bi-box-seam"></i> Orders</a>
+                                                                    class="bi bi-box-seam"></i> <fmt:message key="nav.orders"/></a>
                                                         </div>
                                                     </div>
 
@@ -191,28 +178,28 @@
                                                         <div
                                                             class="d-flex justify-content-between align-items-start mb-2">
                                                             <div>
-                                                                <span class="wm-pulse-eyebrow">Settlement Health</span>
-                                                                <h3>Pending Collection</h3>
+                                                                <span class="wm-pulse-eyebrow"><fmt:message key="distributor.hero.settlement_health"/></span>
+                                                                <h3><fmt:message key="distributor.hero.pending_collection"/></h3>
                                                             </div>
                                                             <div class="home-logo">AI</div>
                                                         </div>
 
-                                                        <div id="settlementBrief">Loading payment health...</div>
+                                                        <div id="settlementBrief"><fmt:message key="distributor.hero.loading_payment_health"/></div>
 
                                                         <hr>
 
                                                         <div class="wm-pulse-stats">
                                                             <div>
                                                                 <h5 id="heroPendingDuesCount">0</h5>
-                                                                <small>Retailers</small>
+                                                                <small><fmt:message key="nav.retailers"/></small>
                                                             </div>
                                                             <div>
                                                                 <h5 id="heroPendingDuesAmount">₹ 0.00</h5>
-                                                                <small>Amount</small>
+                                                                <small><fmt:message key="distributor.hero.amount"/></small>
                                                             </div>
                                                             <div>
                                                                 <h5 id="heroSettlementETA">0</h5>
-                                                                <small>Days</small>
+                                                                <small><fmt:message key="distributor.hero.days"/></small>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -303,9 +290,8 @@
                             <section class="wm-bi-ai-combo mb-4">
                                 <div class="home-section-head">
                                     <span class="wm-kicker">ANALYTICS</span>
-                                    <h2>Business Intelligence & AI Assistant</h2>
-                                    <p>Real-time insights into inventory, fulfillment and business growth — with AI
-                                        help right beside it.</p>
+                                    <h2><fmt:message key="distributor.bi.title"/></h2>
+                                    <p><fmt:message key="distributor.bi.subtitle"/></p>
                                 </div>
 
                                 <div class="row g-4 align-items-stretch">
@@ -317,17 +303,17 @@
                                             <div class="col-md-6">
                                                 <article class="home-role-card wm-report-tile h-100">
                                                     <div class="wm-report-card-head">
-                                                        <h3 class="mb-0">Inventory Health</h3>
+                                                        <h3 class="mb-0"><fmt:message key="distributor.bi.inventory_health"/></h3>
                                         <div class="wm-ring is-success" style="--pct:92"><span id="reportInventoryHealthPct">92%</span>
                                                         </div>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Total Products</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.total_products"/></span><strong
                                                             id="reportTotalItems">0</strong></div>
-                                                    <div class="wm-report-item"><span>Categories</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.categories"/></span><strong
                                                             id="reportCategoryCount">0</strong></div>
-                                                    <div class="wm-report-item"><span>Availability</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.availability"/></span><strong
                                                             style="color:var(--wm-success)">92%</strong></div>
-                                                    <div class="wm-report-item"><span>Out of Stock</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.out_of_stock"/></span><strong
                                                             style="color:var(--wm-danger)">0</strong></div>
                                                 </article>
                                             </div>
@@ -335,17 +321,17 @@
                                             <div class="col-md-6">
                                                 <article class="home-role-card wm-report-tile h-100">
                                                     <div class="wm-report-card-head">
-                                                        <h3 class="mb-0">Order Performance</h3>
+                                                        <h3 class="mb-0"><fmt:message key="distributor.bi.order_performance"/></h3>
                                                         <div class="wm-ring is-success" style="--pct:98"><span>98%</span>
                                                         </div>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Total Orders</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.total_orders"/></span><strong
                                                             id="reportTotalOrders">0</strong></div>
-                                                    <div class="wm-report-item"><span>Running Orders</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.running_orders"/></span><strong
                                                             id="reportActiveOrders">0</strong></div>
-                                                    <div class="wm-report-item"><span>Success Rate</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.success_rate"/></span><strong
                                                             style="color:var(--wm-success)">98.4%</strong></div>
-                                                    <div class="wm-report-item"><span>Rejected</span><strong>0</strong>
+                                                    <div class="wm-report-item"><span><fmt:message key="status.rejected"/></span><strong>0</strong>
                                                     </div>
                                                 </article>
                                             </div>
@@ -353,35 +339,34 @@
                                             <div class="col-md-6">
                                                 <article class="home-role-card wm-report-tile h-100">
                                                     <div class="wm-report-card-head">
-                                                        <h3 class="mb-0">Business Growth</h3>
+                                                        <h3 class="mb-0"><fmt:message key="distributor.bi.business_growth"/></h3>
                                                         <div class="wm-ring" style="--pct:78"><span>78%</span></div>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Retailers</span><strong>84</strong>
+                                                    <div class="wm-report-item"><span><fmt:message key="nav.retailers"/></span><strong>84</strong>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Revenue Trend</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.revenue_trend"/></span><strong
                                                             style="color:var(--wm-success)">+12%</strong></div>
-                                                    <div class="wm-report-item"><span>Expansion</span><strong>2
-                                                            Cities</strong>
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.expansion"/></span><strong>2
+                                                            <fmt:message key="distributor.bi.cities"/></strong>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Target
-                                                            Achievement</span><strong>78%</strong></div>
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.target_achievement"/></span><strong>78%</strong></div>
                                                 </article>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <article class="home-role-card wm-report-tile h-100">
                                                     <div class="wm-report-card-head">
-                                                        <h3 class="mb-0">Payment Health</h3>
+                                                        <h3 class="mb-0"><fmt:message key="distributor.bi.payment_health"/></h3>
                                                         <div class="wm-ring is-success" style="--pct:88"><span>88%</span>
                                                         </div>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Pending Settlements</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.pending_settlements"/></span><strong
                                                             id="reportPendingSettlements">0</strong></div>
-                                                    <div class="wm-report-item"><span>Overdue Amount</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.overdue_amount"/></span><strong
                                                             style="color:var(--wm-danger)">₹0</strong></div>
-                                                    <div class="wm-report-item"><span>Disputes</span><strong>0</strong>
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.disputes"/></span><strong>0</strong>
                                                     </div>
-                                                    <div class="wm-report-item"><span>Collection Rate</span><strong
+                                                    <div class="wm-report-item"><span><fmt:message key="distributor.bi.collection_rate"/></span><strong
                                                             style="color:var(--wm-success)">88%</strong></div>
                                                 </article>
                                             </div>
@@ -396,18 +381,14 @@
                                             <div class="wm-ai-header">
                                                 <div class="wm-ai-avatar"><i class="bi bi-stars"></i></div>
                                                 <div>
-                                                    <span class="wm-ai-badge"><span class="wm-live-dot"></span> AI
-                                                        ASSISTANT</span>
-                                                    <h2 class="mb-0">Ask WholeMart AI</h2>
+                                                    <span class="wm-ai-badge"><span class="wm-live-dot"></span> <fmt:message key="nav.ai_chat"/></span>
+                                                    <h2 class="mb-0"><fmt:message key="ai.ask_title"/></h2>
                                                 </div>
                                             </div>
 
 
                                             <div id="wmDashboardAiResponse" class="wm-ai-response">
-                                                Welcome <strong>
-                                                    <%= wmUserName %>
-                                                </strong> 👋 I'm ready to help with orders, stock, payments and more —
-                                                try a suggestion below or type your own question.
+                                                <fmt:message key="ai.welcome_message"><fmt:param value="<%= wmUserName %>"/></fmt:message>
                                             </div>
 
                                             <div id="wmDashboardAiQuickButtons" class="wm-ai-chips mt-3">
@@ -419,7 +400,7 @@
                                             <form id="wmDashboardAiForm" class="mt-3">
                                                 <div class="input-group">
                                                     <input id="wmDashboardAiMessage" type="text" class="form-control"
-                                                        placeholder="Ask WholeMart AI anything...">
+                                                        placeholder="<fmt:message key="ai.ask_placeholder"/>">
                                                     <button class="wm-ai-mic-btn" type="button"><i
                                                             class="bi bi-mic-fill"></i></button>
                                                     <button class="wm-ai-send-btn" type="submit"><i
@@ -438,15 +419,12 @@
                             <section id="snapshot" class="mb-4">
                                 <div class="home-section-head">
                                     <span class="wm-kicker">ANALYTICS</span>
-                                    <h2>Business Snapshot</h2>
-                                    <p>A live ledger view of your orders, revenue trend, activity and payment health.
-                                    </p>
+                                    <h2><fmt:message key="snap.title"/></h2>
+                                    <p><fmt:message key="distributor.snapshot.subtitle"/></p>
                                 </div>
 
                                 <div class="card shadow-sm border-0 rounded-4">
-                                    <div class="card-header bg-white border-0 pt-4">
-                                        <h4 class="fw-bold text-center">Business Snapshot</h4>
-                                    </div>
+                                    <div class="card-header bg-white border-0 pt-4"><h4 class="fw-bold text-center"><fmt:message key="snap.title"/></h4></div>
                                     <div class="card-body px-lg-4">
                                         <div class="row g-4">
                                             <div class="col-lg-3 col-md-6">
@@ -481,30 +459,21 @@
                             <section class="wm-home-ops mb-4">
                                 <div class="home-section-head">
                                     <span class="wm-kicker">OPERATIONS</span>
-                                    <h2>Priority Center</h2>
-                                    <p>Live operational tasks generated from orders, inventory, payments and deliveries.
-                                    </p>
+                                    <h2><fmt:message key="distributor.priority.title"/></h2>
+                                    <p><fmt:message key="distributor.priority.subtitle"/></p>
                                 </div>
 
                                 <div class="wm-card">
                                     <div class="d-flex justify-content-between align-items-center mb-4">
                                         <div>
-                                            <h4 class="mb-1">Action Queue</h4>
-                                            <small class="text-muted">Items requiring your immediate attention.</small>
+                                            <h4 class="mb-1"><fmt:message key="distributor.priority.action_queue"/></h4>
+                                            <small class="text-muted"><fmt:message key="distributor.priority.action_queue_subtitle"/></small>
                                         </div>
                                         <span class="home-pill">LIVE</span>
                                     </div>
 
                                     <div id="wmAttentionList">
-                                        <div class="wm-home-ops-row">
-                                            <div class="wm-ops-icon"><i class="bi bi-hourglass-split"></i></div>
-                                            <div class="wm-ops-body">
-                                                <strong>Loading operational priorities...</strong>
-                                                <span>WholeMart is analysing your orders, inventory and
-                                                    deliveries.</span>
-                                            </div>
-                                            <span class="home-pill">Loading</span>
-                                        </div>
+                                        <div class="wm-home-ops-row"><div class="wm-ops-icon"><i class="bi bi-hourglass-split"></i></div><div class="wm-ops-body"><strong><fmt:message key="distributor.priority.loading_title"/></strong><span><fmt:message key="distributor.priority.loading_subtitle"/></span></div><span class="home-pill"><fmt:message key="distributor.priority.loading"/></span></div>
                                     </div>
                                 </div>
                             </section>
@@ -515,8 +484,8 @@
                             <!-- ========================================= -->
                             <section class="wm-home-impact">
                                 <div class="home-section-head">
-                                    <h2>Business Overview</h2>
-                                    <p>Live operational metrics from your distributor workspace.</p>
+                                    <h2><fmt:message key="distributor.overview.title"/></h2>
+                                    <p><fmt:message key="distributor.overview.subtitle"/></p>
                                 </div>
 
                                 <!-- Headline metrics -->
@@ -525,46 +494,46 @@
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Revenue</span>
+                                                <span class="wm-kpi-label"><fmt:message key="ops.revenue"/></span>
                                                 <strong id="capturedRevenue" class="wm-kpi-value">Rs. 0.00</strong>
                                             </div>
                                             <div class="home-role-mark is-success"><i class="bi bi-currency-rupee"></i>
                                             </div>
                                         </div>
-                                        <p class="wm-kpi-foot"><span class="wm-trend-up">+12%</span> vs last month</p>
+                                        <p class="wm-kpi-foot"><span class="wm-trend-up">+12%</span> <fmt:message key="distributor.overview.vs_last_month"/></p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Active Orders</span>
+                                                <span class="wm-kpi-label"><fmt:message key="ops.active_orders"/></span>
                                                 <strong id="bizActiveOrders" class="wm-kpi-value">0</strong>
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-box-seam"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot">Total Orders <strong id="bizTotalOrders">0</strong></p>
+                                        <p class="wm-kpi-foot"><fmt:message key="distributor.overview.total_orders"/> <strong id="bizTotalOrders">0</strong></p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Inventory Products</span>
+                                                <span class="wm-kpi-label"><fmt:message key="distributor.overview.inventory_products"/></span>
                                                 <strong id="bizTotalItems" class="wm-kpi-value">0</strong>
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-tag"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot">Active Products</p>
+                                        <p class="wm-kpi-foot"><fmt:message key="distributor.overview.active_products"/></p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Inventory Value</span>
+                                                <span class="wm-kpi-label"><fmt:message key="distributor.overview.inventory_value"/></span>
                                                 <strong id="bizInventoryTotalAmount" class="wm-kpi-value">₹ 0.00</strong>
                                             </div>
                                             <div class="home-role-mark is-success"><i class="bi bi-currency-rupee"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot">Total stock amount</p>
+                                        <p class="wm-kpi-foot"><fmt:message key="distributor.overview.total_stock_amount"/></p>
                                     </article>
 
 
@@ -572,7 +541,7 @@
 
                                 <!-- Secondary metrics — labeled and visually lighter so the
                      four headline numbers above stay the primary read. -->
-                                <div class="wm-subsection-label">At a Glance</div>
+                                <div class="wm-subsection-label"><fmt:message key="distributor.overview.at_a_glance"/></div>
                                 <div class="wm-kpi-secondary">
 
                                     <article class="wm-kpi-card">
@@ -583,41 +552,41 @@
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-truck"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot">Active Drivers</p>
+                                        <p class="wm-kpi-foot"><fmt:message key="distributor.overview.active_drivers"/></p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Retailers</span>
+                                                <span class="wm-kpi-label"><fmt:message key="nav.retailers"/></span>
                                                 <strong class="wm-kpi-value" id="bizRetailersCount">0</strong>
                                             </div>
                                             <div class="home-role-mark"><i class="bi bi-shop"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot"><span class="wm-trend-up" id="bizRetailersTrend">0</span> this week</p>
+                                        <p class="wm-kpi-foot"><span class="wm-trend-up" id="bizRetailersTrend">0</span> <fmt:message key="distributor.overview.this_week"/></p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Catalog Health</span>
+                                                <span class="wm-kpi-label"><fmt:message key="distributor.overview.catalog_health"/></span>
                                                 <strong class="wm-kpi-value" id="bizCatalogHealthPct">0%</strong>
                                             </div>
                                             <div class="wm-ring is-success" style="--pct:0"><span id="bizCatalogHealthPctRing">0%</span></div>
                                         </div>
-                                        <p class="wm-kpi-foot">Products Ready</p>
+                                        <p class="wm-kpi-foot"><fmt:message key="distributor.overview.products_ready"/></p>
                                     </article>
 
                                     <article class="wm-kpi-card">
                                         <div class="wm-kpi-top">
                                             <div>
-                                                <span class="wm-kpi-label">Alerts</span>
+                                                <span class="wm-kpi-label"><fmt:message key="nav.alerts"/></span>
                                                 <strong class="wm-kpi-value" id="bizAlertsCount" style="color:var(--wm-danger)">0</strong>
                                             </div>
                                             <div class="home-role-mark is-danger"><i
                                                     class="bi bi-exclamation-triangle"></i></div>
                                         </div>
-                                        <p class="wm-kpi-foot" style="color:var(--wm-danger)">Immediate Action</p>
+                                        <p class="wm-kpi-foot" style="color:var(--wm-danger)"><fmt:message key="distributor.overview.immediate_action"/></p>
                                     </article>
 
                                 </div>
@@ -630,83 +599,81 @@
                             <section class="wm-home-roles mb-4">
                                 <div class="home-section-head">
                                     <span class="wm-kicker">OPERATIONS</span>
-                                    <h2>Fulfillment & Supply Chain</h2>
-                                    <p>Monitor every operational stage from order placement to successful delivery.</p>
+                                    <h2><fmt:message key="distributor.fulfillment.title"/></h2>
+                                    <p><fmt:message key="distributor.fulfillment.subtitle"/></p>
                                 </div>
 
                                 <div class="wm-home-role-grid">
 
                                     <article class="home-role-card">
                                         <div class="home-role-mark"><i class="bi bi-box-seam"></i></div>
-                                        <h3>Order Pipeline</h3>
-                                        <p>Live order fulfillment queue.</p>
+                                        <h3><fmt:message key="distributor.fulfillment.order_pipeline"/></h3>
+                                        <p><fmt:message key="distributor.fulfillment.order_pipeline_subtitle"/></p>
                                         <div class="mt-4">
                                             <div class="wm-role-metric-row">
-                                                <span>Waiting Review</span>
+                                                <span><fmt:message key="distributor.fulfillment.waiting_review"/></span>
                                                 <strong id="ordersWaiting" style="color:var(--wm-danger)">0</strong>
                                             </div>
                                             <div class="wm-role-metric-row">
-                                                <span>Ready to Pack</span>
+                                                <span><fmt:message key="distributor.fulfillment.ready_to_pack"/></span>
                                                 <strong id="ordersReady">0</strong>
                                             </div>
                                         </div>
-                                        <a href="/web/distributor/orders" class="home-btn home-btn-primary mt-4">Open
-                                            Orders</a>
+                                        <a href="/web/distributor/orders" class="home-btn home-btn-primary mt-4"><fmt:message key="distributor.fulfillment.open_orders"/></a>
                                     </article>
 
                                     <article class="home-role-card">
                                         <div class="home-role-mark"><i class="bi bi-bar-chart-line"></i></div>
-                                        <h3>Inventory</h3>
-                                        <p>Stock availability across catalog.</p>
+                                        <h3><fmt:message key="distributor.fulfillment.inventory"/></h3>
+                                        <p><fmt:message key="distributor.fulfillment.inventory_subtitle"/></p>
                                         <div class="mt-4">
                                             <div class="wm-role-metric-row">
-                                                <span>Categories</span>
+                                                <span><fmt:message key="distributor.bi.categories"/></span>
                                                 <strong id="categoryCount">0</strong>
                                             </div>
                                             <div class="wm-role-metric-row">
-                                                <span>Refill Needed</span>
+                                                <span><fmt:message key="distributor.fulfillment.refill_needed"/></span>
                                                 <strong id="stockPlanningCount"
                                                     style="color:var(--wm-warning)">0</strong>
                                             </div>
                                         </div>
                                         <a href="/web/distributor/products"
-                                            class="home-btn home-btn-primary mt-4">Manage Products</a>
+                                            class="home-btn home-btn-primary mt-4"><fmt:message key="distributor.fulfillment.manage_products"/></a>
                                     </article>
 
                                     <article class="home-role-card">
                                         <div class="home-role-mark"><i class="bi bi-cash-coin"></i></div>
-                                        <h3>Credit Ledger</h3>
-                                        <p>Retailer dues & settlements.</p>
+                                        <h3><fmt:message key="feat.credit_title"/></h3>
+                                        <p><fmt:message key="distributor.fulfillment.ledger_subtitle"/></p>
                                         <div class="mt-4">
                                             <div class="wm-role-metric-row">
-                                                <span>Overdue Amount</span>
+                                                <span><fmt:message key="distributor.bi.overdue_amount"/></span>
                                                 <strong style="color:var(--wm-danger)">₹0</strong>
                                             </div>
                                             <div class="wm-role-metric-row">
-                                                <span>Disputes</span>
+                                                <span><fmt:message key="distributor.bi.disputes"/></span>
                                                 <strong>0</strong>
                                             </div>
                                         </div>
-                                        <a href="/web/distributor/dues" class="home-btn home-btn-primary mt-4">Open
-                                            Ledger</a>
+                                        <a href="/web/distributor/dues" class="home-btn home-btn-primary mt-4"><fmt:message key="distributor.hero.open_ledger"/></a>
                                     </article>
 
                                     <article class="home-role-card">
                                         <div class="home-role-mark"><i class="bi bi-truck"></i></div>
-                                        <h3>Dispatch Hub</h3>
-                                        <p>Delivery planning & fleet tracking.</p>
+                                        <h3><fmt:message key="distributor.fulfillment.dispatch_hub"/></h3>
+                                        <p><fmt:message key="distributor.fulfillment.dispatch_hub_subtitle"/></p>
                                         <div class="mt-4">
                                             <div class="wm-role-metric-row">
-                                                <span>Completed</span>
+                                                <span><fmt:message key="status.completed"/></span>
                                                 <strong id="completedDropoffs">0</strong>
                                             </div>
                                             <div class="wm-role-metric-row">
-                                                <span>Active Trips</span>
+                                                <span><fmt:message key="distributor.fulfillment.active_trips"/></span>
                                                 <strong>0</strong>
                                             </div>
                                         </div>
                                         <a href="/web/distributor/delivery"
-                                            class="home-btn home-btn-primary mt-4">Dispatch Center</a>
+                                            class="home-btn home-btn-primary mt-4"><fmt:message key="distributor.fulfillment.dispatch_center"/></a>
                                     </article>
 
                                 </div>
@@ -724,39 +691,39 @@
                                         <div class="wm-card h-100">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <div>
-                                                    <span class="wm-kicker">LIVE FEED</span>
-                                                    <h3 class="mb-0">Recent Activities</h3>
+                                                    <span class="wm-kicker"><fmt:message key="distributor.productivity.live_feed"/></span>
+                                                    <h3 class="mb-0"><fmt:message key="distributor.productivity.recent_activities"/></h3>
                                                 </div>
-                                                <span class="home-pill">Today</span>
+                                                <span class="home-pill"><fmt:message key="distributor.productivity.today"/></span>
                                             </div>
 
                                             <div class="wm-timeline">
                                                 <div class="wm-timeline-item">
                                                     <div class="wm-timeline-icon is-success"><i
                                                             class="bi bi-check-lg"></i></div>
-                                                    <div><strong>Order #ORD-10025 Accepted</strong>
-                                                        <div class="text-muted">5 minutes ago</div>
+                                                    <div><strong><fmt:message key="distributor.productivity.activity1_title"/></strong>
+                                                        <div class="text-muted"><fmt:message key="distributor.productivity.activity1_time"/></div>
                                                     </div>
                                                 </div>
                                                 <div class="wm-timeline-item">
                                                     <div class="wm-timeline-icon is-info"><i class="bi bi-box-seam"></i>
                                                     </div>
-                                                    <div><strong>Inventory Updated</strong>
-                                                        <div class="text-muted">12 products restocked</div>
+                                                    <div><strong><fmt:message key="distributor.productivity.activity2_title"/></strong>
+                                                        <div class="text-muted"><fmt:message key="distributor.productivity.activity2_desc"/></div>
                                                     </div>
                                                 </div>
                                                 <div class="wm-timeline-item">
                                                     <div class="wm-timeline-icon is-warning"><i
                                                             class="bi bi-cash-coin"></i></div>
-                                                    <div><strong>Payment Pending</strong>
-                                                        <div class="text-muted">₹12,500 awaiting settlement</div>
+                                                    <div><strong><fmt:message key="distributor.productivity.activity3_title"/></strong>
+                                                        <div class="text-muted"><fmt:message key="distributor.productivity.activity3_desc"/></div>
                                                     </div>
                                                 </div>
                                                 <div class="wm-timeline-item">
                                                     <div class="wm-timeline-icon is-info"><i class="bi bi-truck"></i>
                                                     </div>
-                                                    <div><strong>Driver Assigned</strong>
-                                                        <div class="text-muted">Delivery route optimized</div>
+                                                    <div><strong><fmt:message key="distributor.productivity.activity4_title"/></strong>
+                                                        <div class="text-muted"><fmt:message key="distributor.productivity.activity4_desc"/></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -765,12 +732,12 @@
 
                                     <div class="col-lg-4">
                                         <div class="wm-card h-100">
-                                            <span class="wm-kicker">SHORTCUTS</span>
-                                            <h3 class="mb-4">Quick Actions</h3>
+                                            <span class="wm-kicker"><fmt:message key="distributor.productivity.shortcuts"/></span>
+                                            <h3 class="mb-4"><fmt:message key="distributor.productivity.quick_actions"/></h3>
                                             <div class="wm-quick-actions">
                                                 <a href="/web/distributor/add-product"
                                                     class="home-btn home-btn-primary"><i class="bi bi-plus-circle"></i>
-                                                    Add Product</a>
+                                                    <fmt:message key="nav.add_product"/></a>
                                                 <a href="/web/distributor/orders" class="home-btn home-btn-secondary"><i
                                                         class="bi bi-box-seam"></i> Manage Orders</a>
                                                 <a href="/web/distributor/delivery"
@@ -780,7 +747,7 @@
                                                         class="bi bi-cash-coin"></i> View Payments</a>
                                                 <a href="/web/distributor/reports"
                                                     class="home-btn home-btn-secondary"><i class="bi bi-bar-chart"></i>
-                                                    Analytics</a>
+                                                    <fmt:message key="distributor.hero.analytics_btn"/></a>
                                             </div>
                                         </div>
                                     </div>

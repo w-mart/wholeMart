@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WholeMart | Retailer Dashboard</title>
+    <title>WholeMart | <fmt:message key="retailer.dashboard_title"/></title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -38,7 +39,7 @@
                                         <section class="wm-home-hero-slide" data-hero-slide="0">
                                             <div class="wm-home-hero-grid">
                                                 <div class="wm-home-hero-copy">
-                                                    <span class="wm-kicker"><span class="wm-live-dot"></span> RETAILER WORKSPACE</span>
+                                                    <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="nav.retailer_workspace"/></span>
                                                     <h1 class="wm-home-title">Welcome back, <strong><%=wmUserNameHeader%></strong></h1>
                                                     <p class="wm-home-subtitle">
                                                         Find distributors, build carts, place orders, and track dues from one centralized workspace.

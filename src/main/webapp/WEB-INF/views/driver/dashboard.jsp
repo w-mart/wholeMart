@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WholeMart | Driver Logistics & Dispatch Hub</title>
+    <title>WholeMart | <fmt:message key="driver.dashboard_title"/></title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
@@ -47,40 +47,38 @@
                                 <section class="wm-home-hero-slide" data-hero-slide="0">
                                     <div class="wm-home-hero-grid">
                                         <div class="wm-home-hero-copy">
-                                            <span class="wm-kicker"><span class="wm-live-dot"></span> DRIVER DISPATCH WORKSPACE</span>
-                                            <h1 class="wm-home-title">Welcome back, <strong><%= wmUserName %></strong></h1>
-                                            <p class="wm-home-subtitle">
-                                                Monitor live delivery routes, accept incoming distributor assignments, verify customer OTPs, and track your daily payouts in real time.
-                                            </p>
+                                            <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="nav.driver_workspace"/></span>
+                                            <h1 class="wm-home-title"><fmt:message key="driver.hero.welcome"><fmt:param value="<%= wmUserName %>"/></fmt:message></h1>
+                                            <p class="wm-home-subtitle"><fmt:message key="driver.hero.subtitle"/></p>
                                             <div class="wm-home-actions">
-                                                <a class="home-btn home-btn-primary" href="${pageContext.request.contextPath}/web/driver/deliveries"><i class="bi bi-truck"></i> All Deliveries</a>
-                                                <a class="home-btn home-btn-secondary" href="${pageContext.request.contextPath}/web/driver/earnings"><i class="bi bi-wallet2"></i> Earnings Report</a>
-                                                <a class="home-btn home-btn-secondary" href="${pageContext.request.contextPath}/web/driver/ai-chat"><i class="bi bi-stars"></i> Logistics AI</a>
+                                                <a class="home-btn home-btn-primary" href="${pageContext.request.contextPath}/web/driver/deliveries"><i class="bi bi-truck"></i> <fmt:message key="driver.hero.all_deliveries"/></a>
+                                                <a class="home-btn home-btn-secondary" href="${pageContext.request.contextPath}/web/driver/earnings"><i class="bi bi-wallet2"></i> <fmt:message key="driver.hero.earnings_report"/></a>
+                                                <a class="home-btn home-btn-secondary" href="${pageContext.request.contextPath}/web/driver/ai-chat"><i class="bi bi-stars"></i> <fmt:message key="driver.hero.logistics_ai"/></a>
                                             </div>
                                         </div>
 
                                         <div class="wm-pulse-card">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
                                                 <div>
-                                                    <span class="wm-pulse-eyebrow">Driver Shift Performance</span>
-                                                    <h3>Dispatch Snapshot</h3>
+                                                    <span class="wm-pulse-eyebrow"><fmt:message key="driver.hero.shift_performance"/></span>
+                                                    <h3><fmt:message key="driver.hero.dispatch_snapshot"/></h3>
                                                 </div>
                                                 <div class="home-logo">AI</div>
                                             </div>
-                                            <div id="driverPerformanceBrief">Loading active shift telemetries...</div>
+                                            <div id="driverPerformanceBrief"><fmt:message key="driver.hero.loading_telemetry"/></div>
                                             <hr>
                                             <div class="wm-pulse-stats">
                                                 <div>
                                                     <h5 id="heroActiveDeliveries">0</h5>
-                                                    <small>Active Trips</small>
+                                                    <small><fmt:message key="distributor.fulfillment.active_trips"/></small>
                                                 </div>
                                                 <div>
                                                     <h5 id="heroTodayEarnings">₹0</h5>
-                                                    <small>Today Payout</small>
+                                                    <small><fmt:message key="driver.hero.today_payout"/></small>
                                                 </div>
                                                 <div>
                                                     <h5 id="heroCompletedTrips">0</h5>
-                                                    <small>Completed</small>
+                                                    <small><fmt:message key="status.completed"/></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,39 +89,37 @@
                                 <section class="wm-home-hero-slide" data-hero-slide="1">
                                     <div class="wm-home-hero-grid">
                                         <div class="wm-home-hero-copy">
-                                            <span class="wm-kicker"><span class="wm-live-dot"></span> GPS ROUTE TRACKING</span>
-                                            <h1 class="wm-home-title">Optimized Multi-Stop Delivery.</h1>
-                                            <p class="wm-home-subtitle">
-                                                Fast warehouse pickups from distributors and direct doorstep store deliveries with GPS navigation support.
-                                            </p>
+                                            <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="driver.hero.gps_tracking"/></span>
+                                            <h1 class="wm-home-title"><fmt:message key="driver.hero.optimized_delivery"/></h1>
+                                            <p class="wm-home-subtitle"><fmt:message key="driver.hero.optimized_delivery_subtitle"/></p>
                                             <div class="wm-home-actions">
-                                                <a class="home-btn home-btn-primary" href="${pageContext.request.contextPath}/web/driver/deliveries"><i class="bi bi-geo-alt"></i> View Routes</a>
-                                                <a class="home-btn home-btn-secondary" href="${pageContext.request.contextPath}/web/driver/orders"><i class="bi bi-box-seam"></i> Assigned Orders</a>
+                                                <a class="home-btn home-btn-primary" href="${pageContext.request.contextPath}/web/driver/deliveries"><i class="bi bi-geo-alt"></i> <fmt:message key="driver.hero.view_routes"/></a>
+                                                <a class="home-btn home-btn-secondary" href="${pageContext.request.contextPath}/web/driver/orders"><i class="bi bi-box-seam"></i> <fmt:message key="driver.hero.assigned_orders"/></a>
                                             </div>
                                         </div>
 
                                         <div class="wm-pulse-card">
                                             <div class="d-flex justify-content-between align-items-start mb-2">
                                                 <div>
-                                                    <span class="wm-pulse-eyebrow">Fleet Route Status</span>
-                                                    <h3>GPS Telemetry</h3>
+                                                    <span class="wm-pulse-eyebrow"><fmt:message key="driver.hero.fleet_status"/></span>
+                                                    <h3><fmt:message key="driver.hero.gps_telemetry"/></h3>
                                                 </div>
                                                 <div class="home-logo">GPS</div>
                                             </div>
-                                            <div>Live satellite route mapping and real-time transit status enabled.</div>
+                                            <div><fmt:message key="driver.hero.gps_enabled"/></div>
                                             <hr>
                                             <div class="wm-pulse-stats">
                                                 <div>
                                                     <h5 id="heroTotalDeliveries">0</h5>
-                                                    <small>Lifetime</small>
+                                                    <small><fmt:message key="driver.kpi.lifetime"/></small>
                                                 </div>
                                                 <div>
                                                     <h5 id="heroTodayTrips">0</h5>
-                                                    <small>Today Assigned</small>
+                                                    <small><fmt:message key="driver.kpi.today_assigned"/></small>
                                                 </div>
                                                 <div>
                                                     <h5 id="heroTotalEarnings">₹0</h5>
-                                                    <small>Total Balance</small>
+                                                    <small><fmt:message key="driver.kpi.total_balance"/></small>
                                                 </div>
                                             </div>
                                         </div>
@@ -211,17 +207,17 @@
                     <div class="wm-status-indicator">
                         <div class="wm-pulse-ring" id="onlineDot"></div>
                         <div>
-                            <div class="wm-status-label" id="onlineText">Checking dispatch channel status...</div>
+                            <div class="wm-status-label" id="onlineText"><fmt:message key="driver.status.checking"/></div>
                             <div class="wm-status-meta">
-                                <span><i class="bi bi-broadcast text-primary"></i> Dispatch Channel</span>
-                                <span><i class="bi bi-crosshair text-success"></i> GPS Tracker Active</span>
-                                <span class="d-none d-sm-inline"><i class="bi bi-clock-history"></i> Syncing every 15s</span>
+                                <span><i class="bi bi-broadcast text-primary"></i> <fmt:message key="driver.status.dispatch_channel"/></span>
+                                <span><i class="bi bi-crosshair text-success"></i> <fmt:message key="driver.status.gps_active"/></span>
+                                <span class="d-none d-sm-inline"><i class="bi bi-clock-history"></i> <fmt:message key="driver.status.syncing"/></span>
                             </div>
                         </div>
                     </div>
                     <div>
                         <button id="toggleOnlineBtn" class="wm-toggle-btn btn-online">
-                            <i class="bi bi-power"></i> Go Online
+                            <i class="bi bi-power"></i> <fmt:message key="driver.status.go_online"/>
                         </button>
                     </div>
                 </section>
@@ -229,57 +225,57 @@
                 <!-- ===================================================== -->
                 <!-- 4. KPI METRICS OVERVIEW -->
                 <!-- ===================================================== -->
-                <section class="wm-driver-kpi-grid" aria-label="Delivery Statistics">
+                <section class="wm-driver-kpi-grid" aria-label="<fmt:message key="nav.deliveries"/> Statistics">
                     <div class="wm-driver-kpi-card">
                         <div>
-                            <div class="wm-driver-kpi-label">Total Deliveries</div>
+                            <div class="wm-driver-kpi-label"><fmt:message key="driver.kpi.total_deliveries"/></div>
                             <div class="wm-driver-kpi-val" id="statTotalDeliveries">0</div>
-                            <div class="wm-driver-kpi-sub">Lifetime Trips</div>
+                            <div class="wm-driver-kpi-sub"><fmt:message key="driver.kpi.lifetime_trips"/></div>
                         </div>
                         <div class="wm-driver-icon-pill icon-dark"><i class="bi bi-truck"></i></div>
                     </div>
 
                     <div class="wm-driver-kpi-card">
                         <div>
-                            <div class="wm-driver-kpi-label">Completed</div>
+                            <div class="wm-driver-kpi-label"><fmt:message key="status.completed"/></div>
                             <div class="wm-driver-kpi-val text-success" id="statCompleted">0</div>
-                            <div class="wm-driver-kpi-sub">Verified & Closed</div>
+                            <div class="wm-driver-kpi-sub"><fmt:message key="driver.kpi.verified_closed"/></div>
                         </div>
                         <div class="wm-driver-icon-pill"><i class="bi bi-check2-circle"></i></div>
                     </div>
 
                     <div class="wm-driver-kpi-card">
                         <div>
-                            <div class="wm-driver-kpi-label">Active Orders</div>
+                            <div class="wm-driver-kpi-label"><fmt:message key="ops.active_orders"/></div>
                             <div class="wm-driver-kpi-val text-warning" id="statActive">0</div>
-                            <div class="wm-driver-kpi-sub">Assigned / In Transit</div>
+                            <div class="wm-driver-kpi-sub"><fmt:message key="driver.kpi.assigned_in_transit"/></div>
                         </div>
                         <div class="wm-driver-icon-pill icon-amber"><i class="bi bi-hourglass-split"></i></div>
                     </div>
 
                     <div class="wm-driver-kpi-card">
                         <div>
-                            <div class="wm-driver-kpi-label">Today's Trips</div>
+                            <div class="wm-driver-kpi-label"><fmt:message key="driver.kpi.today_trips"/></div>
                             <div class="wm-driver-kpi-val" id="statToday">0</div>
-                            <div class="wm-driver-kpi-sub">Assigned Today</div>
+                            <div class="wm-driver-kpi-sub"><fmt:message key="driver.kpi.assigned_today"/></div>
                         </div>
                         <div class="wm-driver-icon-pill icon-dark"><i class="bi bi-calendar2-check"></i></div>
                     </div>
 
                     <div class="wm-driver-kpi-card">
                         <div>
-                            <div class="wm-driver-kpi-label">Today's Earnings</div>
+                            <div class="wm-driver-kpi-label"><fmt:message key="driver.kpi.today_earnings"/></div>
                             <div class="wm-driver-kpi-val text-success" id="statEarnings">₹0</div>
-                            <div class="wm-driver-kpi-sub">Calculated Payout</div>
+                            <div class="wm-driver-kpi-sub"><fmt:message key="driver.kpi.calculated_payout"/></div>
                         </div>
                         <div class="wm-driver-icon-pill"><i class="bi bi-currency-rupee"></i></div>
                     </div>
 
                     <div class="wm-driver-kpi-card">
                         <div>
-                            <div class="wm-driver-kpi-label">Total Earnings</div>
+                            <div class="wm-driver-kpi-label"><fmt:message key="driver.kpi.total_earnings"/></div>
                             <div class="wm-driver-kpi-val" id="statTotalEarnings">₹0</div>
-                            <div class="wm-driver-kpi-sub">Accumulated Balance</div>
+                            <div class="wm-driver-kpi-sub"><fmt:message key="driver.kpi.accumulated_balance"/></div>
                         </div>
                         <div class="wm-driver-icon-pill icon-dark"><i class="bi bi-wallet2"></i></div>
                     </div>
@@ -293,9 +289,9 @@
                 <section class="wm-home-ops mb-4">
                     <div class="home-section-head d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div>
-                            <span class="wm-kicker"><span class="wm-live-dot"></span> LIVE DISPATCH QUEUE</span>
-                            <h2>Active Delivery Assignments</h2>
-                            <p>Live incoming assignments requiring your acceptance, pickup, or delivery OTP.</p>
+                            <span class="wm-kicker"><span class="wm-live-dot"></span> <fmt:message key="driver.dispatch.live_queue"/></span>
+                            <h2><fmt:message key="driver.dispatch.active_assignments"/></h2>
+                            <p><fmt:message key="driver.dispatch.subtitle"/></p>
                         </div>
                         <span class="home-pill">REAL-TIME</span>
                     </div>
@@ -305,14 +301,14 @@
                             <table class="wm-table wm-driver-table table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Order Reference</th>
-                                        <th>Status</th>
-                                        <th>Pickup OTP</th>
-                                        <th>Delivery OTP</th>
-                                        <th>Delivery Fee</th>
-                                        <th>Assigned At</th>
-                                        <th class="text-end">Actions</th>
+                                        <th><fmt:message key="driver.table.hash"/></th>
+                                        <th><fmt:message key="driver.table.order_ref"/></th>
+                                        <th><fmt:message key="driver.table.status"/></th>
+                                        <th><fmt:message key="driver.table.pickup_otp"/></th>
+                                        <th><fmt:message key="driver.table.delivery_otp"/></th>
+                                        <th><fmt:message key="driver.table.delivery_fee"/></th>
+                                        <th><fmt:message key="driver.table.assigned_at"/></th>
+                                        <th class="text-end"><fmt:message key="driver.table.actions"/></th>
                                     </tr>
                                 </thead>
                                 <tbody id="activeDeliveriesBody">
@@ -320,7 +316,7 @@
                                         <td colspan="8">
                                             <div class="wm-empty-state">
                                                 <div class="spinner-border text-success mb-2" role="status" style="width: 1.8rem; height: 1.8rem;"></div>
-                                                <div>Loading active deliveries...</div>
+                                                <div><fmt:message key="driver.table.loading_active"/></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -336,12 +332,12 @@
                 <section class="wm-home-ops mb-5">
                     <div class="home-section-head d-flex justify-content-between align-items-center flex-wrap gap-2">
                         <div>
-                            <span class="wm-kicker">LEDGER ARCHIVE</span>
-                            <h2>Recent Delivery History</h2>
-                            <p>Recent trip completions, assigned tasks, and settlement verifications.</p>
+                            <span class="wm-kicker"><fmt:message key="driver.history.ledger_archive"/></span>
+                            <h2><fmt:message key="driver.history.title"/></h2>
+                            <p><fmt:message key="driver.history.subtitle"/></p>
                         </div>
                         <a href="${pageContext.request.contextPath}/web/driver/deliveries" class="home-btn home-btn-secondary py-1 px-3">
-                            View Full Ledger <i class="bi bi-arrow-right"></i>
+                            <fmt:message key="driver.history.view_full_ledger"/> <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
 
@@ -350,12 +346,12 @@
                             <table class="wm-table wm-driver-table table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Delivery ID</th>
-                                        <th>Order ID</th>
-                                        <th>Status</th>
-                                        <th>Date</th>
-                                        <th>Fee</th>
+                                        <th><fmt:message key="driver.table.hash"/></th>
+                                        <th><fmt:message key="driver.table.delivery_id"/></th>
+                                        <th><fmt:message key="driver.table.order_id"/></th>
+                                        <th><fmt:message key="driver.table.status"/></th>
+                                        <th><fmt:message key="driver.table.date"/></th>
+                                        <th><fmt:message key="driver.table.fee"/></th>
                                     </tr>
                                 </thead>
                                 <tbody id="recentDeliveriesBody">
@@ -363,7 +359,7 @@
                                         <td colspan="6">
                                             <div class="wm-empty-state">
                                                 <div class="spinner-border text-secondary mb-2" role="status" style="width: 1.8rem; height: 1.8rem;"></div>
-                                                <div>Loading recent deliveries...</div>
+                                                <div><fmt:message key="driver.table.loading_recent"/></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -398,11 +394,11 @@
                             </div>
                             <div class="d-flex align-items-center gap-2 small text-white-50">
                                 <i class="bi bi-shield-check"></i>
-                                <span>Review pickup warehouse and drop-off retailer details before accepting</span>
+                                <span><fmt:message key="driver.modal.review_details"/></span>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="<fmt:message key="btn.close"/>"></button>
                 </div>
 
                 <!-- Body -->
@@ -418,9 +414,9 @@
                                     </div>
                                     <div class="flex-grow-1 min-w-0">
                                         <span class="badge bg-warning-subtle text-warning-emphasis font-monospace fw-bold px-2 py-1 rounded-pill mb-1" style="font-size: 0.72rem;">
-                                            <i class="bi bi-box-arrow-up me-1"></i> STEP 1: PICKUP HUB
+                                            <i class="bi bi-box-arrow-up me-1"></i> <fmt:message key="driver.modal.step1"/>
                                         </span>
-                                        <h6 class="fw-bold mb-1 mt-1 text-dark">Distributor / Warehouse</h6>
+                                        <h6 class="fw-bold mb-1 mt-1 text-dark"><fmt:message key="driver.modal.pickup_location"/></h6>
                                         <p class="text-secondary mb-0 small" id="modalFromAddress">Loading...</p>
                                     </div>
                                 </div>
@@ -435,9 +431,9 @@
                                     </div>
                                     <div class="flex-grow-1 min-w-0">
                                         <span class="badge bg-success-subtle text-success-emphasis font-monospace fw-bold px-2 py-1 rounded-pill mb-1" style="font-size: 0.72rem;">
-                                            <i class="bi bi-geo-alt-fill me-1"></i> STEP 2: DROP-OFF LOCATION
+                                            <i class="bi bi-geo-alt-fill me-1"></i> <fmt:message key="driver.modal.step2"/>
                                         </span>
-                                        <h6 class="fw-bold mb-1 mt-1 text-dark">Retailer / Storefront</h6>
+                                        <h6 class="fw-bold mb-1 mt-1 text-dark"><fmt:message key="driver.modal.dropoff_location"/></h6>
                                         <p class="text-secondary mb-0 small" id="modalToAddress">Loading...</p>
                                     </div>
                                 </div>
@@ -449,33 +445,33 @@
                     <div class="row g-2 g-md-3 mb-3">
                         <div class="col-6 col-md-3">
                             <div class="wm-modal-metric h-100">
-                                <div class="wm-metric-label">Driver Fee</div>
+                                <div class="wm-metric-label"><fmt:message key="driver.modal.driver_fee"/></div>
                                 <h3 class="wm-metric-value text-success" id="modalDeliveryFee">₹0</h3>
-                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-wallet2 text-success me-1"></i> Direct bank credit</div>
+                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-wallet2 text-success me-1"></i> <fmt:message key="driver.modal.bank_credit"/></div>
                             </div>
                         </div>
 
                         <div class="col-6 col-md-3">
                             <div class="wm-modal-metric h-100">
-                                <div class="wm-metric-label">Order Total</div>
+                                <div class="wm-metric-label"><fmt:message key="driver.modal.order_total"/></div>
                                 <h3 class="wm-metric-value text-dark" id="modalOrderTotal">₹0</h3>
-                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-credit-card me-1"></i> Order bill value</div>
+                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-credit-card me-1"></i> <fmt:message key="driver.modal.order_bill_value"/></div>
                             </div>
                         </div>
 
                         <div class="col-6 col-md-3">
                             <div class="wm-modal-metric h-100">
-                                <div class="wm-metric-label">Pickup OTP</div>
+                                <div class="wm-metric-label"><fmt:message key="driver.table.pickup_otp"/></div>
                                 <h3 class="wm-metric-value text-dark letter-spacing-1" id="modalPickupOtp">-</h3>
-                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-shield-check text-warning me-1"></i> Share at pickup</div>
+                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-shield-check text-warning me-1"></i> <fmt:message key="driver.modal.share_at_pickup"/></div>
                             </div>
                         </div>
 
                         <div class="col-6 col-md-3">
                             <div class="wm-modal-metric h-100">
-                                <div class="wm-metric-label">Delivery OTP</div>
+                                <div class="wm-metric-label"><fmt:message key="driver.table.delivery_otp"/></div>
                                 <h3 class="wm-metric-value text-success letter-spacing-1" id="modalDeliveryOtp">-</h3>
-                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-key text-success me-1"></i> Verify with retailer</div>
+                                <div class="small text-muted text-truncate mt-1"><i class="bi bi-key text-success me-1"></i> <fmt:message key="driver.modal.verify_with_retailer"/></div>
                             </div>
                         </div>
                     </div>
@@ -485,9 +481,7 @@
                         <div class="wm-modal-manifest-head">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="bi bi-box-seam-fill text-primary"></i>
-                                <h6 class="fw-bold mb-0 text-dark" style="font-family: var(--font-display);">
-                                    Order Manifest & Packages
-                                </h6>
+                                <h6 class="fw-bold mb-0 text-dark" style="font-family: var(--font-display);"><fmt:message key="driver.modal.order_manifest"/></h6>
                             </div>
                             <span class="badge bg-dark rounded-pill font-monospace" id="modalItemsCount">0 Items</span>
                         </div>
@@ -496,17 +490,17 @@
                             <table class="table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
-                                        <th>Product</th>
-                                        <th>SKU</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-end">Price</th>
-                                        <th class="text-end">Total</th>
-                                        <th>Pack Size</th>
-                                        <th>Weight</th>
+                                        <th><fmt:message key="driver.modal.product"/></th>
+                                        <th><fmt:message key="driver.modal.sku"/></th>
+                                        <th class="text-center"><fmt:message key="driver.modal.qty"/></th>
+                                        <th class="text-end"><fmt:message key="driver.modal.price"/></th>
+                                        <th class="text-end"><fmt:message key="driver.modal.total"/></th>
+                                        <th><fmt:message key="driver.modal.pack_size"/></th>
+                                        <th><fmt:message key="driver.modal.weight"/></th>
                                     </tr>
                                 </thead>
                                 <tbody id="modalOrderItemsBody">
-                                    <tr><td colspan="7" class="text-center py-3 text-muted">No item details available.</td></tr>
+                                    <tr><td colspan="7" class="text-center py-3 text-muted"><fmt:message key="driver.modal.no_items"/></td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -517,14 +511,14 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary rounded-pill px-4 wm-mobile-footer-btn" data-bs-dismiss="modal">
-                        <i class="bi bi-x-lg me-1"></i> Close
+                        <i class="bi bi-x-lg me-1"></i> <fmt:message key="btn.close"/>
                     </button>
                     <div class="d-flex gap-2 w-100-mobile">
                         <button type="button" class="btn btn-outline-danger rounded-pill px-4 fw-semibold wm-mobile-footer-btn flex-grow-1" id="modalRejectBtn">
-                            <i class="bi bi-x-circle me-1"></i> Reject Order
+                            <i class="bi bi-x-circle me-1"></i> <fmt:message key="btn.reject"/>
                         </button>
                         <button type="button" class="btn btn-success rounded-pill px-4 fw-semibold d-inline-flex align-items-center justify-content-center gap-2 wm-mobile-footer-btn flex-grow-1" id="modalAcceptBtn">
-                            <i class="bi bi-check2-circle"></i> Accept Delivery
+                            <i class="bi bi-check2-circle"></i> <fmt:message key="btn.accept"/>
                         </button>
                     </div>
                 </div>
@@ -566,16 +560,16 @@
             var btn = document.getElementById("toggleOnlineBtn");
             if (isOnline) {
                 if (dot) dot.className = "wm-pulse-ring online";
-                if (txt) txt.textContent = "You are ONLINE - Ready to receive delivery assignments";
+                if (txt) txt.textContent = "<fmt:message key="driver.status.online"/>";
                 if (btn) {
-                    btn.innerHTML = '<i class="bi bi-power"></i> Go Offline';
+                    btn.innerHTML = '<i class="bi bi-power"></i> <fmt:message key="driver.status.go_offline"/>';
                     btn.className = "wm-toggle-btn btn-offline";
                 }
             } else {
                 if (dot) dot.className = "wm-pulse-ring";
-                if (txt) txt.textContent = "You are OFFLINE - Not receiving new delivery requests";
+                if (txt) txt.textContent = "<fmt:message key="driver.status.offline"/>";
                 if (btn) {
-                    btn.innerHTML = '<i class="bi bi-power"></i> Go Online';
+                    btn.innerHTML = '<i class="bi bi-power"></i> <fmt:message key="driver.status.go_online"/>';
                     btn.className = "wm-toggle-btn btn-online";
                 }
                 if (deliveryModal) {
@@ -633,9 +627,9 @@
                         var activeCount = stats.activeDeliveries || 0;
                         var todayEarn = stats.todayEarnings || "0.00";
                         if (activeCount > 0) {
-                            brief.textContent = "You have " + activeCount + " active delivery in queue. Today's payout is ₹" + todayEarn + ".";
+                            brief.innerHTML = "<fmt:message key="driver.brief.active"><fmt:param>" + activeCount + "</fmt:param><fmt:param>" + todayEarn + "</fmt:param></fmt:message>";
                         } else {
-                            brief.textContent = "All queues clear. Keep your status Online to receive automatic distributor assignments.";
+                            brief.textContent = "<fmt:message key="driver.brief.clear"/>";
                         }
                     }
 
@@ -659,7 +653,7 @@
             var assignment = activeDeliveries.find(function(d) { return d.id === assignmentId; });
             if (!assignment) {
                 if (isExplicitClick) {
-                    alert("Delivery assignment not found.");
+                    alert("<fmt:message key="driver.alert.not_found"/>");
                 }
                 return;
             }
@@ -718,14 +712,14 @@
                                     "<td>" + (item.weightKg != null ? item.weightKg + " kg" : "-") + "</td>" +
                                     "</tr>";
                             }).join("")
-                            : "<tr><td colspan='7' class='text-center text-muted py-3'>No item details available.</td></tr>";
+                            : "<tr><td colspan='7' class='text-center text-muted py-3'><fmt:message key="driver.modal.no_items"/></td></tr>";
                     }
 
                     var modalItemsCountEl = document.getElementById("modalItemsCount");
                     if (modalItemsCountEl) modalItemsCountEl.textContent = (order.items ? order.items.length : 0) + " Items";
 
                     if (!deliveryModal && typeof bootstrap !== 'undefined') {
-                        deliveryModal = new bootstrap.Modal(document.getElementById('driverDeliveryModal'));
+                        deliveryModal = new bootstrap.Modal(modalElement);
                     }
 
                     var acceptBtn = document.getElementById('modalAcceptBtn');
@@ -743,13 +737,13 @@
                 })
                 .catch(function() {
                     if (isExplicitClick) {
-                        alert("Unable to load delivery details. Please try again.");
+                        alert("<fmt:message key="driver.alert.load_details_failed"/>");
                     }
                 });
         };
 
         window.acceptDelivery = function(assignmentId) {
-            var confirmAccept = confirm("Accept this delivery assignment and start routing?");
+            var confirmAccept = confirm("<fmt:message key="driver.alert.accept_confirm"/>");
             if (!confirmAccept) {
                 return;
             }
@@ -768,12 +762,12 @@
                     loadActiveDeliveries();
                 })
                 .catch(function() {
-                    alert("Unable to accept delivery. Please try again.");
+                    alert("<fmt:message key="driver.alert.accept_failed"/>");
                 });
         };
 
         window.rejectDelivery = function(assignmentId) {
-            var reason = prompt("Enter rejection reason (optional):", "Vehicle unavailable / Route busy");
+            var reason = prompt("<fmt:message key="driver.alert.reject_prompt"/>", "<fmt:message key="driver.alert.reject_default_reason"/>");
             if (reason === null) {
                 return;
             }
@@ -792,7 +786,7 @@
                     loadActiveDeliveries();
                 })
                 .catch(function() {
-                    alert("Unable to reject delivery. Please try again.");
+                    alert("<fmt:message key="driver.alert.reject_failed"/>");
                 });
         };
 
@@ -808,9 +802,7 @@
                     if (rows.length === 0) {
                         body.innerHTML = "<tr><td colspan='8'>" +
                             "<div class='wm-empty-state'>" +
-                            "  <i class='bi bi-inbox wm-empty-icon'></i>" +
-                            "  <div class='fw-bold text-dark'>No active deliveries in queue</div>" +
-                            "  <div class='small text-muted'>Keep your status set to ONLINE to receive automatic dispatch assignments.</div>" +
+                            "  <i class='bi bi-inbox wm-empty-icon'></i>" + "<div class='fw-bold text-dark'><fmt:message key="driver.table.no_active"/></div>" + "<div class='small text-muted'><fmt:message key="driver.table.no_active_subtitle"/></div>" +
                             "</div></td></tr>";
                         return;
                     }
@@ -822,8 +814,8 @@
                         else if (d.status === 'IN_TRANSIT') badgeClass = 'wm-badge-intransit';
 
                         var actions = canRespond
-                            ? "<button class='wm-btn-review' onclick='openDeliveryModal(" + d.id + ", true)'><i class='bi bi-eye'></i> Review</button>"
-                            : "<span class='text-muted small font-monospace'>In Progress</span>";
+                            ? "<button class='wm-btn-review' onclick='openDeliveryModal(" + d.id + ", true)'><i class='bi bi-eye'></i> <fmt:message key="btn.review"/></button>"
+                            : "<span class='text-muted small font-monospace'><fmt:message key="home.in_progress"/></span>";
 
                         return "<tr>" +
                             "<td class='wm-col-seq font-monospace text-muted' data-label='#'>" + (i + 1) + "</td>" +
@@ -853,7 +845,7 @@
                 .catch(function() {
                     var body = document.getElementById("activeDeliveriesBody");
                     if (body) {
-                        body.innerHTML = "<tr><td colspan='8' class='text-center py-4 text-danger'>Unable to load active deliveries from database.</td></tr>";
+                        body.innerHTML = "<tr><td colspan='8' class='text-center py-4 text-danger'><fmt:message key="driver.table.load_active_failed"/></td></tr>";
                     }
                 });
         }
@@ -869,9 +861,7 @@
                     if (rows.length === 0) {
                         body.innerHTML = "<tr><td colspan='6'>" +
                             "<div class='wm-empty-state py-4'>" +
-                            "  <i class='bi bi-clock-history wm-empty-icon'></i>" +
-                            "  <div class='fw-bold text-dark'>No historical deliveries yet</div>" +
-                            "  <div class='small text-muted'>Completed and logged deliveries will be cataloged here.</div>" +
+                            "  <i class='bi bi-clock-history wm-empty-icon'></i>" + "<div class='fw-bold text-dark'><fmt:message key="driver.table.no_history"/></div>" + "<div class='small text-muted'><fmt:message key="driver.table.no_history_subtitle"/></div>" +
                             "</div></td></tr>";
                         return;
                     }
@@ -903,7 +893,7 @@
                 .catch(function() {
                     var body = document.getElementById("recentDeliveriesBody");
                     if (body) {
-                        body.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'>Unable to load delivery history.</td></tr>";
+                        body.innerHTML = "<tr><td colspan='6' class='text-center py-4 text-danger'><fmt:message key="driver.table.load_history_failed"/></td></tr>";
                     }
                 });
         }
@@ -956,7 +946,7 @@
 
             if (dotsEl && dotsEl.children.length === 0) {
                 dotsEl.innerHTML = slides.map(function (_, i) {
-                    return '<button type="button" class="wm-hero-carousel-dot' + (i === 0 ? " is-active" : "") + '" data-hero-dot="' + i + '" aria-label="Go to slide ' + (i + 1) + '"></button>';
+                    return '<button type="button" class="wm-hero-carousel-dot' + (i === 0 ? " is-active" : "") + '" data-hero-dot="' + i + '" aria-label="<fmt:message key="driver.hero.goto_slide"><fmt:param>' + (i + 1) + '</fmt:param></fmt:message>"></button>';
                 }).join("");
             }
 

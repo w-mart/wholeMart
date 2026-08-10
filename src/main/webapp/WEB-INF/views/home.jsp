@@ -6,8 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><fmt:message key="app.title"/></title>
-    <meta name="description" content="WholeMart connects retailers, distributors, drivers and administrators on one AI-powered platform for wholesale ordering, inventory, credit and delivery.">
+    <title><fmt:message key="app.title" /></title>
+    <meta name="description" content="<fmt:message key="app.short_desc"/>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,8 +36,8 @@
                         <fmt:message key="hero.subtitle"/>
                     </p>
                     <div class="d-flex flex-wrap gap-3 mt-4">
-                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary"><fmt:message key="hero.start_now"/></a>
-                        <a href="#roles" class="btn wm-btn-outline"><fmt:message key="hero.choose_workspace"/></a>
+                        <a href="${pageContext.request.contextPath}/web/auth/login" class="btn wm-btn-primary"><fmt:message key="hero.start_now" /></a>
+                        <a href="#roles" class="btn wm-btn-outline"><fmt:message key="hero.choose_workspace" /></a>
                     </div>                   
                 </div>
                 
@@ -50,16 +50,16 @@
                              alt="WholeMart operations dashboard showing live inventory, orders and delivery status">
                         <div class="wm-mini-card-container">
                             <div class="wm-mini-card">
-                                <h6><i class="bi bi-boxes text-success" aria-hidden="true"></i> <fmt:message key="ops.live_inventory"/></h6>
-                                <small><fmt:message key="hero.live_inventory_desc"/></small>
+                                <h6><i class="bi bi-boxes text-success" aria-hidden="true"></i> <fmt:message key="ops.live_inventory" /></h6>
+                                <small><fmt:message key="hero.live_inventory_desc" /></small>
                             </div>
                             <div class="wm-mini-card">
-                                <h6><i class="bi bi-cart-check text-primary" aria-hidden="true"></i> <fmt:message key="ops.active_orders"/></h6>
-                                <small><fmt:message key="hero.active_orders_desc"/></small>
+                                <h6><i class="bi bi-cart-check text-primary" aria-hidden="true"></i> <fmt:message key="ops.active_orders" /></h6>
+                                <small><fmt:message key="hero.active_orders_desc" /></small>
                             </div>
                             <div class="wm-mini-card">
-                                <h6><i class="bi bi-truck text-warning" aria-hidden="true"></i> <fmt:message key="ops.delivery_status"/></h6>
-                                <small><fmt:message key="hero.delivery_status_desc"/></small>
+                                <h6><i class="bi bi-truck text-warning" aria-hidden="true"></i> <fmt:message key="ops.delivery_status" /></h6>
+                                <small><fmt:message key="hero.delivery_status_desc" /></small>
                             </div>
                         </div>
                     </div>
@@ -224,22 +224,22 @@
                     <div class="card shadow-sm border-0 rounded-4">
                         <div class="card-header bg-white border-0 pt-4">
                             <h4 class="fw-bold text-center">
-                                <fmt:message key="snap.title"/>
+                                <fmt:message key="snap.title" />
                             </h4>
                         </div>
                         <div class="card-body px-lg-4">
                             <div class="row g-4">
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="salesDoughnutChart" role="img" aria-label="Sales channel breakdown"></canvas>
+                                    <canvas id="salesDoughnutChart" role="img" aria-label="<fmt:message key="snap.sales_doughnut"/>"></canvas>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="salesTrendChart" role="img" aria-label="Monthly sales trend"></canvas>
+                                    <canvas id="salesTrendChart" role="img" aria-label="<fmt:message key="snap.sales_trend"/>"></canvas>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="activityBarChart" role="img" aria-label="Activity count"></canvas>
+                                    <canvas id="activityBarChart" role="img" aria-label="<fmt:message key="snap.activity_bar"/>"></canvas>
                                 </div>
                                 <div class="col-lg-3 col-md-6">
-                                    <canvas id="expiryManagementChart" role="img" aria-label="AI expiry management"></canvas>
+                                    <canvas id="expiryManagementChart" role="img" aria-label="<fmt:message key="snap.expiry_chart"/>"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -318,31 +318,29 @@
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
-                            <div class="wm-dashboard-content">
-                                <h5><fmt:message key="ops.low_stock_prods"/> <small class="text-muted fw-normal">(17 items)</small></h5>
-                            </div>
-                            <span class="badge bg-warning"><fmt:message key="nav.products"/></span>
+                            <div class="wm-dashboard-content"><h5><fmt:message key="ops.low_stock_prods"/> <small class="text-muted fw-normal">(17 <fmt:message key="home.items"/>)</small></h5></div>
+                            <span class="badge bg-warning"><fmt:message key="nav.products" /></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-person-check" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5><fmt:message key="ops.dist_approval"/> <small class="text-muted fw-normal">(5 pending)</small></h5>
+                                <h5><fmt:message key="ops.dist_approval"/> <small class="text-muted fw-normal">(5 <fmt:message key="status.pending"/>)</small></h5>
                             </div>
-                            <span class="badge bg-info"><fmt:message key="status.pending"/></span>
+                            <span class="badge bg-info"><fmt:message key="status.pending" /></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-credit-card" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5><fmt:message key="ops.ret_payments"/> <small class="text-muted fw-normal">(₹2.8L due)</small></h5>
+                                <h5><fmt:message key="ops.ret_payments"/> <small class="text-muted fw-normal">(₹2.8L <fmt:message key="home.due"/>)</small></h5>
                             </div>
-                            <span class="badge bg-primary"><fmt:message key="nav.payments"/></span>
+                            <span class="badge bg-primary"><fmt:message key="nav.payments" /></span>
                         </div>
                         <div class="wm-dashboard-item">
                             <div class="wm-dashboard-icon"><i class="bi bi-truck" aria-hidden="true"></i></div>
                             <div class="wm-dashboard-content">
-                                <h5><fmt:message key="ops.driver_deliv"/> <small class="text-muted fw-normal">(38 in progress)</small></h5>
+                                <h5><fmt:message key="ops.driver_deliv"/> <small class="text-muted fw-normal">(38 <fmt:message key="home.in_progress"/>)</small></h5>
                             </div>
-                            <span class="badge bg-success"><fmt:message key="nav.deliveries"/></span>
+                            <span class="badge bg-success"><fmt:message key="nav.deliveries" /></span>
                         </div>
                     </div>
                 </div>
@@ -350,7 +348,7 @@
                 <div class="col-lg-5">
                     <div class="wm-ai-panel h-100">
                         <div class="wm-ai-header">
-                            <i class="bi bi-robot" aria-hidden="true"></i>
+                            <i class="bi bi-stars" aria-hidden="true"></i>
                             <h4><fmt:message key="nav.ai_chat"/></h4>
                             <span class="live-indicator" aria-hidden="true"></span>
                         </div>
@@ -360,14 +358,14 @@
                         <a href="#" class="wm-ai-card text-decoration-none text-white">
                             <i class="bi bi-box-seam fs-4" aria-hidden="true"></i>
                             <div class="wm-ai-card-content">
-                                <div><fmt:message key="ai.quick_query1"/></div>
+                                <div><fmt:message key="ai.home_quick_query1"/></div>
                                 <small class="wm-ai-card-action"><fmt:message key="btn.order_now"/> &rarr;</small>
                             </div>
                         </a>
                         <a href="#" class="wm-ai-card text-decoration-none text-white mt-2">
                             <i class="bi bi-sign-merge-right fs-4" aria-hidden="true"></i>
                             <div class="wm-ai-card-content">
-                                <div><fmt:message key="ai.quick_query2"/></div>
+                                <div><fmt:message key="ai.home_quick_query2"/></div>
                                 <small class="wm-ai-card-action"><fmt:message key="btn.track"/> &rarr;</small>
                             </div>
                         </a>
@@ -375,19 +373,19 @@
                         <div class="wm-ai-stats row g-3 text-center mt-4">
                             <div class="col-6 col-md-3 wm-ai-stat">
                                 <h6>94%</h6>
-                                <small class="text-white-50">AI Health</small>
+                                <small class="text-white-50"><fmt:message key="ai.health"/></small>
                             </div>
                             <div class="col-6 col-md-3 wm-ai-stat">
                                 <h6>96%</h6>
-                                <small class="text-white-50">Forecast</small>
+                                <small class="text-white-50"><fmt:message key="ai.forecast"/></small>
                             </div>
                             <div class="col-6 col-md-3 wm-ai-stat">
                                 <h6>24</h6>
-                                <small class="text-white-50">Alerts</small>
+                                <small class="text-white-50"><fmt:message key="nav.alerts"/></small>
                             </div>
                             <div class="col-6 col-md-3 wm-ai-stat">
                                 <h6>₹3.4L</h6>
-                                <small class="text-white-50">Saved</small>
+                                <small class="text-white-50"><fmt:message key="ai.saved"/></small>
                             </div>
                         </div>
                         <a href="${pageContext.request.contextPath}/web/auth/login" class="btn btn-light w-100 mt-4"><fmt:message key="ai.ai_studio"/></a>
@@ -550,20 +548,14 @@
                     <div class="wm-testimonial-card h-100 shadow-sm">
                         <i class="bi bi-quote" aria-hidden="true"></i>
                         <p><fmt:message key="test.dist_quote"/></p>
-                        <div class="wm-testimonial-who">
-                            <div class="wm-testimonial-avatar bg-warning-subtle text-warning"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
-                            <div><strong><fmt:message key="roles.distributor_title"/></strong><span><fmt:message key="test.dist_role"/></span></div>
-                        </div>
+                        <div class="wm-testimonial-who"><div class="wm-testimonial-avatar bg-warning-subtle text-warning"><i class="bi bi-box-seam" aria-hidden="true"></i></div><div><strong><fmt:message key="roles.distributor_title"/></strong><span><fmt:message key="test.dist_role"/></span></div></div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="wm-testimonial-card h-100 shadow-sm">
                         <i class="bi bi-quote" aria-hidden="true"></i>
                         <p><fmt:message key="test.driver_quote"/></p>
-                        <div class="wm-testimonial-who">
-                            <div class="wm-testimonial-avatar bg-danger-subtle text-danger"><i class="bi bi-truck" aria-hidden="true"></i></div>
-                            <div><strong><fmt:message key="roles.driver_title"/></strong><span><fmt:message key="test.driver_role"/></span></div>
-                        </div>
+                        <div class="wm-testimonial-who"><div class="wm-testimonial-avatar bg-danger-subtle text-danger"><i class="bi bi-truck" aria-hidden="true"></i></div><div><strong><fmt:message key="roles.driver_title"/></strong><span><fmt:message key="test.driver_role"/></span></div></div>
                     </div>
                 </div>
             </div>
@@ -722,7 +714,7 @@
 
 <!-- Login Popup Modal -->
 <div id="loginModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Log in to WholeMart">
-    <div class="modal-content">
+    <div class="modal-content" style="max-width: 460px;">
         <button class="close-button" onclick="closeLoginPopup()" aria-label="Close login form">&times;</button>
         <%@ include file="/WEB-INF/views/home/_loginForm.jsp" %>
     </div>
