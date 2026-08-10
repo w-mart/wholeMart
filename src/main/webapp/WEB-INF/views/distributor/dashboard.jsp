@@ -238,63 +238,62 @@
                             <!-- ===================================================== -->
                             <!-- LIVE OPERATIONS DASHBOARD HUB -->
                             <!-- ===================================================== -->
-                            <section class="wm-operations-section mb-5">
-                                <div class="wm-operations-hub">
-                                    <div class="wm-operations-hero-wrap">
-                                        <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
-                                        class="img-fluid w-100 object-fit-cover"
-                                        style="max-height: 420px; display: block;"
-                                        onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png';"
-                                        alt="WholeMart Operations Dashboard live inventory, orders and delivery van dispatch">
-                                        <div class="wm-operations-overlay">
-                                            <div>
-                                                <span class="wm-operations-live-badge mb-2">
-                                                    <span class="wm-live-pulse-dot"></span> Live Operations Telemetry
-                                                </span>
-                                                <h2 class="wm-operations-title">Warehouse & Fulfillment Operations</h2>
-                                                <p class="wm-operations-subtitle">
-                                                    Monitor live stock replenishments, active retailer order queues, and real-time delivery van dispatches across your distribution zone.
-                                                </p>
-                                            </div>
-                                            <div class="d-flex flex-wrap gap-2 mt-3">
-                                                <a href="/web/distributor/products" class="btn btn-sm btn-success fw-semibold"><i class="bi bi-boxes me-1"></i> Live Inventory Control</a>
-                                                <a href="/web/distributor/orders" class="btn btn-sm btn-primary fw-semibold"><i class="bi bi-cart-check me-1"></i> Active Orders Panel</a>
-                                                <a href="/web/distributor/delivery" class="btn btn-sm btn-warning text-dark fw-semibold"><i class="bi bi-truck me-1"></i> Delivery Fleet Tracking</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="wm-operations-telemetry-grid">
-                                        <div class="wm-telemetry-card">
-                                            <div class="wm-telemetry-icon inventory">
-                                                <i class="bi bi-boxes"></i>
-                                            </div>
-                                            <div class="wm-telemetry-content">
-                                                <h5 id="opsLiveInventory">1,280 Units</h5>
-                                                <small>Live Inventory • Stock Synced</small>
-                                            </div>
-                                        </div>
-                                        <div class="wm-telemetry-card">
-                                            <div class="wm-telemetry-icon orders">
-                                                <i class="bi bi-cart-check"></i>
-                                            </div>
-                                            <div class="wm-telemetry-content">
-                                                <h5 id="opsActiveOrders">42 Pending</h5>
-                                                <small>Live Orders Processing</small>
-                                            </div>
-                                        </div>
-                                        <div class="wm-telemetry-card">
-                                            <div class="wm-telemetry-icon delivery">
-                                                <i class="bi bi-truck"></i>
-                                            </div>
-                                            <div class="wm-telemetry-content">
-                                                <h5 id="opsDeliveryStatus">12 Dispatched</h5>
-                                                <small>Delivery Status • En-Route</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
+                            <section id="operations" class="container my-5">
+        <div class="wm-operations-hub">
+            <div class="wm-operations-hero-wrap">
+                <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
+                     class="wm-operations-hero-img"
+                     onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png';"
+                     alt="WholeMart Live Operations Hub showing inventory, orders and delivery van dispatch">
+                <div class="wm-operations-overlay">
+                    <div>
+                        <span class="wm-operations-live-badge mb-2">
+                            <span class="wm-live-pulse-dot"></span> <fmt:message key="ops.hub_title"/>
+                        </span>
+                        <h2 class="wm-operations-title"><fmt:message key="ops.sync_title"/></h2>
+                        <p class="wm-operations-subtitle">
+                            <fmt:message key="ops.subtitle"/>
+                        </p>
+                    </div>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-check-circle-fill text-success me-1"></i> <fmt:message key="ops.live_inventory"/></span>
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-arrow-repeat text-info me-1"></i> <fmt:message key="ops.active_orders"/></span>
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-geo-alt-fill text-warning me-1"></i> <fmt:message key="ops.delivery_status"/></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wm-operations-telemetry-grid">
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon inventory">
+                        <i class="bi bi-boxes"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.sku_count"/></h5>
+                        <small><fmt:message key="ops.live_inventory"/> • <fmt:message key="ops.in_stock"/></small>
+                    </div>
+                </div>
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon orders">
+                        <i class="bi bi-bag-check"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.orders_count"/></h5>
+                        <small><fmt:message key="ops.active_orders"/></small>
+                    </div>
+                </div>
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon delivery">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.vans_count"/></h5>
+                        <small><fmt:message key="ops.delivery_status"/> • <fmt:message key="ops.avg_time"/></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
                             <!-- ===================================================== -->
                             <!-- BUSINESS INTELLIGENCE + AI ASSISTANT

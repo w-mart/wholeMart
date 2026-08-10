@@ -307,7 +307,7 @@ main section { scroll-margin-top: 96px; }
 /* ============================================================
    OPERATIONS — Today's Operations + AI dispatch console
    ============================================================ */
-#operations { padding: 0 0 68px; }
+#operations { padding: 0 0 0; }
 
 .wm-dashboard {
   background: var(--paper-raised);

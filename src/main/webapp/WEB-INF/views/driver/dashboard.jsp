@@ -22,422 +22,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dashboard.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/hero-carousel.css">
 
-    <style>
-        *, *::before, *::after {
-            scrollbar-width: none !important;
-            -ms-overflow-style: none !important;
-        }
-
-        *::-webkit-scrollbar,
-        ::-webkit-scrollbar,
-        html::-webkit-scrollbar,
-        body::-webkit-scrollbar,
-        div::-webkit-scrollbar,
-        main::-webkit-scrollbar,
-        section::-webkit-scrollbar,
-        aside::-webkit-scrollbar,
-        nav::-webkit-scrollbar,
-        .wm-driver-table-wrap::-webkit-scrollbar,
-        .table-responsive::-webkit-scrollbar {
-            display: none !important;
-            width: 0 !important;
-            height: 0 !important;
-            max-width: 0 !important;
-            max-height: 0 !important;
-            background: transparent !important;
-            opacity: 0 !important;
-            visibility: hidden !important;
-        }
-
-        /* Driver Dispatch Strip */
-        .wm-driver-status-card {
-            background: var(--wm-paper, #FFFDF7);
-            border: 1px solid var(--wm-line, #D8D0B8);
-            border-radius: var(--wm-radius, 6px);
-            padding: 16px 22px;
-            box-shadow: var(--wm-shadow);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .wm-status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .wm-pulse-ring {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #94a3b8;
-            position: relative;
-            flex-shrink: 0;
-        }
-
-        .wm-pulse-ring.online {
-            background: #10b981;
-            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-            animation: wm-status-pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
-        }
-
-        @keyframes wm-status-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-        }
-
-        .wm-status-label {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--wm-ink, #20261F);
-        }
-
-        .wm-status-meta {
-            font-size: 0.78rem;
-            color: var(--wm-ink-soft, #5B6158);
-            display: flex;
-            gap: 14px;
-            margin-top: 3px;
-        }
-
-        .wm-toggle-btn {
-            font-family: var(--wm-font-mono, 'IBM Plex Mono', monospace);
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 10px 22px;
-            border-radius: var(--wm-radius, 4px);
-            border: 1px solid transparent;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .wm-toggle-btn.btn-online {
-            background: var(--wm-dark, #1A2420);
-            color: var(--wm-mint, #BFD8C4);
-            box-shadow: 0 4px 14px rgba(26, 36, 32, 0.2);
-        }
-
-        .wm-toggle-btn.btn-online:hover {
-            background: var(--wm-dark-soft, #26332C);
-            transform: translateY(-1px);
-        }
-
-        .wm-toggle-btn.btn-offline {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
-        }
-
-        .wm-toggle-btn.btn-offline:hover {
-            background: #fecaca;
-        }
-
-        /* KPI Bento Grid */
-        .wm-driver-kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .wm-driver-kpi-card {
-            background: var(--wm-paper, #FFFDF7);
-            border: 1px solid var(--wm-line, #D8D0B8);
-            border-radius: var(--wm-radius, 6px);
-            padding: 18px 20px;
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            box-shadow: var(--wm-shadow);
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-        }
-
-        .wm-driver-kpi-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--wm-mint-deep, #4F8F6B);
-        }
-
-        .wm-driver-kpi-label {
-            font-size: 0.74rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--wm-ink-soft, #5B6158);
-            margin-bottom: 4px;
-            font-family: var(--wm-font-mono, monospace);
-        }
-
-        .wm-driver-kpi-val {
-            font-family: var(--wm-font-mono, monospace);
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--wm-ink, #20261F);
-            line-height: 1.15;
-            margin-bottom: 3px;
-        }
-
-        .wm-driver-kpi-sub {
-            font-size: 0.74rem;
-            color: var(--wm-ink-soft, #5B6158);
-        }
-
-        .wm-driver-icon-pill {
-            width: 38px;
-            height: 38px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            background: var(--wm-mint-pale, #E4EEE1);
-            color: var(--wm-mint-deep, #4F8F6B);
-        }
-
-        .wm-driver-icon-pill.icon-dark {
-            background: var(--wm-dark, #1A2420);
-            color: var(--wm-mint, #BFD8C4);
-        }
-
-        .wm-driver-icon-pill.icon-amber {
-            background: #fef3c7;
-            color: #b45309;
-        }
-
-        /* OTP Chip & Status Tags */
-        .wm-otp-chip {
-            font-family: var(--wm-font-mono, monospace);
-            font-weight: 700;
-            font-size: 0.86rem;
-            letter-spacing: 0.08em;
-            padding: 4px 10px;
-            border-radius: 4px;
-            background: #f1f5f9;
-            color: #0f172a;
-            border: 1px solid #cbd5e1;
-            display: inline-block;
-        }
-
-        .wm-fee-tag {
-            font-family: var(--wm-font-mono, monospace);
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: var(--wm-success, #3F7D53);
-        }
-
-        .wm-badge-status {
-            font-family: var(--wm-font-mono, monospace);
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .wm-badge-assigned { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-        .wm-badge-accepted { background: #dbeafe; color: #1d4ed8; border: 1px solid #bfdbfe; }
-        .wm-badge-intransit { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
-        .wm-badge-delivered { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-
-        .wm-btn-review {
-            font-family: var(--wm-font-mono, monospace);
-            font-size: 0.8rem;
-            font-weight: 700;
-            background: var(--wm-dark, #1A2420);
-            color: #ffffff;
-            border: 1px solid transparent;
-            padding: 6px 14px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .wm-btn-review:hover {
-            background: var(--wm-dark-soft, #26332C);
-            color: var(--wm-mint, #BFD8C4);
-            transform: translateY(-1px);
-        }
-
-        /* Modal Styles */
-        .wm-driver-modal .modal-content {
-            border-radius: 12px;
-            border: 1px solid var(--wm-line, #D8D0B8);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            background: var(--wm-paper, #FFFDF7);
-        }
-
-        .wm-driver-modal .modal-header {
-            background: var(--wm-cream, #F6F2E7);
-            border-bottom: 1px solid var(--wm-line, #D8D0B8);
-            padding: 20px 24px;
-        }
-
-        .wm-driver-modal .modal-body {
-            padding: 24px;
-            background: var(--wm-paper, #FFFDF7);
-        }
-
-        .wm-route-card {
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid var(--wm-line, #D8D0B8);
-            padding: 16px;
-            height: 100%;
-        }
-
-        .wm-route-icon-box {
-            width: 38px;
-            height: 38px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-            flex-shrink: 0;
-        }
-
-        .wm-route-pickup { background: #eff6ff; color: #2563eb; }
-        .wm-route-dropoff { background: #ecfdf5; color: #16a34a; }
-
-        .wm-info-pill-box {
-            background: #ffffff;
-            border: 1px solid var(--wm-line, #D8D0B8);
-            border-radius: 8px;
-            padding: 14px;
-            text-align: center;
-        }
-
-        .wm-driver-modal .modal-footer {
-            background: var(--wm-cream, #F6F2E7);
-            border-top: 1px solid var(--wm-line, #D8D0B8);
-            padding: 16px 24px;
-        }
-
-        .wm-btn-accept {
-            background: var(--wm-success, #3F7D53);
-            color: #ffffff;
-            border: none;
-            font-family: var(--wm-font-mono, monospace);
-            font-weight: 700;
-            padding: 10px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .wm-btn-accept:hover {
-            background: #2e613f;
-            transform: translateY(-1px);
-        }
-
-        .wm-btn-reject {
-            background: #fee2e2;
-            color: #b91c1c;
-            border: 1px solid #fca5a5;
-            font-family: var(--wm-font-mono, monospace);
-            font-weight: 600;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.15s ease;
-        }
-
-        .wm-btn-reject:hover {
-            background: #fecaca;
-        }
-
-        .wm-empty-state {
-            padding: 40px 20px;
-            text-align: center;
-            color: var(--wm-ink-soft, #5B6158);
-        }
-
-        .wm-empty-icon {
-            font-size: 2.4rem;
-            color: var(--wm-line, #D8D0B8);
-            margin-bottom: 10px;
-        }
-
-        /* Mobile Card view for tables */
-        @media (max-width: 768px) {
-            .wm-driver-table-wrap {
-                overflow: visible !important;
-            }
-            .wm-driver-table {
-                display: block !important;
-                width: 100% !important;
-                border: none !important;
-            }
-            .wm-driver-table thead {
-                display: none !important;
-            }
-            .wm-driver-table tbody {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 14px !important;
-                width: 100% !important;
-            }
-            .wm-driver-table tbody tr {
-                display: block !important;
-                width: 100% !important;
-                background: #ffffff !important;
-                border: 1px solid var(--wm-line, #D8D0B8) !important;
-                border-radius: 8px !important;
-                padding: 14px 16px !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.03) !important;
-            }
-            .wm-driver-table tbody td {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 8px 0 !important;
-                border-bottom: 1px dashed var(--wm-line, #D8D0B8) !important;
-                font-size: 0.88rem !important;
-            }
-            .wm-driver-table tbody td::before {
-                content: attr(data-label);
-                font-family: var(--wm-font-mono, monospace);
-                font-size: 0.72rem;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-                color: var(--wm-ink-soft, #5B6158);
-            }
-            .wm-driver-table tbody td:last-child {
-                border-bottom: none !important;
-                padding-top: 12px !important;
-            }
-            .wm-driver-table tbody td.wm-col-actions .wm-btn-review {
-                width: 100% !important;
-                justify-content: center !important;
-                padding: 9px 16px !important;
-            }
-            .wm-driver-table tbody tr td[colspan] {
-                display: block !important;
-                border: none !important;
-            }
-            .wm-driver-table tbody tr td[colspan]::before {
-                display: none !important;
-            }
-        }
-    </style>
+    
 </head>
 
 <body class="wm-home">
@@ -562,63 +147,62 @@
                 <!-- ===================================================== -->
                 <!-- 2. LIVE OPERATIONS DASHBOARD HUB (Signature Section) -->
                 <!-- ===================================================== -->
-                <section class="wm-operations-section mb-4">
-                    <div class="wm-operations-hub">
-                        <div class="wm-operations-hero-wrap">
-                            <img src="${pageContext.request.contextPath}/images/wholemart_operations.jpg" 
-                                 class="wm-operations-hero-img" 
-                                 referrerpolicy="no-referrer"
-                                 onerror="this.onerror=null;this.src='/images/wholemart_operations.jpg';"
-                                 alt="WholeMart Operations Dashboard showing live inventory, orders and delivery status">
-                            <div class="wm-operations-overlay">
-                                <div>
-                                    <span class="wm-operations-live-badge mb-2">
-                                        <span class="wm-live-pulse-dot"></span> Live Fleet Dispatch Hub
-                                    </span>
-                                    <h2 class="wm-operations-title">Driver Logistics & Delivery Route Tracking</h2>
-                                    <p class="wm-operations-subtitle">
-                                        Real-time GPS route optimization, instant pickup at distributor warehouses, and secure OTP verification at retailer stores.
-                                    </p>
-                                </div>
-                                <div class="d-flex flex-wrap gap-2 mt-3">
-                                    <a href="${pageContext.request.contextPath}/web/driver/deliveries" class="btn btn-sm btn-success fw-semibold"><i class="bi bi-truck me-1"></i> Active Deliveries</a>
-                                    <a href="${pageContext.request.contextPath}/web/driver/earnings" class="btn btn-sm btn-primary fw-semibold"><i class="bi bi-wallet2 me-1"></i> View Payouts</a>
-                                    <a href="${pageContext.request.contextPath}/web/driver/ai-chat" class="btn btn-sm btn-warning text-dark fw-semibold"><i class="bi bi-stars me-1"></i> Logistics AI Assistant</a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="wm-operations-telemetry-grid">
-                            <div class="wm-telemetry-card">
-                                <div class="wm-telemetry-icon inventory">
-                                    <i class="bi bi-boxes"></i>
-                                </div>
-                                <div class="wm-telemetry-content">
-                                    <h5>Warehouse Pickups</h5>
-                                    <small>Ready at Distributor Hubs</small>
-                                </div>
-                            </div>
-                            <div class="wm-telemetry-card">
-                                <div class="wm-telemetry-icon orders">
-                                    <i class="bi bi-geo-alt"></i>
-                                </div>
-                                <div class="wm-telemetry-content">
-                                    <h5>GPS Route Nav</h5>
-                                    <small>Optimized Multi-Stop Delivery</small>
-                                </div>
-                            </div>
-                            <div class="wm-telemetry-card">
-                                <div class="wm-telemetry-icon delivery">
-                                    <i class="bi bi-check-circle"></i>
-                                </div>
-                                <div class="wm-telemetry-content">
-                                    <h5>OTP Verified</h5>
-                                    <small>Instant Secure Handover</small>
-                                </div>
-                            </div>
-                        </div>
+                <section id="operations" class="container my-5">
+        <div class="wm-operations-hub">
+            <div class="wm-operations-hero-wrap">
+                <img src="${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png"
+                     class="wm-operations-hero-img"
+                     onerror="this.onerror=null;this.src='${pageContext.request.contextPath}/images/logo/wholemart-home-hero.png';"
+                     alt="WholeMart Live Operations Hub showing inventory, orders and delivery van dispatch">
+                <div class="wm-operations-overlay">
+                    <div>
+                        <span class="wm-operations-live-badge mb-2">
+                            <span class="wm-live-pulse-dot"></span> <fmt:message key="ops.hub_title"/>
+                        </span>
+                        <h2 class="wm-operations-title"><fmt:message key="ops.sync_title"/></h2>
+                        <p class="wm-operations-subtitle">
+                            <fmt:message key="ops.subtitle"/>
+                        </p>
                     </div>
-                </section>
+                    <div class="d-flex flex-wrap gap-2 mt-3">
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-check-circle-fill text-success me-1"></i> <fmt:message key="ops.live_inventory"/></span>
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-arrow-repeat text-info me-1"></i> <fmt:message key="ops.active_orders"/></span>
+                        <span class="badge bg-dark bg-opacity-75 text-light border border-secondary px-3 py-2"><i class="bi bi-geo-alt-fill text-warning me-1"></i> <fmt:message key="ops.delivery_status"/></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="wm-operations-telemetry-grid">
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon inventory">
+                        <i class="bi bi-boxes"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.sku_count"/></h5>
+                        <small><fmt:message key="ops.live_inventory"/> • <fmt:message key="ops.in_stock"/></small>
+                    </div>
+                </div>
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon orders">
+                        <i class="bi bi-bag-check"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.orders_count"/></h5>
+                        <small><fmt:message key="ops.active_orders"/></small>
+                    </div>
+                </div>
+                <div class="wm-telemetry-card">
+                    <div class="wm-telemetry-icon delivery">
+                        <i class="bi bi-truck"></i>
+                    </div>
+                    <div class="wm-telemetry-content">
+                        <h5><fmt:message key="ops.vans_count"/></h5>
+                        <small><fmt:message key="ops.delivery_status"/> • <fmt:message key="ops.avg_time"/></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
                 <!-- ===================================================== -->
                 <!-- 3. DRIVER DISPATCH STATUS STRIP -->
