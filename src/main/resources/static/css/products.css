@@ -79,6 +79,161 @@
     100% { transform: rotate(360deg); }
 }
 
+/* ---------- Distributor inventory workspace ---------- */
+.wm-distributor-inventory {
+    padding: 28px 0 56px;
+}
+
+.wm-distributor-inventory .wm-home-reports {
+    margin-bottom: 0 !important;
+}
+
+.wm-distributor-inventory .home-role-card {
+    min-height: 250px;
+    border-radius: 16px;
+    padding: 24px 26px;
+    box-shadow: 0 10px 24px rgba(18, 24, 31, 0.045);
+}
+
+.wm-distributor-inventory .wm-report-item {
+    padding: 12px 0;
+    font-size: .84rem;
+}
+
+.wm-distributor-inventory .wm-inventory-divider {
+    height: 1px;
+    background: var(--line, rgba(18, 24, 31, .12));
+    margin: 30px 0;
+}
+
+.wm-distributor-inventory .wm-inventory-panel {
+    background: var(--paper-raised, #fff);
+    border: 1px solid var(--line, rgba(18, 24, 31, .12));
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(18, 24, 31, .045);
+    overflow: hidden;
+}
+
+.wm-distributor-inventory .wm-inventory-panel-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 24px 26px 20px;
+    border-bottom: 1px solid var(--line, rgba(18, 24, 31, .12));
+}
+
+.wm-distributor-inventory .wm-inventory-panel-header h3 {
+    font-family: var(--font-display, 'Plus Jakarta Sans', sans-serif);
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 5px 0 4px;
+}
+
+.wm-distributor-inventory .wm-inventory-panel-header p {
+    color: var(--ink-soft, #5A6578);
+    font-size: .88rem;
+    margin: 0;
+}
+
+.wm-distributor-inventory .wm-toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(190px, 280px);
+    gap: 14px;
+    padding: 18px 26px;
+    background: rgba(245, 244, 236, .48);
+    border-bottom: 1px solid var(--line, rgba(18, 24, 31, .12));
+}
+
+.wm-distributor-inventory .wm-search-field { position: relative; }
+.wm-distributor-inventory .wm-search-field > i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-faint, #8C98A9);
+    z-index: 1;
+}
+.wm-distributor-inventory .wm-search-field .wm-input { padding-left: 42px; }
+.wm-distributor-inventory .wm-input,
+.wm-distributor-inventory .wm-select { height: 44px; border-radius: 9px; }
+
+.wm-distributor-inventory .wm-table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.wm-distributor-inventory .wm-table {
+    width: 100%;
+    min-width: 820px;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+.wm-distributor-inventory .wm-table th {
+    padding: 13px 18px;
+    background: #fbfbf8;
+    border-bottom: 1px solid var(--line, rgba(18, 24, 31, .12));
+    color: var(--ink-soft, #5A6578);
+    font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .055em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.wm-distributor-inventory .wm-table td {
+    padding: 15px 18px;
+    border-bottom: 1px solid rgba(18, 24, 31, .08);
+    color: var(--ink, #12181F);
+    font-size: .88rem;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.wm-distributor-inventory .wm-table tbody tr { transition: background-color .16s ease; }
+.wm-distributor-inventory .wm-table tbody tr:hover { background: rgba(27, 94, 60, .045); }
+.wm-distributor-inventory .wm-table td:nth-child(1),
+.wm-distributor-inventory .wm-table td:nth-child(6),
+.wm-distributor-inventory .wm-table td:nth-child(7) { font-family: var(--font-mono, monospace); }
+.wm-distributor-inventory .wm-table td:nth-child(3) { font-weight: 700; }
+.wm-distributor-inventory .wm-table td[colspan] { padding: 38px 18px; text-align: center; color: var(--ink-soft, #5A6578); }
+
+.wm-distributor-inventory .wm-btn {
+    min-height: 34px;
+    border-radius: 7px;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong, rgba(18, 24, 31, .22));
+    background: #fff;
+    color: var(--ink, #12181F);
+    font-family: var(--font-mono, monospace);
+    font-size: .76rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+.wm-distributor-inventory .wm-btn:hover:not(:disabled) { border-color: var(--green, #1B5E3C); background: var(--green-tint, rgba(27, 94, 60, .1)); }
+.wm-distributor-inventory .wm-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+.wm-distributor-inventory .wm-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 18px 26px;
+    margin: 0;
+    color: var(--ink-soft, #5A6578);
+    font-size: .84rem;
+}
+
+@media (max-width: 767px) {
+    .wm-distributor-inventory { padding: 22px 0 40px; }
+    .wm-distributor-inventory .wm-inventory-panel-header { align-items: stretch; flex-direction: column; padding: 20px; }
+    .wm-distributor-inventory .wm-inventory-panel-header .home-btn { justify-content: center; }
+    .wm-distributor-inventory .wm-toolbar { grid-template-columns: 1fr; padding: 16px 20px; }
+    .wm-distributor-inventory .wm-pagination { padding: 16px 20px; }
+}
+
 /* ============================================================
    RETAILER PRODUCTS PAGE — "DISPATCH LEDGER" DESIGN SYSTEM
    ============================================================ */
@@ -596,7 +751,7 @@
 /* Card Visual Header with Image & Badges */
 .wm-card-media-wrap {
     position: relative;
-    height: 180px;
+    height: 146px;
     background: #EFECE6;
     overflow: hidden;
     display: flex;
@@ -622,12 +777,24 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #F0EFE9 0%, #E2DFD6 100%);
-    color: var(--wm-prod-ink-soft);
-    gap: 8px;
+    background:
+        radial-gradient(circle at 78% 24%, color-mix(in srgb, var(--cat-color, var(--wm-prod-green)) 20%, transparent) 0 15%, transparent 16%),
+        linear-gradient(135deg, #F8F7F1 0%, #ECEAE1 100%);
+    color: var(--cat-color, var(--wm-prod-green));
+    gap: 9px;
 }
-.wm-card-media-fallback i { font-size: 2.5rem; opacity: 0.7; }
-.wm-card-media-fallback span { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; }
+.wm-card-media-fallback i {
+    width: 54px;
+    height: 54px;
+    border-radius: 18px;
+    display: grid;
+    place-items: center;
+    font-size: 1.6rem;
+    color: var(--cat-color, var(--wm-prod-green));
+    background: color-mix(in srgb, var(--cat-color, var(--wm-prod-green)) 13%, #fff);
+    border: 1px solid color-mix(in srgb, var(--cat-color, var(--wm-prod-green)) 24%, #fff);
+}
+.wm-card-media-fallback span { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 
 /* Media Badges */
 .wm-media-top-badges {
@@ -667,7 +834,7 @@
 
 /* Card Body Content */
 .wm-card-body {
-    padding: 16px 18px 14px;
+    padding: 14px 18px 12px;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -712,7 +879,7 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 42px;
+    min-height: 38px;
 }
 
 .wm-card-distributor-info {
@@ -802,7 +969,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 0 18px 16px;
+    padding: 0 18px 18px;
 }
 
 /* Quick Bulk Preset Buttons */
@@ -1012,6 +1179,15 @@
     object-fit: cover;
     border: 1px solid var(--wm-prod-line);
     flex-shrink: 0;
+}
+
+.wm-table-thumb-fallback {
+    display: inline-grid;
+    place-items: center;
+    color: var(--cat-color, var(--wm-prod-green));
+    background: color-mix(in srgb, var(--cat-color, var(--wm-prod-green)) 12%, #fff);
+    border-color: color-mix(in srgb, var(--cat-color, var(--wm-prod-green)) 25%, #fff);
+    font-size: 1.05rem;
 }
 
 .wm-table-prod-name {

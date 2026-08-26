@@ -595,6 +595,12 @@
         var paramDistributorId = urlParams.get("distributorUserId") || urlParams.get("distributorId");
         var paramDistributorName = urlParams.get("distributorName");
 
+        // Keep the selected supplier active from the first render.  The product
+        // request must not wait for the supplier-label request to finish.
+        if (paramDistributorId) {
+            activeDistributor = paramDistributorId;
+        }
+
         if (paramDistributorName) {
             productHeroSubtitle.innerHTML = "Browsing wholesale inventory from <b>" + escapeHtml(paramDistributorName) + "</b>";
         }
@@ -736,7 +742,7 @@
             allDistributors.forEach(function (d) {
                 var opt = document.createElement("option");
                 opt.value = d.userId || d.id;
-                opt.textContent = (d.shopName || d.name) + " (" + (d.city || "Jaspur Hub") + ")";
+                opt.textContent = (d.businessName || d.shopName || d.name || "Wholesale hub") + " (" + (d.city || "Location pending") + ")";
                 distributorSelect.appendChild(opt);
             });
 
@@ -826,27 +832,33 @@
             var sku = p.sku || ("#SKU-" + String(p.id).padStart(5, "0"));
             var category = p.category || "General";
             var catStyle = getCategoryStyle(category);
-            var distName = "Apex Wholesale Suppliers";
+            var distName = "Wholesale distributor";
             var distObj = allDistributors.find(function (d) { return (d.userId == p.distributorUserId || d.id == p.distributorId); });
-            if (distObj) distName = distObj.shopName || distObj.name;
+            if (distObj) distName = distObj.businessName || distObj.shopName || distObj.name;
 
             var unitPrice = Number(p.unitPrice || p.price || 0);
             var mrp = Number(p.mrp || 0);
             if (mrp <= unitPrice) mrp = Math.round(unitPrice * 1.22);
             var savingsPct = Math.max(8, Math.round(((mrp - unitPrice) / mrp) * 100));
 
-            var stockQty = Number(p.stock != null ? p.stock : 5000);
+            var stockQty = Number(p.stockQuantity != null ? p.stockQuantity : (p.stock != null ? p.stock : 0));
             var packSize = p.packSize || p.unit || "50kg Bulk Sack";
             var brandName = p.brand || "WholeMart Verified";
 
-            var imgSrc = p.imageUrl || p.image_url || "${pageContext.request.contextPath}/images/wholemart_operations.jpg";
+            var imgSrc = p.imageUrl || p.image_url;
+            var cardMedia = imgSrc
+                ? '<img class="wm-card-img" src="' + escapeHtml(imgSrc) + '" alt="' + escapeHtml(p.name) + '">'
+                : '<div class="wm-card-media-fallback" style="--cat-color:' + catStyle.color + '">' +
+                    '<i class="bi ' + catStyle.icon + '" aria-hidden="true"></i>' +
+                    '<span>' + escapeHtml(category) + ' wholesale</span>' +
+                  '</div>';
 
             var bulkTierSavings = Math.round(unitPrice * 0.05);
 
             return '<div class="wm-commodity-card wm-card-enter" style="--cat-color:' + catStyle.color + '" data-id="' + p.id + '">' +
                 '<div class="wm-card-accent-bar"></div>' +
                 '<div class="wm-card-media-wrap">' +
-                    '<img class="wm-card-img" src="' + imgSrc + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null;this.src=\'/images/wholemart_operations.jpg\';">' +
+                    cardMedia +
                     '<div class="wm-media-top-badges">' +
                         '<span class="wm-badge-category">' + escapeHtml(category) + '</span>' +
                         '<span class="wm-badge-savings">Save ' + savingsPct + '%</span>' +
@@ -907,9 +919,9 @@
             var sku = p.sku || ("#SKU-" + String(p.id).padStart(5, "0"));
             var category = p.category || "General";
             var catStyle = getCategoryStyle(category);
-            var distName = "Apex Wholesale Hub";
+            var distName = "Wholesale distributor";
             var distObj = allDistributors.find(function (d) { return (d.userId == p.distributorUserId || d.id == p.distributorId); });
-            if (distObj) distName = distObj.shopName || distObj.name;
+            if (distObj) distName = distObj.businessName || distObj.shopName || distObj.name;
 
             var unitPrice = Number(p.unitPrice || p.price || 0);
             var mrp = Number(p.mrp || 0);
@@ -917,12 +929,15 @@
             var savingsPct = Math.max(8, Math.round(((mrp - unitPrice) / mrp) * 100));
 
             var packSize = p.packSize || p.unit || "50kg Sack";
-            var imgSrc = p.imageUrl || p.image_url || "${pageContext.request.contextPath}/images/wholemart_operations.jpg";
+            var imgSrc = p.imageUrl || p.image_url;
+            var tableThumbnail = imgSrc
+                ? '<img class="wm-table-thumb" src="' + escapeHtml(imgSrc) + '" alt="' + escapeHtml(p.name) + '">'
+                : '<span class="wm-table-thumb wm-table-thumb-fallback" style="--cat-color:' + catStyle.color + '" aria-hidden="true"><i class="bi ' + catStyle.icon + '"></i></span>';
 
             return '<tr data-id="' + p.id + '">' +
                 '<td>' +
                     '<div class="wm-table-prod-cell">' +
-                        '<img class="wm-table-thumb" src="' + imgSrc + '" alt="' + escapeHtml(p.name) + '" onerror="this.onerror=null;this.src=\'/images/wholemart_operations.jpg\';">' +
+                        tableThumbnail +
                         '<div>' +
                             '<p class="wm-table-prod-name">' + escapeHtml(p.name) + '</p>' +
                             '<span class="wm-card-sku">' + escapeHtml(sku) + '</span>' +
@@ -1247,30 +1262,36 @@
             renderSkeletonGrid(8);
 
             // 1. Fetch Distributors
-            fetch("/api/v1/distributors")
-                .then(function (res) { return res.json(); })
+            fetch("/api/v1/distributors/nearby")
+                .then(function (res) {
+                    if (!res.ok) throw new Error("Unable to load distributors");
+                    return res.json();
+                })
                 .then(function (dists) {
                     allDistributors = Array.isArray(dists) ? dists : [];
-                    statDistributorsCount.textContent = (allDistributors.length || 4) + " Hubs";
+                    statDistributorsCount.textContent = allDistributors.length + " Hubs";
                     renderDistributorSelect();
                 })
                 .catch(function () {
-                    allDistributors = [
-                        { id: 1, userId: 1, name: "Apex Wholesale Suppliers", shopName: "Apex Wholesale Suppliers", city: "Jaspur" },
-                        { id: 2, userId: 2, name: "Kashipur Mega Hub", shopName: "Kashipur Mega Grain Hub", city: "Kashipur" }
-                    ];
-                    statDistributorsCount.textContent = "4 Hubs";
+                    // Do not fabricate hub IDs: that makes a genuine selected
+                    // distributor look empty when the directory is unavailable.
+                    allDistributors = [];
+                    statDistributorsCount.textContent = "0 Hubs";
                     renderDistributorSelect();
                 });
 
-            // 2. Fetch Products
-            var fetchUrl = "/api/v1/products";
+            // 2. A selected distributor uses the unpaged catalog endpoint so
+            // every product in that distributor's inventory is shown.
+            var fetchUrl = "/api/v1/products?size=100";
             if (paramDistributorId) {
-                fetchUrl += "?distributorUserId=" + encodeURIComponent(paramDistributorId);
+                fetchUrl = "/api/v1/products/by-distributor?distributorUserId=" + encodeURIComponent(paramDistributorId);
             }
 
             fetch(fetchUrl)
-                .then(function (res) { return res.json(); })
+                .then(function (res) {
+                    if (!res.ok) throw new Error("Unable to load products");
+                    return res.json();
+                })
                 .then(function (data) {
                     allProducts = (window.wmRows ? window.wmRows(data) : data);
                     if (!Array.isArray(allProducts)) allProducts = [];

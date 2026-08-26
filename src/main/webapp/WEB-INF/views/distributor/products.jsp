@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>WholeMart | Distributor Dashboard</title>
+        <title>WholeMart | Distributor Inventory</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@
                 <div class="wm-app">
 
                     <main>
-                        <div class="wm-home-container">
+                        <div class="wm-home-container wm-distributor-inventory">
                             <section class="wm-home-reports mb-4">
                                 <div class="home-section-head">
                                     <span class="wm-kicker">ANALYTICS</span>
@@ -106,19 +106,26 @@
 
                                 </div>
                             </section>
-<hr>
-                            <div class="wm-toolbar">
-                                <div class="row g-4">
-                                    <div class="col-md-6"><input id="productSearch" class="wm-input" type="search"
-                                            placeholder="Search"></div>
-                                    <div class="col-md-3"><select class="wm-select">
+                            <div class="wm-inventory-divider" aria-hidden="true"></div>
+                            <section class="wm-inventory-panel" aria-labelledby="inventoryListTitle">
+                                <div class="wm-inventory-panel-header">
+                                    <div>
+                                        <span class="wm-kicker">INVENTORY</span>
+                                        <h3 id="inventoryListTitle">Product catalog</h3>
+                                        <p>Search, review, and manage the products available to your retailers.</p>
+                                    </div>
+                                    <a class="home-btn home-btn-primary" href="/web/distributor/add-product"><i class="bi bi-plus-lg" aria-hidden="true"></i> Add product</a>
+                                </div>
+                                <div class="wm-toolbar">
+                                    <div class="wm-search-field">
+                                        <i class="bi bi-search" aria-hidden="true"></i>
+                                        <input id="productSearch" class="wm-input" type="search" placeholder="Search products, SKU, category..." aria-label="Search products">
+                                    </div>
+                                    <div class="wm-filter-field"><select id="categoryFilter" class="wm-select" aria-label="Filter products by category">
                                             <option>All Products</option>
                                         </select></div>
-                                    <div class="col-auto"><a class="home-btn home-btn-primary"
-                                            href="/web/distributor/add-product">Add Product</a></div>
                                 </div>
-                            </div>
-                            <div class="wm-table-container">
+                            <div class="wm-table-container" tabindex="0">
                                 <table class="wm-table">
                                 <thead>
                                     <tr>
@@ -181,6 +188,7 @@
                                 <span id="pageInfo"></span>
                                 <button id="nextPage" class="wm-btn wm-btn-secondary" disabled>Next</button>
                             </div>
+                            </section>
                         </div>
                     </main>
                     <%@ include file="/WEB-INF/common/footer.jsp" %>
@@ -189,6 +197,7 @@
                     document.addEventListener("DOMContentLoaded", function () {
                         var productsBody = document.getElementById("productsBody");
                         var productSearch = document.getElementById("productSearch");
+                        var categoryFilter = document.getElementById("categoryFilter");
                         var prevPageBtn = document.getElementById("prevPage");
                         var nextPageBtn = document.getElementById("nextPage");
                         var pageInfo = document.getElementById("pageInfo");
@@ -208,7 +217,9 @@
                         function render() {
                             var query = (productSearch.value || "").toLowerCase();
                             var filtered = products.filter(function (product) {
-                                return !query || [product.name, product.category].join(" ").toLowerCase().indexOf(query) !== -1;
+                                var matchesSearch = !query || [product.sku, product.name, product.brand, product.category].join(" ").toLowerCase().indexOf(query) !== -1;
+                                var matchesCategory = !categoryFilter.value || categoryFilter.value === "All Products" || product.category === categoryFilter.value;
+                                return matchesSearch && matchesCategory;
                             });
 
                             var totalPages = Math.ceil(filtered.length / rowsPerPage);
@@ -236,9 +247,8 @@
                                 pageInfo.textContent = "";
                             }
 
-                            setText("totalProducts", products.length);
-                            setText("activeProducts", products.length);
-                            setText("categoryCount", new Set(products.map(function (product) { return product.category; })).size);
+                            setText("reportTotalItems", products.length);
+                            setText("reportCategoryCount", new Set(products.map(function (product) { return product.category; }).filter(Boolean)).size);
                         }
 
                         fetch("/api/v1/products/mine")
@@ -252,24 +262,30 @@
 
                                 if (!result.ok) {
                                     products = [];
-                                    productsBody.innerHTML = "<tr><td colspan=\"7\">Unable to load inventory. Status: " + result.status + "</td></tr>";
-                                    setText("totalProducts", 0);
-                                    setText("activeProducts", 0);
-                                    setText("categoryCount", 0);
+                                    productsBody.innerHTML = "<tr><td colspan=\"8\">Unable to load inventory. Status: " + result.status + "</td></tr>";
+                                    setText("reportTotalItems", 0);
+                                    setText("reportCategoryCount", 0);
                                     return;
                                 }
 
                                 // API returns List<ProductDto>: [ {id, distributorUserId, name, category, unitPrice}, ... ]
                                 products = Array.isArray(result.body) ? result.body : [];
+                                var categories = Array.from(new Set(products.map(function (product) { return product.category; }).filter(Boolean))).sort();
+                                categoryFilter.innerHTML = "<option value=\"All Products\">All products</option>" + categories.map(function (category) {
+                                    return "<option value=\"" + category.replace(/&/g, "&amp;").replace(/\"/g, "&quot;") + "\">" + category.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</option>";
+                                }).join("");
                                 console.log('[/api/v1/products/mine] products.length=', products.length);
 
                                 render();
                             }).catch(function () {
-                                productsBody.innerHTML = "<tr><td colspan=\"7\">Unable to load inventory from the database.</td></tr>";
+                                productsBody.innerHTML = "<tr><td colspan=\"8\">Unable to load inventory from the database.</td></tr>";
                             });
-                        productSearch.addEventListener("input", render);
-
                         productSearch.addEventListener("input", function() {
+                            currentPage = 1;
+                            render();
+                        });
+
+                        categoryFilter.addEventListener("change", function() {
                             currentPage = 1;
                             render();
                         });

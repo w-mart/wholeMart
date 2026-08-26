@@ -32,6 +32,12 @@ public class CartApiController {
                 .toList();
     }
 
+    /** Returns cart rows with product details for retailer web and mobile clients. */
+    @GetMapping("/details")
+    public List<CartItemDetailsDto> myCartDetails() {
+        return cartService.myCartDetails(currentUserProvider.requireCurrentUser());
+    }
+
     @PostMapping("/items")
     public CartItemDto add(@Valid @RequestBody AddCartItemRequest request) {
         return toDto(cartService.addToCart(currentUserProvider.requireCurrentUser(), request.productId(), request.quantity()));

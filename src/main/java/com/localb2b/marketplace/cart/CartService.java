@@ -1,7 +1,12 @@
 package com.localb2b.marketplace.cart;
 
 import com.localb2b.marketplace.common.CurrentUser;
+import com.localb2b.marketplace.product.Product;
+import com.localb2b.marketplace.product.ProductRepository;
 import com.localb2b.marketplace.user.UserRole;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CartService {
     private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
 
-    public CartService(CartRepository cartRepository) {
+    public CartService(CartRepository cartRepository, ProductRepository productRepository) {
         this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
     }
 
     @Transactional
@@ -33,6 +40,34 @@ public class CartService {
     @Transactional(readOnly = true)
     public List<CartItem> myCart(CurrentUser currentUser) {
         return cartRepository.findByRetailerUserId(currentUser.userId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<CartItemDetailsDto> myCartDetails(CurrentUser currentUser) {
+        List<CartItem> cartItems = myCart(currentUser);
+        Map<Long, Product> productsById = productRepository.findAllById(
+                        cartItems.stream().map(CartItem::getProductId).toList())
+                .stream()
+                .collect(java.util.stream.Collectors.toMap(Product::getId, Function.identity()));
+
+        return cartItems.stream()
+                .map(item -> toDetailsDto(item, productsById.get(item.getProductId())))
+                .filter(java.util.Objects::nonNull)
+                .toList();
+    }
+
+    private CartItemDetailsDto toDetailsDto(CartItem item, Product product) {
+        // A deleted product cannot be ordered, so it is omitted from the
+        // mobile-ready response rather than exposing incomplete price data.
+        if (product == null) {
+            return null;
+        }
+        BigDecimal unitPrice = product.getUnitPrice() == null ? BigDecimal.ZERO : product.getUnitPrice();
+        return new CartItemDetailsDto(
+                item.getId(), item.getProductId(), product.getDistributorUserId(),
+                product.getName(), product.getBrand(), product.getCategory(), product.getSku(), product.getImageUrl(),
+                unitPrice, item.getQuantity(), unitPrice.multiply(BigDecimal.valueOf(item.getQuantity())),
+                product.getStockQuantity(), item.getCreatedAt());
     }
 
     @Transactional
