@@ -64,6 +64,13 @@ public class OrderService {
         if (cartItems.isEmpty()) {
             throw new IllegalStateException("Cart is empty");
         }
+        if (paymentMode == null) {
+            throw new IllegalArgumentException("paymentMode is required");
+        }
+        if (paymentMode == OrderPaymentMode.PARTIAL
+                && (partialAmount == null || partialAmount.signum() <= 0)) {
+            throw new IllegalArgumentException("partialAmount must be greater than zero for PARTIAL payment");
+        }
         Map<Long, Product> productsById = productRepository
                 .findAllById(cartItems.stream().map(item -> item.getProductId()).toList()).stream()
                 .collect(Collectors.toMap(Product::getId, Function.identity()));
